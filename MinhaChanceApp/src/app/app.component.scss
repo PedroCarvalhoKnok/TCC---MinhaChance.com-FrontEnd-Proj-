@@ -1,0 +1,57 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.example-spacer-menu {
+  flex: 0.7 0.7 auto;
+}
+
+.example-spacer-menu-footer {
+  flex: 0.9 0.9 auto;
+}
+
+.example-spacer-menu-items{
+  flex: 0.1 0.1 auto;
+}
+
+
+.footer{
+  margin-top: 90vh;
+  background-color: #7600BC;
+}
+
+.toolbar{
+  background-color: #7600BC;
+}
+
+.menu-icon-mobile{
+  display: none;
+}
+  
+
+   @media (max-width:420px){
+
+    .example-spacer-menu, .example-spacer-menu-footer, .example-spacer-menu-footer {
+      flex: 0 0 auto;
+      display: none;
+    }
+  
+    .menu-icon, .footer-icon{
+      display: none;
+    }
+
+    .example-spacer{
+      flex: 0.3 0.3 auto;
+    }
+
+    .menu-icon-mobile{
+      display: block;
+    }
+
+    
+    
+   }
+  
+  
+  
+
