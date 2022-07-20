@@ -3,7 +3,7 @@
 <mat-toolbar class="toolbar">
   <span>Minha Chance</span>
   <span class="example-spacer-menu"></span>
-  <button mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon" title="Início">
+  <button mat-icon-button class="menu-icon" title="Início">
     <mat-icon>home</mat-icon>
   </button>
   <span class="example-spacer-menu-items"></span>
@@ -25,10 +25,8 @@
   <span class="example-spacer-menu-items"></span>
   <button mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon" title="Cursos">
     <span class="material-icons">
-      <span class="material-icons">
         school
-        </span>
-      </span>
+    </span>
   </button>
   <span class="example-spacer"></span>
   <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
@@ -40,6 +38,8 @@
     <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
+
+<router-outlet></router-outlet>
 
 <!-- Footer -->
 <mat-toolbar class="footer">
@@ -81,6 +81,3 @@
 </mat-toolbar>
 
 
-
-
-<router-outlet></router-outlet>

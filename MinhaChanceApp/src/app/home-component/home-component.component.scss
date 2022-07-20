@@ -1,0 +1,62 @@
+.example-card {
+    background-color: #7600BC;
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    
+  }
+
+  .star-icon{
+    color: yellow;
+
+  }
+
+  .company-icon{
+    color: white;
+
+  }
+
+  .center-icons{
+    align-content: center;
+    text-align: center;
+  }
+
+  .home-content {
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.description-content{
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #7600BC;
+    width: 642px;
+}
+
+.benefits-content {
+    background-color: #7600BC;
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    width: 642px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .objectives-content {
+    background-color: #7600BC;
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    width: 900px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }

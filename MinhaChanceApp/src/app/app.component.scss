@@ -27,11 +27,13 @@
 .menu-icon-mobile{
   display: none;
 }
+
+
   
 
-   @media (max-width:420px){
+   @media (max-width:425px){
 
-    .example-spacer-menu, .example-spacer-menu-footer, .example-spacer-menu-footer {
+    .example-spacer-menu, .example-spacer-menu-footer, .example-spacer-menu-footer{
       flex: 0 0 auto;
       display: none;
     }
