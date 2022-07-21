@@ -62,6 +62,31 @@
 
 </div>
 
+<div class="corousel-content">
+
+    <ngb-carousel *ngIf="imagesActors">
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img [src]="imagesActors[0]" alt="Random second slide">
+          </div>
+          <div class="carousel-caption">
+            <h1>Corporações</h1>
+            <p>Empresas que buscam otimizar sua busca por colaboradores</p>
+          </div>
+        </ng-template>
+        <ng-template ngbSlide>
+            <div class="picsum-img-wrapper">
+              <img [src]="imagesActors[1]" alt="Random second slide">
+            </div>
+            <div class="carousel-caption">
+              <h1>Pensamos em você!</h1>
+              <p>Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado</p>
+            </div>
+          </ng-template>
+      </ngb-carousel>
+    
+    </div>
+
 <div class="home-content">
 <mat-card class="objectives-content">
 
@@ -92,4 +117,75 @@
     </mat-card-header>
           
 </mat-card>
+</div>
+
+
+<div class="corousel-content">
+
+<ngb-carousel *ngIf="images">
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img [src]="images[0]" alt="Random second slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Empregue e qualifique</h1>
+        <p>Crie oportunidades de empregos e serviços de acordo com sua necessidade</p>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img [src]="images[1]" alt="Random third slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Facilite sua busca de candidatos!</h1>
+        <p>Encontre candidatos ideais para suas oportunidades</p>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img [src]="images[2]" alt="Random third slide">
+        </div>
+        <div class="carousel-caption">
+          <h1>Avalie antigos colaboradores e serviços prestados!</h1>
+          <p>Elabore avaliações e compartilhe suas experiências</p>
+        </div>
+      </ng-template>
+    <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img [src]="images[3]" alt="Random third slide">
+        </div>
+        <div class="carousel-caption">
+          <h1>Compartilhe cursos e avalie futuros colaboradores!</h1>
+          <p>Auxilie na qualificação e no futuro das pessoas</p>
+        </div>
+      </ng-template>
+    <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img [src]="images[4]" alt="Random third slide">
+        </div>
+        <div class="carousel-caption">
+          <h1>Se qualifique e garanta seu crescimento profissional!</h1>
+          <p>Encontre cursos e maneiras criativas de se especializar</p>
+        </div>
+    </ng-template>
+    <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img [src]="images[5]" alt="Random third slide">
+        </div>
+        <div class="carousel-caption">
+          <h1>Acumule certificados!</h1>
+          <p>Aumente sua requisição através de certificados emitidos por empresas</p>
+        </div>
+    </ng-template>
+    <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img [src]="images[6]" alt="Random third slide">
+        </div>
+        <div class="carousel-caption">
+          <h1>Encontre a vaga mais indicada ao seu perfil!</h1>
+          <p>Se reencontre no mercado de trabalho ou encontre a sua grande oportunidade!</p>
+        </div>
+    </ng-template>
+  </ngb-carousel>
+
 </div>

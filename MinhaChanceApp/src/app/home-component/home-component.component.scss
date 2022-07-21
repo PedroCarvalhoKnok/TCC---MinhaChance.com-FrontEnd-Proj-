@@ -1,5 +1,18 @@
+
+.carousel-caption{
+  color: black;
+}
+
+.picsum-img-wrapper{
+  color: black;
+}
+
+mat-card-title, .company-icon{
+  color: white;
+}
+
 .example-card {
-    background-color: #7600BC;
+    background-color: #191645;
     padding-top: 30px;
     display: flex;
     justify-content: space-between;
@@ -8,11 +21,6 @@
 
   .star-icon{
     color: yellow;
-
-  }
-
-  .company-icon{
-    color: white;
 
   }
 
@@ -35,12 +43,12 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: #7600BC;
+    background-color: #888888;
     width: 642px;
 }
 
 .benefits-content {
-    background-color: #7600BC;
+    background-color: #888888;
     padding-top: 30px;
     display: flex;
     justify-content: space-between;
@@ -51,7 +59,7 @@
   }
 
   .objectives-content {
-    background-color: #7600BC;
+    background-color: #888888;
     padding-top: 30px;
     display: flex;
     justify-content: space-between;
@@ -59,4 +67,11 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+  }
+
+  .corousel-content{
+
+    display: flex;
+    justify-content: center;
+
   }

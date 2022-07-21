@@ -16,16 +16,20 @@
 
 
 .footer{
-  margin-top: 90vh;
-  background-color: #7600BC;
+  margin-top: 40vh;
+  background-color: #191645;
 }
 
 .toolbar{
-  background-color: #7600BC;
+  background-color: #191645;
 }
 
 .menu-icon-mobile{
   display: none;
+}
+
+.menu-icon, .footer-icon, .name-icon, .side-icon{
+  color: white;
 }
 
 
@@ -40,6 +44,7 @@
   
     .menu-icon, .footer-icon{
       display: none;
+
     }
 
     .example-spacer{
@@ -48,6 +53,8 @@
 
     .menu-icon-mobile{
       display: block;
+      color: white;
+
     }
 
     
