@@ -10,11 +10,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { HomeComponentComponent } from './home-component/home-component.component';
 import {MatCardModule} from '@angular/material/card';
+import { CoursesListComponent } from './courses-component/courses-list/courses-list.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponentComponent,
+    CoursesListComponent,
     
   ],
   imports: [
@@ -25,7 +28,8 @@ import {MatCardModule} from '@angular/material/card';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
