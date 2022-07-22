@@ -22,6 +22,14 @@ export class HomeComponentComponent implements OnInit {
     'https://thumbs.dreamstime.com/b/grupo-criativo-linha-moderna-ilustra%C3%A7%C3%A3o-do-estilo-projeto-133672888.jpg',
     ].map((n) => `${n}`);
 
+    imagesObjetives = [
+      'https://t3.ftcdn.net/jpg/04/69/59/56/360_F_469595667_TQVf3OscbMTjnllYhqfQ8hs9PuqsSABh.webp',
+      'https://cdn-icons-png.flaticon.com/512/3588/3588296.png',
+      'https://cdn-icons-png.flaticon.com/512/2689/2689212.png',
+      'https://cdn-icons-png.flaticon.com/512/1239/1239719.png',
+      'https://cdn-icons-png.flaticon.com/512/4341/4341966.png'
+      ].map((n) => `${n}`);
+
   constructor() { }
 
   ngOnInit(): void {

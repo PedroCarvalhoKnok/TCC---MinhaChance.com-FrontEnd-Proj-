@@ -11,7 +11,7 @@
 }
 
 .example-spacer-menu-items{
-  flex: 0.1 0.1 auto;
+  flex: 0.3 0.3 auto;
 }
 
 
@@ -32,6 +32,24 @@
   color: white;
 }
 
+.text-menu{
+    padding-top: 10px;
+    margin-top: 10px;
+    margin-left: -20px;
+    position: fixed;
+    font-size: 7px;
+    color: white;
+}
+
+.text-menu-fix{
+  padding-top: 10px;
+  margin-top: 10px;
+  margin-left: -33px;
+  position: fixed;
+  font-size: 7px;
+  color: white;
+}
+
 
   
 
@@ -48,7 +66,15 @@
     }
 
     .example-spacer{
-      flex: 0.3 0.3 auto;
+      flex: 0 0 auto;
+    }
+
+    .example-spacer-menu-items{
+      flex: 0.2 0.2 auto;
+    }
+
+    .example-spacer-menu-items-fix{
+      flex: 0.5 0.5 auto;
     }
 
     .menu-icon-mobile{
@@ -57,6 +83,9 @@
 
     }
 
+    .footer{
+      margin-top: 20vh;
+    }
     
     
    }
