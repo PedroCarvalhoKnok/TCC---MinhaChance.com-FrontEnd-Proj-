@@ -12,6 +12,12 @@ import { HomeComponentComponent } from './home-component/home-component.componen
 import {MatCardModule} from '@angular/material/card';
 import { CoursesListComponent } from './courses-component/courses-list/courses-list.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -29,7 +35,13 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDividerModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

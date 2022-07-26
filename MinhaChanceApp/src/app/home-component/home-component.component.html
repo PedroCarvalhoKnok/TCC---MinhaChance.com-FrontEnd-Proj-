@@ -47,13 +47,22 @@
         <mat-card-header>
           <mat-card-title>Empresas</mat-card-title>
           
-          <mat-card-title><span class="material-icons">business</span>
+        <mat-card-title>
+          <button type="button" class="btn btn-outline-secondary me-2" placement="bottom"
+          ngbPopover="Texto empresa" popoverTitle="Empresa">
+            <span class="material-icons">business</span>
+          </button>
         </mat-card-title>
         </mat-card-header>
 
         <mat-card-header>
             <mat-card-title>Você</mat-card-title>
-            <mat-card-title><span class='material-icons'>people</span></mat-card-title>
+            <mat-card-title>
+              <button type="button" class="btn btn-outline-secondary me-2" placement="bottom"
+          ngbPopover="Texto pessoas" popoverTitle="Você">
+              <span class='material-icons'>people</span>
+              </button>
+            </mat-card-title>
         </mat-card-header>
        
     </mat-card>
