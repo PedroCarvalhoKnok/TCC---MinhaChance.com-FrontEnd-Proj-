@@ -35,6 +35,7 @@
     display: flex;
     width: 100%;
     padding-left: 0px;
+    overflow:auto;
 }
 
 .example-form {
@@ -48,7 +49,7 @@
   }
   
   .d-inline-flex{
-    font-size: 30px;
+    font-size: 20px;
     color: yellow;
   }
 
@@ -63,12 +64,77 @@
   .description{
     padding-top: 20px;
   }
+  .space-button{
+    margin-left: 20px;
+  }
   .desc-course{
     max-width: 300px;
     overflow-wrap: break-word;
   }
 
-  .test{
+  .form-control{
     width: 100%;
-    display: flex;
+  }
+
+  .apply-btn{
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  .add-course-card{
+    width: 60%;
+    background-color: #191645;
+    border-radius: 0;
+  }
+  .add-title{
+    font-size: 15px;
+    color: white;
+  }
+
+ 
+  @media (max-width: 625px) {
+
+    .d-inline-flex{
+      font-size: 15px;
+    }
+
+    .form-control, .label-filter, .apply-btn, .select-filters{
+      width: 70%;
+    }
+
+    .filter-card{
+      height: 160vh;
+    }
+    .space-button{
+      margin-left: 0;
+    }
+    
+  }
+
+
+  @media (max-width: 425px) {
+
+   .header-content{
+    width: 200px;
+   }
+
+   .form-control, .label-filter, .apply-btn, .select-filters{
+    width: 70%;
+  }
+
+  .title-course{
+    font-size: 12px;
+  }
+
+  .filter-card{
+    height: 170vh;
+    padding-left: 0px;
+    margin-right: -40px;
+    width: 130px;
+  }
+  .space-button{
+    margin-left: 0;
+  }
+
+    
   }

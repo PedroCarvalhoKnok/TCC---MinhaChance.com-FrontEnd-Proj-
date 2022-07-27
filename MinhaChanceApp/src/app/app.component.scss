@@ -16,8 +16,9 @@
 
 
 .footer{
-  margin-top: 40vh;
+  margin-top: 0vh;
   background-color: #191645;
+  position: relative;
 }
 
 .toolbar{
@@ -53,7 +54,7 @@
 
   
 
-   @media (max-width:425px){
+   @media (max-width:500px){
 
     .example-spacer-menu, .example-spacer-menu-footer, .example-spacer-menu-footer{
       flex: 0 0 auto;
@@ -70,11 +71,11 @@
     }
 
     .example-spacer-menu-items{
-      flex: 0.2 0.2 auto;
+      flex: 0.3 0.3 auto;
     }
 
     .example-spacer-menu-items-fix{
-      flex: 0.5 0.5 auto;
+      flex: 0.3 0.3 auto;
     }
 
     .menu-icon-mobile{
@@ -85,7 +86,7 @@
 
     .footer{
       margin-top: 20vh;
-      width: 105%;
+      width: 120%;
     }
 
     .toolbar{

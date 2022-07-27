@@ -1,5 +1,13 @@
 
 <div>
+    <mat-card class="add-course-card">
+        
+        <mat-card-header>
+            <mat-card-title class="add-title"><a>Crie cursos de capacitação para sua empresa</a></mat-card-title>
+        </mat-card-header>
+    </mat-card>
+</div>
+<div>
     <mat-card class="filter-card">
             
         
@@ -14,14 +22,14 @@
             <form class="example-form">
                 
                 <div class="form-group">
-                <label for="inputdefault">Cargo:</label>
+                <label class="label-filter" for="inputdefault">Cargo:</label>
                 <input class="form-control" type="text"/>
                 </div>
                 
 
-                <label for="typeahead-basic">Categoria:</label>
-                <div class="col">
-                    <div ngbDropdown class="d-inline-block">
+                <label class="label-filter" for="typeahead-basic">Categoria:</label>
+                <div class="col select-filters">
+                    <div ngbDropdown class="d-inline-block select-filters">
                       <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Categoria</button>
                       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                         <button ngbDropdownItem>Construção</button>
@@ -29,9 +37,9 @@
                         <button ngbDropdownItem>Estética</button>
                       </div>
                     </div>
-                  </div>
+                </div>
 
-                  <label for="typeahead-basic">Possui vinculo a vagas:</label>
+                  <label class="label-filter" for="typeahead-basic">Possui vinculo a vagas:</label>
                   <br/>
                   <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
@@ -45,7 +53,7 @@
 
                   <div class="form-group">
 
-                  <label>Quantidade de inscrições:</label>
+                  <label class="label-filter">Quantidade de inscrições:</label>
                   <br/>
                   <input class="form-control" type="number" class="form-control"/>
                   </div>
@@ -55,7 +63,7 @@
                   <ngb-rating></ngb-rating>
                   <br/>
 
-                  <label for="typeahead-basic">Possui certificado?:</label>
+                  <label class="label-filter" for="typeahead-basic">Possui certificado?:</label>
                   <br/>
                   <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="btnradiocert" id="btnradio3" autocomplete="off" checked>
@@ -66,10 +74,10 @@
                     
                   </div>
                   <br/>
-                  <label>Titulo:</label>
+                  <label class="label-filter">Titulo:</label>
                   <input type="text" class="form-control"/>
                   <br/>
-                  <label for="typeahead-basic">Possui prova avaliativa?:</label>
+                  <label class="label-filter" for="typeahead-basic">Possui prova avaliativa?:</label>
                   <br/>
                   <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="btnradioprova" id="btnradioprova" autocomplete="off" checked>
@@ -81,19 +89,20 @@
                   </div>
                   <br/>
                   <div class="form-group">
-                  <label>Titulo:</label>
+                  <label class="label-filter">Titulo:</label>
                   <input type="text" class="form-control"/>
                   </div>
                   <br/>
-                  <label>Quantidade de questões:</label>
+                  <label class="label-filter">Quantidade de questões:</label>
                   <br/>
                   <input type="number" class="form-control"/>
                   <br/>
-                  <label>Dificuldade da prova</label>
+                  <label class="label-filter">Dificuldade da prova</label>
                   <br/>
                   <ngb-rating></ngb-rating>
-
-            
+                  <br/>
+                  <button type="button" class="btn btn-primary apply-btn">Aplicar</button>
+                         
             </form>
            
         </mat-card-content>
@@ -106,7 +115,7 @@
 <div>
 <mat-card class="courses-card">
         
-    <mat-card-header>
+    <mat-card-header class="header-content">
         <mat-card-title class="title-course">
             Curso Introdução I
         </mat-card-title>
@@ -115,35 +124,47 @@
 
     <mat-card-content class="course-content">
 
+        <div class="container">
         
         <div class="row">
             
-            <label class="col-4 col-md-4" for="inputdefault">Duração <br/>20 horas</label>
-            <label class="col-4 col-md-4" for="inputdefault">Criação<br/>28/06/2022</label><br/>
-            <label class="col-4 col-md-4" for="inputdefault">Inscrições<br/>10</label>
-            <label class="col-4 col-md-4" for="inputdefault">Dificuldade<br/>Iniciante</label><br/>
-            <label class="col-4 col-md-4" for="inputdefault">Sessões<br/>
+            <span class="material-icons col-4">account_circle</span>
+            <label class="col-md-4" for="inputdefault">Duração <br/>20 horas</label>
+            <label class="col-md-4" for="inputdefault">Criação<br/>28/06/2022</label><br/>
+            <label class="col-md-4" for="inputdefault">Inscrições<br/>10</label><br/>
+            <label class="col-md-4" for="inputdefault">Dificuldade<br/>Iniciante</label><br/>
+            <label class="col-md-4" for="inputdefault">Sessões<br/>
                 <ul class="session-list">
                     <li>4 sessões</li>
                 </ul>
             </label><br/>
-            <label class="col-4 col-md-4" for="inputdefault">Certificação?<br/>Sim</label>
-            <label class="col-4 col-md-4" for="inputdefault">Prova Avaliativa?<br/> Sim</label><br/>
-            <label class="col-4 col-md-4" for="inputdefault">Dificuldade da prova<br/> Iniciante</label><br/>
-            <label class="col-4 col-md-4" for="inputdefault">Quantidade de questões<br/>9</label>
+            <label class="col-md-4" for="inputdefault">Possui Certificação?<br/>Sim</label>
+            <label class="col-md-4" for="inputdefault">Prova Avaliativa?<br/> Sim</label><br/>
+            <label class="col-md-4" for="inputdefault">Dificuldade da prova<br/> Iniciante</label><br/>
+            <label class="col-md-4" for="inputdefault">Quantidade de questões<br/>9</label>
             <div class="description">
-                <label class="col-4 col-md-4" for="inputdefault">Descrição<br/></label><br/>
-               <label class="desc-course col-12">Curso introdutório ao Python</label>
+                <label class="col-md-4" for="inputdefault">Descrição<br/></label><br/>
+               <label class="desc-course col-md-4">Curso introdutório ao Python</label>
+               
             </div>
+
+            <div class="description">
+                <button type="button" class="btn btn-primary btn-sm">Editar</button>
+                <button type="button" class="btn btn-danger btn-sm space-button">Excluir</button>
+            </div>
+
+           
         </div>
+
+        
+    </div>
+
+    
 
        
     </mat-card-content>
 
-    <mat-card-actions align="end">
-        <button mat-button>Editar</button>
-        <button mat-button>Excluir</button>
-    </mat-card-actions>
+    
    
           
 </mat-card>
@@ -224,6 +245,51 @@
           
 </mat-card>
 
+<mat-card class="courses-card">
+        
+    <mat-card-header>
+        <mat-card-title>
+            Curso
+            Introdução III
+        </mat-card-title>
+     
+    </mat-card-header>
+
+    <mat-card-content class="course-content">
+
+        
+        <div class="row">
+            
+            <label class="col-4" for="inputdefault"><span class="material-icons">account_circle</span></label>
+            <label class="col-4" for="inputdefault">Duração <br/>20 horas</label>
+            <label class="col-4" for="inputdefault">Criação<br/>28/06/2022</label><br/>
+            <label class="col-4" for="inputdefault">Descrição<br/></label><br/>
+            <label class="col-4" for="inputdefault">Inscrições<br/>3 candidato(s)</label>
+            <label class="col-4" for="inputdefault">Dificuldade do curso<br/>Avançado</label><br/>
+            <label class="col-4" for="inputdefault">Sessões<br/>
+                <ul class="session-list">
+                    <li>4 sessões</li>
+                </ul>
+            </label><br/>
+            <label class="col-4" for="inputdefault">Possui Certificação<br/>Sim</label>
+            <label class="col-4" for="inputdefault">Possui Prova Avaliativa<br/> Sim</label><br/>
+            <label class="col-4" for="inputdefault">Dificuldade da prova<br/> Avançado</label><br/>
+            <label class="col-4" for="inputdefault">Quantidade de questões<br/>7</label>
+        </div>
+
+       
+    </mat-card-content>
+
+   
+          
+</mat-card>
+
+
+<mat-paginator [length]="100"
+[pageSize]="10"
+[pageSizeOptions]="[5, 10, 25, 100]"
+aria-label="Select page">
+</mat-paginator>
 
 </div>
 
