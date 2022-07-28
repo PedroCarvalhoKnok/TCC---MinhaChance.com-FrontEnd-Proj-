@@ -19,12 +19,15 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { CoursesRegisterComponent } from './courses-component/courses-register/courses-register.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponentComponent,
     CoursesListComponent,
+    CoursesRegisterComponent,
     
   ],
   imports: [
@@ -43,7 +46,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatSelectModule,
     MatDatepickerModule,
     MatRadioModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,276 @@
+<div>
+    <mat-card class="courses-card">
+            
+        <mat-card-header>
+            <mat-card-title fxLayoutAlign="center" class="title-course">
+                Crie cursos únicos e vinculados a vagas em aberto para sua empresa
+            </mat-card-title>
+         
+        </mat-card-header>
+    
+        <mat-card-content class="course-content">
+    
+           
+                                
+            <div class="container">
+                    <div fxLayout="row" fxLayoutAlign="center">
+                        <form novalidate>
+                            <div fxLayout="column">
+                                <mat-form-field>
+                                    <input type="text" matInput autocomplete="off" placeholder="Titulo do curso" required/>
+                                </mat-form-field>
+                                <mat-form-field class="spacing-margin">
+                                    <mat-select placeholder="Vaga">
+                                        <mat-option value="Introdução I">Introdução I</mat-option>
+                                        <mat-option value="Introdução II">Introdução II</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br/>
+                                <mat-form-field>
+                                    <input type="number" matInput autocomplete="off" placeholder="Duração" required/>
+                                </mat-form-field>
+                                <mat-form-field class="spacing-margin">
+                                    <mat-select>
+                                        <mat-option>Minutos</mat-option>
+                                        <mat-option>Horas</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                
+                                <br/>
+                                <mat-checkbox>
+                                    Possui certificação?
+                                </mat-checkbox>    
+                                <br/>
+                                <br/>
+                                <mat-checkbox>
+                                    Possui prova avaliativa?
+                                </mat-checkbox>  
+                                <br/>
+                                <br/>
+                                <mat-label>Descrição</mat-label>
+                                <br/>
+                                <textarea class="text-area-form" required></textarea>
+                                
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            
+    
+        
+    
+           
+        </mat-card-content>
+    
+        
+       
+              
+    </mat-card>
+</div>
+
+
+<div>
+    <mat-card class="session-card">
+            
+        <mat-card-header class="header-content">
+            <mat-card-title fxLayoutAlign="center" class="title-course">
+                Sessão
+            </mat-card-title>
+            <span class="material-icons col-4">add_circle_outline</span>
+        </mat-card-header>
+    
+        <mat-card-content class="session-content">
+                                
+            <div class="container">
+                    <div fxLayout="row" fxLayoutAlign="center">
+                        <form novalidate>
+                            <div fxLayout="column">
+                                <mat-form-field>
+                                    <input type="text" matInput autocomplete="off" placeholder="Titulo da sessão" required/>
+                                </mat-form-field>
+                                
+                                <br/>
+                                
+                                <mat-label>Video da sessão</mat-label><br/>
+                                <input class="ng-hide" id="input-file-id" multiple type="file" />
+                                <label for="input-file-id" class="md-button md-raised md-primary"><span class="material-icons col-4">picture_as_pdf</span></label><br/>
+                                <mat-label>PDF didático da sessão</mat-label><br/>
+                                <input class="ng-hide" id="input-file-id" multiple type="file" />
+                                <label for="input-file-id" class="md-button md-raised md-primary"><span class="material-icons col-4">file_upload</span></label>
+                                
+                                <br/>
+                                <br/>
+                                <mat-label>Descrição da sessão</mat-label>
+                                <br/>
+                                <textarea class="text-area-form" required></textarea>
+                                
+                                
+                            </div>
+                        </form>
+                    </div>
+            </div>
+        
+    
+           
+        </mat-card-content>
+       
+              
+    </mat-card>
+</div>
+
+<div>
+    <mat-card class="session-card">
+            
+        <mat-card-header class="header-content">
+            <mat-card-title fxLayoutAlign="center" class="title-course">
+                Certificação
+            </mat-card-title>
+            
+        </mat-card-header>
+    
+        <mat-card-content class="session-content">
+                                
+            <div class="container">
+                    <div fxLayout="row" fxLayoutAlign="center">
+                        <form novalidate>
+                            <div fxLayout="column">
+                                <mat-form-field>
+                                    <input type="text" matInput autocomplete="off" placeholder="Titulo do certificado" required/>
+                                </mat-form-field>
+                                <br/>
+                                <br/>
+                                <mat-label>Assinatura Corporativa</mat-label><br/>
+                                <input class="ng-hide" id="assign-file-id" multiple type="file" />
+                                <label for="assign-file-id" class="md-button md-raised md-primary"><span class="material-icons col-4">file_upload</span></label>
+                                <br/>
+                                <br/>
+                                <mat-label>Descrição do certificado</mat-label>
+                                <br/>
+                                <textarea class="text-area-form" required></textarea>
+                                
+                                
+                            </div>
+                        </form>
+                    </div>
+            </div>
+        
+    
+           
+        </mat-card-content>
+       
+              
+    </mat-card>
+</div>
+
+<div>
+    <mat-card class="session-card">
+            
+        <mat-card-header class="header-content">
+            <mat-card-title fxLayoutAlign="center" class="title-course">
+                Prova Avaliativa
+            </mat-card-title>
+            
+        </mat-card-header>
+    
+        <mat-card-content class="session-content">
+                                
+            <div class="container">
+                    <div fxLayout="row" fxLayoutAlign="center">
+                        <form novalidate>
+                            <div fxLayout="column">
+                                <mat-form-field>
+                                    <input type="number" matInput autocomplete="off" placeholder="Duração da prova" required/>
+                                </mat-form-field>
+                                <mat-form-field class="spacing-margin">
+                                    <mat-select placeholder="Tempo">
+                                        <mat-option value="Minutos">Minutos</mat-option>
+                                        <mat-option value="Hora">Hora</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br/>
+                                <mat-form-field>
+                                    <mat-select placeholder="Dificuldade">
+                                        <mat-option value="Iniciante">Iniciante</mat-option>
+                                        <mat-option value="Intermediário">Intermediário</mat-option>
+                                        <mat-option value="Avançado">Avançado</mat-option>
+                                        <mat-option value="Profissional">Profissional</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br/>
+                                <br/>
+                                <mat-card class="question-content">
+                                    <mat-card-header class="header-content">
+                                        <mat-card-title fxLayoutAlign="center" class="title-course">
+                                            Perguntas da prova avaliativa
+                                        </mat-card-title>
+
+                                        <span class="material-icons col-4">add_circle_outline</span>
+                                                                               
+                                    </mat-card-header>
+
+                                </mat-card>
+                                <br/>
+
+                                <mat-card class="question-content">
+                                    <mat-card-header class="header-content">
+                                        <mat-card-title fxLayoutAlign="center" class="title-course">
+                                            Pergunta 1
+                                        </mat-card-title>
+                                    </mat-card-header>
+
+                                    <mat-card-content>
+                                        <mat-label>Descrição da pergunta</mat-label>
+                                        <br/>
+                                        <textarea class="text-area-form" required></textarea>
+                                    
+
+                                    <mat-form-field>
+                                        <mat-select placeholder="Resposta Correta">
+                                            <mat-option value="A">A</mat-option>
+                                            <mat-option value="B">B</mat-option>
+                                            <mat-option value="C">C</mat-option>
+                                            <mat-option value="D">D</mat-option>
+                                            <mat-option value="E">E</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <br/>
+                                    <mat-label>Pergunta A</mat-label>
+                                        <br/>
+                                    <textarea class="text-area-form" required></textarea>
+                                    
+                                    <mat-label>Pergunta B</mat-label>
+                                        <br/>
+                                    <textarea class="text-area-form" required></textarea>
+                                    <mat-label>Pergunta C</mat-label>
+                                        <br/>
+                                        <textarea class="text-area-form" required></textarea>
+                                    
+                                    <mat-label>Pergunta D</mat-label>
+                                        <br/>
+                                    <textarea class="text-area-form" required></textarea>
+                                    <mat-label>Pergunta E</mat-label>
+                                        <br/>
+                                        <textarea class="text-area-form" required></textarea>
+                                    
+                                </mat-card-content>
+
+                                </mat-card>
+                                
+                                
+                            </div>
+                        </form>
+                    </div>
+            </div>
+        
+    
+           
+        </mat-card-content>
+       
+              
+    </mat-card>
+</div>
+<br/>
+<button mat-raised-button class="submit-btn" color="primary">Cadastrar Curso</button>
+<br/>
+<br/>
