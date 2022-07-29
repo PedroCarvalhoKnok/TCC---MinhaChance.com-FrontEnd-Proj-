@@ -23,7 +23,7 @@
 
 .course-content{
     margin-top: 60px;
-    margin-left: -500px;
+    margin-left: -70%;
     display: flex;
     width: 100%;
     padding-left: 0px;
@@ -33,6 +33,7 @@
 
 .session-content{
     margin-top: 60px;
+    margin-left: -70%;
     display: flex;
     padding-left: 0px;
     overflow:auto;
@@ -53,12 +54,12 @@
     margin-left: 20px;
 }
 
-mat-form-field{
-    color: white;
+.mat-checkbox-inner-container{
+    background-color: white !important
 }
 
 .spacing-margin {
-    margin-left: 30px;
+    margin-left: 100px;
 }
 
 .text-area-form, .container, .session-area-form {
@@ -66,6 +67,43 @@ mat-form-field{
   }
 
 .submit-btn{
-    width: 30%;
-    margin-left: 40%;
+    width: 60%;
+    margin-left: 20%;
+    background-color: #191645;
  }
+
+ .title-course{
+    width: 100%;
+ }
+
+.placeholder-color {
+    color: white !important;
+    
+  }
+
+
+ @media (max-width: 1000px) {
+
+    .spacing-margin {
+        margin-left: 0px;
+    }
+    
+  }
+
+  @media (max-width: 500px) {
+
+
+    .session-card{
+        width: 80%;
+    }
+    
+
+    .courses-card{
+        width: 80%;
+    }
+
+    .submit-btn{
+        width: 80%;
+     }
+    
+  }

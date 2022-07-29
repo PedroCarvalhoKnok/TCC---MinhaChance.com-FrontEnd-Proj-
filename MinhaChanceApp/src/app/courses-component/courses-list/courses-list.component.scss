@@ -11,7 +11,7 @@
 .filter-card{
     float: right;
     width: 30%;
-    height: 150vh;
+    height: 160vh;
     border-bottom: 10px;
     border-color: black;
     position: relative;
@@ -77,42 +77,58 @@
   }
 
   .apply-btn{
-    margin-top: 30px;
+    margin-top: 10px;
     width: 100%;
   }
 
   .add-course-card{
-    width: 60%;
+    width: 70%;
     background-color: #191645;
     border-radius: 0;
   }
   .add-title{
     font-size: 15px;
     color: white;
+    width: 100%;
+  }
+
+  .title-course{
+    width: 100%;
+  }
+
+  .material-icons{
+    color: white;
+  }
+  .paginator{
+    margin-bottom: -3%;
+  }
+
+  @media (max-width: 750px) {
+
+    .container{
+      margin-left: 30%;
+    }
+     
   }
 
  
   @media (max-width: 625px) {
 
-    .d-inline-flex{
-      font-size: 15px;
-    }
+    
 
     .form-control, .label-filter, .apply-btn, .select-filters{
       width: 70%;
     }
 
     .filter-card{
-      height: 160vh;
+      height: 50%;
     }
-    .space-button{
-      margin-left: 0;
-    }
+    
     
   }
 
 
-  @media (max-width: 425px) {
+  @media (max-width: 510px) {
 
    .header-content{
     width: 200px;
@@ -127,7 +143,7 @@
   }
 
   .filter-card{
-    height: 170vh;
+    height: 80%;
     padding-left: 0px;
     margin-right: -40px;
     width: 130px;
@@ -136,5 +152,8 @@
     margin-left: 0;
   }
 
-    
+  .paginator{
+    margin-bottom: -30%;
   }
+    
+}

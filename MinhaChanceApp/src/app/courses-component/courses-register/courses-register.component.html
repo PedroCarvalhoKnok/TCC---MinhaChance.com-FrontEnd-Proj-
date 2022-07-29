@@ -1,9 +1,9 @@
 <div>
     <mat-card class="courses-card">
             
-        <mat-card-header>
+        <mat-card-header class="title-course">
             <mat-card-title fxLayoutAlign="center" class="title-course">
-                Crie cursos únicos e vinculados a vagas em aberto para sua empresa
+                Crie cursos únicos  para sua empresa
             </mat-card-title>
          
         </mat-card-header>
@@ -14,25 +14,29 @@
                                 
             <div class="container">
                     <div fxLayout="row" fxLayoutAlign="center">
-                        <form novalidate>
+                        <form [formGroup]="formCourse">
                             <div fxLayout="column">
                                 <mat-form-field>
+                                    <mat-label class="placeholder-color">Titulo do curso</mat-label>
                                     <input type="text" matInput autocomplete="off" placeholder="Titulo do curso" required/>
                                 </mat-form-field>
                                 <mat-form-field class="spacing-margin">
-                                    <mat-select placeholder="Vaga">
-                                        <mat-option value="Introdução I">Introdução I</mat-option>
-                                        <mat-option value="Introdução II">Introdução II</mat-option>
+                                    <mat-label class="placeholder-color">Vaga</mat-label>
+                                    <mat-select class="selected" placeholder="Vaga">
+                                        <mat-option  value="Introdução I">Analista I</mat-option>
+                                        <mat-option value="Introdução II">Analista II</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                                 <br/>
                                 <mat-form-field>
+                                    <mat-label class="placeholder-color">Duração</mat-label>
                                     <input type="number" matInput autocomplete="off" placeholder="Duração" required/>
                                 </mat-form-field>
                                 <mat-form-field class="spacing-margin">
+                                    <mat-label class="placeholder-color">Tempo</mat-label>
                                     <mat-select>
-                                        <mat-option>Minutos</mat-option>
-                                        <mat-option>Horas</mat-option>
+                                        <mat-option value="Minutos">Minutos</mat-option>
+                                        <mat-option value="Horas">Horas</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                                 
@@ -73,7 +77,7 @@
 <div>
     <mat-card class="session-card">
             
-        <mat-card-header class="header-content">
+        <mat-card-header class="title-course">
             <mat-card-title fxLayoutAlign="center" class="title-course">
                 Sessão
             </mat-card-title>
@@ -84,9 +88,10 @@
                                 
             <div class="container">
                     <div fxLayout="row" fxLayoutAlign="center">
-                        <form novalidate>
+                        <form [formGroup]="formSession">
                             <div fxLayout="column">
                                 <mat-form-field>
+                                    <mat-label class="placeholder-color">Titulo da sessão</mat-label>
                                     <input type="text" matInput autocomplete="off" placeholder="Titulo da sessão" required/>
                                 </mat-form-field>
                                 
@@ -122,7 +127,7 @@
 <div>
     <mat-card class="session-card">
             
-        <mat-card-header class="header-content">
+        <mat-card-header class="title-course">
             <mat-card-title fxLayoutAlign="center" class="title-course">
                 Certificação
             </mat-card-title>
@@ -133,9 +138,10 @@
                                 
             <div class="container">
                     <div fxLayout="row" fxLayoutAlign="center">
-                        <form novalidate>
+                        <form [formGroup]="formCertification">
                             <div fxLayout="column">
                                 <mat-form-field>
+                                    <mat-label class="placeholder-color">Titulo do certificado</mat-label>
                                     <input type="text" matInput autocomplete="off" placeholder="Titulo do certificado" required/>
                                 </mat-form-field>
                                 <br/>
@@ -166,7 +172,7 @@
 <div>
     <mat-card class="session-card">
             
-        <mat-card-header class="header-content">
+        <mat-card-header class="title-course">
             <mat-card-title fxLayoutAlign="center" class="title-course">
                 Prova Avaliativa
             </mat-card-title>
@@ -177,19 +183,22 @@
                                 
             <div class="container">
                     <div fxLayout="row" fxLayoutAlign="center">
-                        <form novalidate>
+                        <form [formGroup]="formTest">
                             <div fxLayout="column">
                                 <mat-form-field>
+                                    <mat-label class="placeholder-color">Duração da prova</mat-label>
                                     <input type="number" matInput autocomplete="off" placeholder="Duração da prova" required/>
                                 </mat-form-field>
                                 <mat-form-field class="spacing-margin">
+                                    <mat-label class="placeholder-color">Tempo</mat-label>
                                     <mat-select placeholder="Tempo">
                                         <mat-option value="Minutos">Minutos</mat-option>
-                                        <mat-option value="Hora">Hora</mat-option>
+                                        <mat-option value="Horas">Hora</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                                 <br/>
                                 <mat-form-field>
+                                    <mat-label class="placeholder-color">Dificuldade</mat-label>
                                     <mat-select placeholder="Dificuldade">
                                         <mat-option value="Iniciante">Iniciante</mat-option>
                                         <mat-option value="Intermediário">Intermediário</mat-option>
@@ -272,5 +281,3 @@
 </div>
 <br/>
 <button mat-raised-button class="submit-btn" color="primary">Cadastrar Curso</button>
-<br/>
-<br/>
