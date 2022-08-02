@@ -3,7 +3,7 @@ import { Question } from "../Question/Question";
 
 export class Test {
     id!: number;
-    certification!: Certification;
+    certificationId!: string;
     questions!: Question[];
     durationTime!: string;
     difficulty!: string;

@@ -44,15 +44,57 @@ export class CoursesRegisterComponent implements OnInit {
     this.createFormQuestionValidation();
   }
 
+  async registerCourse(){
+    let test: Test;
+    let certification: Certification;
+
+    let retornoIdCertification: string = '';
+    let retornoIdTest: string = '';
+
+    if(this.formCertification.valid)
+    {
+      certification = this.certification;
+      retornoIdCertification = '1'; //inserir curso no banco retornando id dele mock exemplo await 
+    }
+    if(this.formTest.valid)
+    {
+      test = this.test;
+      if(retornoIdCertification != '' || retornoIdCertification != undefined)
+        test.certificationId = retornoIdCertification
+
+      test.questions = this.questions;
+      retornoIdTest = '1'; //inserir curso no banco retornando id dele mock exemplo await 
+
+    }
+    if(this.formCourse.valid)
+    {
+      let course: Course = this.course
+      course.sessions = this.sessions;
+     // course.userId = idUsuarioLogado
+     
+     if(retornoIdCertification != '' || retornoIdCertification != undefined)
+      course.certificationId = retornoIdCertification;
+
+     if(retornoIdTest != '' || retornoIdTest != undefined)
+      course.testId = retornoIdTest;
+
+      let retornoIdCurso = 1; //inserir curso no banco retornando id dele mock exemplo await 
+
+
+    }
+  }
+
   addSession(session: Session): void{
 
-    this.sessions.push(session);
+    if(this.formSession.valid)
+      this.sessions.push(session);
 
   }
 
   addQuestion(question: Question): void{
 
-    this.questions.push(question);
+    if(this.formQuestion.valid)
+      this.questions.push(question);
 
   }
 
@@ -71,10 +113,9 @@ export class CoursesRegisterComponent implements OnInit {
 
   createFormCourseValidation(): void
   {
-    this.formCourse = new FormGroup({
+    this.formCourse = this.formBuilder.group({
       courseTitle: new FormControl(this.course.courseTitle, [
         Validators.required,
-        Validators.minLength(4),
       ]),
       courseDuration: new FormControl(this.course.durationTime, [
         Validators.required,
@@ -92,7 +133,7 @@ export class CoursesRegisterComponent implements OnInit {
     this.formSession = new FormGroup({
       sessionTitle: new FormControl(this.session.sessionTitle, [
         Validators.required,
-        Validators.minLength(4),
+        Validators.minLength(1),
       ]),
       sessionDescription: new FormControl(this.session.description, [
         Validators.required,
