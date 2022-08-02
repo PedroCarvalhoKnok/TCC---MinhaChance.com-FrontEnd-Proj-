@@ -1,5 +1,5 @@
 export class Certification {
     id!: number;
-    certificationtitle!: string;
+    certificationTitle!: string;
     description!: string;
 }
