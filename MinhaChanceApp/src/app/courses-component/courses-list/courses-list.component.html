@@ -124,11 +124,11 @@
 </div>
 
 <div>
-    <mat-card class="courses-card">
+    <mat-card class="courses-card" *ngFor="let course of this.courses">
         
     <mat-card-header class="header-content">
         <mat-card-title class="title-course">
-            Curso Introdução I
+           {{course.courseTitle}}
         </mat-card-title>
      
     </mat-card-header>
@@ -140,22 +140,21 @@
         <div class="row">
             
             <span class="material-icons col-md-4">account_circle</span>
-            <label class="col-md-4" for="inputdefault">Duração <br/>20 horas</label>
-            <label class="col-md-4" for="inputdefault">Criação<br/>28/06/2022</label><br/>
-            <label class="col-md-4" for="inputdefault">Inscrições<br/>10</label><br/>
-            <label class="col-md-4" for="inputdefault">Dificuldade<br/>Iniciante</label><br/>
+            <label class="col-md-4" for="inputdefault">Duração <br/>{{ course.durationTime }}</label>
+            <label class="col-md-4" for="inputdefault">Criação<br/>{{ course.creationDate }}</label><br/>
+            <label class="col-md-4" for="inputdefault">Inscrições<br/>{{ course.subscribeQuantity }}</label><br/>
             <label class="col-md-4" for="inputdefault">Sessões<br/>
                 <ul class="session-list">
-                    <li>4 sessões</li>
+                    <li>{{ course.subscribeQuantity }} sessões</li>
                 </ul>
             </label><br/>
-            <label class="col-md-4" for="inputdefault">Possui Certificação?<br/>Sim</label>
-            <label class="col-md-4" for="inputdefault">Prova Avaliativa?<br/> Sim</label><br/>
-            <label class="col-md-4" for="inputdefault">Dificuldade da prova<br/> Iniciante</label><br/>
-            <label class="col-md-4" for="inputdefault">Quantidade de questões<br/>9</label>
+            <label class="col-md-4" for="inputdefault">Possui Certificação?<br/>{{ course.certificationId != undefined || course.certificationId != 0 ? 'Sim': 'Não'}}</label>
+            <label class="col-md-4" for="inputdefault">Prova Avaliativa?<br/> {{ course.test?.id != undefined || course.test?.id != 0 ? 'Sim': 'Não'}}</label><br/>
+            <label class="col-md-4" for="inputdefault">Dificuldade da prova<br/> {{ course.test?.difficulty }}</label><br/>
+            <label class="col-md-4" for="inputdefault">Quantidade de questões<br/> {{ course.test?.questionsQuantity }}</label>
             <div class="description">
                 <label class="col-md-4" for="inputdefault">Descrição<br/></label><br/>
-               <label class="desc-course col-md-4">Curso introdutório ao Python</label>
+               <label class="desc-course col-md-4">{{ course.description }}</label>
                
             </div>
 

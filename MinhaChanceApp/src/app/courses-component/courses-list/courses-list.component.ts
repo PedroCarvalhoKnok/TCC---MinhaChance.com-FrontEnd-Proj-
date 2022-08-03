@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Course } from 'src/app/Models/Course/Course';
+import { Test } from 'src/app/Models/Test/Test';
 
 export interface Tile {
   color: string;
@@ -14,9 +16,11 @@ export interface Tile {
 })
 export class CoursesListComponent implements OnInit {
 
-  tiles: Tile[] = [
-    {text: 'One', cols: 3, rows: 1, color: '#191645'},
-    {text: 'Two', cols: 1, rows: 2, color: 'grey'},
+  test: Test = {id: 1, certificationId: 1, durationTime: '1 Hora', difficulty: 'Iniciante', questionsQuantity: 9}
+
+  courses: Course[] = [
+    {id: 1,sessionsQuantity: 4,certificationId: 1,test: this.test, description: 'Curso introdutório ao Python',courseTitle: 'Introdução Python I',creationDate: '19/07/2022',subscribeQuantity: 100, durationTime: '7 Horas'},
+    
   ];
 
   constructor() { }

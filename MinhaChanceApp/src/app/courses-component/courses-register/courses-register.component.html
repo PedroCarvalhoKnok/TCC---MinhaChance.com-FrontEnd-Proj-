@@ -42,6 +42,9 @@
                                     <p *ngIf="formCourse.get('courseDuration')?.errors?.['required']">
                                         Duração do curso é necessária.
                                     </p>
+                                    <p *ngIf="formCourse.get('courseDuration')?.errors?.['forbiddenDurationTime']">
+                                        Duração do curso deve ser maior que 0.
+                                    </p>
                                 </div>
                                 <mat-form-field class="spacing-margin">
                                     <mat-label class="placeholder-color">Hora(s)</mat-label>
@@ -221,11 +224,11 @@
                         <form [formGroup]="formCertification">
                             <div fxLayout="column">
                                 <mat-form-field>
-                                    <mat-label>Titulo do certificado</mat-label>
-                                    <input [ngModel]="certification.certificationTitle" formControlName="certificationTitle" type="text" matInput autocomplete="off" placeholder="Titulo do certificado" required/>
+                                <mat-label class="placeholder-color">Titulo do certificado</mat-label>
+                                <input [(ngModel)]="this.certification.certificationTitle" formControlName="certificationTitle" type="text" matInput autocomplete="off" placeholder="Titulo do certificado" required/>
                                 </mat-form-field>
-                                <div *ngIf="formCertification.get('certificationTitle')?.invalid && (formCertification.get('certificationTitle')?.dirty || formCertification.get('certificationTitle')?.touched)">
-                                    <p *ngIf="formCertification.get('certificationTitle')?.errors?.['required']">
+                                <div *ngIf="this.formCertification.get('certificationTitle')?.invalid && (this.formCertification.get('certificationTitle')?.dirty || this.formCertification.get('certificationTitle')?.touched)">
+                                    <p *ngIf="this.formCertification.get('certificationTitle')?.errors?.['required']">
                                         Titulo do certificado é necessário.
                                     </p>
                                 </div>
@@ -238,7 +241,7 @@
                                 <br/>
                                 <mat-label>Descrição do certificado</mat-label>
                                 <br/>
-                                <textarea [ngModel]="certification.description" formControlName="certificationDescription" class="text-area-form" required></textarea>
+                                <textarea [ngModel]="this.certification.description" formControlName="certificationDescription" class="text-area-form" required></textarea>
                                 <div *ngIf="formCertification.get('certificationDescription')?.invalid && (formCertification.get('certificationDescription')?.dirty || formCertification.get('certificationDescription')?.touched)">
                                     <p *ngIf="formCertification.get('certificationDescription')?.errors?.['required']">
                                         Descrição do certificado é necessário.
@@ -281,6 +284,9 @@
                                 </mat-form-field>
                                 <div *ngIf="formTest.get('testDuration')?.invalid && (formTest.get('testDuration')?.dirty || formTest.get('testDuration')?.touched)">
                                     <p *ngIf="formTest.get('testDuration')?.errors?.['required']">
+                                        Duração da prova é necessária.
+                                    </p>
+                                    <p *ngIf="formTest.get('testDuration')?.errors?.['forbiddenDurationTime']">
                                         Duração da prova é necessária.
                                     </p>
                                 </div>
@@ -443,7 +449,7 @@
                                     <mat-card-content>
                                         <mat-label>Descrição da pergunta</mat-label>
                                         <br/>
-                                        <textarea [value]="question.question" formControlName="testQuestion" class="text-area-form" required></textarea>
+                                        <textarea [(ngModel)]="this.question.question" formControlName="testQuestion" class="text-area-form" required></textarea>
                                     
 
                                     <mat-form-field>
@@ -458,21 +464,21 @@
                                     <br/>
                                     <mat-label>Pergunta A</mat-label>
                                         <br/>
-                                    <textarea [value]="question.answerA" formControlName="answerA" class="text-area-form" required></textarea>
+                                    <textarea [(ngModel)]="question.answerA" formControlName="answerA" class="text-area-form" required></textarea>
                                     
                                     <mat-label>Pergunta B</mat-label>
                                         <br/>
-                                    <textarea [value]="question.answerB" formControlName="answerB" class="text-area-form" required></textarea>
+                                    <textarea [(ngModel)]="question.answerB" formControlName="answerB" class="text-area-form" required></textarea>
                                     <mat-label>Pergunta C</mat-label>
                                         <br/>
-                                        <textarea [value]="question.answerC" formControlName="answerC" class="text-area-form" required></textarea>
+                                        <textarea [(ngModel)]="question.answerC" formControlName="answerC" class="text-area-form" required></textarea>
                                     
                                     <mat-label>Pergunta D</mat-label>
                                         <br/>
-                                    <textarea [value]="question.answerD" formControlName="answerD" class="text-area-form" required></textarea>
+                                    <textarea [(ngModel)]="question.answerD" formControlName="answerD" class="text-area-form" required></textarea>
                                     <mat-label>Pergunta E</mat-label>
                                         <br/>
-                                        <textarea [value]="question.answerE" formControlName="answerE" class="text-area-form" required></textarea>
+                                        <textarea [(ngModel)]="question.answerE" formControlName="answerE" class="text-area-form" required></textarea>
                                     
                                 </mat-card-content>
                                 </form>

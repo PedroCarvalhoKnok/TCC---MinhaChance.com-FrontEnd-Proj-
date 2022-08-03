@@ -1,6 +1,6 @@
 export class Question {
     id!: number;
-    testId!: string;
+    testId!: number;
     question!: string;
     answerA!: string;
     answerB!: string;

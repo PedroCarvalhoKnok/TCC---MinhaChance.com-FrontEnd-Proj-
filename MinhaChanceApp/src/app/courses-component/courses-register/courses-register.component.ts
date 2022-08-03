@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Certification } from 'src/app/Models/Certification/Certification';
 import { Course } from 'src/app/Models/Course/Course';
@@ -45,7 +45,7 @@ export class CoursesRegisterComponent implements OnInit {
   {
     this.createFormCourseValidation();
     this.createFormSessionValidation();
-    this.createFormCertificationValidation;
+    this.createFormCertificationValidation();
     this.createFormTestValidation();
     this.createFormQuestionValidation();
   }
@@ -55,9 +55,9 @@ export class CoursesRegisterComponent implements OnInit {
     let test: Test;
     let certification: Certification;
 
-    let retornoIdCertification: string = '';
-    let retornoIdTest: string = '';
-    let retornoIdCurso: string = '';
+    let retornoIdCertification: number = 0;
+    let retornoIdTest: number = 0;
+    let retornoIdCurso: number = 0;
 
     if(this.formCertification.valid)
     {
@@ -67,7 +67,7 @@ export class CoursesRegisterComponent implements OnInit {
     if(this.formTest.valid)
     {
       test = this.test;
-      if(retornoIdCertification != '' || retornoIdCertification != undefined)
+      if(retornoIdCertification != 0 || retornoIdCertification != undefined)
         test.certificationId = retornoIdCertification
       
       //retornoIdTest = await this.testService.postTest(test); //inserir curso no banco retornando id dele mock exemplo await 
@@ -76,7 +76,7 @@ export class CoursesRegisterComponent implements OnInit {
     if(this.questions.length > 0){
       for(let question of this.questions)
       {
-        if(retornoIdTest != '' || retornoIdTest != undefined)
+        if(retornoIdTest != 0 || retornoIdTest != undefined)
           question.testId = retornoIdTest 
 
         //await this.questionService.postQuestion(question);//inserir questao no banco retornando id dele mock exemplo await 
@@ -87,10 +87,10 @@ export class CoursesRegisterComponent implements OnInit {
       let course: Course = this.course
      // course.userId = idUsuarioLogado
      
-     if(retornoIdCertification != '' || retornoIdCertification != undefined)
+     if(retornoIdCertification != 0 || retornoIdCertification != undefined)
         course.certificationId = retornoIdCertification;
 
-     if(retornoIdTest != '' || retornoIdTest != undefined)
+     if(retornoIdTest != 0 || retornoIdTest != undefined)
         course.testId = retornoIdTest;
 
      // retornoIdCurso = await this.courseService.postCourse(course); //inserir curso no banco retornando id dele mock exemplo await 
@@ -99,7 +99,7 @@ export class CoursesRegisterComponent implements OnInit {
     if(this.sessions.length > 0){
       for(let session of this.sessions)
       {
-        if(retornoIdCurso != '' || retornoIdCurso != undefined)
+        if(retornoIdCurso != 0 || retornoIdCurso != undefined)
           session.courseId = retornoIdCurso 
 
         //await this.sessionService.postSession(session); //inserir questao no banco retornando id dele mock exemplo await 
@@ -158,13 +158,13 @@ export class CoursesRegisterComponent implements OnInit {
 
   createFormCourseValidation(): void
   {
-    this.formCourse = this.formBuilder.group({
+    this.formCourse = new FormGroup({
       courseTitle: new FormControl(this.course.courseTitle, [
         Validators.required,
       ]),
       courseDuration: new FormControl(this.course.durationTime, [
         Validators.required,
-        Validators.maxLength(3),
+        this.forbiddenDurationTimeValidator(/0/i)
       ]),
       courseDescription: new FormControl(this.course.description, [
         Validators.required,
@@ -173,12 +173,18 @@ export class CoursesRegisterComponent implements OnInit {
 
   }
 
+  forbiddenDurationTimeValidator(nameRe: RegExp): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const forbidden = nameRe.test(control.value);
+      return forbidden ? {forbiddenDurationTime: {value: control.value}} : null;
+    };
+  }
+
   createFormSessionValidation(): void
   {
     this.formSession = new FormGroup({
       sessionTitle: new FormControl(this.session.sessionTitle, [
         Validators.required,
-        Validators.minLength(1),
       ]),
       sessionDescription: new FormControl(this.session.description, [
         Validators.required,
@@ -205,7 +211,7 @@ export class CoursesRegisterComponent implements OnInit {
     this.formTest = new FormGroup({
       testDuration: new FormControl(this.test.durationTime, [
         Validators.required,
-        Validators.maxLength(3),
+        this.forbiddenDurationTimeValidator(/0/i)
       ]),
       testDifficulty: new FormControl(this.test.difficulty, [
         Validators.required,
