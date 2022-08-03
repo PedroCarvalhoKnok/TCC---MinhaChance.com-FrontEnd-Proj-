@@ -6,11 +6,11 @@ import { Vacancy } from "../Vacancy/Vacancy";
 
 export class Course {
     id!: number;
+    courseimage!: File;
     userId!: string;
     courseTitle!: string;
     vacancyId!: string;
     durationTime!: string;
-    sessions!: Session[];
     testId!: string;
     certificationId! : string;
     description!: string;

@@ -6,6 +6,12 @@ import { Course } from 'src/app/Models/Course/Course';
 import { Question } from 'src/app/Models/Question/Question';
 import { Session } from 'src/app/Models/Session/Session';
 import { Test } from 'src/app/Models/Test/Test';
+import { AzureBlobStorageService } from 'src/app/Services/Azure/azure-blob-storage.service';
+import { CertificationService } from 'src/app/Services/Certification/certification.service';
+import { CourseService } from 'src/app/Services/Course/course.service';
+import { QuestionService } from 'src/app/Services/Question/question.service';
+import { SessionService } from 'src/app/Services/Session/session.service';
+import { TestService } from 'src/app/Services/Test/test.service';
 
 @Component({
   selector: 'app-courses-register',
@@ -45,46 +51,85 @@ export class CoursesRegisterComponent implements OnInit {
   }
 
   async registerCourse(){
+  try{
     let test: Test;
     let certification: Certification;
 
     let retornoIdCertification: string = '';
     let retornoIdTest: string = '';
+    let retornoIdCurso: string = '';
 
     if(this.formCertification.valid)
     {
       certification = this.certification;
-      retornoIdCertification = '1'; //inserir curso no banco retornando id dele mock exemplo await 
+     // retornoIdCertification = await this.certificationService.postCertification(certification); //inserir curso no banco retornando id dele mock exemplo await 
     }
     if(this.formTest.valid)
     {
       test = this.test;
       if(retornoIdCertification != '' || retornoIdCertification != undefined)
         test.certificationId = retornoIdCertification
+      
+      //retornoIdTest = await this.testService.postTest(test); //inserir curso no banco retornando id dele mock exemplo await 
 
-      test.questions = this.questions;
-      retornoIdTest = '1'; //inserir curso no banco retornando id dele mock exemplo await 
+    }
+    if(this.questions.length > 0){
+      for(let question of this.questions)
+      {
+        if(retornoIdTest != '' || retornoIdTest != undefined)
+          question.testId = retornoIdTest 
 
+        //await this.questionService.postQuestion(question);//inserir questao no banco retornando id dele mock exemplo await 
+      }
     }
     if(this.formCourse.valid)
     {
       let course: Course = this.course
-      course.sessions = this.sessions;
      // course.userId = idUsuarioLogado
      
      if(retornoIdCertification != '' || retornoIdCertification != undefined)
-      course.certificationId = retornoIdCertification;
+        course.certificationId = retornoIdCertification;
 
      if(retornoIdTest != '' || retornoIdTest != undefined)
-      course.testId = retornoIdTest;
+        course.testId = retornoIdTest;
 
-      let retornoIdCurso = 1; //inserir curso no banco retornando id dele mock exemplo await 
-
+     // retornoIdCurso = await this.courseService.postCourse(course); //inserir curso no banco retornando id dele mock exemplo await 
 
     }
+    if(this.sessions.length > 0){
+      for(let session of this.sessions)
+      {
+        if(retornoIdCurso != '' || retornoIdCurso != undefined)
+          session.courseId = retornoIdCurso 
+
+        //await this.sessionService.postSession(session); //inserir questao no banco retornando id dele mock exemplo await 
+      }
+    }
+  }
+  catch(e){
+
+  }
+  }
+
+  videoSessionSelected(event: any){
+    this.session.videoSession = event.target.files[0];
+  }
+
+  pdfSessionSelected(event: any){
+    this.session.pdfSession = event.target.files[0];
+  }
+
+  corporativeSignatureSelected(event: any){
+    this.certification.corporativeSignature = event.target.files[0];
+  }
+
+  courseImageSelected(event: any){
+    this.course.courseimage = event.target.files[0];
   }
 
   addSession(session: Session): void{
+
+
 
     if(this.formSession.valid)
       this.sessions.push(session);
@@ -147,7 +192,6 @@ export class CoursesRegisterComponent implements OnInit {
     this.formCertification = new FormGroup({
       certificationTitle: new FormControl(this.certification.certificationTitle, [
         Validators.required,
-        Validators.minLength(4),
       ]),
       certificationDescription: new FormControl(this.certification.description, [
         Validators.required,
@@ -174,6 +218,9 @@ export class CoursesRegisterComponent implements OnInit {
   {
     this.formQuestion = new FormGroup({
       testQuestion: new FormControl(this.question.question, [
+        Validators.required,
+      ]),
+      testCorrectAnswer: new FormControl(this.question.correctAnswer, [
         Validators.required,
       ]),
       answerA: new FormControl(this.question.answerA, [

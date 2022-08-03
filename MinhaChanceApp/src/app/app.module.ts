@@ -23,6 +23,7 @@ import { CoursesRegisterComponent } from './courses-component/courses-register/c
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSliderModule} from '@angular/material/slider';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatCheckboxModule,
     MatSliderModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
