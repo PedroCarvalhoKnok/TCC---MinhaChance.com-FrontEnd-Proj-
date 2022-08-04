@@ -48,6 +48,7 @@ export class CoursesListComponent implements OnInit {
   changeHideCertification(){
     this.showCertificationTitle = false;
     this.filters.hasCertification = false;
+    this.filters.certificationTitle = '';
   }
   changeShowTest(){
     this.showTestTitle = true;
@@ -57,6 +58,7 @@ export class CoursesListComponent implements OnInit {
   changeHideTest(){
     this.showTestTitle = false;
     this.filters.hasTest = false;
+    this.filters.testTitle = '';
   }
 
   changeCategoryFilter(category: string){
@@ -69,23 +71,51 @@ export class CoursesListComponent implements OnInit {
 
   difficultyRateChange(rate: number){
 
-    //switch
-
+    this.filters.difficulty = this.switchDifficultyRate(rate);
+    
   }
 
   difficultyTestRateChange(rate: number){
 
-    //switch
+    this.filters.testDifficulty = this.switchDifficultyRate(rate);
 
   }
 
   testDuration(event: any){
+    
     this.filters.testDuration = event.value;
     
   }
 
+  switchDifficultyRate(rate: number): string{
+
+    switch(rate){
+      case 1:
+        return 'Iniciante'
+        break;
+      case 2:
+        return 'Basico'
+      case 3:
+        return 'Intermediario'
+      case 4:
+        return 'Avançado'
+      case 5:
+        return 'Profissional'
+      default:
+        return ''
+    }
+
+  }
+
   async applyFiltersCourses(){
+
+    this.filters.approvalPercentual = (<HTMLInputElement>document.getElementById('approvalPercentual')) == null || undefined ? 0: +(<HTMLInputElement>document.getElementById('approvalPercentual')).value;
+    this.filters.subscribeQuantity = (<HTMLInputElement>document.getElementById('subscribeQuantity')) == null || undefined ? 0: +(<HTMLInputElement>document.getElementById('subscribeQuantity')).value;
+
+    this.filters.testTitle = (<HTMLInputElement>document.getElementById('testTitle')) == null || undefined ? '': (<HTMLInputElement>document.getElementById('testTitle')).value;
+    this.filters.certificationTitle = (<HTMLInputElement>document.getElementById('certificationTitle')) == null || undefined ? '': (<HTMLInputElement>document.getElementById('certificationTitle')).value;
     
+    console.log(this.filters);
 
   }
 

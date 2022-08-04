@@ -22,18 +22,19 @@
             <form class="example-form">
 
                 <div class="form-group">
-                    <label class="label-filter" for="inputdefault">Porcentagem para aprovação</label>
-                    <input [value]="this.filters.approvalPercentual" class="form-control" type="number" />
+                    <label class="label-filter">Porcentagem para aprovação</label>
+                    <input id="approvalPercentual" class="form-control" type="number" />
                 </div>
 
 
                 <label class="label-filter" for="typeahead-basic">Categoria:</label>
                 <div class="col select-filters">
                     <div ngbDropdown class="d-inline-block select-filters">
-                        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1"
-                            ngbDropdownToggle>Categoria</button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button *ngFor="let category of categories" (click)="changeCategoryFilter(category)" ngbDropdownItem>{{category}}</button>
+                        <button type="button" class="btn btn-outline-primary" id="dropdownCategory"
+                            ngbDropdownToggle>{{this.filters.courseCategory == undefined ? 'Categoria': this.filters.courseCategory}}</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownCategory">
+                            <button *ngFor="let category of categories" (click)="changeCategoryFilter(category)"
+                                ngbDropdownItem>{{category}}</button>
                         </div>
                     </div>
                 </div>
@@ -41,10 +42,12 @@
                 <label class="label-filter" for="typeahead-basic">Possui vinculo a vagas:</label>
                 <br />
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input (click)="changeLinkedVacancies(true)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                    <input (click)="changeLinkedVacancies(true)" type="radio" class="btn-check" name="btnradio"
+                        id="btnradio1" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
 
-                    <input (click)="changeLinkedVacancies(false)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <input (click)="changeLinkedVacancies(false)" type="radio" class="btn-check" name="btnradio"
+                        id="btnradio2" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio2">Não</label>
 
                 </div>
@@ -54,7 +57,7 @@
 
                     <label class="label-filter">Quantidade de inscrições:</label>
                     <br />
-                    <input [value]="this.filters.subscribeQuantity" class="form-control" type="number" class="form-control" />
+                    <input id="subscribeQuantity" class="form-control" type="number" class="form-control" />
                 </div>
 
                 <label>Dificuldade</label>
@@ -65,37 +68,43 @@
                 <label class="label-filter" for="typeahead-basic">Possui certificado?:</label>
                 <br />
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input (click)="changeShowCertification()" type="radio" class="btn-check" name="btnradiocert" id="btnradio3" autocomplete="off">
+                    <input (click)="changeShowCertification()" type="radio" class="btn-check" name="btnradiocert"
+                        id="btnradio3" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio3">Sim</label>
 
-                    <input (click)="changeHideCertification()" type="radio" class="btn-check" name="btnradiocert" id="btnradio4" autocomplete="off">
+                    <input (click)="changeHideCertification()" type="radio" class="btn-check" name="btnradiocert"
+                        id="btnradio4" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio4">Não</label>
 
                 </div>
                 <br />
-                <label *ngIf="this.showCertificationTitle" class="label-filter">Titulo:</label>
-                <input *ngIf="this.showCertificationTitle" [value]="this.filters.certificationTitle" type="text" class="form-control" />
+                <div *ngIf="this.showCertificationTitle" class="form-group">
+                    <label class="label-filter">Titulo:</label>
+                    <input id="certificationTitle" type="text"
+                        class="form-control" />
+                </div>
                 <br />
                 <label class="label-filter" for="typeahead-basic">Possui prova avaliativa?:</label>
                 <br />
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input (click)="changeShowTest()" type="radio" class="btn-check" name="btnradioprova" id="btnradioprova" autocomplete="off"
-                        >
+                    <input (click)="changeShowTest()" type="radio" class="btn-check" name="btnradioprova"
+                        id="btnradioprova" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradioprova">Sim</label>
 
-                    <input (click)="changeHideTest()" type="radio" class="btn-check" name="btnradioprova" id="btnradioprova2" autocomplete="off">
+                    <input (click)="changeHideTest()" type="radio" class="btn-check" name="btnradioprova"
+                        id="btnradioprova2" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradioprova2">Não</label>
 
                 </div>
                 <br />
                 <div *ngIf="this.showTestTitle" class="form-group">
                     <label class="label-filter">Titulo:</label>
-                    <input type="text" [value]="this.filters.testTitle" class="form-control" />
+                    <input type="text" id="testTitle" class="form-control" />
                 </div>
                 <br />
                 <label class="label-filter">Quantidade de questões:</label>
                 <br />
-                <input type="number" [value]="this.filters.questionsQuantity" class="form-control" />
+                <input [(ngModel)]="this.filters.questionsQuantity" type="number" class="form-control" />
                 <br />
                 <label class="label-filter">Dificuldade da prova</label>
                 <br />
@@ -104,7 +113,8 @@
                 <br />
                 <label class="label-filter">Duração da prova (Horas)</label>
                 <br />
-                <mat-slider (change)="testDuration($event)" thumbLabel tickInterval="1" step="1" min="0" max="1000" aria-label="Horas"></mat-slider>
+                <mat-slider (change)="testDuration($event)" thumbLabel tickInterval="1" step="1" min="0" max="1000"
+                    aria-label="Horas"></mat-slider>
                 <button (click)="applyFiltersCourses()" type="button" class="btn btn-primary apply-btn">Aplicar</button>
 
             </form>
@@ -117,7 +127,8 @@
 </div>
 
 <div>
-    <mat-card class="courses-card" *ngFor="let course of courses |async |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
+    <mat-card class="courses-card"
+        *ngFor="let course of courses |async |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
 
         <mat-card-header class="header-content">
             <mat-card-title class="title-course">
@@ -182,8 +193,8 @@
 
 
 
-    <mat-paginator #paginator class="paginator" [length]="100" [pageSize]="10" [pageSizeOptions]="[1, 5, 25, 100]" (page)="pageEvent = $event"
-        aria-label="Select page">
+    <mat-paginator #paginator class="paginator" [length]="100" [pageSize]="10" [pageSizeOptions]="[1, 5, 25, 100]"
+        (page)="pageEvent = $event" aria-label="Select page">
     </mat-paginator>
 
 </div>
