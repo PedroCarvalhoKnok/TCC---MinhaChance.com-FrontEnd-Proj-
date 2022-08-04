@@ -7,4 +7,5 @@ export class Test {
     questionsQuantity?: number;
     durationTime!: string;
     difficulty!: string;
+    approvalPercentual!: string;
 }

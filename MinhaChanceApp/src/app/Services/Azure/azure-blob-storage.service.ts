@@ -8,7 +8,7 @@ export class AzureBlobStorageService {
 
   accountName: string = '';
 
-  constructor(private blobService: AzureBlobStorageService) { }
+  constructor() { }
 
   public uploadPDFFile(sas: string, content: Blob, name: string, handler: () => void){
 

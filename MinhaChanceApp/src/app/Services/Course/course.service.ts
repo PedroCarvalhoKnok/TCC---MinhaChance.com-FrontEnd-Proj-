@@ -11,7 +11,7 @@ import { HandleErrors } from '../Errors/handleError';
 })
 export class CourseService{
 
-  constructor(private httpClient: HttpClient, private handleErr: HandleErrors) { }
+  constructor(private httpClient: HttpClient) { }
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,7 +21,7 @@ export class CourseService{
     return this.httpClient.post<Course>(``, this.httpOptions)
       .pipe(
         retry(2),
-        catchError(this.handleErr.handleError)
+        
       )
   }
 

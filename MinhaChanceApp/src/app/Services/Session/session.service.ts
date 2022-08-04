@@ -11,7 +11,7 @@ import { Session } from 'src/app/Models/Session/Session';
 })
 export class SessionService {
 
-  constructor(private httpClient: HttpClient, private handleErr: HandleErrors) { }
+  constructor(private httpClient: HttpClient) { }
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,7 +21,7 @@ export class SessionService {
     return this.httpClient.post<Session>(``, this.httpOptions)
       .pipe(
         retry(2),
-        catchError(this.handleErr.handleError)
+       
       )
   }
 }

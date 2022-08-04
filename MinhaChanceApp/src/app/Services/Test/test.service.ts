@@ -11,7 +11,7 @@ import { throwError } from 'rxjs';
 })
 export class TestService {
 
-  constructor(private httpClient: HttpClient, private handleErr: HandleErrors) { }
+  constructor(private httpClient: HttpClient) { }
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,7 +21,6 @@ export class TestService {
     return this.httpClient.post<Test>(``, this.httpOptions)
       .pipe(
         retry(2),
-        catchError(this.handleErr.handleError)
       )
   }
 }

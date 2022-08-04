@@ -36,7 +36,7 @@ export class CoursesRegisterComponent implements OnInit {
   hasCertification: boolean = false;
   hasTest: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) 
+  constructor(private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) 
   {
       
   }
@@ -129,8 +129,6 @@ export class CoursesRegisterComponent implements OnInit {
 
   addSession(session: Session): void{
 
-
-
     if(this.formSession.valid)
       this.sessions.push(session);
 
@@ -180,11 +178,32 @@ export class CoursesRegisterComponent implements OnInit {
     };
   }
 
+  forbiddenSendFileValidator() {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const arrayFile = control.value;
+      let error: string = '';
+
+      if(arrayFile.length > 0)
+      {
+        if(arrayFile[0].type === '')
+          return {forbiddenSendFile: error}
+      }
+
+      return null;
+    };
+  }
+
   createFormSessionValidation(): void
   {
     this.formSession = new FormGroup({
       sessionTitle: new FormControl(this.session.sessionTitle, [
         Validators.required,
+      ]),
+      sessionVideoFile: new FormControl(this.session.videoSession, [
+        this.forbiddenSendFileValidator,
+      ]),
+      sessionPDFFile: new FormControl(this.session.pdfSession, [
+        this.forbiddenSendFileValidator,
       ]),
       sessionDescription: new FormControl(this.session.description, [
         Validators.required,
@@ -198,6 +217,9 @@ export class CoursesRegisterComponent implements OnInit {
     this.formCertification = new FormGroup({
       certificationTitle: new FormControl(this.certification.certificationTitle, [
         Validators.required,
+      ]),
+      corporativeSignatureFile: new FormControl(this.certification.corporativeSignature, [
+        this.forbiddenSendFileValidator,
       ]),
       certificationDescription: new FormControl(this.certification.description, [
         Validators.required,
@@ -214,6 +236,9 @@ export class CoursesRegisterComponent implements OnInit {
         this.forbiddenDurationTimeValidator(/0/i)
       ]),
       testDifficulty: new FormControl(this.test.difficulty, [
+        Validators.required,
+      ]),
+      testApproval: new FormControl(this.test.approvalPercentual, [
         Validators.required,
       ]),
     });

@@ -1,7 +1,6 @@
-
 <div>
     <mat-card class="add-course-card">
-        
+
         <mat-card-header class="title-course">
             <span class="material-icons">add_circle_outline</span>
             <mat-card-title class="add-title"><a>Crie cursos de capacitação para sua empresa</a></mat-card-title>
@@ -10,300 +9,181 @@
 </div>
 <div>
     <mat-card class="filter-card">
-            
-        
+
+
         <mat-card-header>
             <mat-card-title>Filtro</mat-card-title>
         </mat-card-header>
 
-       
-    
+
+
         <mat-card-content class="filter-content">
 
             <form class="example-form">
-                
+
                 <div class="form-group">
-                <label class="label-filter" for="inputdefault">Cargo:</label>
-                <input class="form-control" type="text"/>
+                    <label class="label-filter" for="inputdefault">Porcentagem para aprovação</label>
+                    <input [value]="this.filters.approvalPercentual" class="form-control" type="number" />
                 </div>
-                
+
 
                 <label class="label-filter" for="typeahead-basic">Categoria:</label>
                 <div class="col select-filters">
                     <div ngbDropdown class="d-inline-block select-filters">
-                      <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Categoria</button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button ngbDropdownItem>Construção</button>
-                        <button ngbDropdownItem>Tecnologia</button>
-                        <button ngbDropdownItem>Estética</button>
-                      </div>
+                        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1"
+                            ngbDropdownToggle>Categoria</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button *ngFor="let category of categories" (click)="changeCategoryFilter(category)" ngbDropdownItem>{{category}}</button>
+                        </div>
                     </div>
                 </div>
 
-                  <label class="label-filter" for="typeahead-basic">Possui vinculo a vagas:</label>
-                  <br/>
-                  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                <label class="label-filter" for="typeahead-basic">Possui vinculo a vagas:</label>
+                <br />
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input (click)="changeLinkedVacancies(true)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
-                  
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+
+                    <input (click)="changeLinkedVacancies(false)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio2">Não</label>
-                    
-                  </div>
-                  <br/>
 
-                  <div class="form-group">
+                </div>
+                <br />
 
-                  <label class="label-filter">Quantidade de inscrições:</label>
-                  <br/>
-                  <input class="form-control" type="number" class="form-control"/>
-                  </div>
+                <div class="form-group">
 
-                  <label>Dificuldade</label>
-                  <br/>
-                  <ngb-rating [max]="5"></ngb-rating>
-                  <br/>
+                    <label class="label-filter">Quantidade de inscrições:</label>
+                    <br />
+                    <input [value]="this.filters.subscribeQuantity" class="form-control" type="number" class="form-control" />
+                </div>
 
-                  <label class="label-filter" for="typeahead-basic">Possui certificado?:</label>
-                  <br/>
-                  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradiocert" id="btnradio3" autocomplete="off" checked>
+                <label>Dificuldade</label>
+                <br />
+                <ngb-rating (rateChange)="difficultyRateChange($event)" [max]="5"></ngb-rating>
+                <br />
+
+                <label class="label-filter" for="typeahead-basic">Possui certificado?:</label>
+                <br />
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input (click)="changeShowCertification()" type="radio" class="btn-check" name="btnradiocert" id="btnradio3" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio3">Sim</label>
-                  
-                    <input type="radio" class="btn-check" name="btnradiocert" id="btnradio4" autocomplete="off">
+
+                    <input (click)="changeHideCertification()" type="radio" class="btn-check" name="btnradiocert" id="btnradio4" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio4">Não</label>
-                    
-                  </div>
-                  <br/>
-                  <label class="label-filter">Titulo:</label>
-                  <input type="text" class="form-control"/>
-                  <br/>
-                  <label class="label-filter" for="typeahead-basic">Possui prova avaliativa?:</label>
-                  <br/>
-                  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradioprova" id="btnradioprova" autocomplete="off" checked>
+
+                </div>
+                <br />
+                <label *ngIf="this.showCertificationTitle" class="label-filter">Titulo:</label>
+                <input *ngIf="this.showCertificationTitle" [value]="this.filters.certificationTitle" type="text" class="form-control" />
+                <br />
+                <label class="label-filter" for="typeahead-basic">Possui prova avaliativa?:</label>
+                <br />
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input (click)="changeShowTest()" type="radio" class="btn-check" name="btnradioprova" id="btnradioprova" autocomplete="off"
+                        >
                     <label class="btn btn-outline-primary" for="btnradioprova">Sim</label>
-                  
-                    <input type="radio" class="btn-check" name="btnradioprova" id="btnradioprova2" autocomplete="off">
+
+                    <input (click)="changeHideTest()" type="radio" class="btn-check" name="btnradioprova" id="btnradioprova2" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradioprova2">Não</label>
-                    
-                  </div>
-                  <br/>
-                  <div class="form-group">
-                  <label class="label-filter">Titulo:</label>
-                  <input type="text" class="form-control"/>
-                  </div>
-                  <br/>
-                  <label class="label-filter">Quantidade de questões:</label>
-                  <br/>
-                  <input type="number" class="form-control"/>
-                  <br/>
-                  <label class="label-filter">Dificuldade da prova</label>
-                  <br/>
-                  <ngb-rating [max]="5"></ngb-rating>
-                  <br/>
-                  <br/>
-                  <label class="label-filter">Duração da prova (Horas)</label>
-                  <br/>
-                  <mat-slider
-                    thumbLabel
-                    tickInterval="1"
-                    step="1"
-                    min="0"
-                    max="100"
-                    aria-label="Horas"></mat-slider>
-                  <button type="button" class="btn btn-primary apply-btn">Aplicar</button>
-                         
+
+                </div>
+                <br />
+                <div *ngIf="this.showTestTitle" class="form-group">
+                    <label class="label-filter">Titulo:</label>
+                    <input type="text" [value]="this.filters.testTitle" class="form-control" />
+                </div>
+                <br />
+                <label class="label-filter">Quantidade de questões:</label>
+                <br />
+                <input type="number" [value]="this.filters.questionsQuantity" class="form-control" />
+                <br />
+                <label class="label-filter">Dificuldade da prova</label>
+                <br />
+                <ngb-rating (rateChange)="difficultyTestRateChange($event)" [max]="5"></ngb-rating>
+                <br />
+                <br />
+                <label class="label-filter">Duração da prova (Horas)</label>
+                <br />
+                <mat-slider (change)="testDuration($event)" thumbLabel tickInterval="1" step="1" min="0" max="1000" aria-label="Horas"></mat-slider>
+                <button (click)="applyFiltersCourses()" type="button" class="btn btn-primary apply-btn">Aplicar</button>
+
             </form>
-           
+
         </mat-card-content>
-    
-       
-              
+
+
+
     </mat-card>
 </div>
 
 <div>
-    <mat-card class="courses-card" *ngFor="let course of this.courses">
-        
-    <mat-card-header class="header-content">
-        <mat-card-title class="title-course">
-           {{course.courseTitle}}
-        </mat-card-title>
-     
-    </mat-card-header>
+    <mat-card class="courses-card" *ngFor="let course of courses |async |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
 
-    <mat-card-content class="course-content">
+        <mat-card-header class="header-content">
+            <mat-card-title class="title-course">
+                {{course.courseTitle}}
+            </mat-card-title>
 
-        <div class="container">
-        
-        <div class="row">
-            
-            <span class="material-icons col-md-4">account_circle</span>
-            <label class="col-md-4" for="inputdefault">Duração <br/>{{ course.durationTime }}</label>
-            <label class="col-md-4" for="inputdefault">Criação<br/>{{ course.creationDate }}</label><br/>
-            <label class="col-md-4" for="inputdefault">Inscrições<br/>{{ course.subscribeQuantity }}</label><br/>
-            <label class="col-md-4" for="inputdefault">Sessões<br/>
-                <ul class="session-list">
-                    <li>{{ course.subscribeQuantity }} sessões</li>
-                </ul>
-            </label><br/>
-            <label class="col-md-4" for="inputdefault">Possui Certificação?<br/>{{ course.certificationId != undefined || course.certificationId != 0 ? 'Sim': 'Não'}}</label>
-            <label class="col-md-4" for="inputdefault">Prova Avaliativa?<br/> {{ course.test?.id != undefined || course.test?.id != 0 ? 'Sim': 'Não'}}</label><br/>
-            <label class="col-md-4" for="inputdefault">Dificuldade da prova<br/> {{ course.test?.difficulty }}</label><br/>
-            <label class="col-md-4" for="inputdefault">Quantidade de questões<br/> {{ course.test?.questionsQuantity }}</label>
-            <div class="description">
-                <label class="col-md-4" for="inputdefault">Descrição<br/></label><br/>
-               <label class="desc-course col-md-4">{{ course.description }}</label>
-               
+        </mat-card-header>
+
+        <mat-card-content class="course-content">
+
+            <div class="container">
+
+                <div class="row">
+
+                    <span class="material-icons col-md-4">account_circle</span>
+                    <label class="col-md-4" for="inputdefault">Duração <br />{{ course.durationTime }}</label>
+                    <label class="col-md-4" for="inputdefault">Criação<br />{{ course.creationDate }}</label><br />
+                    <label class="col-md-4" for="inputdefault">Inscrições<br />{{ course.subscribeQuantity
+                        }}</label><br />
+                    <label class="col-md-4" for="inputdefault">Sessões<br />
+                        <ul class="session-list">
+                            <li>{{ course.subscribeQuantity }} sessões</li>
+                        </ul>
+                    </label><br />
+                    <label class="col-md-4" for="inputdefault">Possui Certificação?<br />{{ course.certificationId !=
+                        undefined ? 'Sim': 'Não'}}</label>
+                    <label class="col-md-4" for="inputdefault">Possui Prova?<br /> {{ course.test?.id != undefined
+                        ? 'Sim': 'Não'}}</label><br />
+                    <label class="col-md-4" for="inputdefault">Dificuldade da prova<br /> {{ course.test?.difficulty
+                        }}</label><br />
+                    <label class="col-md-4" for="inputdefault">Quantidade de questões<br /> {{
+                        course.test?.questionsQuantity }}</label>
+                    <label class="col-md-4" for="inputdefault">Percentual de aprovação<br /> {{
+                        course.test?.approvalPercentual }}</label>
+                    <div class="description">
+                        <label class="col-md-4" for="inputdefault">Descrição<br /></label><br />
+                        <label class="desc-course col-md-4">{{ course.description }}</label>
+
+                    </div>
+
+                    <div class="description">
+                        <button type="button" class="btn btn-primary btn-sm">Editar</button>
+                        <button type="button" class="btn btn-danger btn-sm space-button">Excluir</button>
+                    </div>
+
+
+                </div>
+
+
             </div>
 
-            <div class="description">
-                <button type="button" class="btn btn-primary btn-sm">Editar</button>
-                <button type="button" class="btn btn-danger btn-sm space-button">Excluir</button>
-            </div>
-
-           
-        </div>
-
-        
-    </div>
-
-    
-
-       
-    </mat-card-content>
-
-    
-   
-          
-</mat-card>
-
-<mat-card class="courses-card">
-        
-    <mat-card-header class="header-content">
-        <mat-card-title class="title-course">
-            Curso Introdução I
-        </mat-card-title>
-     
-    </mat-card-header>
-
-    <mat-card-content class="course-content">
-
-        <div class="container">
-        
-        <div class="row">
-            
-            <span class="material-icons col-md-4">account_circle</span>
-            <label class="col-md-4" for="inputdefault">Duração <br/>20 horas</label>
-            <label class="col-md-4" for="inputdefault">Criação<br/>28/06/2022</label><br/>
-            <label class="col-md-4" for="inputdefault">Inscrições<br/>10</label><br/>
-            <label class="col-md-4" for="inputdefault">Dificuldade<br/>Iniciante</label><br/>
-            <label class="col-md-4" for="inputdefault">Sessões<br/>
-                <ul class="session-list">
-                    <li>4 sessões</li>
-                </ul>
-            </label><br/>
-            <label class="col-md-4" for="inputdefault">Possui Certificação?<br/>Sim</label>
-            <label class="col-md-4" for="inputdefault">Prova Avaliativa?<br/> Sim</label><br/>
-            <label class="col-md-4" for="inputdefault">Dificuldade da prova<br/> Iniciante</label><br/>
-            <label class="col-md-4" for="inputdefault">Quantidade de questões<br/>9</label>
-            <div class="description">
-                <label class="col-md-4" for="inputdefault">Descrição<br/></label><br/>
-               <label class="desc-course col-md-4">Curso introdutório ao Python</label>
-               
-            </div>
-
-            <div class="description">
-                <button type="button" class="btn btn-primary btn-sm">Editar</button>
-                <button type="button" class="btn btn-danger btn-sm space-button">Excluir</button>
-            </div>
-
-           
-        </div>
-
-        
-    </div>
-
-    
-
-       
-    </mat-card-content>
-
-    
-   
-          
-</mat-card>
-
-<mat-card class="courses-card">
-        
-    <mat-card-header class="header-content">
-        <mat-card-title class="title-course">
-            Curso Introdução I
-        </mat-card-title>
-     
-    </mat-card-header>
-
-    <mat-card-content class="course-content">
-
-        <div class="container">
-        
-        <div class="row">
-            
-            <span class="material-icons col-md-4">account_circle</span>
-            <label class="col-md-4" for="inputdefault">Duração <br/>20 horas</label>
-            <label class="col-md-4" for="inputdefault">Criação<br/>28/06/2022</label><br/>
-            <label class="col-md-4" for="inputdefault">Inscrições<br/>10</label><br/>
-            <label class="col-md-4" for="inputdefault">Dificuldade<br/>Iniciante</label><br/>
-            <label class="col-md-4" for="inputdefault">Sessões<br/>
-                <ul class="session-list">
-                    <li>4 sessões</li>
-                </ul>
-            </label><br/>
-            <label class="col-md-4" for="inputdefault">Possui Certificação?<br/>Sim</label>
-            <label class="col-md-4" for="inputdefault">Prova Avaliativa?<br/> Sim</label><br/>
-            <label class="col-md-4" for="inputdefault">Dificuldade da prova<br/> Iniciante</label><br/>
-            <label class="col-md-4" for="inputdefault">Quantidade de questões<br/>9</label>
-            <div class="description">
-                <label class="col-md-4" for="inputdefault">Descrição<br/></label><br/>
-               <label class="desc-course col-md-4">Curso introdutório ao Python</label>
-               
-            </div>
-
-            <div class="description">
-                <button type="button" class="btn btn-primary btn-sm">Editar</button>
-                <button type="button" class="btn btn-danger btn-sm space-button">Excluir</button>
-            </div>
-
-           
-        </div>
-
-        
-    </div>
-
-    
-
-       
-    </mat-card-content>
-
-    
-   
-          
-</mat-card>
 
 
-<mat-paginator class="paginator"
-[length]="100"
-[pageSize]="10"
-[pageSizeOptions]="[5, 10, 25, 100]"
-aria-label="Select page">
-</mat-paginator>
+
+        </mat-card-content>
+
+
+
+
+    </mat-card>
+
+
+
+
+    <mat-paginator #paginator class="paginator" [length]="100" [pageSize]="10" [pageSizeOptions]="[1, 5, 25, 100]" (page)="pageEvent = $event"
+        aria-label="Select page">
+    </mat-paginator>
 
 </div>
-
-
-
-
-
-
-
