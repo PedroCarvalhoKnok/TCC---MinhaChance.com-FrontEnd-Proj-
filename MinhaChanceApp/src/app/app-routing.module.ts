@@ -16,6 +16,11 @@ const routes: Routes = [
     path: 'empresa/curso',
     component: CoursesRegisterComponent
   }
+  ,
+  {
+    path: 'empresa/curso/:courseId',
+    component: CoursesRegisterComponent
+  }
 ];
 
 @NgModule({

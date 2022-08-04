@@ -12,6 +12,7 @@ import { CourseService } from 'src/app/Services/Course/course.service';
 import { QuestionService } from 'src/app/Services/Question/question.service';
 import { SessionService } from 'src/app/Services/Session/session.service';
 import { TestService } from 'src/app/Services/Test/test.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-courses-register',
@@ -36,18 +37,22 @@ export class CoursesRegisterComponent implements OnInit {
   hasCertification: boolean = false;
   hasTest: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) 
+  constructor(private router: ActivatedRoute,private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) 
   {
       
   }
 
   ngOnInit(): void 
   {
+    let courseId = this.router.snapshot.params?.['courseId'];
+    //console.log(courseId); usar para carregar edição de curso
+
     this.createFormCourseValidation();
     this.createFormSessionValidation();
     this.createFormCertificationValidation();
     this.createFormTestValidation();
     this.createFormQuestionValidation();
+    
   }
 
   async registerCourse(){
