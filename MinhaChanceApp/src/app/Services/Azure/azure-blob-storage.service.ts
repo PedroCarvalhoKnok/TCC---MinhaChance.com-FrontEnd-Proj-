@@ -10,19 +10,33 @@ export class AzureBlobStorageService {
 
   constructor() { }
 
-  public uploadPDFFile(sas: string, content: Blob, name: string, handler: () => void){
+  
 
-    const blockBlobClient = this.containerClient(sas, 'CoursesPDFs').getBlockBlobClient(name);
+  public uploadFile(sas: string, content: Blob, name: string,containerName: string, handler: () => void){
+
+    const blockBlobClient = this.containerClient(sas, containerName).getBlockBlobClient(name);
     blockBlobClient.uploadData(content, { blobHTTPHeaders: {blobContentType: content.type}}).then(() => handler());
+    
+  }
 
+  public getFile(sas: string, containerName?: string, fileName?: string, courseId?: number, sessionId?: number| undefined): string{
+    let token = "";
+    if(sas)
+      token = sas;
+
+    
+    const getBlobFileURI = sessionId != undefined ? `https://${this.accountName}.blob.core.windows.net?${token}/${containerName}/${fileName}/${courseId}/${sessionId}`: `https://${this.accountName}.blob.core.windows.net?${token}/${containerName}/${fileName}/${courseId}`;
+
+    return getBlobFileURI;
 
   }
 
-  public uploadVideoFile(sas: string, content: Blob, name: string, handler: () => void){
+  public deleteFile(sas: string, content: Blob, name: string, containerName: string, handler: () => void): void{
 
-    const blockBlobClient = this.containerClient(sas, 'CoursesVideos').getBlockBlobClient(name);
-    blockBlobClient.uploadData(content, { blobHTTPHeaders: {blobContentType: content.type}}).then(() => handler());
-
+    const blockBlobClient = this.containerClient(sas).deleteBlob(name).then(() => {
+      handler();
+    });
+   
     
   }
 

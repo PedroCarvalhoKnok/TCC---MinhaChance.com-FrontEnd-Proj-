@@ -19,7 +19,7 @@ export class SessionService {
   }
 
   postSession(session: Session) {
-    return this.httpClient.post<Session>(``, this.httpOptions)
+    return this.httpClient.post<number>(``, this.httpOptions)
       .pipe(
         retry(2),
        

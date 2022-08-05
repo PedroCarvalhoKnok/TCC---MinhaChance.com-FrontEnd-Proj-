@@ -98,16 +98,18 @@ export class CoursesRegisterComponent implements OnInit {
 
   async registerCourse() {
     try {
-      let test: Test;
-      let certification: Certification;
+      let test: Test = new Test();
+      let certification: Certification = new Certification();
 
       let retornoIdCertification: number = 0;
       let retornoIdTest: number = 0;
       let retornoIdCurso: number = 0;
+      let retornoIdSessao: number = 0;
 
       if (this.formCertification.valid) {
         certification = this.certification;
         await this.certificationService.postCertification(certification).subscribe(certificationId => { retornoIdCertification = certificationId }); //inserir curso no banco retornando id dele mock exemplo await 
+        
       }
       if (this.formTest.valid) {
         test = this.test;
@@ -122,6 +124,7 @@ export class CoursesRegisterComponent implements OnInit {
           if (retornoIdTest != 0 || retornoIdTest != undefined)
             question.testId = retornoIdTest
 
+          
           await this.questionService.postQuestion(question);//inserir questao no banco retornando id dele mock exemplo await 
         }
       }
@@ -143,9 +146,16 @@ export class CoursesRegisterComponent implements OnInit {
           if (retornoIdCurso != 0 || retornoIdCurso != undefined)
             session.courseId = retornoIdCurso
 
-          await this.sessionService.postSession(session); //inserir questao no banco retornando id dele mock exemplo await 
+          
+          await this.sessionService.postSession(session).subscribe(sessionId => { retornoIdSessao = sessionId}); //inserir questao no banco retornando id dele mock exemplo await 
+          await this.blobService.uploadFile('', session.pdfSession, `${session.pdfSession.name}/${session.courseId}/${retornoIdSessao}`,'CoursesPDFs', () => {});
+          await this.blobService.uploadFile('', session.videoSession, `${session.videoSession.name}/${session.courseId}/${retornoIdSessao}`,'CoursesVideos', () => {});
         }
       }
+
+      if(retornoIdCertification != 0 || retornoIdCertification != undefined)
+        await this.blobService.uploadFile('', certification.corporativeSignature, `${certification.corporativeSignature.name}/${retornoIdCurso}`,'CorporativeSignatures', () => {});
+
     }
     catch (e) {
 
@@ -191,14 +201,17 @@ export class CoursesRegisterComponent implements OnInit {
 
   videoSessionSelected(event: any) {
     this.session.videoSession = event.target.files[0];
+    this.session.videoSessionName = event.target.files[0].name;
   }
 
   pdfSessionSelected(event: any) {
     this.session.pdfSession = event.target.files[0];
+    this.session.pdfSessionName = event.target.files[0].name;
   }
 
   corporativeSignatureSelected(event: any) {
     this.certification.corporativeSignature = event.target.files[0];
+    this.certification.corporativeSignatureName = event.target.files[0].name;
   }
 
   courseImageSelected(event: any) {
