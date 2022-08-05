@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@azure/storage-blob';
 import { HandleErrors } from '../Errors/handleError';
 import { retry, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -14,15 +13,35 @@ export class CertificationService {
   constructor(private httpClient: HttpClient) { }
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json',
+                                'Authorization': `Bearer token`})
   }
 
   postCertification(certification: Certification) {
     
-    return this.httpClient.post<Certification>(``, this.httpOptions)
+    return this.httpClient.post<number>(``, this.httpOptions)
       .pipe(
         retry(2),
         
       )
   }
+
+  getCertificationByCourseId(courseId: number) {
+    
+    return this.httpClient.get<Certification>(``, this.httpOptions)
+      .pipe(
+        retry(2),
+        
+      )
+  }
+
+  editCertification(certification: Certification) {
+    return this.httpClient.put<Certification>(``, this.httpOptions)
+      .pipe(
+        retry(2),
+        
+      )
+  }
+
+  
 }

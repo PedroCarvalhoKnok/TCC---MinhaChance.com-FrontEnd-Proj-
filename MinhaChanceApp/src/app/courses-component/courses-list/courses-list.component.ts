@@ -4,6 +4,7 @@ import { Test } from 'src/app/Models/Test/Test';
 import {PageEvent} from '@angular/material/paginator';
 import { Observable, of } from 'rxjs';
 import { courseFilter } from 'src/app/Models/Filters/Course/courseFilter';
+import { CourseService } from 'src/app/Services/Course/course.service';
 
 export interface Tile {
   color: string;
@@ -35,9 +36,10 @@ export class CoursesListComponent implements OnInit {
     {id: 3,sessionsQuantity: 2,certificationId: 2,test: undefined, description: 'Curso Ruby II',courseTitle: 'Introdução Ruby II',creationDate: '19/07/2022',subscribeQuantity: 10, durationTime: '9 Horas'},
   ]);
 
-  constructor() { }
+  constructor(private courseService: CourseService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+   // await this.getAllCoursesByUserId(); getting all courses
   }
 
   changeShowCertification(){
@@ -107,6 +109,13 @@ export class CoursesListComponent implements OnInit {
 
   }
 
+  async getAllCoursesByUserId(){
+    let filteredCoursesList = await this.courseService.getAllCoursesById(1, this.filters);
+
+    if(filteredCoursesList.subscribe(result => result.length > 0))
+      this.courses = filteredCoursesList;
+  }
+
   async applyFiltersCourses(){
 
     this.filters.approvalPercentual = (<HTMLInputElement>document.getElementById('approvalPercentual')) == null || undefined ? 0: +(<HTMLInputElement>document.getElementById('approvalPercentual')).value;
@@ -115,7 +124,10 @@ export class CoursesListComponent implements OnInit {
     this.filters.testTitle = (<HTMLInputElement>document.getElementById('testTitle')) == null || undefined ? '': (<HTMLInputElement>document.getElementById('testTitle')).value;
     this.filters.certificationTitle = (<HTMLInputElement>document.getElementById('certificationTitle')) == null || undefined ? '': (<HTMLInputElement>document.getElementById('certificationTitle')).value;
     
-    console.log(this.filters);
+    let filteredCoursesList = await this.courseService.getAllCoursesById(1, this.filters);
+
+    if(filteredCoursesList.subscribe(result => result.length > 0))
+      this.courses = filteredCoursesList;
 
   }
 

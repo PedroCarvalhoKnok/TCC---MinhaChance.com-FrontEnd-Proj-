@@ -37,130 +37,200 @@ export class CoursesRegisterComponent implements OnInit {
   hasCertification: boolean = false;
   hasTest: boolean = false;
 
-  constructor(private router: ActivatedRoute,private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) 
-  {
-      
+  constructor(private router: ActivatedRoute, private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) {
+
   }
 
-  ngOnInit(): void 
-  {
+  async ngOnInit(): Promise<void> {
     let courseId = this.router.snapshot.params?.['courseId'];
     //console.log(courseId); usar para carregar edição de curso
+
 
     this.createFormCourseValidation();
     this.createFormSessionValidation();
     this.createFormCertificationValidation();
     this.createFormTestValidation();
     this.createFormQuestionValidation();
-    
+
+    if (courseId != undefined) {
+
+      let courseSelected = await this.courseService.getCourseById(courseId);
+      courseSelected.subscribe(course => {
+        this.course.courseTitle = course.courseTitle;
+        this.course.vacancyId = course.vacancyId;
+        this.course.durationTime = course.durationTime;
+        this.hasCertification = course.certificationId != null || undefined ? true : false;
+        this.hasTest = course.testId != null || undefined ? true : false;
+        this.course.description = course.description;
+        this.course.id = course.id;
+      });
+
+      let sessionsSelected = await this.sessionService.getSessionsByCourseId(courseId);
+      sessionsSelected.subscribe(sessions => {
+        this.sessions = sessions;
+      });
+
+      let certificationSelected = await this.certificationService.getCertificationByCourseId(courseId);
+      certificationSelected.subscribe(certification => {
+        this.certification.certificationTitle = certification.certificationTitle;
+        this.certification.description = certification.description;
+        this.certification.id = certification.id;
+      });
+
+      let testSelected = await this.testService.getTestByCourseId(courseId);
+      testSelected.subscribe(test => {
+        this.test.approvalPercentual = test.approvalPercentual;
+        this.test.certificationId = test.certificationId;
+        this.test.durationTime = test.durationTime;
+        this.test.questionsQuantity = test.questionsQuantity;
+        this.test.id = test.id;
+      });
+
+      let questionsSelected = await this.questionService.getQuestionsByTestId(this.test.id);
+      questionsSelected.subscribe(questions => {
+        this.questions = questions;
+      });
+
+    }
+
+
   }
 
-  async registerCourse(){
-  try{
-    let test: Test;
-    let certification: Certification;
+  async registerCourse() {
+    try {
+      let test: Test;
+      let certification: Certification;
 
-    let retornoIdCertification: number = 0;
-    let retornoIdTest: number = 0;
-    let retornoIdCurso: number = 0;
+      let retornoIdCertification: number = 0;
+      let retornoIdTest: number = 0;
+      let retornoIdCurso: number = 0;
 
-    if(this.formCertification.valid)
-    {
-      certification = this.certification;
-     // retornoIdCertification = await this.certificationService.postCertification(certification); //inserir curso no banco retornando id dele mock exemplo await 
-    }
-    if(this.formTest.valid)
-    {
-      test = this.test;
-      if(retornoIdCertification != 0 || retornoIdCertification != undefined)
-        test.certificationId = retornoIdCertification
-      
-      //retornoIdTest = await this.testService.postTest(test); //inserir curso no banco retornando id dele mock exemplo await 
+      if (this.formCertification.valid) {
+        certification = this.certification;
+        await this.certificationService.postCertification(certification).subscribe(certificationId => { retornoIdCertification = certificationId }); //inserir curso no banco retornando id dele mock exemplo await 
+      }
+      if (this.formTest.valid) {
+        test = this.test;
+        if (retornoIdCertification != 0 || retornoIdCertification != undefined)
+          test.certificationId = retornoIdCertification
 
-    }
-    if(this.questions.length > 0){
-      for(let question of this.questions)
-      {
-        if(retornoIdTest != 0 || retornoIdTest != undefined)
-          question.testId = retornoIdTest 
+        await this.testService.postTest(test).subscribe(testId => { retornoIdTest = testId }); //inserir curso no banco retornando id dele mock exemplo await 
 
-        //await this.questionService.postQuestion(question);//inserir questao no banco retornando id dele mock exemplo await 
+      }
+      if (this.questions.length > 0) {
+        for (let question of this.questions) {
+          if (retornoIdTest != 0 || retornoIdTest != undefined)
+            question.testId = retornoIdTest
+
+          await this.questionService.postQuestion(question);//inserir questao no banco retornando id dele mock exemplo await 
+        }
+      }
+      if (this.formCourse.valid) {
+        let course: Course = this.course
+        // course.userId = idUsuarioLogado
+
+        if (retornoIdCertification != 0 || retornoIdCertification != undefined)
+          course.certificationId = retornoIdCertification;
+
+        if (retornoIdTest != 0 || retornoIdTest != undefined)
+          course.testId = retornoIdTest;
+
+        await this.courseService.postCourse(course).subscribe(courseId => { retornoIdCurso = courseId}); //inserir curso no banco retornando id dele mock exemplo await 
+
+      }
+      if (this.sessions.length > 0) {
+        for (let session of this.sessions) {
+          if (retornoIdCurso != 0 || retornoIdCurso != undefined)
+            session.courseId = retornoIdCurso
+
+          await this.sessionService.postSession(session); //inserir questao no banco retornando id dele mock exemplo await 
+        }
       }
     }
-    if(this.formCourse.valid)
-    {
-      let course: Course = this.course
-     // course.userId = idUsuarioLogado
-     
-     if(retornoIdCertification != 0 || retornoIdCertification != undefined)
-        course.certificationId = retornoIdCertification;
-
-     if(retornoIdTest != 0 || retornoIdTest != undefined)
-        course.testId = retornoIdTest;
-
-     // retornoIdCurso = await this.courseService.postCourse(course); //inserir curso no banco retornando id dele mock exemplo await 
+    catch (e) {
 
     }
-    if(this.sessions.length > 0){
-      for(let session of this.sessions)
-      {
-        if(retornoIdCurso != 0 || retornoIdCurso != undefined)
-          session.courseId = retornoIdCurso 
+  }
 
-        //await this.sessionService.postSession(session); //inserir questao no banco retornando id dele mock exemplo await 
+  async editCourse(course: Course) {
+    try {
+      if (this.formCertification.valid) {
+        let certification = this.certification;
+        await this.certificationService.editCertification(certification);
       }
+
+      if (this.formTest.valid) {
+        let test = this.test;
+        await this.testService.editTest(test);
+
+      }
+
+      if (this.questions.length > 0) {
+        for (let question of this.questions) {
+          await this.questionService.editQuestion(question);
+        }
+      }
+
+      if (this.formCourse.valid) {
+        let course = this.course
+        await this.courseService.editCourse(course);
+
+      }
+
+      if (this.sessions.length > 0) {
+        for (let session of this.sessions) {
+          await this.sessionService.editSession(session);
+        }
+      }
+
+    }
+    catch (e) {
+
     }
   }
-  catch(e){
 
-  }
-  }
-
-  videoSessionSelected(event: any){
+  videoSessionSelected(event: any) {
     this.session.videoSession = event.target.files[0];
   }
 
-  pdfSessionSelected(event: any){
+  pdfSessionSelected(event: any) {
     this.session.pdfSession = event.target.files[0];
   }
 
-  corporativeSignatureSelected(event: any){
+  corporativeSignatureSelected(event: any) {
     this.certification.corporativeSignature = event.target.files[0];
   }
 
-  courseImageSelected(event: any){
+  courseImageSelected(event: any) {
     this.course.courseimage = event.target.files[0];
   }
 
-  addSession(session: Session): void{
+  addSession(session: Session): void {
 
-    if(this.formSession.valid)
+    if (this.formSession.valid)
       this.sessions.push(session);
 
   }
 
-  addQuestion(question: Question): void{
+  addQuestion(question: Question): void {
 
-    if(this.formQuestion.valid)
+    if (this.formQuestion.valid)
       this.questions.push(question);
 
   }
 
-  changeShowCertification()
-  {
+  changeShowCertification() {
     this.hasCertification = !this.hasCertification;
-   
+
   }
 
-  changeShowTest()
-  {
-    
+  changeShowTest() {
+
     this.hasTest = !this.hasTest;
-    
+
   }
 
-  createFormCourseValidation(): void
-  {
+  createFormCourseValidation(): void {
     this.formCourse = new FormGroup({
       courseTitle: new FormControl(this.course.courseTitle, [
         Validators.required,
@@ -179,7 +249,7 @@ export class CoursesRegisterComponent implements OnInit {
   forbiddenDurationTimeValidator(nameRe: RegExp): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const forbidden = nameRe.test(control.value);
-      return forbidden ? {forbiddenDurationTime: {value: control.value}} : null;
+      return forbidden ? { forbiddenDurationTime: { value: control.value } } : null;
     };
   }
 
@@ -188,18 +258,16 @@ export class CoursesRegisterComponent implements OnInit {
       const arrayFile = control.value;
       let error: string = '';
 
-      if(arrayFile.length > 0)
-      {
-        if(arrayFile[0].type === '')
-          return {forbiddenSendFile: error}
+      if (arrayFile.length > 0) {
+        if (arrayFile[0].type === '')
+          return { forbiddenSendFile: error }
       }
 
       return null;
     };
   }
 
-  createFormSessionValidation(): void
-  {
+  createFormSessionValidation(): void {
     this.formSession = new FormGroup({
       sessionTitle: new FormControl(this.session.sessionTitle, [
         Validators.required,
@@ -217,8 +285,7 @@ export class CoursesRegisterComponent implements OnInit {
 
   }
 
-  createFormCertificationValidation(): void
-  {
+  createFormCertificationValidation(): void {
     this.formCertification = new FormGroup({
       certificationTitle: new FormControl(this.certification.certificationTitle, [
         Validators.required,
@@ -233,8 +300,7 @@ export class CoursesRegisterComponent implements OnInit {
 
   }
 
-  createFormTestValidation(): void
-  {
+  createFormTestValidation(): void {
     this.formTest = new FormGroup({
       testDuration: new FormControl(this.test.durationTime, [
         Validators.required,
@@ -250,8 +316,7 @@ export class CoursesRegisterComponent implements OnInit {
 
   }
 
-  createFormQuestionValidation(): void
-  {
+  createFormQuestionValidation(): void {
     this.formQuestion = new FormGroup({
       testQuestion: new FormControl(this.question.question, [
         Validators.required,
@@ -278,5 +343,5 @@ export class CoursesRegisterComponent implements OnInit {
 
   }
 
-  
+
 }

@@ -19,7 +19,7 @@
 
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Titulo do curso</mat-label>
-                                <input id="courseTitle" class="form-control" [(ngModel)]="course.courseTitle"
+                                <input id="courseTitle" class="form-control" [(ngModel)]="this.course.courseTitle"
                                     formControlName="courseTitle" type="text" matInput autocomplete="off"
                                     placeholder="Titulo do curso" required />
                             </mat-form-field>
@@ -31,7 +31,7 @@
                             </div>
                             <mat-form-field class="spacing-margin">
                                 <mat-label class="placeholder-color">Vaga</mat-label>
-                                <mat-select [value]="course.vacancyId" placeholder="Vaga">
+                                <mat-select [value]="this.course.vacancyId" placeholder="Vaga">
                                     <mat-option value="Introdução I">Analista I</mat-option>
                                     <mat-option value="Introdução II">Analista II</mat-option>
                                 </mat-select>
@@ -39,7 +39,7 @@
                             <br />
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Duração</mat-label>
-                                <input [value]="this.course.durationTime" type="number" formControlName="courseDuration"
+                                <input [(ngModel)]="this.course.durationTime" type="number" formControlName="courseDuration"
                                     matInput autocomplete="off" placeholder="Duração" required />
                             </mat-form-field>
                             <div

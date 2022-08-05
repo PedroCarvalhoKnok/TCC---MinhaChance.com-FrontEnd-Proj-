@@ -14,7 +14,8 @@ export class SessionService {
   constructor(private httpClient: HttpClient) { }
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json',
+                               'Authorization': `Bearer token` })
   }
 
   postSession(session: Session) {
@@ -22,6 +23,22 @@ export class SessionService {
       .pipe(
         retry(2),
        
+      )
+  }
+
+  getSessionsByCourseId(courseId: number) {
+    return this.httpClient.post<Session[]>(``, this.httpOptions)
+      .pipe(
+        retry(2),
+       
+      )
+  }
+
+  editSession(question: Session) {
+    return this.httpClient.put<Session>(``, this.httpOptions)
+      .pipe(
+        retry(2),
+        
       )
   }
 }
