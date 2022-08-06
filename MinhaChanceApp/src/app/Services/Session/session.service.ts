@@ -34,8 +34,16 @@ export class SessionService {
       )
   }
 
-  editSession(question: Session) {
+  editSession(session: Session) {
     return this.httpClient.put<Session>(``, this.httpOptions)
+      .pipe(
+        retry(2),
+        
+      )
+  }
+
+  deleteSession(sessionId: number) {
+    return this.httpClient.delete<boolean>(``, this.httpOptions)
       .pipe(
         retry(2),
         

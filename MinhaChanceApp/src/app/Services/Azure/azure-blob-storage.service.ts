@@ -15,7 +15,7 @@ export class AzureBlobStorageService {
   public uploadFile(sas: string, content: Blob, name: string,containerName: string, handler: () => void){
 
     const blockBlobClient = this.containerClient(sas, containerName).getBlockBlobClient(name);
-    blockBlobClient.uploadData(content, { blobHTTPHeaders: {blobContentType: content.type}}).then(() => handler());
+    blockBlobClient.uploadData(content, { blobHTTPHeaders: {blobContentType: content?.type}}).then(() => handler());
     
   }
 
@@ -25,7 +25,7 @@ export class AzureBlobStorageService {
       token = sas;
 
     
-    const getBlobFileURI = sessionId != undefined ? `https://${this.accountName}.blob.core.windows.net?${token}/${containerName}/${fileName}/${courseId}/${sessionId}`: `https://${this.accountName}.blob.core.windows.net?${token}/${containerName}/${fileName}/${courseId}`;
+    const getBlobFileURI = sessionId != undefined ? `https://${this.accountName}.blob.core.windows.net?${token}/${containerName}/${fileName}/${sessionId}`: `https://${this.accountName}.blob.core.windows.net?${token}/${containerName}/${fileName}/${courseId}`;
 
     return getBlobFileURI;
 
@@ -33,7 +33,7 @@ export class AzureBlobStorageService {
 
   public deleteFile(sas: string, content: Blob, name: string, containerName: string, handler: () => void): void{
 
-    const blockBlobClient = this.containerClient(sas).deleteBlob(name).then(() => {
+    const blockBlobClient = this.containerClient(sas, containerName).deleteBlob(name).then(() => {
       handler();
     });
    

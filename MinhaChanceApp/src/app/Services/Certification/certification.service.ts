@@ -43,5 +43,15 @@ export class CertificationService {
       )
   }
 
+  deleteCertification(certificationId: number) {
+    return this.httpClient.delete<boolean>(``, this.httpOptions)
+      .pipe(
+        retry(2),
+        
+      )
+  }
+
+  
+
   
 }

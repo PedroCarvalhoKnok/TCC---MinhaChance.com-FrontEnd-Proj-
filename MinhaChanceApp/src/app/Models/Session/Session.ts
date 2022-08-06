@@ -7,4 +7,6 @@ export class Session {
     courseId!: number;
     description!: string;
     sessionTitle!: string;
+    videoPath?: string;
+    pdfPath?: string
 }

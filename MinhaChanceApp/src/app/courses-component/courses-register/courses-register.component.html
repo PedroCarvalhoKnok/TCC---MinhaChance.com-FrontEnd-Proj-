@@ -39,8 +39,9 @@
                             <br />
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Duração</mat-label>
-                                <input [(ngModel)]="this.course.durationTime" type="number" formControlName="courseDuration"
-                                    matInput autocomplete="off" placeholder="Duração" required />
+                                <input [(ngModel)]="this.course.durationTime" type="number"
+                                    formControlName="courseDuration" matInput autocomplete="off" placeholder="Duração"
+                                    required />
                             </mat-form-field>
                             <div
                                 *ngIf="formCourse.get('courseDuration')?.invalid && (formCourse.get('courseDuration')?.dirty || formCourse.get('courseDuration')?.touched)">
@@ -138,24 +139,38 @@
                             <br />
 
                             <mat-label>Video da sessão</mat-label><br />
-                            <input (change)="videoSessionSelected($event)" class="ng-hide" id="input-file-id" multiple
-                                type="file" />
+                            <input (change)="videoSessionSelected($event)" class="ng-hide" id="input-file-video"
+                                multiple type="file" accept="video/mp4,video/x-m4v,video/*" />
                             <label for="input-file-id" class="md-button md-raised md-primary"><span
                                     class="material-icons col-4">picture_as_pdf</span></label>
-                            <div
-                                *ngIf="formSession.get('sessionVideoFile')?.errors">
+                            <div *ngIf="formSession.get('sessionVideoFile')?.errors">
                                 <p>
                                     Titulo da sessão é necessária.
                                 </p>
                             </div>
                             <br />
+                            <br />
+                            <video width="320" height="240" controls>
+                                <source src="{{this.session.videoSession}}" type="video/mp4">
+                                <source src="{{this.session.videoSession}}" type="video/ogg">
+                                Seu browser não suporta a tag de video
+                            </video>
+                            <br />
+                            <button mat-raised-button (click)="cleanSession('video')" color="warn">Excluir</button>
+                            <br />
+                            <br />
                             <mat-label>PDF didático da sessão</mat-label><br />
-                            <input (change)="pdfSessionSelected($event)" class="ng-hide" id="input-file-id" multiple
-                                type="file" />
+                            <input (change)="pdfSessionSelected($event)" class="ng-hide" id="input-file-pdf" multiple
+                                type="file" accept="application/pdf" />
                             <label for="input-file-id" class="md-button md-raised md-primary"><span
                                     class="material-icons col-4">file_upload</span></label>
 
                             <br />
+                            <br />
+                            <!-- <embed src="{{this.session.pdfSession}}" width="320" height="240" 
+                            type="application/pdf"> 
+                            <br />-->
+                            <button mat-raised-button (click)="cleanSession('pdf')" color="warn">Excluir</button>
                             <br />
                             <mat-label>Descrição da sessão</mat-label>
                             <br />
@@ -182,7 +197,7 @@
 </div>
 
 <!-- lista sessões adicionadas -->
-<div *ngFor="let session of this.sessions">
+<div *ngFor="let session of this.sessions;let indexOfSession=index;">
     <mat-card class="session-card">
 
         <mat-card-header class="title-course">
@@ -199,29 +214,54 @@
                         <div fxLayout="column">
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Titulo da sessão</mat-label>
-                                <input [ngModel]="session.sessionTitle" formControlName="sessionTitle" type="text"
-                                    matInput autocomplete="off" placeholder="Titulo da sessão" required />
+                                <input [ngModel]="session.sessionTitle" formControlName="sessionTitle"
+                                    id="{{'input-sessionTitle-' + indexOfSession}}" type="text" matInput
+                                    autocomplete="off" placeholder="Titulo da sessão" required />
                             </mat-form-field>
 
                             <br />
 
                             <mat-label>Video da sessão</mat-label><br />
-                            <input class="ng-hide" id="input-file-id" multiple type="file" />
+                            <input class="ng-hide" id="{{'input-video-' + indexOfSession}}" multiple type="file"
+                                accept="video/mp4,video/x-m4v,video/*" />
                             <label for="input-file-id" class="md-button md-raised md-primary"><span
                                     class="material-icons col-4">picture_as_pdf</span></label><br />
+                            <br />
+                            <video *ngIf="this.courseId != undefined" width="320" height="240" controls>
+                                <source src="{{this.session.videoPath}}" type="video/mp4">
+                                <source src="{{this.session.videoPath}}" type="video/ogg">
+                                Seu browser não suporta a tag de video
+                            </video>
+                            <br />
+                            <button mat-raised-button (click)="cleanSessionIndexed(indexOfSession, 'video')"
+                                color="warn">Excluir</button>
+                            <br />
+                            <br />
                             <mat-label>PDF didático da sessão</mat-label><br />
-                            <input class="ng-hide" id="input-file-id" multiple type="file" />
+                            <input id="{{'input-pdf-' + indexOfSession}}" class="ng-hide" id="input-file-id" multiple
+                                type="file" accept="application/pdf" />
                             <label for="input-file-id" class="md-button md-raised md-primary"><span
                                     class="material-icons col-4">file_upload</span></label>
-
+                            <br />
+                            <button mat-raised-button (click)="cleanSessionIndexed(indexOfSession, 'pdf')"
+                                color="warn">Excluir</button>
+                            <br />
+                            <br />
+                            <embed *ngIf="this.courseId != undefined" src="{{this.session.pdfPath}}" width="320"
+                                height="240" type="application/pdf">
                             <br />
                             <br />
                             <mat-label>Descrição da sessão</mat-label>
                             <br />
-                            <textarea [ngModel]="session.description" formControlName="sessionDescription"
+                            <textarea id="{{'input-descriptionSession-' + indexOfSession}}"
+                                [ngModel]="session.description" formControlName="sessionDescription"
                                 class="text-area-form" required></textarea>
-
-
+                            <br />
+                            <button mat-raised-button (click)="editSessionIndexed(indexOfSession)"
+                                color="warn">Editar</button>
+                            <button mat-raised-button (click)="deleteSessionIndexed(indexOfSession)"
+                                color="warn">Editar</button>
+                            <br />
                         </div>
                     </form>
                 </div>
@@ -268,10 +308,17 @@
                             <br />
                             <mat-label>Assinatura Corporativa</mat-label><br />
                             <input (change)="corporativeSignatureSelected($event)" class="ng-hide" id="assign-file-id"
-                                multiple type="file" />
+                                multiple type="file" accept="image/png, image/gif, image/jpeg" />
                             <label for="assign-file-id" class="md-button md-raised md-primary"><span
                                     class="material-icons col-4">file_upload</span></label>
                             <br />
+                            <br />
+                            <embed *ngIf="this.courseId != undefined" src="{{this.certification.corporativeSignaturePath}}" width="320"
+                                height="240" type="application/pdf">
+                            <br />
+                            <br />
+                            <button mat-raised-button (click)="cleanCorporativeSignature()" color="warn">Excluir
+                                assinatura</button>
                             <br />
                             <mat-label>Descrição do certificado</mat-label>
                             <br />
@@ -283,6 +330,9 @@
                                     Descrição do certificado é necessário.
                                 </p>
                             </div>
+                            <br />
+                            <button *ngIf="this.courseId != undefined" mat-raised-button
+                                (click)="deleteCertification(this.certification.id)" color="warn">Excluir Prova</button>
 
 
                         </div>
@@ -369,6 +419,9 @@
                                 </p>
                             </div>
                             <br />
+                            <button *ngIf="this.courseId != undefined" mat-raised-button
+                                (click)="deleteTest(this.test.id)" color="warn">Excluir Prova</button>
+                            <br />
                             <mat-card class="question-content">
                                 <mat-card-header class="header-content">
                                     <mat-card-title fxLayoutAlign="center" class="title-course">
@@ -388,7 +441,7 @@
                                 <form [formGroup]="formQuestion">
                                     <mat-card-header class="header-content">
                                         <mat-card-title fxLayoutAlign="center" class="title-course">
-                                            Pergunta 1
+                                            Pergunta
                                         </mat-card-title>
                                     </mat-card-header>
 
@@ -492,12 +545,12 @@
 </div>
 
 <!-- Lista de questoes inseridas -->
-<div *ngFor="let question of this.questions">
+<div *ngFor="let question of this.questions;let questionIndex = index;">
     <mat-card class="session-card">
 
         <mat-card-header class="title-course">
             <mat-card-title fxLayoutAlign="center" class="title-course">
-                Pergunta
+                Pergunta {{questionIndex + 1}}
             </mat-card-title>
 
         </mat-card-header>
@@ -512,19 +565,21 @@
                                 <form [formGroup]="formQuestion">
                                     <mat-card-header class="header-content">
                                         <mat-card-title fxLayoutAlign="center" class="title-course">
-                                            Pergunta 1
+                                            Pergunta
                                         </mat-card-title>
                                     </mat-card-header>
 
                                     <mat-card-content>
                                         <mat-label>Descrição da pergunta</mat-label>
                                         <br />
-                                        <textarea [(ngModel)]="this.question.question" formControlName="testQuestion"
+                                        <textarea id="'questionDescription-' + {{questionIndex}}"
+                                            [(ngModel)]="this.question.question" formControlName="testQuestion"
                                             class="text-area-form" required></textarea>
 
 
                                         <mat-form-field>
-                                            <mat-select [value]="question.correctAnswer" placeholder="Resposta Correta">
+                                            <mat-select id="'correctAnswer-' + {{questionIndex}}"
+                                                [value]="question.correctAnswer" placeholder="Resposta Correta">
                                                 <mat-option value="A">A</mat-option>
                                                 <mat-option value="B">B</mat-option>
                                                 <mat-option value="C">C</mat-option>
@@ -535,26 +590,31 @@
                                         <br />
                                         <mat-label>Pergunta A</mat-label>
                                         <br />
-                                        <textarea [(ngModel)]="question.answerA" formControlName="answerA"
-                                            class="text-area-form" required></textarea>
+                                        <textarea id="'answerA-' + {{questionIndex}}" [(ngModel)]="question.answerA"
+                                            formControlName="answerA" class="text-area-form" required></textarea>
 
                                         <mat-label>Pergunta B</mat-label>
                                         <br />
-                                        <textarea [(ngModel)]="question.answerB" formControlName="answerB"
-                                            class="text-area-form" required></textarea>
+                                        <textarea id="'answerB-' + {{questionIndex}}" [(ngModel)]="question.answerB"
+                                            formControlName="answerB" class="text-area-form" required></textarea>
                                         <mat-label>Pergunta C</mat-label>
                                         <br />
-                                        <textarea [(ngModel)]="question.answerC" formControlName="answerC"
-                                            class="text-area-form" required></textarea>
+                                        <textarea id="'answerC-' + {{questionIndex}}" [(ngModel)]="question.answerC"
+                                            formControlName="answerC" class="text-area-form" required></textarea>
 
                                         <mat-label>Pergunta D</mat-label>
                                         <br />
-                                        <textarea [(ngModel)]="question.answerD" formControlName="answerD"
-                                            class="text-area-form" required></textarea>
+                                        <textarea id="'answerD-' + {{questionIndex}}" [(ngModel)]="question.answerD"
+                                            formControlName="answerD" class="text-area-form" required></textarea>
                                         <mat-label>Pergunta E</mat-label>
                                         <br />
-                                        <textarea [(ngModel)]="question.answerE" formControlName="answerE"
-                                            class="text-area-form" required></textarea>
+                                        <textarea id="'answerE-' + {{questionIndex}}" [(ngModel)]="question.answerE"
+                                            formControlName="answerE" class="text-area-form" required></textarea>
+                                        <br />
+                                        <button mat-raised-button (click)="editQuestionIndexed(questionIndex)"
+                                            color="primary">Editar</button>
+                                        <button mat-raised-button (click)="deleteQuestionIndexed(questionIndex)"
+                                            color="warn">Editar</button>
 
                                     </mat-card-content>
                                 </form>

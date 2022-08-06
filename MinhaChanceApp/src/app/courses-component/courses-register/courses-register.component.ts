@@ -37,6 +37,8 @@ export class CoursesRegisterComponent implements OnInit {
   hasCertification: boolean = false;
   hasTest: boolean = false;
 
+  courseId!: number;
+
   constructor(private router: ActivatedRoute, private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) {
 
   }
@@ -44,7 +46,7 @@ export class CoursesRegisterComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     let courseId = this.router.snapshot.params?.['courseId'];
     //console.log(courseId); usar para carregar edição de curso
-
+    this.courseId = courseId;
 
     this.createFormCourseValidation();
     this.createFormSessionValidation();
@@ -68,14 +70,21 @@ export class CoursesRegisterComponent implements OnInit {
       let sessionsSelected = await this.sessionService.getSessionsByCourseId(courseId);
       sessionsSelected.subscribe(sessions => {
         this.sessions = sessions;
+        sessions.forEach(async session => {
+          this.session.videoPath = await this.blobService.getFile('', 'CoursesVideos', session.videoSessionName, session.id);
+          this.session.pdfPath = await this.blobService.getFile('', 'CoursesPDFs', session.pdfSessionName, session.id);
+        })
       });
 
       let certificationSelected = await this.certificationService.getCertificationByCourseId(courseId);
-      certificationSelected.subscribe(certification => {
+      certificationSelected.subscribe(async certification => {
         this.certification.certificationTitle = certification.certificationTitle;
         this.certification.description = certification.description;
         this.certification.id = certification.id;
+
+        this.certification.corporativeSignaturePath = await this.blobService.getFile('', 'CorporativeSignatures', certification.corporativeSignatureName, courseId);
       });
+
 
       let testSelected = await this.testService.getTestByCourseId(courseId);
       testSelected.subscribe(test => {
@@ -109,7 +118,7 @@ export class CoursesRegisterComponent implements OnInit {
       if (this.formCertification.valid) {
         certification = this.certification;
         await this.certificationService.postCertification(certification).subscribe(certificationId => { retornoIdCertification = certificationId }); //inserir curso no banco retornando id dele mock exemplo await 
-        
+
       }
       if (this.formTest.valid) {
         test = this.test;
@@ -124,7 +133,7 @@ export class CoursesRegisterComponent implements OnInit {
           if (retornoIdTest != 0 || retornoIdTest != undefined)
             question.testId = retornoIdTest
 
-          
+
           await this.questionService.postQuestion(question);//inserir questao no banco retornando id dele mock exemplo await 
         }
       }
@@ -138,7 +147,7 @@ export class CoursesRegisterComponent implements OnInit {
         if (retornoIdTest != 0 || retornoIdTest != undefined)
           course.testId = retornoIdTest;
 
-        await this.courseService.postCourse(course).subscribe(courseId => { retornoIdCurso = courseId}); //inserir curso no banco retornando id dele mock exemplo await 
+        await this.courseService.postCourse(course).subscribe(courseId => { retornoIdCurso = courseId }); //inserir curso no banco retornando id dele mock exemplo await 
 
       }
       if (this.sessions.length > 0) {
@@ -146,15 +155,15 @@ export class CoursesRegisterComponent implements OnInit {
           if (retornoIdCurso != 0 || retornoIdCurso != undefined)
             session.courseId = retornoIdCurso
 
-          
-          await this.sessionService.postSession(session).subscribe(sessionId => { retornoIdSessao = sessionId}); //inserir questao no banco retornando id dele mock exemplo await 
-          await this.blobService.uploadFile('', session.pdfSession, `${session.pdfSession.name}/${session.courseId}/${retornoIdSessao}`,'CoursesPDFs', () => {});
-          await this.blobService.uploadFile('', session.videoSession, `${session.videoSession.name}/${session.courseId}/${retornoIdSessao}`,'CoursesVideos', () => {});
+
+          await this.sessionService.postSession(session).subscribe(sessionId => { retornoIdSessao = sessionId }); //inserir questao no banco retornando id dele mock exemplo await 
+          await this.blobService.uploadFile('', session.pdfSession, `${session.pdfSession.name}/${retornoIdSessao}`, 'CoursesPDFs', () => { });
+          await this.blobService.uploadFile('', session.videoSession, `${session.videoSession.name}/${retornoIdSessao}`, 'CoursesVideos', () => { });
         }
       }
 
-      if(retornoIdCertification != 0 || retornoIdCertification != undefined)
-        await this.blobService.uploadFile('', certification.corporativeSignature, `${certification.corporativeSignature.name}/${retornoIdCurso}`,'CorporativeSignatures', () => {});
+      if (retornoIdCertification != 0 || retornoIdCertification != undefined)
+        await this.blobService.uploadFile('', certification.corporativeSignature, `${certification.corporativeSignature.name}/${retornoIdCurso}`, 'CorporativeSignatures', () => { });
 
     }
     catch (e) {
@@ -217,6 +226,117 @@ export class CoursesRegisterComponent implements OnInit {
   courseImageSelected(event: any) {
     this.course.courseimage = event.target.files[0];
   }
+
+  async deleteTest(testId: number) {
+    let isDeleted: boolean;
+    await this.testService.deleteTest(testId).subscribe(isDeleted => isDeleted = isDeleted);
+  }
+
+  async deleteCertification(certificationId: number) {
+    let isDeleted: boolean;
+    await this.certificationService.deleteCertification(certificationId).subscribe(isDeleted => isDeleted = isDeleted);
+  }
+
+  cleanCorporativeSignature() {
+    if (this.courseId != undefined) {
+      this.blobService.deleteFile('', this.certification.corporativeSignature, this.certification.corporativeSignatureName, 'CorporativeSignatures', () => { })
+    }
+    else {
+      this.certification.corporativeSignature = new File([], "", {
+        type: "",
+      });
+      this.certification.corporativeSignatureName = '';
+      (<HTMLInputElement>document.getElementById('assign-file-id')).value = '';
+    }
+  }
+
+
+  cleanSession(typeFile: string) {
+    if (typeFile == 'video') {
+      this.session.videoSession = new File([], "", {
+        type: "",
+      });
+      this.session.videoSessionName = '';
+      (<HTMLInputElement>document.getElementById('input-file-video')).value = '';
+    }
+    else {
+      this.session.pdfSession = new File([], "", {
+        type: "",
+      });;
+      this.session.pdfSessionName = '';
+      (<HTMLInputElement>document.getElementById('input-file-pdf')).value = '';
+
+    }
+  }
+
+  cleanSessionIndexed(index: number, typeFile: string) {
+    if (typeFile == 'video') {
+      if (this.courseId != undefined) {
+        this.blobService.deleteFile('', this.sessions[index].videoSession, this.sessions[index].videoSessionName, 'CoursesVideos', () => { })
+      }
+      else {
+        this.sessions[index].videoSession = new File([], "", {
+          type: "",
+        });
+        this.sessions[index].videoSessionName = '';
+      }
+    }
+    else {
+      if (this.courseId != undefined) {
+        this.blobService.deleteFile('', this.sessions[index].pdfSession, this.sessions[index].pdfSessionName, 'CoursesPDFs', () => { })
+      }
+      else {
+        this.sessions[index].pdfSession = new File([], "", {
+          type: "",
+        });
+        this.sessions[index].pdfSessionName = '';
+      }
+    }
+
+    (<HTMLInputElement>document.getElementById(`input-${typeFile}-${index}`)).value = '';
+
+  }
+
+  editSessionIndexed(index: number) {
+    this.sessions[index].sessionTitle = (<HTMLInputElement>document.getElementById(`input-sessionTitle-${index}`)).value;
+    this.sessions[index].videoSession = (<any>document.getElementById(`input-video-${index}`)).target.files[0];
+    this.sessions[index].pdfSession = (<any>document.getElementById(`input-pdf-${index}`)).target.files[0];
+    this.sessions[index].description = (<HTMLInputElement>document.getElementById(`input-descriptionSession-${index}`)).value;
+
+  }
+
+  editQuestionIndexed(index: number) {
+    this.questions[index].question = (<HTMLInputElement>document.getElementById(`questionDescription-${index}`)).value;
+    this.questions[index].correctAnswer = (<HTMLInputElement>document.getElementById(`correctAnswer-${index}`)).value;
+    this.questions[index].answerA = (<HTMLInputElement>document.getElementById(`answerA-${index}`)).value;
+    this.questions[index].answerB = (<HTMLInputElement>document.getElementById(`answerB-${index}`)).value;
+    this.questions[index].answerC = (<HTMLInputElement>document.getElementById(`answerC-${index}`)).value;
+    this.questions[index].answerD = (<HTMLInputElement>document.getElementById(`answerD-${index}`)).value;
+    this.questions[index].answerE = (<HTMLInputElement>document.getElementById(`answerE-${index}`)).value;
+  }
+
+  async deleteQuestionIndexed(index: number) {
+    let isDeleted: boolean;
+    if (this.courseId != undefined)
+      await this.questionService.deleteQuestion(this.questions[index].id).subscribe(isDeleted => isDeleted = isDeleted);
+    else
+      delete this.questions[index];
+
+    //modal msg de exclusao da sessao
+
+  }
+
+  async deleteSessionIndexed(index: number) {
+    let isDeleted: boolean;
+    if (this.courseId != undefined)
+      await this.sessionService.deleteSession(this.sessions[index].id).subscribe(isDeleted => isDeleted = isDeleted);
+    else
+      delete this.sessions[index];
+
+    //modal msg de exclusao da sessao
+
+  }
+
 
   addSession(session: Session): void {
 

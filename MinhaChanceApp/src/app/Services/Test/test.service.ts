@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@azure/storage-blob';
 import { Test } from 'src/app/Models/Test/Test';
 import { HandleErrors } from '../Errors/handleError';
 import { retry, catchError } from 'rxjs/operators';
@@ -34,6 +33,14 @@ export class TestService {
 
   editTest(test: Test) {
     return this.httpClient.put<Test>(``, this.httpOptions)
+      .pipe(
+        retry(2),
+        
+      )
+  }
+
+  deleteTest(testId: number) {
+    return this.httpClient.delete<Test>(``, this.httpOptions)
       .pipe(
         retry(2),
         

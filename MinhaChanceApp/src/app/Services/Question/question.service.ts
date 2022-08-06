@@ -41,4 +41,12 @@ export class QuestionService {
         
       )
   }
+
+  deleteQuestion(questionId: number) {
+    return this.httpClient.delete<boolean>(``, this.httpOptions)
+      .pipe(
+        retry(2),
+        
+      )
+  }
 }
