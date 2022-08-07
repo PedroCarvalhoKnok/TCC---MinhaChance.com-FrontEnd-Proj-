@@ -39,6 +39,8 @@ export class CoursesRegisterComponent implements OnInit {
 
   courseId!: number;
 
+  filesTobeDeleted!: any[];
+
   constructor(private router: ActivatedRoute, private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) {
 
   }
@@ -163,7 +165,7 @@ export class CoursesRegisterComponent implements OnInit {
       }
 
       if (retornoIdCertification != 0 || retornoIdCertification != undefined)
-        await this.blobService.uploadFile('', certification.corporativeSignature, `${certification.corporativeSignature.name}/${retornoIdCurso}`, 'CorporativeSignatures', () => { });
+        await this.blobService.uploadFile('', certification.corporativeSignature, `${certification.corporativeSignatureName}/${retornoIdCurso}`, 'CorporativeSignatures', () => { });
 
     }
     catch (e) {
@@ -173,9 +175,13 @@ export class CoursesRegisterComponent implements OnInit {
 
   async editCourse(course: Course) {
     try {
+      this.deleteFilesToBeDeleted();
+      
       if (this.formCertification.valid) {
         let certification = this.certification;
         await this.certificationService.editCertification(certification);
+        await this.blobService.uploadFile('', certification.corporativeSignature, `${certification.corporativeSignatureName}/${course.id}`, 'CorporativeSignatures', () => { });
+        
       }
 
       if (this.formTest.valid) {
@@ -191,7 +197,7 @@ export class CoursesRegisterComponent implements OnInit {
       }
 
       if (this.formCourse.valid) {
-        let course = this.course
+        course = this.course
         await this.courseService.editCourse(course);
 
       }
@@ -199,12 +205,32 @@ export class CoursesRegisterComponent implements OnInit {
       if (this.sessions.length > 0) {
         for (let session of this.sessions) {
           await this.sessionService.editSession(session);
+          await this.blobService.uploadFile('', session.pdfSession, `${session.pdfSessionName}/${session.id}`, 'CoursesPDFs', () => { });
+          await this.blobService.uploadFile('', session.videoSession, `${session.videoSessionName}/${session.id}`, 'CoursesVideos', () => { });
         }
       }
+      
 
     }
     catch (e) {
 
+    }
+  }
+
+  deleteFilesToBeDeleted(){
+    if(this.filesTobeDeleted.length > 0){
+      this.filesTobeDeleted.forEach(file => {
+        switch(file.type){
+          case 'signature':
+            this.blobService.deleteFile('', file.file.corporativeSignature, file.file.corporativeSignatureName, 'CorporativeSignatures', () => { })
+            break;
+          case 'video':
+            this.blobService.deleteFile('', file.file.videoSession, file.file.videoSessionName, 'CoursesVideos', () => { })
+            break;
+          case 'pdf':
+            this.blobService.deleteFile('', file.file.pdfSession, file.file.pdfSessionName, 'CoursesPDFs', () => { })
+        }
+      })
     }
   }
 
@@ -238,16 +264,15 @@ export class CoursesRegisterComponent implements OnInit {
   }
 
   cleanCorporativeSignature() {
-    if (this.courseId != undefined) {
-      this.blobService.deleteFile('', this.certification.corporativeSignature, this.certification.corporativeSignatureName, 'CorporativeSignatures', () => { })
-    }
-    else {
-      this.certification.corporativeSignature = new File([], "", {
-        type: "",
-      });
-      this.certification.corporativeSignatureName = '';
-      (<HTMLInputElement>document.getElementById('assign-file-id')).value = '';
-    }
+    if (this.courseId != undefined)
+      this.filesTobeDeleted.push({file: this.certification.corporativeSignature, type: 'signature'});
+
+    this.certification.corporativeSignature = new File([], "", {
+      type: "",
+    });
+    this.certification.corporativeSignatureName = '';
+    (<HTMLInputElement>document.getElementById('assign-file-id')).value = '';
+
   }
 
 
@@ -271,26 +296,24 @@ export class CoursesRegisterComponent implements OnInit {
 
   cleanSessionIndexed(index: number, typeFile: string) {
     if (typeFile == 'video') {
-      if (this.courseId != undefined) {
-        this.blobService.deleteFile('', this.sessions[index].videoSession, this.sessions[index].videoSessionName, 'CoursesVideos', () => { })
-      }
-      else {
-        this.sessions[index].videoSession = new File([], "", {
-          type: "",
-        });
-        this.sessions[index].videoSessionName = '';
-      }
+      if (this.courseId != undefined)
+        this.filesTobeDeleted.push({file: this.sessions[index].videoSession, type: 'video'});
+
+      this.sessions[index].videoSession = new File([], "", {
+        type: "",
+      });
+      this.sessions[index].videoSessionName = '';
+
     }
     else {
-      if (this.courseId != undefined) {
-        this.blobService.deleteFile('', this.sessions[index].pdfSession, this.sessions[index].pdfSessionName, 'CoursesPDFs', () => { })
-      }
-      else {
-        this.sessions[index].pdfSession = new File([], "", {
-          type: "",
-        });
-        this.sessions[index].pdfSessionName = '';
-      }
+      if (this.courseId != undefined)
+        this.filesTobeDeleted.push({file: this.sessions[index].pdfSession, type: 'pdf'});
+
+      this.sessions[index].pdfSession = new File([], "", {
+        type: "",
+      });
+      this.sessions[index].pdfSessionName = '';
+
     }
 
     (<HTMLInputElement>document.getElementById(`input-${typeFile}-${index}`)).value = '';

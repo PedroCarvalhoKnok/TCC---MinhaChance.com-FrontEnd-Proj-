@@ -5,6 +5,13 @@ import {PageEvent} from '@angular/material/paginator';
 import { Observable, of } from 'rxjs';
 import { courseFilter } from 'src/app/Models/Filters/Course/courseFilter';
 import { CourseService } from 'src/app/Services/Course/course.service';
+import { CertificationService } from 'src/app/Services/Certification/certification.service';
+import { TestService } from 'src/app/Services/Test/test.service';
+import { QuestionService } from 'src/app/Services/Question/question.service';
+import { SessionService } from 'src/app/Services/Session/session.service';
+import { AzureBlobStorageService } from 'src/app/Services/Azure/azure-blob-storage.service';
+import { Session } from 'src/app/Models/Session/Session';
+import { Certification } from 'src/app/Models/Certification/Certification';
 
 export interface Tile {
   color: string;
@@ -36,7 +43,7 @@ export class CoursesListComponent implements OnInit {
     {id: 3,sessionsQuantity: 2,certificationId: 2,test: undefined, description: 'Curso Ruby II',courseTitle: 'Introdução Ruby II',creationDate: '19/07/2022',subscribeQuantity: 10, durationTime: '9 Horas'},
   ]);
 
-  constructor(private courseService: CourseService) { }
+  constructor(private courseService: CourseService,private blobService: AzureBlobStorageService,private certificationService: CertificationService, private testService: TestService, private questionService: QuestionService, private sessionService: SessionService) { }
 
   async ngOnInit(): Promise<void> {
    // await this.getAllCoursesByUserId(); getting all courses
@@ -128,6 +135,22 @@ export class CoursesListComponent implements OnInit {
 
     if(filteredCoursesList.subscribe(result => result.length > 0))
       this.courses = filteredCoursesList;
+
+  }
+
+  async deleteCourse(courseId: number){
+
+    await this.sessionService.getSessionsByCourseId(courseId).subscribe(sessions => sessions.forEach(session => {
+      this.blobService.deleteFile('', session.videoSession, session.videoSessionName, 'CoursesVideos', () => { })
+      this.blobService.deleteFile('', session.pdfSession, session.pdfSessionName, 'CoursesPDFs', () => { })
+    }));
+    
+
+    await this.certificationService.getCertificationByCourseId(courseId).subscribe(certification => {
+      this.blobService.deleteFile('', certification.corporativeSignature, certification.corporativeSignatureName, 'CorporativeSignatures', () => { })
+    });
+
+    this.courseService.deleteCourse(courseId);
 
   }
 

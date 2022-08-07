@@ -31,7 +31,7 @@ export class AzureBlobStorageService {
 
   }
 
-  public deleteFile(sas: string, content: Blob, name: string, containerName: string, handler: () => void): void{
+  public deleteFile(sas: string, content: Blob, name: string, containerName: string | undefined, handler: () => void): void{
 
     const blockBlobClient = this.containerClient(sas, containerName).deleteBlob(name).then(() => {
       handler();

@@ -35,6 +35,14 @@ export class CourseService{
       )
   }
 
+  deleteCourse(courseId: number) {
+    return this.httpClient.delete<boolean>(``, this.httpOptions)
+      .pipe(
+        retry(2),
+        
+      )
+  }
+
   
   getAllCoursesById(userId: number, filters: courseFilter | undefined) {
     return this.httpClient.get<Course[]>(``, this.httpOptions)

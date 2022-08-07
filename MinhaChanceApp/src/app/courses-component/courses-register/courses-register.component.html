@@ -149,12 +149,12 @@
                                 </p>
                             </div>
                             <br />
-                            <br />
+                            <!-- <br />
                             <video width="320" height="240" controls>
                                 <source src="{{this.session.videoSession}}" type="video/mp4">
                                 <source src="{{this.session.videoSession}}" type="video/ogg">
                                 Seu browser não suporta a tag de video
-                            </video>
+                            </video> -->
                             <br />
                             <button mat-raised-button (click)="cleanSession('video')" color="warn">Excluir</button>
                             <br />
@@ -635,4 +635,5 @@
 </div>
 <!-- Lista de questoes inseridas -->
 <br />
-<button (click)="registerCourse()" mat-raised-button class="submit-btn" color="primary">Cadastrar Curso</button>
+<button *ngIf="this.courseId == undefined" (click)="registerCourse()" mat-raised-button class="submit-btn" color="primary">Cadastrar Curso</button>
+<button *ngIf="this.courseId != undefined" (click)="registerCourse()" mat-raised-button class="submit-btn" color="primary">Editar Curso</button>
