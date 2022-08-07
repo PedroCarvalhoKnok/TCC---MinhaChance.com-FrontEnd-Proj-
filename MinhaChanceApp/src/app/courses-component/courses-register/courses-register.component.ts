@@ -222,13 +222,13 @@ export class CoursesRegisterComponent implements OnInit {
       this.filesTobeDeleted.forEach(file => {
         switch(file.type){
           case 'signature':
-            this.blobService.deleteFile('', file.file.corporativeSignature, file.file.corporativeSignatureName, 'CorporativeSignatures', () => { })
+            this.blobService.deleteFile('', file.file.corporativeSignatureName, 'CorporativeSignatures', () => { })
             break;
           case 'video':
-            this.blobService.deleteFile('', file.file.videoSession, file.file.videoSessionName, 'CoursesVideos', () => { })
+            this.blobService.deleteFile('', file.file.videoSessionName, 'CoursesVideos', () => { })
             break;
           case 'pdf':
-            this.blobService.deleteFile('', file.file.pdfSession, file.file.pdfSessionName, 'CoursesPDFs', () => { })
+            this.blobService.deleteFile('', file.file.pdfSessionName, 'CoursesPDFs', () => { })
         }
       })
     }
