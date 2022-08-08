@@ -53,7 +53,7 @@ export class CourseService{
   }
 
   getCourseById(courseId: number) {
-    return this.httpClient.get<Course>(``, this.httpOptions)
+    return this.httpClient.get<any>(``, this.httpOptions)
       .pipe(
         retry(2),
         

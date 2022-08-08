@@ -141,13 +141,13 @@ export class CoursesListComponent implements OnInit {
   async deleteCourse(courseId: number){
 
     await this.sessionService.getSessionsByCourseId(courseId).subscribe(sessions => sessions.forEach(session => {
-      this.blobService.deleteFile('', session.videoSessionName, 'CoursesVideos', () => { })
+      this.blobService.deleteFile('', `${session.videoSessionName}/${session.id}`, 'CoursesVideos', () => { })
       this.blobService.deleteFile('', session.pdfSessionName, 'CoursesPDFs', () => { })
     }));
     
 
     await this.certificationService.getCertificationByCourseId(courseId).subscribe(certification => {
-      this.blobService.deleteFile('', certification.corporativeSignatureName, 'CorporativeSignatures', () => { })
+      this.blobService.deleteFile('', `${certification.corporativeSignatureName}/${courseId}`, 'CorporativeSignatures', () => { })
     });
 
     this.courseService.deleteCourse(courseId);

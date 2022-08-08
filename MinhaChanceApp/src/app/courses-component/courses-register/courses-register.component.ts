@@ -59,47 +59,35 @@ export class CoursesRegisterComponent implements OnInit {
     if (courseId != undefined) {
 
       let courseSelected = await this.courseService.getCourseById(courseId);
-      courseSelected.subscribe(course => {
+      courseSelected.subscribe(async course => {
         this.course.courseTitle = course.courseTitle;
         this.course.vacancyId = course.vacancyId;
         this.course.durationTime = course.durationTime;
-        this.hasCertification = course.certificationId != null || undefined ? true : false;
-        this.hasTest = course.testId != null || undefined ? true : false;
+        this.hasCertification = course.Certication != null || undefined ? true : false;
+        this.hasTest = course.Test != null || undefined ? true : false;
         this.course.description = course.description;
-        this.course.id = course.id;
-      });
+        this.course.id = courseId;
 
-      let sessionsSelected = await this.sessionService.getSessionsByCourseId(courseId);
-      sessionsSelected.subscribe(sessions => {
-        this.sessions = sessions;
-        sessions.forEach(async session => {
+        this.sessions = course.Sessions;
+        course.Sessions.forEach(async session => {
           this.session.videoPath = await this.blobService.getFile('', 'CoursesVideos', session.videoSessionName, session.id);
           this.session.pdfPath = await this.blobService.getFile('', 'CoursesPDFs', session.pdfSessionName, session.id);
-        })
-      });
+        });
 
-      let certificationSelected = await this.certificationService.getCertificationByCourseId(courseId);
-      certificationSelected.subscribe(async certification => {
-        this.certification.certificationTitle = certification.certificationTitle;
-        this.certification.description = certification.description;
-        this.certification.id = certification.id;
+        this.certification.certificationTitle = course.Certification.certificationTitle;
+        this.certification.description = course.Certification.description;
+        this.certification.id = course.Certification.id;
+        this.certification.corporativeSignaturePath = await this.blobService.getFile('', 'CorporativeSignatures', course.Certification.corporativeSignatureName, courseId);
 
-        this.certification.corporativeSignaturePath = await this.blobService.getFile('', 'CorporativeSignatures', certification.corporativeSignatureName, courseId);
-      });
+        this.test.approvalPercentual = course.Test.approvalPercentual;
+        this.test.certificationId = course.Test.certificationId;
+        this.test.durationTime = course.Test.durationTime;
+        this.test.questionsQuantity = course.Test.questionsQuantity;
+        this.test.id = course.Test.id;
 
+        this.questions = course.Test.Questions;
+        
 
-      let testSelected = await this.testService.getTestByCourseId(courseId);
-      testSelected.subscribe(test => {
-        this.test.approvalPercentual = test.approvalPercentual;
-        this.test.certificationId = test.certificationId;
-        this.test.durationTime = test.durationTime;
-        this.test.questionsQuantity = test.questionsQuantity;
-        this.test.id = test.id;
-      });
-
-      let questionsSelected = await this.questionService.getQuestionsByTestId(this.test.id);
-      questionsSelected.subscribe(questions => {
-        this.questions = questions;
       });
 
     }
@@ -222,13 +210,13 @@ export class CoursesRegisterComponent implements OnInit {
       this.filesTobeDeleted.forEach(file => {
         switch(file.type){
           case 'signature':
-            this.blobService.deleteFile('', file.file.corporativeSignatureName, 'CorporativeSignatures', () => { })
+            this.blobService.deleteFile('',`${file.file.corporativeSignatureName}/${file.id}`, 'CorporativeSignatures', () => { })
             break;
           case 'video':
-            this.blobService.deleteFile('', file.file.videoSessionName, 'CoursesVideos', () => { })
+            this.blobService.deleteFile('', `${file.file.videoSessionName}/${file.id}`, 'CoursesVideos', () => { })
             break;
           case 'pdf':
-            this.blobService.deleteFile('', file.file.pdfSessionName, 'CoursesPDFs', () => { })
+            this.blobService.deleteFile('', `${file.file.pdfSessionName}/${file.id}`, 'CoursesPDFs', () => { })
         }
       })
     }
@@ -252,20 +240,30 @@ export class CoursesRegisterComponent implements OnInit {
   courseImageSelected(event: any) {
     this.course.courseimage = event.target.files[0];
   }
+ 
 
-  async deleteTest(testId: number) {
-    let isDeleted: boolean;
-    await this.testService.deleteTest(testId).subscribe(isDeleted => isDeleted = isDeleted);
-  }
+  async deleteCourseItem(courseItem: any) {
+    let isDeleted: boolean = false;
+    if(Object.getPrototypeOf(courseItem) === Certification.prototype){
+      await this.certificationService.deleteCertification(courseItem.id).subscribe(isDeleted => isDeleted = isDeleted);
+      (<HTMLInputElement>document.getElementById('certificationTitle')).value = '';
+      (<HTMLInputElement>document.getElementById('certificationDescription')).value = '';
+      this.cleanCorporativeSignature();
+    }
+    else{
+      await this.testService.deleteTest(courseItem.id).subscribe(isDeleted => isDeleted = isDeleted);
+      (<HTMLInputElement>document.getElementById('testDuration')).value = '';
+      (<HTMLInputElement>document.getElementById('testDifficulty')).value = '';
+      (<HTMLInputElement>document.getElementById('testAppPercentual')).value = '';
+    }
 
-  async deleteCertification(certificationId: number) {
-    let isDeleted: boolean;
-    await this.certificationService.deleteCertification(certificationId).subscribe(isDeleted => isDeleted = isDeleted);
+    if(isDeleted && Object.getPrototypeOf(courseItem) === Certification.prototype)
+      this.blobService.deleteFile('',`${courseItem.corporativeSignatureName}/${courseItem.id}`, 'CorporativeSignatures', () => { })
   }
 
   cleanCorporativeSignature() {
     if (this.courseId != undefined)
-      this.filesTobeDeleted.push({file: this.certification.corporativeSignature, type: 'signature'});
+      this.filesTobeDeleted.push({file: this.certification.corporativeSignature, type: 'signature', id: this.courseId});
 
     this.certification.corporativeSignature = new File([], "", {
       type: "",
@@ -297,7 +295,7 @@ export class CoursesRegisterComponent implements OnInit {
   cleanSessionIndexed(index: number, typeFile: string) {
     if (typeFile == 'video') {
       if (this.courseId != undefined)
-        this.filesTobeDeleted.push({file: this.sessions[index].videoSession, type: 'video'});
+        this.filesTobeDeleted.push({file: this.sessions[index].videoSession, type: 'video', id: this.sessions[index].id});
 
       this.sessions[index].videoSession = new File([], "", {
         type: "",
@@ -307,7 +305,7 @@ export class CoursesRegisterComponent implements OnInit {
     }
     else {
       if (this.courseId != undefined)
-        this.filesTobeDeleted.push({file: this.sessions[index].pdfSession, type: 'pdf'});
+        this.filesTobeDeleted.push({file: this.sessions[index].pdfSession, type: 'pdf', id: this.sessions[index].id});
 
       this.sessions[index].pdfSession = new File([], "", {
         type: "",

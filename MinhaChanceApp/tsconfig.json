@@ -16,6 +16,7 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "noImplicitAny": false,
     "target": "es2020",
     "module": "es2020",
     "lib": [
@@ -29,5 +30,6 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     "noPropertyAccessFromIndexSignature": false,
+    "noImplicitAny": false
   }
 }

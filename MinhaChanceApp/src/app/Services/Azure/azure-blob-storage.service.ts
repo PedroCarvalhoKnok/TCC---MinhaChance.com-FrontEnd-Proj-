@@ -19,13 +19,13 @@ export class AzureBlobStorageService {
     
   }
 
-  public getFile(sas: string, containerName?: string, fileName?: string, courseId?: number, sessionId?: number| undefined): string{
+  public getFile(sas: string, containerName?: string, fileName?: string, id?: number| undefined): string{
     let token = "";
     if(sas)
       token = sas;
 
     
-    const getBlobFileURI = sessionId != undefined ? `https://${this.accountName}.blob.core.windows.net?${token}/${containerName}/${fileName}/${sessionId}`: `https://${this.accountName}.blob.core.windows.net?${token}/${containerName}/${fileName}/${courseId}`;
+    const getBlobFileURI = `https://${this.accountName}.blob.core.windows.net?${token}/${containerName}/${fileName}/${id}`;
 
     return getBlobFileURI;
 

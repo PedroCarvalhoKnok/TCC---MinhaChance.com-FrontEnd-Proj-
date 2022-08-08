@@ -295,7 +295,7 @@
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Titulo do certificado</mat-label>
                                 <input [(ngModel)]="this.certification.certificationTitle"
-                                    formControlName="certificationTitle" type="text" matInput autocomplete="off"
+                                    formControlName="certificationTitle" id="certificationTitle" type="text" matInput autocomplete="off"
                                     placeholder="Titulo do certificado" required />
                             </mat-form-field>
                             <div
@@ -323,7 +323,7 @@
                             <mat-label>Descrição do certificado</mat-label>
                             <br />
                             <textarea [ngModel]="this.certification.description"
-                                formControlName="certificationDescription" class="text-area-form" required></textarea>
+                                formControlName="certificationDescription" id="certificationDescription" class="text-area-form" required></textarea>
                             <div
                                 *ngIf="formCertification.get('certificationDescription')?.invalid && (formCertification.get('certificationDescription')?.dirty || formCertification.get('certificationDescription')?.touched)">
                                 <p *ngIf="formCertification.get('certificationDescription')?.errors?.['required']">
@@ -332,7 +332,7 @@
                             </div>
                             <br />
                             <button *ngIf="this.courseId != undefined" mat-raised-button
-                                (click)="deleteCertification(this.certification.id)" color="warn">Excluir Prova</button>
+                                (click)="deleteCourseItem(this.certification)" color="warn">Excluir Certificado</button>
 
 
                         </div>
@@ -367,7 +367,7 @@
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Duração da prova</mat-label>
                                 <input [(ngModel)]="test.durationTime" formControlName="testDuration" type="number"
-                                    matInput autocomplete="off" placeholder="Duração da prova" required />
+                                    matInput autocomplete="off" id="testDuration" placeholder="Duração da prova" required />
                             </mat-form-field>
                             <div
                                 *ngIf="formTest.get('testDuration')?.invalid && (formTest.get('testDuration')?.dirty || formTest.get('testDuration')?.touched)">
@@ -387,7 +387,7 @@
                             <br />
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Dificuldade</mat-label>
-                                <mat-select [(ngModel)]="test.difficulty" formControlName="testDifficulty"
+                                <mat-select id="testDifficulty" [(ngModel)]="test.difficulty" formControlName="testDifficulty"
                                     placeholder="Dificuldade">
                                     <mat-option value="Iniciante">Iniciante</mat-option>
                                     <mat-option value="Intermediário">Intermediário</mat-option>
@@ -404,7 +404,7 @@
                             <br />
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Percentual de aprovação</mat-label>
-                                <mat-select [(ngModel)]="test.approvalPercentual" formControlName="testApproval"
+                                <mat-select [(ngModel)]="test.approvalPercentual" id="testAppPercentual" formControlName="testApproval"
                                     placeholder="Percentual de aprovação">
                                     <mat-option value="0%">0%</mat-option>
                                     <mat-option value="10%">10%</mat-option>
@@ -420,7 +420,7 @@
                             </div>
                             <br />
                             <button *ngIf="this.courseId != undefined" mat-raised-button
-                                (click)="deleteTest(this.test.id)" color="warn">Excluir Prova</button>
+                                (click)="deleteCourseItem(this.test)" color="warn">Excluir Prova</button>
                             <br />
                             <mat-card class="question-content">
                                 <mat-card-header class="header-content">
@@ -612,9 +612,9 @@
                                             formControlName="answerE" class="text-area-form" required></textarea>
                                         <br />
                                         <button mat-raised-button (click)="editQuestionIndexed(questionIndex)"
-                                            color="primary">Editar</button>
+                                            color="primary">Editar Pergunta</button>
                                         <button mat-raised-button (click)="deleteQuestionIndexed(questionIndex)"
-                                            color="warn">Editar</button>
+                                            color="warn">Excluir Pergunta</button>
 
                                     </mat-card-content>
                                 </form>
