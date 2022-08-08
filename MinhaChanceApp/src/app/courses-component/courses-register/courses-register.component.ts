@@ -40,6 +40,7 @@ export class CoursesRegisterComponent implements OnInit {
   courseId!: number;
 
   filesTobeDeleted!: any[];
+  objectsTobeDeleted!: any[];
 
   constructor(private router: ActivatedRoute, private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) {
 
@@ -86,7 +87,7 @@ export class CoursesRegisterComponent implements OnInit {
         this.test.id = course.Test.id;
 
         this.questions = course.Test.Questions;
-        
+
 
       });
 
@@ -163,13 +164,15 @@ export class CoursesRegisterComponent implements OnInit {
 
   async editCourse(course: Course) {
     try {
+
       this.deleteFilesToBeDeleted();
-      
+      this.deleteObjectsToBeDeleted();
+
       if (this.formCertification.valid) {
         let certification = this.certification;
         await this.certificationService.editCertification(certification);
         await this.blobService.uploadFile('', certification.corporativeSignature, `${certification.corporativeSignatureName}/${course.id}`, 'CorporativeSignatures', () => { });
-        
+
       }
 
       if (this.formTest.valid) {
@@ -197,7 +200,7 @@ export class CoursesRegisterComponent implements OnInit {
           await this.blobService.uploadFile('', session.videoSession, `${session.videoSessionName}/${session.id}`, 'CoursesVideos', () => { });
         }
       }
-      
+
 
     }
     catch (e) {
@@ -205,18 +208,41 @@ export class CoursesRegisterComponent implements OnInit {
     }
   }
 
-  deleteFilesToBeDeleted(){
-    if(this.filesTobeDeleted.length > 0){
+  async deleteObjectsToBeDeleted() {
+    if (this.objectsTobeDeleted.length > 0) {
+      this.objectsTobeDeleted.forEach(async item => {
+        switch (item.type) {
+          case 'certification':
+            await this.certificationService.deleteCertification(item.id).subscribe(isDeleted => isDeleted = isDeleted);
+            break;
+          case 'session':
+            await this.sessionService.deleteSession(item.id).subscribe(isDeleted => isDeleted = isDeleted);
+            break;
+          case 'question':
+            await this.questionService.deleteQuestion(item.id).subscribe(isDeleted => isDeleted = isDeleted);
+            break;
+          case 'test':
+            await this.testService.deleteTest(item.id).subscribe(isDeleted => isDeleted = isDeleted);
+            break;
+
+        }
+      });
+    }
+  }
+
+  deleteFilesToBeDeleted() {
+    if (this.filesTobeDeleted.length > 0) {
       this.filesTobeDeleted.forEach(file => {
-        switch(file.type){
+        switch (file.type) {
           case 'signature':
-            this.blobService.deleteFile('',`${file.file.corporativeSignatureName}/${file.id}`, 'CorporativeSignatures', () => { })
+            this.blobService.deleteFile('', `${file.file.corporativeSignatureName}/${file.id}`, 'CorporativeSignatures', () => { })
             break;
           case 'video':
             this.blobService.deleteFile('', `${file.file.videoSessionName}/${file.id}`, 'CoursesVideos', () => { })
             break;
           case 'pdf':
             this.blobService.deleteFile('', `${file.file.pdfSessionName}/${file.id}`, 'CoursesPDFs', () => { })
+            break;
         }
       })
     }
@@ -240,30 +266,36 @@ export class CoursesRegisterComponent implements OnInit {
   courseImageSelected(event: any) {
     this.course.courseimage = event.target.files[0];
   }
- 
+
 
   async deleteCourseItem(courseItem: any) {
-    let isDeleted: boolean = false;
-    if(Object.getPrototypeOf(courseItem) === Certification.prototype){
-      await this.certificationService.deleteCertification(courseItem.id).subscribe(isDeleted => isDeleted = isDeleted);
+    
+    if (Object.getPrototypeOf(courseItem) === Certification.prototype) {
+
+      this.objectsTobeDeleted.push({ id: courseItem.id, type: 'certification' });
+
       (<HTMLInputElement>document.getElementById('certificationTitle')).value = '';
       (<HTMLInputElement>document.getElementById('certificationDescription')).value = '';
       this.cleanCorporativeSignature();
     }
-    else{
-      await this.testService.deleteTest(courseItem.id).subscribe(isDeleted => isDeleted = isDeleted);
+    else {
+
+      this.objectsTobeDeleted.push({ id: courseItem.id, type: 'test' });
+
       (<HTMLInputElement>document.getElementById('testDuration')).value = '';
       (<HTMLInputElement>document.getElementById('testDifficulty')).value = '';
       (<HTMLInputElement>document.getElementById('testAppPercentual')).value = '';
     }
 
-    if(isDeleted && Object.getPrototypeOf(courseItem) === Certification.prototype)
-      this.blobService.deleteFile('',`${courseItem.corporativeSignatureName}/${courseItem.id}`, 'CorporativeSignatures', () => { })
+    if (Object.getPrototypeOf(courseItem) === Certification.prototype) {
+      this.blobService.deleteFile('', `${courseItem.corporativeSignatureName}/${courseItem.id}`, 'CorporativeSignatures', () => { })
+      this.cleanCorporativeSignature();
+    }
   }
 
   cleanCorporativeSignature() {
     if (this.courseId != undefined)
-      this.filesTobeDeleted.push({file: this.certification.corporativeSignature, type: 'signature', id: this.courseId});
+      this.filesTobeDeleted.push({ file: this.certification.corporativeSignature, type: 'signature', id: this.courseId });
 
     this.certification.corporativeSignature = new File([], "", {
       type: "",
@@ -295,7 +327,7 @@ export class CoursesRegisterComponent implements OnInit {
   cleanSessionIndexed(index: number, typeFile: string) {
     if (typeFile == 'video') {
       if (this.courseId != undefined)
-        this.filesTobeDeleted.push({file: this.sessions[index].videoSession, type: 'video', id: this.sessions[index].id});
+        this.filesTobeDeleted.push({ file: this.sessions[index].videoSession, type: 'video', id: this.sessions[index].id });
 
       this.sessions[index].videoSession = new File([], "", {
         type: "",
@@ -305,7 +337,7 @@ export class CoursesRegisterComponent implements OnInit {
     }
     else {
       if (this.courseId != undefined)
-        this.filesTobeDeleted.push({file: this.sessions[index].pdfSession, type: 'pdf', id: this.sessions[index].id});
+        this.filesTobeDeleted.push({ file: this.sessions[index].pdfSession, type: 'pdf', id: this.sessions[index].id });
 
       this.sessions[index].pdfSession = new File([], "", {
         type: "",
@@ -336,10 +368,10 @@ export class CoursesRegisterComponent implements OnInit {
     this.questions[index].answerE = (<HTMLInputElement>document.getElementById(`answerE-${index}`)).value;
   }
 
-  async deleteQuestionIndexed(index: number) {
+  deleteQuestionIndexed(index: number) {
     let isDeleted: boolean;
     if (this.courseId != undefined)
-      await this.questionService.deleteQuestion(this.questions[index].id).subscribe(isDeleted => isDeleted = isDeleted);
+      this.objectsTobeDeleted.push({ id: this.questions[index].id, type: 'question' })
     else
       delete this.questions[index];
 
@@ -347,10 +379,10 @@ export class CoursesRegisterComponent implements OnInit {
 
   }
 
-  async deleteSessionIndexed(index: number) {
+  deleteSessionIndexed(index: number) {
     let isDeleted: boolean;
     if (this.courseId != undefined)
-      await this.sessionService.deleteSession(this.sessions[index].id).subscribe(isDeleted => isDeleted = isDeleted);
+      this.objectsTobeDeleted.push({ id: this.sessions[index].id, type: 'session' })
     else
       delete this.sessions[index];
 
