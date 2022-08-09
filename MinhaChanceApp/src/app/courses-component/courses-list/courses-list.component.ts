@@ -12,6 +12,7 @@ import { SessionService } from 'src/app/Services/Session/session.service';
 import { AzureBlobStorageService } from 'src/app/Services/Azure/azure-blob-storage.service';
 import { Session } from 'src/app/Models/Session/Session';
 import { Certification } from 'src/app/Models/Certification/Certification';
+import { VacancyService } from 'src/app/Services/Vacancy/vacancy.service';
 
 export interface Tile {
   color: string;
@@ -43,9 +44,10 @@ export class CoursesListComponent implements OnInit {
     {id: 3,sessionsQuantity: 2,certificationId: 2,test: undefined, description: 'Curso Ruby II',courseTitle: 'Introdução Ruby II',creationDate: '19/07/2022',subscribeQuantity: 10, durationTime: '9 Horas'},
   ]);
 
-  constructor(private courseService: CourseService,private blobService: AzureBlobStorageService,private certificationService: CertificationService, private testService: TestService, private questionService: QuestionService, private sessionService: SessionService) { }
+  constructor(private courseService: CourseService,private blobService: AzureBlobStorageService,private certificationService: CertificationService, private testService: TestService, private questionService: QuestionService, private sessionService: SessionService, private vacancyService: VacancyService) { }
 
   async ngOnInit(): Promise<void> {
+   // await this.getCategories();
    // await this.getAllCoursesByUserId(); getting all courses
   }
 
@@ -121,6 +123,13 @@ export class CoursesListComponent implements OnInit {
 
     if(filteredCoursesList.subscribe(result => result.length > 0))
       this.courses = filteredCoursesList;
+  }
+
+  async getCategories(){
+    await this.vacancyService.getCategoriesByUser(1).subscribe(category => {
+      this.categories = category;
+    }) //id do usuario logado
+
   }
 
   async applyFiltersCourses(){

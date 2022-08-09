@@ -13,6 +13,8 @@ import { QuestionService } from 'src/app/Services/Question/question.service';
 import { SessionService } from 'src/app/Services/Session/session.service';
 import { TestService } from 'src/app/Services/Test/test.service';
 import { ActivatedRoute } from '@angular/router';
+import { Vacancy } from 'src/app/Models/Vacancy/Vacancy';
+import { VacancyService } from 'src/app/Services/Vacancy/vacancy.service';
 
 @Component({
   selector: 'app-courses-register',
@@ -42,7 +44,9 @@ export class CoursesRegisterComponent implements OnInit {
   filesTobeDeleted!: any[];
   objectsTobeDeleted!: any[];
 
-  constructor(private router: ActivatedRoute, private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) {
+  vacanciesList!: Vacancy[];
+
+  constructor(private router: ActivatedRoute,private vacancyService: VacancyService, private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) {
 
   }
 
@@ -56,6 +60,8 @@ export class CoursesRegisterComponent implements OnInit {
     this.createFormCertificationValidation();
     this.createFormTestValidation();
     this.createFormQuestionValidation();
+
+    //this.getActiveVacancies();
 
     if (courseId != undefined) {
 
@@ -248,6 +254,14 @@ export class CoursesRegisterComponent implements OnInit {
     }
   }
 
+  async getActiveVacancies(){
+
+    await this.vacancyService.getActiveVacanciesByUser(1).subscribe(vacancies => {
+      this.vacanciesList = vacancies;
+    }); //passar id do usuario logado
+    
+  }
+
   videoSessionSelected(event: any) {
     this.session.videoSession = event.target.files[0];
     this.session.videoSessionName = event.target.files[0].name;
@@ -301,6 +315,9 @@ export class CoursesRegisterComponent implements OnInit {
       type: "",
     });
     this.certification.corporativeSignatureName = '';
+
+    
+    (<HTMLEmbedElement>document.getElementById('signature-source')).src = '';
     (<HTMLInputElement>document.getElementById('assign-file-id')).value = '';
 
   }
@@ -334,6 +351,8 @@ export class CoursesRegisterComponent implements OnInit {
       });
       this.sessions[index].videoSessionName = '';
 
+      (<HTMLSourceElement>document.getElementById(`video-source-${index}`)).src = '';
+
     }
     else {
       if (this.courseId != undefined)
@@ -343,6 +362,8 @@ export class CoursesRegisterComponent implements OnInit {
         type: "",
       });
       this.sessions[index].pdfSessionName = '';
+
+      (<HTMLSourceElement>document.getElementById(`pdf-source-${index}`)).src = '';
 
     }
 

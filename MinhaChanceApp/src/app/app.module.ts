@@ -25,6 +25,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { VacanciesListComponent } from './vacancies-component/vacancies-list/vacancies-list.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { FormsModule } from '@angular/forms';
     HomeComponentComponent,
     CoursesListComponent,
     CoursesRegisterComponent,
+    VacanciesListComponent,
     
   ],
   imports: [
