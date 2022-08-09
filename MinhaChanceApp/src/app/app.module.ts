@@ -26,6 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { VacanciesListComponent } from './vacancies-component/vacancies-list/vacancies-list.component';
+import { VacanciesDetailsComponent } from './vacancies-component/vacancies-details/vacancies-details/vacancies-details.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { VacanciesListComponent } from './vacancies-component/vacancies-list/vac
     CoursesListComponent,
     CoursesRegisterComponent,
     VacanciesListComponent,
+    VacanciesDetailsComponent,
     
   ],
   imports: [
