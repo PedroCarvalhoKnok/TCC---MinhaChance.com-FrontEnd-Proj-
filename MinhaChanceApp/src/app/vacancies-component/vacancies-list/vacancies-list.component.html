@@ -22,7 +22,7 @@
             <form class="example-form">
 
 
-                <label class="label-filter">Benefícios</label>
+                <label class="label-filter" for="typeahead-basic">Benefícios</label>
                 <div class="col select-filters">
                     <div ngbDropdown class="d-inline-block select-filters">
                         <button type="button" class="btn btn-outline-primary" id="dropdownBenefits"
@@ -149,64 +149,11 @@
                             mais de 10 anos e agora busca um profissional experiente e dedicado</label><br />
                     </div>
 
-                </div>
-
-            </div>
-
-
-        </mat-card-content>
-
-
-
-
-    </mat-card>
-
-    <mat-card class="vacancies-card">
-
-        <mat-card-header class="header-content">
-            <mat-card-title class="title-vacancy">
-                Consultor Senior
-            </mat-card-title>
-
-        </mat-card-header>
-
-        <mat-card-content class="vacancy-content">
-
-            <div class="container">
-
-                <div class="row">
-
-                    <span class="material-icons col-md-4">account_circle</span>
-                    <label class="col-md-4" for="inputdefault">Salário<br />A combinar</label>
-                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />4 vagas</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />Híbrido (2x/semana
-                        presencial)</label>
-                    <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
-                        <ul class="vacancy-list col-md-8">
-                            <li>VR + VT (A combinar)</li>
-                            <li>Convenio Médico</li>
-                            <li>Convenio Odontológico</li>
-                            <li>Gym Pass</li>
-                        </ul>
-                    </label><br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
-                        <ul class="vacancy-list col-md-4">
-                            <li>2 anos de experiência na área</li>
-                            <li>Superior Completo</li>
-                            <li>Conhecimento em arquitetura</li>
-                            <li>Conhecimento de MongoDB é um diferencial</li>
-                        </ul>
-                    </label><br />
-                    <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">
-                        Avaliação Geral<br />
-                        <ngb-rating class="rate" [max]="5"></ngb-rating>
-                    </label>
                     <div class="description">
-                        <label for="inputdefault">Descrição da vaga<br />A empresa X está atuando no ramo da tecnologia
-                            a
-                            mais de 10 anos e agora busca um profissional experiente e dedicado</label><br />
+                        <button type="button" [routerLink]="" class="btn btn-primary btn-sm space-button">Editar vaga</button>
+                        <button type="button" [routerLink]="" class="btn btn-primary btn-sm space-button">Vaga preenchida</button>
+                        <button type="button" [routerLink]="" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
+                        <button type="button"  class="btn btn-danger btn-sm space-button">Excluir vaga</button>
                     </div>
 
                 </div>
@@ -260,7 +207,7 @@
                     </label><br />
                     <br />
                     <label class="col-md-4 distance-between" for="inputdefault">
-                        Avaliação Geral<br />
+                        Avaliação da vaga<br />
                         <ngb-rating class="rate" [max]="5"></ngb-rating>
                     </label>
                     <div class="description">
@@ -280,6 +227,8 @@
 
 
     </mat-card>
+
+    
 
 
 

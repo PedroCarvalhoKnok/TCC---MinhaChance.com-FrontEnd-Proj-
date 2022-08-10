@@ -1,5 +1,5 @@
 .vacancies-card{
-    width: 50%;
+    width: 55%;
     margin-top: 30px;
     margin-left: 10%;
     display: flex;
@@ -11,7 +11,7 @@
   .filter-card{
     float: right;
     width: 30%;
-    height: 100%;
+    height: 170vh;
     border-bottom: 10px;
     border-color: black;
     position: relative;
@@ -83,7 +83,6 @@
   }
   
   .apply-btn{
-    margin-top: 10px;
     width: 100%;
   }
   
@@ -111,11 +110,19 @@
   .distance-between{
     padding-top: 20px;
   }
+  .distance-pad-content{
+    text-align: center;
+    padding-right: 0px;
+  }
   
-  @media (max-width: 750px) {
+  @media (max-width: 770px) {
   
     .container{
       margin-left: 30%;
+    }
+
+    .distance-pad-content{
+      text-align: initial;
     }
      
   }
@@ -129,8 +136,8 @@
       width: 70%;
     }
   
-    .vacancy-card{
-      height: 50%;
+    .filter-card{
+      height: 70%;
     }
     
   }
@@ -150,7 +157,7 @@
     font-size: 12px;
   }
   
-  .vacancy-card{
+  .filter-card{
     height: 80%;
     padding-left: 0px;
     margin-right: -40px;

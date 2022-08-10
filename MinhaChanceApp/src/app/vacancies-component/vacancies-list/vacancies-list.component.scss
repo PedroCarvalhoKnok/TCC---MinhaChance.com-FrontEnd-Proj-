@@ -3,7 +3,7 @@
   margin-top: 30px;
   margin-left: 10%;
   display: flex;
-  height: 350px;
+  height: 280px;
   background-color: #191645;
   color: white;
 }
@@ -11,7 +11,7 @@
 .filter-card{
   float: right;
   width: 30%;
-  height: 100%;
+  height: 80%;
   border-bottom: 10px;
   border-color: black;
   position: relative;
@@ -129,9 +129,7 @@
     width: 70%;
   }
 
-  .vacancy-card{
-    height: 50%;
-  }
+  
   
 }
 
@@ -150,7 +148,7 @@
   font-size: 12px;
 }
 
-.vacancy-card{
+.filter-card{
   height: 80%;
   padding-left: 0px;
   margin-right: -40px;

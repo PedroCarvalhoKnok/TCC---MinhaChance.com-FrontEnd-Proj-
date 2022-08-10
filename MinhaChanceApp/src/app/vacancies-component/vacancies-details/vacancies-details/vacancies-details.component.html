@@ -3,7 +3,7 @@
 
         <mat-card-header class="title-vacancy">
             <span class="material-icons">add_circle_outline</span>
-            <mat-card-title class="add-title"><a>Crie vagas e oportunidades para sua empresa</a></mat-card-title>
+            <mat-card-title class="add-title"><a>Busque candidatos mais adequados a vaga</a></mat-card-title>
         </mat-card-header>
     </mat-card>
 </div>
@@ -22,33 +22,38 @@
             <form class="example-form">
 
 
-                <label class="label-filter">Benefícios</label>
+                <label class="label-filter">Status</label>
                 <div class="col select-filters">
                     <div ngbDropdown class="d-inline-block select-filters">
                         <button type="button" class="btn btn-outline-primary" id="dropdownBenefits"
-                            ngbDropdownToggle>Beneficios</button>
+                            ngbDropdownToggle>Status atual</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownCategory">
-                            <button ngbDropdownItem></button>
+                            <button ngbDropdownItem>Trabalhando</button>
+                            <button ngbDropdownItem>Desempregado(a)</button>
                         </div>
                     </div>
                 </div>
 
-
-
-                <label class="label-filter">Requisitos</label>
-                <div class="col select-filters">
-                    <div ngbDropdown class="d-inline-block select-filters">
-                        <button type="button" class="btn btn-outline-primary" id="dropdownRequires"
-                            ngbDropdownToggle>Requisitos</button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownCategory">
-                            <button ngbDropdownItem></button>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label class="label-filter">Empresa atual</label>
+                    <br />
+                    <input id="atualCompany" class="form-control" type="text" class="form-control" />
                 </div>
 
+                <div class="form-group">
+                    <label class="label-filter">Cargo atual</label>
+                    <br />
+                    <input id="atualCharge" class="form-control" type="text" class="form-control" />
+                </div>
 
+                <br />
+                <label class="label-filter">Idade</label>
+                <br />
+                <mat-slider thumbLabel tickInterval="1" step="1" min="0" max="100" aria-label="Reais">
+                </mat-slider>
 
-                <label class="label-filter" for="typeahead-basic">Vagas Confidenciais</label>
+                <br />
+                <label class="label-filter" for="typeahead-basic">Concluiu curso da vaga?</label>
                 <br />
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
@@ -59,41 +64,48 @@
 
                 </div>
                 <br />
-                <label class="label-filter" for="typeahead-basic">Vagas Presenciais</label>
-                <br />
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
-
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio2">Não</label>
-
-                </div>
-                <br />
-                <div *ngIf="" class="form-group">
-                    <label class="label-filter">Localização</label>
-                    <div class="col select-filters">
-                        <div ngbDropdown class="d-inline-block select-filters">
-                            <button type="button" class="btn btn-outline-primary" id="dropdownLocation"
-                                ngbDropdownToggle>Localização</button>
-                            <div ngbDropdownMenu aria-labelledby="dropdownCategory">
-                                <button ngbDropdownItem></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <br />
                 <div class="form-group">
 
-                    <label class="label-filter">Quantidade de vagas máxima</label>
+                    <label class="label-filter">Anos de experiência</label>
                     <br />
                     <input id="maxVacancyQuantity" class="form-control" type="number" class="form-control" />
                 </div>
                 <br />
-                <label class="label-filter">Salário (R$)</label>
+                <label class="label-filter" for="typeahead-basic">Possui formação acadêmica?</label>
+                <br />
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
+
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio2">Não</label>
+
+                </div>
+                <br />
+                <label class="label-filter" for="typeahead-basic">Possui certificados?</label>
+                <br />
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
+
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio2">Não</label>
+
+                </div>
+                <br/>
+                <div class="form-group">
+
+                    <label class="label-filter">Quantidade de certificados</label>
+                    <br />
+                    <input id="maxVacancyQuantity" class="form-control" type="number" class="form-control" />
+                </div>
+                
+                <label class="label-filter">Pretensão Salarial (R$)</label>
                 <br />
                 <mat-slider thumbLabel tickInterval="1000" step="1000" min="0" max="100000" aria-label="Reais">
                 </mat-slider>
+                
                 <button type="button" class="btn btn-primary apply-btn">Aplicar</button>
 
             </form>
@@ -121,34 +133,54 @@
 
                 <div class="row">
 
-                    <span class="material-icons col-md-4">account_circle</span>
-                    <label class="col-md-4" for="inputdefault">Status<br />Trabalhando</label>
-                    <label class="col-md-4" for="inputdefault">Empresa atual<br />empresa X</label> Caso tenha
-                    <label class="col-md-4" for="inputdefault">Cargo atual<br />Analista júnior</label> Caso Tenha
-                    <label class="col-md-4" for="inputdefault">Idade<br />24 anos</label>
-                    <label class="col-md-4" for="inputdefault">Email<br />calos.eduardo12@gmail.com</label>
-                    <label class="col-md-4" for="inputdefault">Contato<br />(11)983342510</label>
-                    <label class="col-md-4" for="inputdefault">Concluiu curso da vaga?<br />Sim</label>
-                    <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Experiências anteriores<br />
-                        <ul class="vacancy-list col-md-8">
-                            <li>Estagiário - Empresa Y - 1 ano(s)</li>
-                            <li>Analista de software - Empresa Y - 2  ano(s)</li>
+                    <span class="material-icons col-md-4 distance-pad-content">account_circle</span>
+                    <label class="col-md-4 distance-between" for="inputdefault">Status<br />Trabalhando</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Empresa atual<br />empresa X</label>
+                    <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Cargo atual<br />Analista júnior</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Idade<br />24 anos</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Email<br />carlos.eduardo12@gmail.com</label>
+                    <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Contato<br />(11)983342510</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Concluiu curso da vaga?<br />Sim</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Pretensão salarial<br />R$ 4000,00</label>
+                    <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Experiências anteriores<br />
+                        <ul class="vacancy-list col-md-4">
+                            <li>Vaga: Estagiário</li>
+                            <li>Tempo: 1 ano(s)</li>
+                            <li>Vaga: Analista de software</li>
+                            <li>Tempo: 2 ano(s)</li>
                         </ul>
                     </label><br />
                     <label class="col-md-4 distance-between" for="inputdefault">Formação Acadêmica<br />
                         <ul class="vacancy-list col-md-4">
-                            <li>Superior Completo - ADS - Faculdade Y - 3 anos</li>
-                            <li>Ensino Médio Completo - Escola Y</li>
+                            <li>Superior Completo</li>
+                            <li>Curso: ADS</li>
+                            <li>Faculdade: Y</li>
+                            <li>Tempo: 3 ano(s)</li>
+                            <li>Ensino Médio Completo</li>
+                            <li>Escola Y</li>
                         </ul>
                     </label><br />
                     <label class="col-md-4 distance-between" for="inputdefault">Certificados<br />
                         <ul class="vacancy-list col-md-4">
-                            <li>Desenvolvimento Web com .NET - MinhaVez! - Carga horária: 100 hora(s)</li>
-                            <li>Desenvolvimento Mobile e Iot - IBM - Carga horária: 40 hora(s)</li>
+                            <li>Desenvolvimento Web com .NET</li>
+                            <li>Plataforma: MinhaVez!</li>
+                            <li>Carga horária: 100 hora(s)</li>
+                            <li>Desenvolvimento Mobile e Iot</li>
+                            <li>Plataforma: IBM</li>
+                            <li>Carga horária: 40 hora(s)</li>
                         </ul>
                     </label><br />
-                    <div class="description">
+                    <label class="col-md-4 distance-pad-content" for="inputdefault">
+                        Avaliação Geral<br />
+                        <ngb-rating class="rate" [max]="5"></ngb-rating>
+                    </label>
+                    <br />
+                    <label class="col-md-4 distance-pad-content" for="inputdefault">
+                        Avaliação Serviços<br />
+                        <ngb-rating class="rate" [max]="4"></ngb-rating>
+                    </label>
+                    <br/>
+                    <div class="description distance-pad-content">
                         <label for="inputdefault">Objetivos<br />Busco qualificação profissional e pessoal e agregar valor aos 
                         produtos e colaborar com a sociedade</label><br />
                     </div>
@@ -164,129 +196,6 @@
 
 
     </mat-card>
-
-    <mat-card class="vacancies-card">
-
-        <mat-card-header class="header-content">
-            <mat-card-title class="title-vacancy">
-                Consultor Senior
-            </mat-card-title>
-
-        </mat-card-header>
-
-        <mat-card-content class="vacancy-content">
-
-            <div class="container">
-
-                <div class="row">
-
-                    <span class="material-icons col-md-4">account_circle</span>
-                    <label class="col-md-4" for="inputdefault">Salário<br />A combinar</label>
-                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />4 vagas</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />Híbrido (2x/semana
-                        presencial)</label>
-                    <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
-                        <ul class="vacancy-list col-md-8">
-                            <li>VR + VT (A combinar)</li>
-                            <li>Convenio Médico</li>
-                            <li>Convenio Odontológico</li>
-                            <li>Gym Pass</li>
-                        </ul>
-                    </label><br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
-                        <ul class="vacancy-list col-md-4">
-                            <li>2 anos de experiência na área</li>
-                            <li>Superior Completo</li>
-                            <li>Conhecimento em arquitetura</li>
-                            <li>Conhecimento de MongoDB é um diferencial</li>
-                        </ul>
-                    </label><br />
-                    <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">
-                        Avaliação Geral<br />
-                        <ngb-rating class="rate" [max]="5"></ngb-rating>
-                    </label>
-                    <div class="description">
-                        <label for="inputdefault">Descrição da vaga<br />A empresa X está atuando no ramo da tecnologia
-                            a
-                            mais de 10 anos e agora busca um profissional experiente e dedicado</label><br />
-                    </div>
-
-                </div>
-
-            </div>
-
-
-        </mat-card-content>
-
-
-
-
-    </mat-card>
-
-    <mat-card class="vacancies-card">
-
-        <mat-card-header class="header-content">
-            <mat-card-title class="title-vacancy">
-                Consultor Senior
-            </mat-card-title>
-
-        </mat-card-header>
-
-        <mat-card-content class="vacancy-content">
-
-            <div class="container">
-
-                <div class="row">
-
-                    <span class="material-icons col-md-4">account_circle</span>
-                    <label class="col-md-4" for="inputdefault">Salário<br />A combinar</label>
-                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />4 vagas</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />Híbrido (2x/semana
-                        presencial)</label>
-                    <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
-                        <ul class="vacancy-list col-md-8">
-                            <li>VR + VT (A combinar)</li>
-                            <li>Convenio Médico</li>
-                            <li>Convenio Odontológico</li>
-                            <li>Gym Pass</li>
-                        </ul>
-                    </label><br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
-                        <ul class="vacancy-list col-md-4">
-                            <li>2 anos de experiência na área</li>
-                            <li>Superior Completo</li>
-                            <li>Conhecimento em arquitetura</li>
-                            <li>Conhecimento de MongoDB é um diferencial</li>
-                        </ul>
-                    </label><br />
-                    <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">
-                        Avaliação Geral<br />
-                        <ngb-rating class="rate" [max]="5"></ngb-rating>
-                    </label>
-                    <div class="description">
-                        <label for="inputdefault">Descrição da vaga<br />A empresa X está atuando no ramo da tecnologia
-                            a
-                            mais de 10 anos e agora busca um profissional experiente e dedicado</label><br />
-                    </div>
-
-                </div>
-
-            </div>
-
-
-        </mat-card-content>
-
-
-
-
-    </mat-card>
-
-
-
 
 
 

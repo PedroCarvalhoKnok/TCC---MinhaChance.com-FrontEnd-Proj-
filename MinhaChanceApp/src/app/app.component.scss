@@ -10,39 +10,44 @@
   flex: 0.9 0.9 auto;
 }
 
-.example-spacer-menu-items{
+.example-spacer-menu-items {
   flex: 0.3 0.3 auto;
 }
 
 
-.footer{
-  margin-top: 5vh;
-  background-color: #191645;
-  position: relative;
-}
-
-.toolbar{
+.footer {
+  position: fixed;
+  padding: 10px 10px 0px 10px;
+  bottom: 0;
+  width: 100%;
   background-color: #191645;
 }
 
-.menu-icon-mobile{
+.toolbar {
+  background-color: #191645;
+}
+
+.menu-icon-mobile {
   display: none;
 }
 
-.menu-icon, .footer-icon, .name-icon, .side-icon{
+.menu-icon,
+.footer-icon,
+.name-icon,
+.side-icon {
   color: white;
 }
 
-.text-menu{
-    padding-top: 10px;
-    margin-top: 10px;
-    margin-left: -20px;
-    position: fixed;
-    font-size: 7px;
-    color: white;
+.text-menu {
+  padding-top: 10px;
+  margin-top: 10px;
+  margin-left: -20px;
+  position: fixed;
+  font-size: 7px;
+  color: white;
 }
 
-.text-menu-fix{
+.text-menu-fix {
   padding-top: 10px;
   margin-top: 10px;
   margin-left: -33px;
@@ -52,50 +57,44 @@
 }
 
 
-  
 
-   @media (max-width:500px){
 
-    .example-spacer-menu, .example-spacer-menu-footer, .example-spacer-menu-footer{
-      flex: 0 0 auto;
-      display: none;
-    }
-  
-    .menu-icon, .footer-icon{
-      display: none;
+@media (max-width:500px) {
 
-    }
+  .example-spacer-menu,
+  .example-spacer-menu-footer,
+  .example-spacer-menu-footer {
+    flex: 0 0 auto;
+    display: none;
+  }
 
-    .example-spacer{
-      flex: 0 0 auto;
-    }
+  .menu-icon,
+  .footer-icon {
+    display: none;
 
-    .example-spacer-menu-items{
-      flex: 0.3 0.3 auto;
-    }
+  }
 
-    .example-spacer-menu-items-fix{
-      flex: 0.3 0.3 auto;
-    }
+  .example-spacer {
+    flex: 0 0 auto;
+  }
 
-    .menu-icon-mobile{
-      display: block;
-      color: white;
+  .example-spacer-menu-items {
+    flex: 0.3 0.3 auto;
+  }
 
-    }
+  .example-spacer-menu-items-fix {
+    flex: 0.3 0.3 auto;
+  }
 
-    .footer{
-      margin-top: 20vh;
-      width: 120%;
-    }
+  .menu-icon-mobile {
+    display: block;
+    color: white;
 
-    .toolbar{
-      width: 120%;
-    }
-    
-    
-   }
-  
-  
-  
+  }
 
+  .toolbar {
+    width: 120%;
+  }
+
+
+}
