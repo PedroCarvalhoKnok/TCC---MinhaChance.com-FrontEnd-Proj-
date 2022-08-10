@@ -27,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { VacanciesListComponent } from './vacancies-component/vacancies-list/vacancies-list.component';
 import { VacanciesDetailsComponent } from './vacancies-component/vacancies-details/vacancies-details/vacancies-details.component';
+import { VacanciesRegisterComponent } from './vacancies-component/vacancies-register/vacancies-register/vacancies-register.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { VacanciesDetailsComponent } from './vacancies-component/vacancies-detai
     CoursesRegisterComponent,
     VacanciesListComponent,
     VacanciesDetailsComponent,
+    VacanciesRegisterComponent,
     
   ],
   imports: [

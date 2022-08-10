@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from 'src/app/Models/Course/Course';
 import { Test } from 'src/app/Models/Test/Test';
-import {PageEvent} from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { Observable, of } from 'rxjs';
 import { courseFilter } from 'src/app/Models/Filters/Course/courseFilter';
 import { CourseService } from 'src/app/Services/Course/course.service';
@@ -33,74 +33,74 @@ export class CoursesListComponent implements OnInit {
   showTestTitle: boolean = false;
   filters: courseFilter = new courseFilter();
 
-  test: Test = {id: 1, certificationId: 1, durationTime: '1 Hora', difficulty: 'Iniciante', questionsQuantity: 9, approvalPercentual: '50%'}
-  test2: Test = {id: 2, certificationId: 0, durationTime: '1 Hora', difficulty: 'Iniciante', questionsQuantity: 9, approvalPercentual: '50%'}
-  
- categories: string[] = ['Construção', 'Tecnologia', 'Gestão'];
+  test: Test = { id: 1, certificationId: 1, durationTime: '1 Hora', difficulty: 'Iniciante', questionsQuantity: 9, approvalPercentual: '50%' }
+  test2: Test = { id: 2, certificationId: 0, durationTime: '1 Hora', difficulty: 'Iniciante', questionsQuantity: 9, approvalPercentual: '50%' }
+
+  categories: string[] = ['Construção', 'Tecnologia', 'Gestão'];
 
   courses: Observable<Course[]> = of([
-    {id: 1,sessionsQuantity: 4,certificationId: 1,test: this.test, description: 'Curso introdutório ao Python',courseTitle: 'Introdução Python I',creationDate: '19/07/2022',subscribeQuantity: 100, durationTime: '7 Horas'},
-    {id: 2,sessionsQuantity: 3,certificationId: undefined,test: this.test2, description: 'Curso Ruby I',courseTitle: 'Introdução Ruby I',creationDate: '19/07/2022',subscribeQuantity: 100, durationTime: '7 Horas'},
-    {id: 3,sessionsQuantity: 2,certificationId: 2,test: undefined, description: 'Curso Ruby II',courseTitle: 'Introdução Ruby II',creationDate: '19/07/2022',subscribeQuantity: 10, durationTime: '9 Horas'},
+    { id: 1, sessionsQuantity: 4, certificationId: 1, test: this.test, description: 'Curso introdutório ao Python', courseTitle: 'Introdução Python I', creationDate: '19/07/2022', subscribeQuantity: 100, durationTime: '7 Horas' },
+    { id: 2, sessionsQuantity: 3, certificationId: undefined, test: this.test2, description: 'Curso Ruby I', courseTitle: 'Introdução Ruby I', creationDate: '19/07/2022', subscribeQuantity: 100, durationTime: '7 Horas' },
+    { id: 3, sessionsQuantity: 2, certificationId: 2, test: undefined, description: 'Curso Ruby II', courseTitle: 'Introdução Ruby II', creationDate: '19/07/2022', subscribeQuantity: 10, durationTime: '9 Horas' },
   ]);
 
-  constructor(private courseService: CourseService,private blobService: AzureBlobStorageService,private certificationService: CertificationService, private testService: TestService, private questionService: QuestionService, private sessionService: SessionService, private vacancyService: VacancyService) { }
+  constructor(private courseService: CourseService, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private testService: TestService, private questionService: QuestionService, private sessionService: SessionService, private vacancyService: VacancyService) { }
 
   async ngOnInit(): Promise<void> {
-   // await this.getCategories();
-   // await this.getAllCoursesByUserId(); getting all courses
+    // await this.getCategories();
+    // await this.getAllCoursesByUserId(); getting all courses
   }
 
-  changeShowCertification(){
+  changeShowCertification() {
     this.showCertificationTitle = true;
     this.filters.hasCertification = true;
   }
 
-  changeHideCertification(){
+  changeHideCertification() {
     this.showCertificationTitle = false;
     this.filters.hasCertification = false;
     this.filters.certificationTitle = '';
   }
-  changeShowTest(){
+  changeShowTest() {
     this.showTestTitle = true;
     this.filters.hasTest = true;
   }
 
-  changeHideTest(){
+  changeHideTest() {
     this.showTestTitle = false;
     this.filters.hasTest = false;
     this.filters.testTitle = '';
   }
 
-  changeCategoryFilter(category: string){
+  changeCategoryFilter(category: string) {
     this.filters.courseCategory = category;
   }
 
-  changeLinkedVacancies(hasLink: boolean){
-    this.filters.hasVacancyLink = hasLink ? true: false;
+  changeLinkedVacancies(hasLink: boolean) {
+    this.filters.hasVacancyLink = hasLink ? true : false;
   }
 
-  difficultyRateChange(rate: number){
+  // difficultyRateChange(rate: number) {
 
-    this.filters.difficulty = this.switchDifficultyRate(rate);
-    
-  }
+  //   this.filters.difficulty = this.switchDifficultyRate(rate);
 
-  difficultyTestRateChange(rate: number){
+  // }
+
+  difficultyTestRateChange(rate: number) {
 
     this.filters.testDifficulty = this.switchDifficultyRate(rate);
 
   }
 
-  testDuration(event: any){
-    
+  testDuration(event: any) {
+
     this.filters.testDuration = event.value;
-    
+
   }
 
-  switchDifficultyRate(rate: number): string{
+  switchDifficultyRate(rate: number): string {
 
-    switch(rate){
+    switch (rate) {
       case 1:
         return 'Iniciante'
         break;
@@ -118,42 +118,60 @@ export class CoursesListComponent implements OnInit {
 
   }
 
-  async getAllCoursesByUserId(){
+  async getAllCoursesByUserId() {
     let filteredCoursesList = await this.courseService.getAllCoursesById(1, this.filters);
 
-    if(filteredCoursesList.subscribe(result => result.length > 0))
+    if (filteredCoursesList.subscribe(result => result.length > 0))
       this.courses = filteredCoursesList;
   }
 
-  async getCategories(){
+  async getCategories() {
     await this.vacancyService.getCategoriesByUser(1).subscribe(category => {
       this.categories = category;
     }) //id do usuario logado
 
   }
 
-  async applyFiltersCourses(){
+  async applyFiltersCourses() {
 
-    this.filters.approvalPercentual = (<HTMLInputElement>document.getElementById('approvalPercentual')) == null || undefined ? 0: +(<HTMLInputElement>document.getElementById('approvalPercentual')).value;
-    this.filters.subscribeQuantity = (<HTMLInputElement>document.getElementById('subscribeQuantity')) == null || undefined ? 0: +(<HTMLInputElement>document.getElementById('subscribeQuantity')).value;
+    let filteredCourseList: Course[] = [];
+    this.courses.subscribe(filterCourse => { filteredCourseList = filterCourse });
 
-    this.filters.testTitle = (<HTMLInputElement>document.getElementById('testTitle')) == null || undefined ? '': (<HTMLInputElement>document.getElementById('testTitle')).value;
-    this.filters.certificationTitle = (<HTMLInputElement>document.getElementById('certificationTitle')) == null || undefined ? '': (<HTMLInputElement>document.getElementById('certificationTitle')).value;
-    
-    let filteredCoursesList = await this.courseService.getAllCoursesById(1, this.filters);
+    this.filters.approvalPercentual = (<HTMLInputElement>document.getElementById('approvalPercentual')) == null || undefined ? 0 : +(<HTMLInputElement>document.getElementById('approvalPercentual')).value;
+    this.filters.subscribeQuantity = (<HTMLInputElement>document.getElementById('subscribeQuantity')) == null || undefined ? 0 : +(<HTMLInputElement>document.getElementById('subscribeQuantity')).value;
 
-    if(filteredCoursesList.subscribe(result => result.length > 0))
-      this.courses = filteredCoursesList;
+    this.filters.testTitle = (<HTMLInputElement>document.getElementById('testTitle')) == null || undefined ? '' : (<HTMLInputElement>document.getElementById('testTitle')).value;
+    this.filters.certificationTitle = (<HTMLInputElement>document.getElementById('certificationTitle')) == null || undefined ? '' : (<HTMLInputElement>document.getElementById('certificationTitle')).value;
+
+    if (this.filters.testDifficulty != '' || undefined)
+      filteredCourseList = filteredCourseList.filter(course => course.test?.difficulty == this.filters.testDifficulty);
+
+    if (this.filters.certificationTitle != '' || undefined)
+      filteredCourseList = filteredCourseList.filter(course => course.certification?.certificationTitle == this.filters.certificationTitle);
+
+    if (this.filters.hasCertification)
+      filteredCourseList = filteredCourseList.filter(course => course.certificationId != 0 || course.certificationId != undefined);
+
+    if (this.filters.hasTest)
+      filteredCourseList = filteredCourseList.filter(course => course.testId != 0 || course.certificationId != undefined);
+
+    if (this.filters.hasVacancyLink)
+      filteredCourseList = filteredCourseList.filter(course => course.vacancyId != 0 || course.vacancyId != undefined);
+
+    // let filteredCoursesList = await this.courseService.getAllCoursesById(1, this.filters);
+
+    // if(filteredCoursesList.subscribe(result => result.length > 0 ? result: undefined))
+    //   this.courses = filteredCoursesList;
 
   }
 
-  async deleteCourse(courseId: number){
+  async deleteCourse(courseId: number) {
 
     await this.sessionService.getSessionsByCourseId(courseId).subscribe(sessions => sessions.forEach(session => {
       this.blobService.deleteFile('', `${session.videoSessionName}/${session.id}`, 'CoursesVideos', () => { })
       this.blobService.deleteFile('', session.pdfSessionName, 'CoursesPDFs', () => { })
     }));
-    
+
 
     await this.certificationService.getCertificationByCourseId(courseId).subscribe(certification => {
       this.blobService.deleteFile('', `${certification.corporativeSignatureName}/${courseId}`, 'CorporativeSignatures', () => { })

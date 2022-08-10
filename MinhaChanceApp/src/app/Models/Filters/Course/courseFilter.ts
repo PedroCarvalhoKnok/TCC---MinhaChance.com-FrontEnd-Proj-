@@ -3,7 +3,6 @@ export class courseFilter{
     courseCategory?: string;
     hasVacancyLink?: boolean;
     subscribeQuantity?: number;
-    difficulty?: string;
     hasCertification?: boolean;
     certificationTitle?: string;
     hasTest?: boolean;

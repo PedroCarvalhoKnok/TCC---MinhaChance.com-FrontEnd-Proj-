@@ -1,0 +1,101 @@
+.vacancies-card{
+    width: 60%;
+    margin-top: 30px;
+    margin-left: 20%;
+    display: flex;
+    height: 400px;
+    background-color: #191645;
+    color: white;
+}
+
+.benefit-card, .requires-card{
+    width: 60%;
+    margin-top: 30px;
+    margin-left: 20%;
+    display: flex;
+    height: 350px;
+    background-color: #191645;
+    color: white;
+}
+.header-content{
+    width: 20%;
+}
+
+.vacancy-content{
+    margin-top: 60px;
+    margin-left: -70%;
+    display: flex;
+    width: 100%;
+    padding-left: 0px;
+    overflow:auto;
+    color: white;
+}
+
+.benefit-content, .requires-content{
+    margin-top: 60px;
+    margin-left: -70%;
+    display: flex;
+    padding-left: 0px;
+    overflow:auto;
+    color: white;
+    width: 100%;
+}
+
+
+.form-content{
+    color: white;
+}
+
+.margin-btn-vacancy{
+    margin-left: 20px;
+}
+
+.spacing-margin {
+    margin-left: 100px;
+}
+
+.text-area-form, .container, .session-area-form {
+    width: 100%;
+  }
+
+.submit-btn{
+    width: 60%;
+    margin-left: 20%;
+    background-color: #191645;
+ }
+
+ .title-vacancy{
+    width: 100%;
+ }
+
+.placeholder-color {
+    color: white !important;
+    
+  }
+
+
+ @media (max-width: 1000px) {
+
+    .spacing-margin {
+        margin-left: 0px;
+    }
+    
+  }
+
+  @media (max-width: 500px) {
+
+
+    .benefit-card, .requires-card{
+        width: 80%;
+    }
+    
+
+    .vacancies-card{
+        width: 80%;
+    }
+
+    .submit-btn{
+        width: 80%;
+     }
+    
+  }
