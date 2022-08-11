@@ -1,13 +1,11 @@
 export class courseFilter{
-    approvalPercentual?: number;
+    approvalPercentual!: number;
     courseCategory?: string;
     hasVacancyLink?: boolean;
-    subscribeQuantity?: number;
+    subscribeQuantity!: number;
     hasCertification?: boolean;
-    certificationTitle?: string;
     hasTest?: boolean;
-    testTitle?: string;
-    questionsQuantity?: number;
+    questionsQuantity!: number;
     testDifficulty?: string;
-    testDuration?: number;
+    testDuration!: number;
 }

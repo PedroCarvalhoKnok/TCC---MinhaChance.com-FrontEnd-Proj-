@@ -46,7 +46,7 @@ export class CoursesRegisterComponent implements OnInit {
 
   vacanciesList!: Vacancy[];
 
-  constructor(private router: ActivatedRoute,private vacancyService: VacancyService, private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) {
+  constructor(private router: ActivatedRoute, private vacancyService: VacancyService, private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) {
 
   }
 
@@ -70,29 +70,29 @@ export class CoursesRegisterComponent implements OnInit {
         this.course.courseTitle = course.courseTitle;
         this.course.vacancyId = course.vacancyId;
         this.course.durationTime = course.durationTime;
-        this.hasCertification = course.Certication != null || undefined ? true : false;
-        this.hasTest = course.Test != null || undefined ? true : false;
+        this.hasCertification = course.certification != null || undefined ? true : false;
+        this.hasTest = course.test != null || undefined ? true : false;
         this.course.description = course.description;
         this.course.id = courseId;
 
-        this.sessions = course.Sessions;
-        course.Sessions.forEach(async session => {
+        this.sessions = course.sessions != undefined ? course.sessions: [];
+        course.sessions?.forEach(async session => {
           this.session.videoPath = await this.blobService.getFile('', 'CoursesVideos', session.videoSessionName, session.id);
           this.session.pdfPath = await this.blobService.getFile('', 'CoursesPDFs', session.pdfSessionName, session.id);
         });
 
-        this.certification.certificationTitle = course.Certification.certificationTitle;
-        this.certification.description = course.Certification.description;
-        this.certification.id = course.Certification.id;
-        this.certification.corporativeSignaturePath = await this.blobService.getFile('', 'CorporativeSignatures', course.Certification.corporativeSignatureName, courseId);
+        this.certification.certificationTitle = course.certification != undefined ? course.certification.certificationTitle: '';
+        this.certification.description = course.certification != undefined ? course.certification.description: '';
+        this.certification.id =  course.certification != undefined ? course.certification.id: 0;
+        this.certification.corporativeSignaturePath = await this.blobService.getFile('', 'CorporativeSignatures', course.certification?.corporativeSignatureName, courseId);
 
-        this.test.approvalPercentual = course.Test.approvalPercentual;
-        this.test.certificationId = course.Test.certificationId;
-        this.test.durationTime = course.Test.durationTime;
-        this.test.questionsQuantity = course.Test.questionsQuantity;
-        this.test.id = course.Test.id;
+        this.test.approvalPercentual = course.test != undefined ? course.test.approvalPercentual: '';
+        this.test.certificationId = course.test != undefined ? course.test.certificationId: 0;
+        this.test.durationTime = course.test != undefined ? course.test.durationTime: '';
+        this.test.questionsQuantity = course.test != undefined ? course.test.questionsQuantity: 0;
+        this.test.id = course.test != undefined ? course.test.id: 0;
 
-        this.questions = course.Test.Questions;
+        this.questions = course.test?.questions != undefined ? course.test.questions: [];
 
 
       });
@@ -115,7 +115,6 @@ export class CoursesRegisterComponent implements OnInit {
       if (this.formCertification.valid) {
         certification = this.certification;
         await this.certificationService.postCertification(certification).subscribe(certificationId => { retornoIdCertification = certificationId }); //inserir curso no banco retornando id dele mock exemplo await 
-
       }
       if (this.formTest.valid) {
         test = this.test;
@@ -154,8 +153,8 @@ export class CoursesRegisterComponent implements OnInit {
 
 
           await this.sessionService.postSession(session).subscribe(sessionId => { retornoIdSessao = sessionId }); //inserir questao no banco retornando id dele mock exemplo await 
-          await this.blobService.uploadFile('', session.pdfSession, `${session.pdfSession.name}/${retornoIdSessao}`, 'CoursesPDFs', () => { });
-          await this.blobService.uploadFile('', session.videoSession, `${session.videoSession.name}/${retornoIdSessao}`, 'CoursesVideos', () => { });
+          await this.blobService.uploadFile('',  session.pdfSession != undefined ?session.pdfSession: new Blob, `${session.pdfSession?.name}/${retornoIdSessao}`, 'CoursesPDFs', () => { });
+          await this.blobService.uploadFile('', session.videoSession != undefined? session.videoSession: new Blob, `${session.videoSession?.name}/${retornoIdSessao}`, 'CoursesVideos', () => { });
         }
       }
 
@@ -202,8 +201,8 @@ export class CoursesRegisterComponent implements OnInit {
       if (this.sessions.length > 0) {
         for (let session of this.sessions) {
           await this.sessionService.editSession(session);
-          await this.blobService.uploadFile('', session.pdfSession, `${session.pdfSessionName}/${session.id}`, 'CoursesPDFs', () => { });
-          await this.blobService.uploadFile('', session.videoSession, `${session.videoSessionName}/${session.id}`, 'CoursesVideos', () => { });
+          await this.blobService.uploadFile('', session.pdfSession != undefined ?session.pdfSession: undefined, `${session.pdfSessionName}/${session.id}`, 'CoursesPDFs', () => { });
+          await this.blobService.uploadFile('', session.videoSession != undefined? session.videoSession: undefined, `${session.videoSessionName}/${session.id}`, 'CoursesVideos', () => { });
         }
       }
 
@@ -254,12 +253,12 @@ export class CoursesRegisterComponent implements OnInit {
     }
   }
 
-  async getActiveVacancies(){
+  async getActiveVacancies() {
 
     await this.vacancyService.getActiveVacanciesByUser(1).subscribe(vacancies => {
       this.vacanciesList = vacancies;
     }); //passar id do usuario logado
-    
+
   }
 
   videoSessionSelected(event: any) {
@@ -283,7 +282,7 @@ export class CoursesRegisterComponent implements OnInit {
 
 
   async deleteCourseItem(courseItem: any) {
-    
+
     if (Object.getPrototypeOf(courseItem) === Certification.prototype) {
 
       this.objectsTobeDeleted.push({ id: courseItem.id, type: 'certification' });
@@ -316,7 +315,7 @@ export class CoursesRegisterComponent implements OnInit {
     });
     this.certification.corporativeSignatureName = '';
 
-    
+
     (<HTMLEmbedElement>document.getElementById('signature-source')).src = '';
     (<HTMLInputElement>document.getElementById('assign-file-id')).value = '';
 

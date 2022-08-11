@@ -59,6 +59,14 @@
                                 </mat-select>
                             </mat-form-field>
                             <br />
+                            <mat-form-field>
+                                <mat-label class="placeholder-color">Categoria</mat-label>
+                                <mat-select [value]="this.course.category" placeholder="Categoria">
+                                    <mat-option value="Introdução I">Tecnologia</mat-option>
+                                    <mat-option value="Introdução II">Artes</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <br />
                             <br />
                             <section>
                                 <mat-checkbox (change)="changeShowCertification()">
@@ -636,3 +644,4 @@
 <br />
 <button *ngIf="this.courseId == undefined" (click)="registerCourse()" mat-raised-button class="submit-btn" color="primary">Cadastrar Curso</button>
 <button *ngIf="this.courseId != undefined" (click)="registerCourse()" mat-raised-button class="submit-btn" color="primary">Editar Curso</button>
+<br />

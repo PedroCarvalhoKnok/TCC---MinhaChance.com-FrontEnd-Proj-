@@ -8,6 +8,7 @@ export class Course {
     id!: number;
     courseimage?: File;
     userId?: string;
+    category!: string;
     courseTitle!: string;
     vacancyId?: number;
     durationTime!: string;
@@ -15,8 +16,9 @@ export class Course {
     certificationId? : number;
     description!: string;
     creationDate!: string;
-    subscribeQuantity?: number;
+    subscribeQuantity!: number;
     sessionsQuantity?: number;
     test?: Test;
     certification?: Certification;
+    sessions?: Session[];
 }
