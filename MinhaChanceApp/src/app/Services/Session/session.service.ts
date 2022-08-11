@@ -4,7 +4,7 @@ import { Course } from 'src/app/Models/Course/Course';
 import { HandleErrors } from '../Errors/handleError';
 import { retry, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { Session } from 'src/app/Models/Session/Session';
+import { Session } from 'src/app/Models/Course/Session';
 
 @Injectable({
   providedIn: 'root'

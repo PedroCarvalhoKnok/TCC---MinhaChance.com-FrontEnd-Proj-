@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from 'src/app/Models/Course/Course';
-import { Test } from 'src/app/Models/Test/Test';
+import { Test } from 'src/app/Models/Course/Test';
 import { PageEvent } from '@angular/material/paginator';
 import { Observable, of } from 'rxjs';
 import { courseFilter } from 'src/app/Models/Filters/Course/courseFilter';
@@ -10,10 +10,10 @@ import { TestService } from 'src/app/Services/Test/test.service';
 import { QuestionService } from 'src/app/Services/Question/question.service';
 import { SessionService } from 'src/app/Services/Session/session.service';
 import { AzureBlobStorageService } from 'src/app/Services/Azure/azure-blob-storage.service';
-import { Session } from 'src/app/Models/Session/Session';
-import { Certification } from 'src/app/Models/Certification/Certification';
+import { Session } from 'src/app/Models/Course/Session';
+import { Certification } from 'src/app/Models/Course/Certification';
 import { VacancyService } from 'src/app/Services/Vacancy/vacancy.service';
-import { Question } from 'src/app/Models/Question/Question';
+import { Question } from 'src/app/Models/Course/Question';
 
 export interface Tile {
   color: string;
@@ -35,8 +35,8 @@ export class CoursesListComponent implements OnInit {
   filters: courseFilter = new courseFilter();
 
   
-  test: Test = { id: 1, certificationId: 1, durationTime: '1 Hora', difficulty: 'Iniciante', questionsQuantity: 9, approvalPercentual: '50%' }
-  test2: Test = { id: 2, certificationId: 0, durationTime: '1 Hora', difficulty: 'Iniciante', questionsQuantity: 9, approvalPercentual: '50%' }
+  test: Test = { id: 1, certificationId: 1, durationTime: '1 Hora', difficulty: 'Iniciante', questionsQuantity: 9, approvalPercentual: '50%'}
+  test2: Test = { id: 2, certificationId: 0, durationTime: '1 Hora', difficulty: 'Iniciante', questionsQuantity: 9, approvalPercentual: '50%'}
 
   categories: string[] = ['Construção', 'Tecnologia', 'Gestão'];
 
@@ -160,7 +160,7 @@ export class CoursesListComponent implements OnInit {
       filteredCourseList = filteredCourseList.filter(course => course.test != undefined? parseInt(course.test.durationTime.split(' ')[0]) <= this.filters.testDuration: 0);
 
     if (this.filters.courseCategory != '' || undefined)
-      filteredCourseList = filteredCourseList.filter(course => course.category == this.filters.courseCategory);
+      filteredCourseList = filteredCourseList.filter(course => course.vacancy != undefined ? course.vacancy.category == this.filters.courseCategory: '');
 
       return filteredCourseList;
   }

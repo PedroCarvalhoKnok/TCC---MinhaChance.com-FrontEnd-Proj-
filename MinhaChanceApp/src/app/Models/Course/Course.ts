@@ -1,6 +1,6 @@
-import { Certification } from "../Certification/Certification";
-import { Session } from "../Session/Session";
-import { Test } from "../Test/Test";
+import { Certification } from "./Certification";
+import { Session } from "./Session";
+import { Test } from "./Test";
 import { User } from "../User/User";
 import { Vacancy } from "../Vacancy/Vacancy";
 
@@ -8,7 +8,6 @@ export class Course {
     id!: number;
     courseimage?: File;
     userId?: string;
-    category!: string;
     courseTitle!: string;
     vacancyId?: number;
     durationTime!: string;
@@ -21,4 +20,6 @@ export class Course {
     test?: Test;
     certification?: Certification;
     sessions?: Session[];
+    vacancy?: Vacancy;
+    category!: string;
 }

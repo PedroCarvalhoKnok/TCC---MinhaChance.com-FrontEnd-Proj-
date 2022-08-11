@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { Certification } from 'src/app/Models/Certification/Certification';
+import { Certification } from 'src/app/Models/Course/Certification';
 import { Course } from 'src/app/Models/Course/Course';
-import { Question } from 'src/app/Models/Question/Question';
-import { Session } from 'src/app/Models/Session/Session';
-import { Test } from 'src/app/Models/Test/Test';
+import { Question } from 'src/app/Models/Course/Question';
+import { Session } from 'src/app/Models/Course/Session';
+import { Test } from 'src/app/Models/Course/Test';
 import { AzureBlobStorageService } from 'src/app/Services/Azure/azure-blob-storage.service';
 import { CertificationService } from 'src/app/Services/Certification/certification.service';
 import { CourseService } from 'src/app/Services/Course/course.service';
@@ -45,6 +45,7 @@ export class CoursesRegisterComponent implements OnInit {
   objectsTobeDeleted!: any[];
 
   vacanciesList!: Vacancy[];
+  categoriesList!: string[];
 
   constructor(private router: ActivatedRoute, private vacancyService: VacancyService, private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) {
 
@@ -104,62 +105,35 @@ export class CoursesRegisterComponent implements OnInit {
 
   async registerCourse() {
     try {
-      let test: Test = new Test();
-      let certification: Certification = new Certification();
-
-      let retornoIdCertification: number = 0;
-      let retornoIdTest: number = 0;
-      let retornoIdCurso: number = 0;
-      let retornoIdSessao: number = 0;
+      
 
       if (this.formCertification.valid) {
-        certification = this.certification;
-        await this.certificationService.postCertification(certification).subscribe(certificationId => { retornoIdCertification = certificationId }); //inserir curso no banco retornando id dele mock exemplo await 
+        this.course.certification = this.certification;
+        
       }
+
       if (this.formTest.valid) {
-        test = this.test;
-        if (retornoIdCertification != 0 || retornoIdCertification != undefined)
-          test.certificationId = retornoIdCertification
-
-        await this.testService.postTest(test).subscribe(testId => { retornoIdTest = testId }); //inserir curso no banco retornando id dele mock exemplo await 
+        this.course.test = this.test;
 
       }
+
       if (this.questions.length > 0) {
-        for (let question of this.questions) {
-          if (retornoIdTest != 0 || retornoIdTest != undefined)
-            question.testId = retornoIdTest
 
-
-          await this.questionService.postQuestion(question);//inserir questao no banco retornando id dele mock exemplo await 
-        }
+        this.course.test != undefined ? this.course.test.questions = this.questions: [];
+        
       }
-      if (this.formCourse.valid) {
-        let course: Course = this.course
-        // course.userId = idUsuarioLogado
 
-        if (retornoIdCertification != 0 || retornoIdCertification != undefined)
-          course.certificationId = retornoIdCertification;
-
-        if (retornoIdTest != 0 || retornoIdTest != undefined)
-          course.testId = retornoIdTest;
-
-        await this.courseService.postCourse(course).subscribe(courseId => { retornoIdCurso = courseId }); //inserir curso no banco retornando id dele mock exemplo await 
-
-      }
       if (this.sessions.length > 0) {
-        for (let session of this.sessions) {
-          if (retornoIdCurso != 0 || retornoIdCurso != undefined)
-            session.courseId = retornoIdCurso
-
-
-          await this.sessionService.postSession(session).subscribe(sessionId => { retornoIdSessao = sessionId }); //inserir questao no banco retornando id dele mock exemplo await 
-          await this.blobService.uploadFile('',  session.pdfSession != undefined ?session.pdfSession: new Blob, `${session.pdfSession?.name}/${retornoIdSessao}`, 'CoursesPDFs', () => { });
-          await this.blobService.uploadFile('', session.videoSession != undefined? session.videoSession: new Blob, `${session.videoSession?.name}/${retornoIdSessao}`, 'CoursesVideos', () => { });
-        }
+        this.course.sessions = this.sessions;
+        
       }
 
-      if (retornoIdCertification != 0 || retornoIdCertification != undefined)
-        await this.blobService.uploadFile('', certification.corporativeSignature, `${certification.corporativeSignatureName}/${retornoIdCurso}`, 'CorporativeSignatures', () => { });
+      if (this.formCourse.valid) {
+
+        await this.courseService.postCourse(this.course); //inserir curso no banco retornando id dele mock exemplo await 
+
+      }
+     
 
     }
     catch (e) {

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HandleErrors } from '../Errors/handleError';
 import { retry, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { Certification } from 'src/app/Models/Certification/Certification';
+import { Certification } from 'src/app/Models/Course/Certification';
 
 @Injectable({
   providedIn: 'root'

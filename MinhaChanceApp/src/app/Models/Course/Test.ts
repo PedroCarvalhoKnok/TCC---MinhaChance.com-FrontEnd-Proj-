@@ -1,5 +1,5 @@
-import { Certification } from "../Certification/Certification";
-import { Question } from "../Question/Question";
+import { Certification } from "./Certification";
+import { Question } from "./Question";
 
 export class Test {
     id!: number;

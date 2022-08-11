@@ -17,8 +17,8 @@
 
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Salário</mat-label>
-                                <input id="vacancySalary" class="form-control" type="text"
-                                    matInput autocomplete="off" placeholder="Salário" required />
+                                <input id="vacancySalary" formControlName="vacancySalary" class="form-control" type="number"
+                                    matInput autocomplete="off" placeholder="Salário" required/>
                             </mat-form-field>
                             <!-- <div
                                 *ngIf="formCourse.get('courseTitle')?.invalid && (formCourse.get('courseTitle')?.dirty || formCourse.get('courseTitle')?.touched)">
@@ -26,15 +26,20 @@
                                     Titulo do curso é necessário.
                                 </p>
                             </div> -->
-                            <mat-form-field>
-                                <mat-checkbox class="spacing-margin">
+                            <section>
+                                <mat-checkbox>
                                     A combinar
                                 </mat-checkbox>
-                            </mat-form-field>
-                            <br />
+                            </section>
+                            <br/>
                             <mat-form-field>
+                                <mat-label class="placeholder-color">Categoria</mat-label>
+                                <input formControlName="vacancyCategory" class="form-control" type="text"
+                                    matInput autocomplete="off" placeholder="Categoria" required/>
+                            </mat-form-field>
+                            <mat-form-field class="spacing-margin">
                                 <mat-label class="placeholder-color">Tipo contratação</mat-label>
-                                <mat-select placeholder="Tipo contratação">
+                                <mat-select formControlName="contractType" placeholder="Tipo contratação">
                                     <mat-option value="PJ">PJ</mat-option>
                                     <mat-option value="CLT">CLT</mat-option>
                                 </mat-select>
@@ -42,22 +47,22 @@
                             <br />
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Quantidade de vagas</mat-label>
-                                <input type="number" matInput autocomplete="off"
+                                <input formControlName="vacancyQuantity" type="number" matInput autocomplete="off"
                                     placeholder="Quantidade de vagas" required />
                             </mat-form-field>
                             <br />
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Modalidade</mat-label>
-                                <mat-select placeholder="Modalidade">
+                                <mat-select formControlName="vacancyModalidity" placeholder="Modalidade">
                                     <mat-option value="PJ">Remoto</mat-option>
                                     <mat-option value="CLT">Híbrido</mat-option>
                                     <mat-option value="CLT">Presencial</mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field>
+                            <mat-form-field class="spacing-margin">
                                 <mat-label class="placeholder-color">Quantidade por semana</mat-label>
                                 <input class="spacing-margin" type="number" matInput autocomplete="off"
-                                    placeholder="Quantidade por semana" required />
+                                    placeholder="Quantidade por semana" required/>
                             </mat-form-field>
                             <!-- <div
                                 *ngIf="formCourse.get('courseDuration')?.invalid && (formCourse.get('courseDuration')?.dirty || formCourse.get('courseDuration')?.touched)">
@@ -79,12 +84,12 @@
                             <br />
                             <mat-label>Imagem da vaga</mat-label>
                             <br />
-                            <input class="ng-hide" id="input-image-id" multiple type="file" />
+                            <input class="ng-hide" id="input-image-id" multiple type="file" required/>
                             <br />
                             <br />
                             <mat-label>Descrição da vaga</mat-label>
                             <br />
-                            <textarea class="text-area-form" required></textarea>
+                            <textarea formControlName="vacancyDescription" class="text-area-form" required></textarea>
                             <!-- <div
                                 *ngIf="formCourse.get('courseDescription')?.invalid && (formCourse.get('courseDescription')?.dirty || formCourse.get('courseDescription')?.touched)">
                                 <p *ngIf="formCourse.get('courseDescription')?.errors?.['required']">
@@ -120,12 +125,12 @@
 
             <div class="container">
                 <div fxLayout="row" fxLayoutAlign="center">
-                    <form>
+                    <form [formGroup]="formBenefits">
                         <div fxLayout="column">
                             <mat-form-field>
                             <mat-label class="placeholder-color">Nome do beneficio</mat-label>
-                            <input type="text" matInput autocomplete="off"
-                                placeholder="Nome do beneficio" required />
+                            <input formControlName="benefitDescription" type="text" matInput autocomplete="off"
+                                placeholder="Nome do beneficio" required/>
                             </mat-form-field>
                             <!-- <div
                                 *ngIf="formSession.get('sessionTitle')?.invalid && (formSession.get('sessionTitle')?.dirty || formSession.get('sessionTitle')?.touched)">
@@ -135,8 +140,8 @@
                             </div> -->
                             <mat-form-field>
                             <mat-label class="placeholder-color">Valor do beneficio (opcional)</mat-label>
-                            <input type="text" matInput autocomplete="off"
-                                placeholder="Titulo da sessão" required />
+                            <input formControlName="benefitValue" type="text" matInput autocomplete="off"
+                                placeholder="Titulo da sessão" required/>
                             </mat-form-field>
                             <!-- <div
                                 *ngIf="formSession.get('sessionTitle')?.invalid && (formSession.get('sessionTitle')?.dirty || formSession.get('sessionTitle')?.touched)">
@@ -174,11 +179,11 @@
 
             <div class="container">
                 <div fxLayout="row" fxLayoutAlign="center">
-                    <form>
+                    <form [formGroup]="formRequirements">
                         <div fxLayout="column">
                            
                             <mat-label class="placeholder-color">Descrição do requisito</mat-label>
-                            <textarea class="text-area-form" required></textarea>
+                            <textarea formControlName="requirementDescription" class="text-area-form" required></textarea>
                             <!-- <div
                                 *ngIf="formSession.get('sessionTitle')?.invalid && (formSession.get('sessionTitle')?.dirty || formSession.get('sessionTitle')?.touched)">
                                 <p *ngIf="formSession.get('sessionTitle')?.errors?.['required']">
@@ -187,7 +192,7 @@
                             </div> -->
                             <br />
                             <mat-label class="placeholder-color">Diferenciais (opcional)</mat-label>
-                            <textarea class="text-area-form" required></textarea>
+                            <textarea formControlName="requirementDifferential" class="text-area-form" required></textarea>
                             <!-- <div
                                 *ngIf="formSession.get('sessionTitle')?.invalid && (formSession.get('sessionTitle')?.dirty || formSession.get('sessionTitle')?.touched)">
                                 <p *ngIf="formSession.get('sessionTitle')?.errors?.['required']">

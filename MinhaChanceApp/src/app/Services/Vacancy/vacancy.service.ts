@@ -30,7 +30,7 @@ export class VacancyService {
   }
 
   getCategoriesByUser(userId: number){
-    return this.httpClient.post<any[]>(``, this.httpOptions)
+    return this.httpClient.post<string[]>(``, this.httpOptions)
       .pipe(
         retry(2),
       )

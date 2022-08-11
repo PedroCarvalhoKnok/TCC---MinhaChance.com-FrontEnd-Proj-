@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Test } from 'src/app/Models/Test/Test';
+import { Test } from 'src/app/Models/Course/Test';
 import { HandleErrors } from '../Errors/handleError';
 import { retry, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
