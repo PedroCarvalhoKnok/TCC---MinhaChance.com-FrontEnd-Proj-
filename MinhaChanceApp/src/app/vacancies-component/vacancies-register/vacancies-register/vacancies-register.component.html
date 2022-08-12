@@ -27,7 +27,7 @@
                                 </p>
                             </div>
                             <section>
-                                <mat-checkbox>
+                                <mat-checkbox (change)="changeSalaryDisplay()">
                                     A combinar
                                 </mat-checkbox>
                             </section>
@@ -50,15 +50,14 @@
                                     <button type="button" class="btn btn-outline-primary" id="dropdownLocation"
                                         ngbDropdownToggle>Tipo contratação</button>
                                     <div ngbDropdownMenu aria-labelledby="dropdownContract">
-                                        <button ngbDropdownItem>PJ</button>
-                                        <button ngbDropdownItem>CLT</button>
+                                        <button *ngFor="let category of contractCategories" (click)="changeContractType(category)" ngbDropdownItem>{{category}}</button>
                                     </div>
                                 </div>
                             </div>
                             <div
                                 *ngIf="formVacancy.get('contractType')?.invalid && (formVacancy.get('contractType')?.dirty || formVacancy.get('contractType')?.touched)">
                                 <p *ngIf="formVacancy.get('contractType')?.errors?.['required']">
-                                    Vaga do salário é necessário.
+                                    Tipo de contratação é necessária.
                                 </p>
                             </div>
                             <br />
@@ -82,16 +81,21 @@
                             <div class="col">
                                 <div ngbDropdown class="d-inline-block">
                                     <button type="button" class="btn btn-outline-primary" id="dropdownLocation" 
-                                        ngbDropdownToggle>Modalidade</button>
+                                        ngbDropdownToggle>{{this.vacancy.modalidity != undefined ? this.vacancy.modalidity: 'Modalidade'}}</button>
                                     <div ngbDropdownMenu aria-labelledby="dropdownManual">
-                                        <button ngbDropdownItem>Presencial</button>
-                                        <button ngbDropdownItem>Remoto</button>
-                                        <button ngbDropdownItem>Hibrido</button>
+                                        <button *ngFor="let modality of modalities" (click)="changeModality(modality)" ngbDropdownItem>{{modality}}</button>
+                                        
                                     </div>
                                 </div>
                             </div>
-                            <mat-label class="placeholder-color">Quantidade por semana</mat-label>
-                            <mat-form-field class="spacing-margin">
+                            <div
+                                *ngIf="formVacancy.get('contractModality')?.invalid && (formVacancy.get('contractModality')?.dirty || formVacancy.get('contractModality')?.touched)">
+                                <p *ngIf="formVacancy.get('contractModality')?.errors?.['required']">
+                                    Tipo de contratação é necessária.
+                                </p>
+                            </div>
+                            <mat-label *ngIf="isHibrid" class="placeholder-color">Quantidade por semana</mat-label>
+                            <mat-form-field *ngIf="isHibrid" class="spacing-margin">
                                 <input formControlName="vacancySemanalQuantity" class="spacing-margin form-control" type="number" [(ngModel)]="this.vacancy.semanalQuantity" matInput autocomplete="off"
                                     placeholder="Quantidade por semana" required />
                             </mat-form-field>
@@ -103,10 +107,10 @@
                             <p *ngIf="formVacancy.get('vacancySemanalQuantity')?.errors?.['forbiddenDurationTime']">
                                 Duração do curso deve ser maior que 0.
                             </p>
-                        </div>
+                            </div>
                             <br />
                             <section>
-                                <mat-checkbox>
+                                <mat-checkbox (change)="confidencialVacancy()">
                                     Vaga Confidencial
                                 </mat-checkbox>
                             </section>
@@ -114,12 +118,12 @@
                             
                             <mat-label>Imagem da vaga</mat-label>
                             <br />
-                            <input class="ng-hide" id="input-image-id" multiple type="file" required/>
+                            <input (change)="chooseVacancyImage($event)" class="ng-hide" id="input-image-id" multiple type="file" required/>
                             <br />
                             <br />
                             <mat-label>Descrição da vaga</mat-label>
                             <br />
-                            <textarea formControlName="vacancyDescription" class="text-area-form" required></textarea>
+                            <textarea [(ngModel)]="this.vacancy.description" formControlName="vacancyDescription" class="text-area-form" required></textarea>
                             <div
                                 *ngIf="formVacancy.get('vacancyDescription')?.invalid && (formVacancy.get('vacancyDescription')?.dirty || formVacancy.get('vacancyDescription')?.touched)">
                                 <p *ngIf="formVacancy.get('vacancyDescription')?.errors?.['required']">
@@ -147,7 +151,7 @@
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
                 Beneficios
             </mat-card-title>
-            <span class="material-icons col-4">add_circle_outline</span>
+            <span class="material-icons col-4" (click)="addBenefit(this.vacancy.benefit)">add_circle_outline</span>
             <span class="material-icons col-4">remove_circle_outline</span>
         </mat-card-header>
 
@@ -160,7 +164,7 @@
                             <mat-label class="placeholder-color">Nome do beneficio</mat-label>
                             <br/>
                             <mat-form-field>
-                            <input matInput class="form-control" formControlName="benefitDescription" type="text" autocomplete="off"
+                            <input matInput class="form-control" [(ngModel)]="this.vacancy.benefit.description" formControlName="benefitDescription" type="text" autocomplete="off"
                                 placeholder="Nome do beneficio" required />
                             </mat-form-field>
                             <div
@@ -173,7 +177,7 @@
                             <mat-label class="placeholder-color">Valor do beneficio (opcional)</mat-label>
                             <br/>
                             <mat-form-field>
-                            <input matInput class="form-control" formControlName="benefitValue" type="text" autocomplete="off"
+                            <input matInput class="form-control" [(ngModel)]="this.vacancy.benefit.value" formControlName="benefitValue" type="text" autocomplete="off"
                                 placeholder="Valor do beneficio" required />
                             </mat-form-field>
                             <div
@@ -204,7 +208,7 @@
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
                 Requisitos
             </mat-card-title>
-            <span class="material-icons col-4">add_circle_outline</span>
+            <span class="material-icons col-4" (click)="addRequirement(this.vacancy.requirement)">add_circle_outline</span>
             <span class="material-icons col-4">remove_circle_outline</span>
         </mat-card-header>
 
@@ -215,8 +219,8 @@
                     <form [formGroup]="formRequirements">
                         <div fxLayout="column">
                            
-                            <!-- <mat-label class="placeholder-color">Descrição do requisito</mat-label>
-                            <textarea formControlName="requirementDescription" class="text-area-form" required></textarea>
+                            <mat-label class="placeholder-color">Descrição do requisito</mat-label>
+                            <textarea [(ngModel)]="this.vacancy.requirement.description" formControlName="requirementDescription" class="text-area-form" required></textarea>
                             <div
                                 *ngIf="formRequirements.get('requirementDescription')?.invalid && (formRequirements.get('requirementDescription')?.dirty || formRequirements.get('requirementDescription')?.touched)">
                                 <p *ngIf="formRequirements.get('requirementDescription')?.errors?.['required']">
@@ -225,13 +229,13 @@
                             </div>
                             <br />
                             <mat-label class="placeholder-color">Diferenciais (opcional)</mat-label>
-                            <textarea formControlName="requirementDifferential" class="text-area-form" required></textarea>
+                            <textarea [(ngModel)]="this.vacancy.requirement.differencial" formControlName="requirementDifferential" class="text-area-form" required></textarea>
                             <div
                                 *ngIf="formRequirements.get('requirementDifferential')?.invalid && (formRequirements.get('requirementDifferential')?.dirty || formRequirements.get('requirementDifferential')?.touched)">
                                 <p *ngIf="formRequirements.get('requirementDifferential')?.errors?.['required']">
                                     Titulo da sessão é necessária.
                                 </p>
-                            </div> -->
+                            </div>
 
                         </div>
                     </form>
@@ -248,4 +252,4 @@
 
 <br />
 <!-- Lista de requisitos inseridos -->
-<button mat-raised-button class="submit-btn" color="primary">Cadastrar Vaga</button>
+<button (click)="postVacancy(this.vacancy)" mat-raised-button class="submit-btn" color="primary">Cadastrar Vaga</button>

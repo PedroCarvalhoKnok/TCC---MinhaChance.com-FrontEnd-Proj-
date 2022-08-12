@@ -1,4 +1,5 @@
 export class Requirement {
+    id!: number;
     description!: string;
-    differencial?: number;
+    differencial?: string;
 }

@@ -22,6 +22,20 @@ export class VacancyService {
     )
   }
 
+  getVacancy(vacancyId: number){
+    return this.httpClient.get<Vacancy>(``, this.httpOptions)
+    .pipe(
+      retry(2),
+    )
+  }
+
+  editVacancy(vacancy: Vacancy){
+    return this.httpClient.get<string>(``, this.httpOptions)
+    .pipe(
+      retry(2),
+    )
+  }
+
   getAllVacanciesByUser(userId: number){
     return this.httpClient.get<Vacancy[]>(``, this.httpOptions)
       .pipe(
@@ -62,5 +76,12 @@ export class VacancyService {
       .pipe(
         retry(2),
       )
+  }
+
+  deleteVacancyItem(itemId: number){
+    return this.httpClient.get<string>(``, this.httpOptions)
+    .pipe(
+      retry(2),
+    )
   }
 }
