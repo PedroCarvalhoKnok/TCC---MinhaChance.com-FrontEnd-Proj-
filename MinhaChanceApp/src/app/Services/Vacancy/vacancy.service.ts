@@ -15,43 +15,50 @@ export class VacancyService {
                                'Authorization': `Bearer token` })
   }
 
+  postVacancy(vacancy: Vacancy){
+    return this.httpClient.post<string>(``, this.httpOptions)
+    .pipe(
+      retry(2),
+    )
+  }
+
   getAllVacanciesByUser(userId: number){
-    return this.httpClient.post<Vacancy[]>(``, this.httpOptions)
+    return this.httpClient.get<Vacancy[]>(``, this.httpOptions)
       .pipe(
         retry(2),
       )
   }
 
   getActiveVacanciesByUser(userId: number){
-    return this.httpClient.post<Vacancy[]>(``, this.httpOptions)
+    return this.httpClient.get<Vacancy[]>(``, this.httpOptions)
       .pipe(
         retry(2),
       )
   }
 
   getCategoriesByUser(userId: number){
-    return this.httpClient.post<string[]>(``, this.httpOptions)
+    return this.httpClient.get<string[]>(``, this.httpOptions)
       .pipe(
         retry(2),
       )
   }
 
   getBenefitsByUser(userId: number){
-    return this.httpClient.post<any[]>(``, this.httpOptions)
+    return this.httpClient.get<any[]>(``, this.httpOptions)
       .pipe(
         retry(2),
       )
   }
 
   getRequerimentsByUser(userId: number){
-    return this.httpClient.post<any[]>(``, this.httpOptions)
+    return this.httpClient.get<any[]>(``, this.httpOptions)
       .pipe(
         retry(2),
       )
   }
 
   getLocationsByUser(userId: number){
-    return this.httpClient.post<any[]>(``, this.httpOptions)
+    return this.httpClient.get<any[]>(``, this.httpOptions)
       .pipe(
         retry(2),
       )

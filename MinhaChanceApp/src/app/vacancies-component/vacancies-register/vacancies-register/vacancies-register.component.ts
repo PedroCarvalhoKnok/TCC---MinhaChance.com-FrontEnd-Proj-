@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { Benefit } from 'src/app/Models/Vacancy/Benefit';
+import { Requirement } from 'src/app/Models/Vacancy/Requirement';
 import { Vacancy } from 'src/app/Models/Vacancy/Vacancy';
 
 @Component({
@@ -14,6 +16,8 @@ export class VacanciesRegisterComponent implements OnInit {
   formRequirements!: FormGroup;
 
   vacancy!: Vacancy;
+  benefits!: Benefit[];
+  requirements!: Requirement[];
 
   constructor() { }
 
@@ -30,12 +34,17 @@ export class VacanciesRegisterComponent implements OnInit {
     this.formVacancy = new FormGroup({
       vacancySalary: new FormControl(this.vacancy.salary, [
         Validators.required,
-        this.forbiddenDurationTimeValidator(/0/i)
+        this.forbiddenDurationTimeValidator(/0/i),
+        this.forbiddenDurationTimeValidator(/-/i)
       ]),
       contractType: new FormControl(this.vacancy.contractType, [
         Validators.required
       ]),
       vacancyQuantity: new FormControl(this.vacancy.quantity, [
+        Validators.required,
+        this.forbiddenDurationTimeValidator(/0/i)
+      ]),
+      vacancySemanalQuantity: new FormControl(this.vacancy.semanalQuantity, [
         Validators.required,
         this.forbiddenDurationTimeValidator(/0/i)
       ]),

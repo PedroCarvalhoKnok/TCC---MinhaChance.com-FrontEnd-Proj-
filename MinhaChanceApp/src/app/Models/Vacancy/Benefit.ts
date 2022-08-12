@@ -1,4 +1,4 @@
 export class Benefit {
     description!: string;
-    value!: number;
+    value?: number;
 }

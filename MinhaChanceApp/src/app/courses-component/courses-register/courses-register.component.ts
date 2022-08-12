@@ -106,7 +106,7 @@ export class CoursesRegisterComponent implements OnInit {
   async registerCourse() {
     try {
       
-
+      let retornoCurso: string = ''
       if (this.formCertification.valid) {
         this.course.certification = this.certification;
         
@@ -130,7 +130,7 @@ export class CoursesRegisterComponent implements OnInit {
 
       if (this.formCourse.valid) {
 
-        await this.courseService.postCourse(this.course); //inserir curso no banco retornando id dele mock exemplo await 
+        await this.courseService.postCourse(this.course).subscribe(course => retornoCurso = course); //inserir curso no banco retornando id dele mock exemplo await 
 
       }
      

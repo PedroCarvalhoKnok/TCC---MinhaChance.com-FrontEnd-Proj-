@@ -147,7 +147,7 @@ export class CoursesListComponent implements OnInit {
     if (this.filters.hasVacancyLink)
       filteredCourseList = filteredCourseList.filter(course => course.vacancyId != 0 || course.vacancyId != undefined);
 
-    if (this.filters.questionsQuantity != 0)
+    if (this.filters.questionsQuantity > 0)
       filteredCourseList = filteredCourseList.filter(course => course.test != undefined ? course.test.questionsQuantity <= this.filters.questionsQuantity: 0);
 
     if (this.filters.approvalPercentual > 0)
@@ -172,6 +172,7 @@ export class CoursesListComponent implements OnInit {
 
     this.filters.approvalPercentual = (<HTMLInputElement>document.getElementById('approvalPercentual')) == null || undefined ? 0 : +(<HTMLInputElement>document.getElementById('approvalPercentual')).value;
     this.filters.subscribeQuantity = (<HTMLInputElement>document.getElementById('subscribeQuantity')) == null || undefined ? 0 : +(<HTMLInputElement>document.getElementById('subscribeQuantity')).value;
+    this.filters.questionsQuantity = (<HTMLInputElement>document.getElementById('questionsQuantity')) == null || undefined ? 0 : +(<HTMLInputElement>document.getElementById('questionsQuantity')).value;
 
     filteredCourseList = this.filterCourseList(filteredCourseList);
 
