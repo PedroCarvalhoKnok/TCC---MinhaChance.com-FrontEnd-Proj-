@@ -17,7 +17,9 @@ export class VacanciesRegisterComponent implements OnInit {
   formBenefits!: FormGroup;
   formRequirements!: FormGroup;
 
-  vacancy!: Vacancy;
+  vacancy: Vacancy = new Vacancy();
+  benefit: Benefit = new Benefit();
+  requirement: Requirement = new Requirement();
 
   contractCategories = ['CLT', 'PJ'];
   modalities = ['Presencial', 'Hibrido', 'Remoto'];
@@ -27,19 +29,20 @@ export class VacanciesRegisterComponent implements OnInit {
   isHibrid: boolean = false;
 
   vacancyId!: number;
-  vacancyItemsToBeDeleted!: any[];
+  vacancyBenefitsToBeDeleted!: Benefit[];
+  vacancyRequirementsToBeDeleted!: Requirement[];
 
   constructor(private vacancyService: VacancyService, private router: ActivatedRoute) { }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(){
 
-    let vacancyId = this.router.snapshot.params?.['vacancyId'];
+    // let vacancyId = this.router.snapshot.params?.['vacancyId'];
 
-    this.vacancyId = vacancyId;
+    // this.vacancyId = vacancyId;
 
-    if(this.vacancyId != undefined){
-      await this.vacancyService.getVacancy(vacancyId).subscribe(vacancy => this.vacancy = vacancy)
-    }
+    // if(this.vacancyId != undefined){
+    //   await this.vacancyService.getVacancy(vacancyId).subscribe(vacancy => this.vacancy = vacancy)
+    // }
 
     this.createFormVacancyValidation();
     this.createFormBenefitValidation();
@@ -94,10 +97,18 @@ export class VacanciesRegisterComponent implements OnInit {
 
   async editVacancy(vacancy: Vacancy){
 
-    if(this.vacancyItemsToBeDeleted.length > 0){
+    if(this.vacancyBenefitsToBeDeleted.length > 0){
 
-      this.vacancyItemsToBeDeleted.forEach(async item => {
-        await this.vacancyService.deleteVacancyItem(item.id)
+      this.vacancyBenefitsToBeDeleted.forEach(async item => {
+        await this.vacancyService.deleteVacancyBenefit(item.id)
+      })
+      
+    }
+
+    if(this.vacancyRequirementsToBeDeleted.length > 0){
+
+      this.vacancyRequirementsToBeDeleted.forEach(async item => {
+        await this.vacancyService.deleteVacancyRequirement(item.id)
       })
       
     }
@@ -140,7 +151,7 @@ export class VacanciesRegisterComponent implements OnInit {
   removeBenefitByIndex(index: number){
 
     if(this.vacancyId != undefined)
-      this.vacancyItemsToBeDeleted.push(this.vacancy.benefits[index])
+      this.vacancyBenefitsToBeDeleted.push(this.vacancy.benefits[index])
       
       
     delete this.vacancy.benefits[index];
@@ -150,7 +161,7 @@ export class VacanciesRegisterComponent implements OnInit {
   removeRequirementByIndex(index: number){
     
     if(this.vacancyId != undefined)
-      this.vacancyItemsToBeDeleted.push( this.vacancy.requirements[index])  
+      this.vacancyRequirementsToBeDeleted.push( this.vacancy.requirements[index])  
       
     
     delete  this.vacancy.requirements[index];
@@ -199,10 +210,10 @@ export class VacanciesRegisterComponent implements OnInit {
 
   createFormBenefitValidation(): void {
     this.formBenefits = new FormGroup({
-      benefitDescription: new FormControl(this.vacancy.benefit.description, [
+      benefitDescription: new FormControl(this.benefit.description, [
         Validators.required,
       ]),
-      benefitValue: new FormControl(this.vacancy.benefit.value, [
+      benefitValue: new FormControl(this.benefit.value, [
         Validators.required,
         this.forbiddenDurationTimeValidator(/0/i),
         this.forbiddenDurationTimeValidator(/[-0-9]+/i)
@@ -213,10 +224,10 @@ export class VacanciesRegisterComponent implements OnInit {
 
   createFormRequirementValidation(): void {
     this.formRequirements = new FormGroup({
-      requirementDescription: new FormControl(this.vacancy.requirement.description, [
+      requirementDescription: new FormControl(this.requirement.description, [
         Validators.required,
       ]),
-      requirementDifferential: new FormControl(this.vacancy.requirement.differencial, [
+      requirementDifferential: new FormControl(this.requirement.differencial, [
         Validators.required,
       ])
     });

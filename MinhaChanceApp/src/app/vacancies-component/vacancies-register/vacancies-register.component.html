@@ -44,16 +44,13 @@
                                     Descrição do curso é necessária.
                                 </p>
                             </div>
-                            <mat-label class="placeholder-color">Tipo contratação</mat-label>
-                            <div class="col select-filters">
-                                <div ngbDropdown class="d-inline-block select-filters">
-                                    <button type="button" class="btn btn-outline-primary" id="dropdownLocation"
-                                        ngbDropdownToggle>Tipo contratação</button>
-                                    <div ngbDropdownMenu aria-labelledby="dropdownContract">
-                                        <button *ngFor="let category of contractCategories" (click)="changeContractType(category)" ngbDropdownItem>{{category}}</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <mat-form-field class="spacing-margin">
+                                <mat-label class="placeholder-color">Vaga</mat-label>
+                                <mat-select placeholder="Vaga">
+                                    <mat-option value="Introdução I">Analista I</mat-option>
+                                    <mat-option value="Introdução II">Analista II</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                             <div
                                 *ngIf="formVacancy.get('contractType')?.invalid && (formVacancy.get('contractType')?.dirty || formVacancy.get('contractType')?.touched)">
                                 <p *ngIf="formVacancy.get('contractType')?.errors?.['required']">
@@ -123,7 +120,7 @@
                             <br />
                             <mat-label>Descrição da vaga</mat-label>
                             <br />
-                            <textarea [(ngModel)]="this.vacancy.description" formControlName="vacancyDescription" class="text-area-form" required></textarea>
+                            <textarea class="text-area-form" required></textarea>
                             <div
                                 *ngIf="formVacancy.get('vacancyDescription')?.invalid && (formVacancy.get('vacancyDescription')?.dirty || formVacancy.get('vacancyDescription')?.touched)">
                                 <p *ngIf="formVacancy.get('vacancyDescription')?.errors?.['required']">
@@ -164,7 +161,7 @@
                             <mat-label class="placeholder-color">Nome do beneficio</mat-label>
                             <br/>
                             <mat-form-field>
-                            <input matInput class="form-control" [(ngModel)]="this.vacancy.benefit.description" formControlName="benefitDescription" type="text" autocomplete="off"
+                            <input matInput class="form-control" formControlName="benefitDescription" type="text" autocomplete="off"
                                 placeholder="Nome do beneficio" required />
                             </mat-form-field>
                             <div
@@ -177,7 +174,7 @@
                             <mat-label class="placeholder-color">Valor do beneficio (opcional)</mat-label>
                             <br/>
                             <mat-form-field>
-                            <input matInput class="form-control" [(ngModel)]="this.vacancy.benefit.value" formControlName="benefitValue" type="text" autocomplete="off"
+                            <input matInput class="form-control" formControlName="benefitValue" type="text" autocomplete="off"
                                 placeholder="Valor do beneficio" required />
                             </mat-form-field>
                             <div
@@ -220,7 +217,7 @@
                         <div fxLayout="column">
                            
                             <mat-label class="placeholder-color">Descrição do requisito</mat-label>
-                            <textarea [(ngModel)]="this.vacancy.requirement.description" formControlName="requirementDescription" class="text-area-form" required></textarea>
+                            <textarea formControlName="requirementDescription" class="text-area-form" required></textarea>
                             <div
                                 *ngIf="formRequirements.get('requirementDescription')?.invalid && (formRequirements.get('requirementDescription')?.dirty || formRequirements.get('requirementDescription')?.touched)">
                                 <p *ngIf="formRequirements.get('requirementDescription')?.errors?.['required']">
@@ -229,7 +226,7 @@
                             </div>
                             <br />
                             <mat-label class="placeholder-color">Diferenciais (opcional)</mat-label>
-                            <textarea [(ngModel)]="this.vacancy.requirement.differencial" formControlName="requirementDifferential" class="text-area-form" required></textarea>
+                            <textarea formControlName="requirementDifferential" class="text-area-form" required></textarea>
                             <div
                                 *ngIf="formRequirements.get('requirementDifferential')?.invalid && (formRequirements.get('requirementDifferential')?.dirty || formRequirements.get('requirementDifferential')?.touched)">
                                 <p *ngIf="formRequirements.get('requirementDifferential')?.errors?.['required']">

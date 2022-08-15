@@ -78,7 +78,14 @@ export class VacancyService {
       )
   }
 
-  deleteVacancyItem(itemId: number){
+  deleteVacancyRequirement(itemId: number){
+    return this.httpClient.get<string>(``, this.httpOptions)
+    .pipe(
+      retry(2),
+    )
+  }
+
+  deleteVacancyBenefit(itemId: number){
     return this.httpClient.get<string>(``, this.httpOptions)
     .pipe(
       retry(2),
