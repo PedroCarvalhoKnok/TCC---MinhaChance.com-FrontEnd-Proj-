@@ -113,11 +113,11 @@
 </div>
 
 <div>
-    <mat-card class="vacancies-card">
+    <mat-card class="vacancies-card" *ngFor="let vacancy of vacancies|async |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
 
         <mat-card-header class="header-content">
             <mat-card-title class="title-vacancy">
-                Consultor Senior
+                {{this.vacancy.vacancyTitle}}
             </mat-card-title>
 
         </mat-card-header>
@@ -129,14 +129,13 @@
                 <div class="row">
 
                     <span class="material-icons col-md-4">account_circle</span>
-                    <label class="col-md-4" for="inputdefault">Salário<br />A combinar</label>
-                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />4 vagas</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />Híbrido (2x/semana
-                        presencial)</label>
+                    <label class="col-md-4" for="inputdefault">Salário<br />{{this.vacancy.salary}}</label>
+                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{this.vacancy.quantity}} vaga(s)</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{this.vacancy.modalidity}} {{this.vacancy.modalidity == 'Hibrido' ? this.vacancy.semanalQuantity: ''}}</label>
                     <br />
                     <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
                         <ul class="vacancy-list col-md-8">
-                            <li>VR + VT (A combinar)</li>
+                            <li *ngFor="let benefit of this.vacancy.benefits">{{benefit.description}} - {{benefit.value}}</li>
                             <li>Convenio Médico</li>
                             <li>Convenio Odontológico</li>
                             <li>Gym Pass</li>
@@ -144,18 +143,16 @@
                     </label><br />
                     <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
                         <ul class="vacancy-list col-md-4">
-                            <li>2 anos de experiência na área</li>
+                            <li *ngFor="let requirement of this.vacancy.requirements">{{requirement.description}} {{requirement.differencial != undefined ? '- ' + requirement.differencial : ''}}</li>
                             <li>Superior Completo</li>
                             <li>Conhecimento em arquitetura</li>
                             <li>Conhecimento de MongoDB é um diferencial</li>
                         </ul>
                     </label><br />
-                    <label class="col-md-4" for="inputdefault">Localização<br />São Paulo Brasil</label><br />
+                    <label class="col-md-4" for="inputdefault">Localização<br />{{this.vacancy.location}}</label><br />
                     <label class="col-md-4" for="inputdefault">Categoria<br />Tecnologia</label>
                     <div class="description">
-                        <label for="inputdefault">Descrição da vaga<br />A empresa X está atuando no ramo da tecnologia
-                            a
-                            mais de 10 anos e agora busca um profissional experiente e dedicado</label><br />
+                        <label for="inputdefault">Descrição da vaga<br />{{this.vacancy.description}}</label><br />
                     </div>
 
                     <div class="description">
@@ -245,8 +242,8 @@
 
 
 
-    <!-- <mat-paginator #paginator class="paginator" [length]="100" [pageSize]="10" [pageSizeOptions]="[1, 5, 25, 100]"
+    <mat-paginator #paginator class="paginator" [length]="100" [pageSize]="10" [pageSizeOptions]="[1, 5, 25, 100]"
         (page)="pageEvent = $event" aria-label="Select page">
-    </mat-paginator> -->
+    </mat-paginator>
 
 </div>

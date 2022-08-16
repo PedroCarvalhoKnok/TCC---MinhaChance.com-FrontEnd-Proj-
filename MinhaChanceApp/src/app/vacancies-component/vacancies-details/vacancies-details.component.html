@@ -118,11 +118,11 @@
 </div>
 
 <div>
-    <mat-card class="vacancies-card">
+    <mat-card class="vacancies-card" *ngFor="let detail of vacancyDetails|async |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
 
         <mat-card-header class="header-content">
             <mat-card-title class="title-vacancy">
-                Carlos Eduardo dos Santos
+                {{detail.userName}}
             </mat-card-title>
 
         </mat-card-header>
@@ -134,17 +134,17 @@
                 <div class="row">
 
                     <span class="material-icons col-md-4 distance-pad-content">account_circle</span>
-                    <label class="col-md-4 distance-between" for="inputdefault">Status<br />Trabalhando</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Empresa atual<br />empresa X</label>
-                    <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Cargo atual<br />Analista júnior</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Idade<br />24 anos</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Email<br />carlos.eduardo12@gmail.com</label>
-                    <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Contato<br />(11)983342510</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Concluiu curso da vaga?<br />Sim</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Pretensão salarial<br />R$ 4000,00</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Status<br />{{detail.isWorking? 'Trabalhando': 'Desempregado'}}</label>
+                    <label *ngIf="detail.isWorking" class="col-md-4 distance-between" for="inputdefault">Empresa atual<br />{{detail.actualCompany}}</label>
+                    <label *ngIf="detail.isWorking" class="col-md-4 distance-between distance-pad-content" for="inputdefault">Cargo atual<br />{{detail.actualCharge}}</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Idade<br />{{detail.age}} anos</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Email<br />{{detail.email}}</label>
+                    <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Contato<br />{{detail.phone}}</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Concluiu curso da vaga?<br />{{detail.hasVacancyCourse ? 'Sim': 'Não'}}</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Pretensão salarial<br />{{detail.salaryPretension}}</label>
                     <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Experiências anteriores<br />
                         <ul class="vacancy-list col-md-4">
-                            <li>Vaga: Estagiário</li>
+                            <li *ngFor="let experience of detail.experiences">Vaga: Estagiário</li>
                             <li>Tempo: 1 ano(s)</li>
                             <li>Vaga: Analista de software</li>
                             <li>Tempo: 2 ano(s)</li>
@@ -152,7 +152,7 @@
                     </label><br />
                     <label class="col-md-4 distance-between" for="inputdefault">Formação Acadêmica<br />
                         <ul class="vacancy-list col-md-4">
-                            <li>Superior Completo</li>
+                            <li *ngFor="let graduation of detail.graduations">Superior Completo</li>
                             <li>Curso: ADS</li>
                             <li>Faculdade: Y</li>
                             <li>Tempo: 3 ano(s)</li>
@@ -162,7 +162,7 @@
                     </label><br />
                     <label class="col-md-4 distance-between" for="inputdefault">Certificados<br />
                         <ul class="vacancy-list col-md-4">
-                            <li>Desenvolvimento Web com .NET</li>
+                            <li *ngFor="let cartification of detail.certifications">Desenvolvimento Web com .NET</li>
                             <li>Plataforma: MinhaVez!</li>
                             <li>Carga horária: 100 hora(s)</li>
                             <li>Desenvolvimento Mobile e Iot</li>
@@ -181,8 +181,7 @@
                     </label>
                     <br/>
                     <div class="description distance-pad-content">
-                        <label for="inputdefault">Objetivos<br />Busco qualificação profissional e pessoal e agregar valor aos 
-                        produtos e colaborar com a sociedade</label><br />
+                        <label for="inputdefault">Objetivos<br />{{detail.objective}}</label><br />
                     </div>
 
                 </div>
@@ -199,8 +198,8 @@
 
 
 
-    <!-- <mat-paginator #paginator class="paginator" [length]="100" [pageSize]="10" [pageSizeOptions]="[1, 5, 25, 100]"
+    <mat-paginator #paginator class="paginator" [length]="100" [pageSize]="10" [pageSizeOptions]="[1, 5, 25, 100]"
         (page)="pageEvent = $event" aria-label="Select page">
-    </mat-paginator> -->
+    </mat-paginator>
 
 </div>

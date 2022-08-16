@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Observable, of } from 'rxjs';
 import { vacancyFilter } from 'src/app/Models/Filters/Vacancy/vacancyFilter';
 import { Benefit } from 'src/app/Models/Vacancy/Benefit';
@@ -14,6 +15,8 @@ import { VacancyService } from 'src/app/Services/Vacancy/vacancy.service';
 export class VacanciesListComponent implements OnInit {
 
   constructor(private vacancyService: VacancyService) { }
+
+  pageEvent!: PageEvent;
 
   fileMocked = new File([], "", {
     type: "",
