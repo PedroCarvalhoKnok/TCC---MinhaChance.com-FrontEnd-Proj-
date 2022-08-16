@@ -28,7 +28,7 @@
                         <button type="button" class="btn btn-outline-primary" id="dropdownBenefits"
                             ngbDropdownToggle>Beneficios</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownCategory">
-                            <button ngbDropdownItem></button>
+                            <button (click)="changeBenefit(benefit)" *ngFor="let benefit of benefits" ngbDropdownItem>{{benefit}}</button>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                         <button type="button" class="btn btn-outline-primary" id="dropdownRequires"
                             ngbDropdownToggle>Requisitos</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownCategory">
-                            <button ngbDropdownItem>VR + VT</button>
+                            <button (click)="changeRequirement(requirement)" *ngFor="let requirement of requirements" ngbDropdownItem>{{requirement}}</button>
                         </div>
                     </div>
                 </div>
@@ -51,10 +51,10 @@
                 <label class="label-filter" for="typeahead-basic">Vagas Confidenciais</label>
                 <br />
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                    <input (click)="vacancyConfidenciality(true)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <input (click)="vacancyConfidenciality(false)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio2">Não</label>
 
                 </div>
@@ -62,10 +62,10 @@
                 <label class="label-filter" for="typeahead-basic">Vagas Presenciais</label>
                 <br />
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                    <input (click)="vacancyPresencial(true)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <input (click)="vacancyPresencial(false)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio2">Não</label>
 
                 </div>
@@ -77,7 +77,7 @@
                             <button type="button" class="btn btn-outline-primary" id="dropdownLocation"
                                 ngbDropdownToggle>Localização</button>
                             <div ngbDropdownMenu aria-labelledby="dropdownCategory">
-                                <button ngbDropdownItem></button>
+                                <button (click)="changeLocation(location)" *ngFor="let location of locations" ngbDropdownItem>{{location}}</button>
                             </div>
                         </div>
                     </div>
@@ -99,9 +99,9 @@
                 <br />
                 <label class="label-filter">Salário (R$)</label>
                 <br />
-                <mat-slider thumbLabel tickInterval="1000" step="1000" min="0" max="100000" aria-label="Reais">
+                <mat-slider (change)="changeVacancySalary($event)" thumbLabel tickInterval="1000" step="1000" min="0" max="100000" aria-label="Reais">
                 </mat-slider>
-                <button type="button" class="btn btn-primary apply-btn">Aplicar</button>
+                <button (click)="applyFilters()" type="button" class="btn btn-primary apply-btn">Aplicar</button>
 
             </form>
 
@@ -150,6 +150,7 @@
                             <li>Conhecimento de MongoDB é um diferencial</li>
                         </ul>
                     </label><br />
+                    <label class="col-md-4" for="inputdefault">Localização<br />São Paulo Brasil</label><br />
                     <label class="col-md-4" for="inputdefault">Categoria<br />Tecnologia</label>
                     <div class="description">
                         <label for="inputdefault">Descrição da vaga<br />A empresa X está atuando no ramo da tecnologia

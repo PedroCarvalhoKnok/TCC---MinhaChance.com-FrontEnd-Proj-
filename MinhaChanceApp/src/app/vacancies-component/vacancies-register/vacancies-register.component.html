@@ -45,10 +45,9 @@
                                 </p>
                             </div>
                             <mat-form-field class="spacing-margin">
-                                <mat-label class="placeholder-color">Vaga</mat-label>
-                                <mat-select placeholder="Vaga">
-                                    <mat-option value="Introdução I">Analista I</mat-option>
-                                    <mat-option value="Introdução II">Analista II</mat-option>
+                                <mat-label class="placeholder-color">Tipo de contratação</mat-label>
+                                <mat-select id="select-contracts" placeholder="Vaga">
+                                    <mat-option *ngFor="let category of contractCategories" value="{{category}}">{{category}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <div
@@ -74,21 +73,16 @@
                                 </p>
                             </div>
                             <br />
-                            <mat-label class="placeholder-color">Modalidade</mat-label>
-                            <div class="col">
-                                <div ngbDropdown class="d-inline-block">
-                                    <button type="button" class="btn btn-outline-primary" id="dropdownLocation" 
-                                        ngbDropdownToggle>{{this.vacancy.modalidity != undefined ? this.vacancy.modalidity: 'Modalidade'}}</button>
-                                    <div ngbDropdownMenu aria-labelledby="dropdownManual">
-                                        <button *ngFor="let modality of modalities" (click)="changeModality(modality)" ngbDropdownItem>{{modality}}</button>
-                                        
-                                    </div>
-                                </div>
-                            </div>
+                            <mat-form-field>
+                                <mat-label class="placeholder-color">{{this.vacancy.modalidity != undefined ? this.vacancy.modalidity: 'Modalidade'}}</mat-label>
+                                <mat-select id="select-contracts" placeholder="Vaga">
+                                    <mat-option *ngFor="let modality of modalities" (click)="changeModality(modality)" value="{{modality}}">{{modality}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                             <div
                                 *ngIf="formVacancy.get('contractModality')?.invalid && (formVacancy.get('contractModality')?.dirty || formVacancy.get('contractModality')?.touched)">
                                 <p *ngIf="formVacancy.get('contractModality')?.errors?.['required']">
-                                    Tipo de contratação é necessária.
+                                    Modalidade da contratação é necessária.
                                 </p>
                             </div>
                             <mat-label *ngIf="isHibrid" class="placeholder-color">Quantidade por semana</mat-label>
@@ -105,6 +99,12 @@
                                 Duração do curso deve ser maior que 0.
                             </p>
                             </div>
+                            <mat-form-field class="spacing-margin">
+                                <mat-label class="placeholder-color">{{this.vacancy.location != undefined ? this.vacancy.location: 'Localização'}}</mat-label>
+                                <mat-select id="select-contracts" placeholder="Vaga">
+                                    <mat-option *ngFor="let location of locations" (click)="changeLocation(location)" value="{{location}}">{{location}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                             <br />
                             <section>
                                 <mat-checkbox (change)="confidencialVacancy()">
@@ -148,7 +148,7 @@
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
                 Beneficios
             </mat-card-title>
-            <span class="material-icons col-4" (click)="addBenefit(this.vacancy.benefit)">add_circle_outline</span>
+            <span class="material-icons col-4" (click)="addBenefit(this.benefit)">add_circle_outline</span>
             <span class="material-icons col-4">remove_circle_outline</span>
         </mat-card-header>
 
@@ -161,7 +161,7 @@
                             <mat-label class="placeholder-color">Nome do beneficio</mat-label>
                             <br/>
                             <mat-form-field>
-                            <input matInput class="form-control" formControlName="benefitDescription" type="text" autocomplete="off"
+                            <input id="benefitDescription" matInput class="form-control" formControlName="benefitDescription" type="text" autocomplete="off"
                                 placeholder="Nome do beneficio" required />
                             </mat-form-field>
                             <div
@@ -174,7 +174,7 @@
                             <mat-label class="placeholder-color">Valor do beneficio (opcional)</mat-label>
                             <br/>
                             <mat-form-field>
-                            <input matInput class="form-control" formControlName="benefitValue" type="text" autocomplete="off"
+                            <input id="benefitValue" matInput class="form-control" formControlName="benefitValue" type="text" autocomplete="off"
                                 placeholder="Valor do beneficio" required />
                             </mat-form-field>
                             <div
@@ -205,7 +205,7 @@
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
                 Requisitos
             </mat-card-title>
-            <span class="material-icons col-4" (click)="addRequirement(this.vacancy.requirement)">add_circle_outline</span>
+            <span class="material-icons col-4" (click)="addRequirement(this.requirement)">add_circle_outline</span>
             <span class="material-icons col-4">remove_circle_outline</span>
         </mat-card-header>
 
@@ -213,26 +213,14 @@
 
             <div class="container">
                 <div fxLayout="row" fxLayoutAlign="center">
-                    <form [formGroup]="formRequirements">
+                    <form>
                         <div fxLayout="column">
                            
                             <mat-label class="placeholder-color">Descrição do requisito</mat-label>
-                            <textarea formControlName="requirementDescription" class="text-area-form" required></textarea>
-                            <div
-                                *ngIf="formRequirements.get('requirementDescription')?.invalid && (formRequirements.get('requirementDescription')?.dirty || formRequirements.get('requirementDescription')?.touched)">
-                                <p *ngIf="formRequirements.get('requirementDescription')?.errors?.['required']">
-                                    Titulo da sessão é necessária.
-                                </p>
-                            </div>
+                            <textarea id="requirementDescription" class="text-area-form" required></textarea>
                             <br />
                             <mat-label class="placeholder-color">Diferenciais (opcional)</mat-label>
-                            <textarea formControlName="requirementDifferential" class="text-area-form" required></textarea>
-                            <div
-                                *ngIf="formRequirements.get('requirementDifferential')?.invalid && (formRequirements.get('requirementDifferential')?.dirty || formRequirements.get('requirementDifferential')?.touched)">
-                                <p *ngIf="formRequirements.get('requirementDifferential')?.errors?.['required']">
-                                    Titulo da sessão é necessária.
-                                </p>
-                            </div>
+                            <textarea id="requirementDifferential" class="text-area-form" required></textarea>
 
                         </div>
                     </form>

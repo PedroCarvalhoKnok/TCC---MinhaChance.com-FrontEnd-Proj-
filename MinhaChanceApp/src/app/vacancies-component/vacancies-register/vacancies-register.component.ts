@@ -15,14 +15,15 @@ export class VacanciesRegisterComponent implements OnInit {
 
   formVacancy!: FormGroup;
   formBenefits!: FormGroup;
-  formRequirements!: FormGroup;
 
   vacancy: Vacancy = new Vacancy();
   benefit: Benefit = new Benefit();
   requirement: Requirement = new Requirement();
 
-  contractCategories = ['CLT', 'PJ'];
+
+  contractCategories = ['CLT', 'PJ', 'Estagio'];
   modalities = ['Presencial', 'Hibrido', 'Remoto'];
+  locations: string[] = ['Sao Paulo - Centro', 'Rio de Janeiro - Centro', 'Parana - Curitiba']
 
   isCombinated: boolean = false;
   isConfidential: boolean = false;
@@ -34,22 +35,24 @@ export class VacanciesRegisterComponent implements OnInit {
 
   constructor(private vacancyService: VacancyService, private router: ActivatedRoute) { }
 
-  ngOnInit(){
+  async ngOnInit(){
 
-    // let vacancyId = this.router.snapshot.params?.['vacancyId'];
+    let vacancyId = this.router.snapshot.params?.['vacancyId'];
 
-    // this.vacancyId = vacancyId;
+    this.vacancyId = vacancyId;
 
-    // if(this.vacancyId != undefined){
-    //   await this.vacancyService.getVacancy(vacancyId).subscribe(vacancy => this.vacancy = vacancy)
-    // }
+    if(this.vacancyId != undefined){
+      await this.vacancyService.getVacancy(vacancyId).subscribe(vacancy => this.vacancy = vacancy)
+    }
 
     this.createFormVacancyValidation();
     this.createFormBenefitValidation();
-    this.createFormRequirementValidation();
+    //this.getLocationsByUserId();
 
+  }
 
-
+  async getLocationsByUserId(){
+    await this.vacancyService.getLocationsByUser(1).subscribe(location => this.locations = location)//user id
   }
 
   changeContractType(type: string){
@@ -86,6 +89,12 @@ export class VacanciesRegisterComponent implements OnInit {
 
   }
 
+  changeLocation(location: string){
+
+    this.vacancy.location = location;
+
+  }
+
   chooseVacancyImage(event: any){
     this.vacancy.image = event.target.files[0];
   }
@@ -119,8 +128,11 @@ export class VacanciesRegisterComponent implements OnInit {
 
   addBenefit(benefit: Benefit){
 
-    if(this.formBenefits.valid)
+    if(this.formBenefits.valid){
+      this.benefit.description = (<HTMLInputElement>document.getElementById(`benefitDescription`)).value;
+      this.benefit.value = +(<HTMLInputElement>document.getElementById(`benefitValue`)).value;
       this.vacancy.benefits.push(benefit);
+    }
 
   }
 
@@ -132,14 +144,17 @@ export class VacanciesRegisterComponent implements OnInit {
 
   removeRequirement(){
 
-    this.vacancy.requirements.pop();
+    this.vacancy.requirements?.pop();
 
   }
 
   addRequirement(requirement: Requirement){
 
-    if(this.formRequirements.valid)
-      this.vacancy.requirements.push(requirement);
+    requirement.description = (<HTMLInputElement>document.getElementById(`requirementDescription`)).value;
+    requirement.differencial = (<HTMLInputElement>document.getElementById(`requirementDifferential`)).value;
+
+    
+    this.vacancy.requirements?.push(requirement);
 
   }
 
@@ -161,15 +176,16 @@ export class VacanciesRegisterComponent implements OnInit {
   removeRequirementByIndex(index: number){
     
     if(this.vacancyId != undefined)
-      this.vacancyRequirementsToBeDeleted.push( this.vacancy.requirements[index])  
+      if(this.vacancy.requirements != undefined)
+        this.vacancyRequirementsToBeDeleted.push(this.vacancy.requirements[index])  
       
     
-    delete  this.vacancy.requirements[index];
+    delete this.vacancy.requirements??[index];
   }
 
   editRequirementByIndex(index: number){
-    this.vacancy.requirements[index].description = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value;
-    this.vacancy.requirements[index].differencial = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value;
+    this.vacancy.requirements != undefined ? this.vacancy.requirements[index].description = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value: '';
+    this.vacancy.requirements != undefined ? this.vacancy.requirements[index].differencial = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value: '';
   }
 
   createFormVacancyValidation(): void {
@@ -217,18 +233,6 @@ export class VacanciesRegisterComponent implements OnInit {
         Validators.required,
         this.forbiddenDurationTimeValidator(/0/i),
         this.forbiddenDurationTimeValidator(/[-0-9]+/i)
-      ])
-    });
-
-  }
-
-  createFormRequirementValidation(): void {
-    this.formRequirements = new FormGroup({
-      requirementDescription: new FormControl(this.requirement.description, [
-        Validators.required,
-      ]),
-      requirementDifferential: new FormControl(this.requirement.differencial, [
-        Validators.required,
       ])
     });
 

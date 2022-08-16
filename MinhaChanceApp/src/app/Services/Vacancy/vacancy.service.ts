@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
 import { Vacancy } from 'src/app/Models/Vacancy/Vacancy';
+import { Benefit } from 'src/app/Models/Vacancy/Benefit';
+import { Requirement } from 'src/app/Models/Vacancy/Requirement';
 
 @Injectable({
   providedIn: 'root'
@@ -58,21 +60,21 @@ export class VacancyService {
   }
 
   getBenefitsByUser(userId: number){
-    return this.httpClient.get<any[]>(``, this.httpOptions)
+    return this.httpClient.get<string[]>(``, this.httpOptions)
       .pipe(
         retry(2),
       )
   }
 
   getRequerimentsByUser(userId: number){
-    return this.httpClient.get<any[]>(``, this.httpOptions)
+    return this.httpClient.get<string[]>(``, this.httpOptions)
       .pipe(
         retry(2),
       )
   }
 
   getLocationsByUser(userId: number){
-    return this.httpClient.get<any[]>(``, this.httpOptions)
+    return this.httpClient.get<string[]>(``, this.httpOptions)
       .pipe(
         retry(2),
       )

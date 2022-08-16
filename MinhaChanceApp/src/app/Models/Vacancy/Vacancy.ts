@@ -13,9 +13,10 @@ export class Vacancy {
     semanalQuantity?: number;
     image!: File;
     description!: string;
-    benefit!: Benefit;
-    requirement!: Requirement;
+    benefit?: Benefit;
+    requirement?: Requirement;
     benefits!: Benefit[];
-    requirements!: Requirement[];
+    requirements?: Requirement[];
     category!: string;
+    location?: string;
 }
