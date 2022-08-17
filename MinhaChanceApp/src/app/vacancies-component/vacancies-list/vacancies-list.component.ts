@@ -35,7 +35,7 @@ export class VacanciesListComponent implements OnInit {
 
   async ngOnInit(){
 
-   this.vacancies = await this.vacancyService.getAllVacanciesByUser(1); //user id
+  // this.vacancies = await this.vacancyService.getAllVacanciesByUser(1); //user id
 
   }
 

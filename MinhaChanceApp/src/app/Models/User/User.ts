@@ -18,7 +18,7 @@ export class User {
     experiences?: Experiences[];
     graduations?: Graduation[];
     certifications?: UserCertification[];
-    generalRating?: number;
-    generalServicesRating?: number;
+    generalRating?: number[];
+    generalServicesRating?: number[];
     objective?: string;
 }

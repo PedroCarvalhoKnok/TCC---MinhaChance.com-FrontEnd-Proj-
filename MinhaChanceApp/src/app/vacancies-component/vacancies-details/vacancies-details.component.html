@@ -22,44 +22,43 @@
             <form class="example-form">
 
 
-                <label class="label-filter">Status</label>
-                <div class="col select-filters">
-                    <div ngbDropdown class="d-inline-block select-filters">
-                        <button type="button" class="btn btn-outline-primary" id="dropdownBenefits"
-                            ngbDropdownToggle>Status atual</button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownCategory">
-                            <button ngbDropdownItem>Trabalhando</button>
-                            <button ngbDropdownItem>Desempregado(a)</button>
-                        </div>
-                    </div>
+                <label class="label-filter" for="typeahead-basic">Trabalhando?</label>
+                <br />
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input (click)="changeWorking(true)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
+
+                    <input (click)="changeWorking(false)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio2">Não</label>
+
                 </div>
 
                 <div class="form-group">
                     <label class="label-filter">Empresa atual</label>
                     <br />
-                    <input id="atualCompany" class="form-control" type="text" class="form-control" />
+                    <input id="actualCompany" class="form-control" type="text" class="form-control" />
                 </div>
 
                 <div class="form-group">
                     <label class="label-filter">Cargo atual</label>
                     <br />
-                    <input id="atualCharge" class="form-control" type="text" class="form-control" />
+                    <input id="actualCharge" class="form-control" type="text" class="form-control" />
                 </div>
 
                 <br />
                 <label class="label-filter">Idade</label>
                 <br />
-                <mat-slider thumbLabel tickInterval="1" step="1" min="0" max="100" aria-label="Reais">
+                <mat-slider (change)="changeAge($event)" thumbLabel tickInterval="1" step="1" min="0" max="100" aria-label="Idade">
                 </mat-slider>
 
                 <br />
                 <label class="label-filter" for="typeahead-basic">Concluiu curso da vaga?</label>
                 <br />
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                    <input (click)="changeCourseConclusion(true)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <input (click)="changeCourseConclusion(false)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio2">Não</label>
 
                 </div>
@@ -69,16 +68,17 @@
 
                     <label class="label-filter">Anos de experiência</label>
                     <br />
-                    <input id="maxVacancyQuantity" class="form-control" type="number" class="form-control" />
+                    <mat-slider (change)="changeExperience($event)" thumbLabel tickInterval="1" step="1" min="0" max="100" aria-label="Ano">
+                    </mat-slider>
                 </div>
                 <br />
                 <label class="label-filter" for="typeahead-basic">Possui formação acadêmica?</label>
                 <br />
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                    <input (click)="changeHasGradutuation(true)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <input (click)="changeHasGradutuation(false)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio2">Não</label>
 
                 </div>
@@ -86,10 +86,10 @@
                 <label class="label-filter" for="typeahead-basic">Possui certificados?</label>
                 <br />
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                    <input (click)="changeHasCertifications(true)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <input (click)="changeHasCertifications(false)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio2">Não</label>
 
                 </div>
@@ -103,10 +103,10 @@
                 
                 <label class="label-filter">Pretensão Salarial (R$)</label>
                 <br />
-                <mat-slider thumbLabel tickInterval="1000" step="1000" min="0" max="100000" aria-label="Reais">
+                <mat-slider (change)="changeSalaryPretension($event)" thumbLabel tickInterval="1000" step="1000" min="0" max="100000" aria-label="Reais">
                 </mat-slider>
                 
-                <button type="button" class="btn btn-primary apply-btn">Aplicar</button>
+                <button (click)="applyFilters()" type="button" class="btn btn-primary apply-btn">Aplicar</button>
 
             </form>
 
@@ -151,33 +151,28 @@
                         </ul>
                     </label><br />
                     <label class="col-md-4 distance-between" for="inputdefault">Formação Acadêmica<br />
-                        <ul class="vacancy-list col-md-4">
-                            <li *ngFor="let graduation of detail.graduations">Superior Completo</li>
-                            <li>Curso: ADS</li>
-                            <li>Faculdade: Y</li>
-                            <li>Tempo: 3 ano(s)</li>
-                            <li>Ensino Médio Completo</li>
-                            <li>Escola Y</li>
+                        <ul *ngFor="let graduation of detail.graduations" class="vacancy-list col-md-4">
+                            <li>{{graduation.graduationDescription}}</li>
+                            <li>{{graduation.course}}</li>
+                            <li>{{graduation.institute}}</li>
+                            <li>{{graduation.timeSpent}}</li>
                         </ul>
                     </label><br />
                     <label class="col-md-4 distance-between" for="inputdefault">Certificados<br />
-                        <ul class="vacancy-list col-md-4">
-                            <li *ngFor="let cartification of detail.certifications">Desenvolvimento Web com .NET</li>
-                            <li>Plataforma: MinhaVez!</li>
-                            <li>Carga horária: 100 hora(s)</li>
-                            <li>Desenvolvimento Mobile e Iot</li>
-                            <li>Plataforma: IBM</li>
-                            <li>Carga horária: 40 hora(s)</li>
+                        <ul *ngFor="let certification of detail.certifications" class="vacancy-list col-md-4">
+                            <li>{{certification.certificationDescription}}</li>
+                            <li>{{certification.platform}}</li>
+                            <li>{{certification.timeSpent}}</li>
                         </ul>
                     </label><br />
                     <label class="col-md-4 distance-pad-content" for="inputdefault">
                         Avaliação Geral<br />
-                        <ngb-rating class="rate" [max]="5"></ngb-rating>
+                        <ngb-rating [readonly]='true' class="rate" [max]="5"></ngb-rating>
                     </label>
                     <br />
                     <label class="col-md-4 distance-pad-content" for="inputdefault">
                         Avaliação Serviços<br />
-                        <ngb-rating class="rate" [max]="4"></ngb-rating>
+                        <ngb-rating [readonly]='true' class="rate" [max]="5"></ngb-rating>
                     </label>
                     <br/>
                     <div class="description distance-pad-content">

@@ -113,11 +113,11 @@
 </div>
 
 <div>
-    <mat-card class="vacancies-card" *ngFor="let vacancy of vacancies|async |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
+    <mat-card class="vacancies-card" *ngFor="let vacancy of this.vacancies|async |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
 
         <mat-card-header class="header-content">
             <mat-card-title class="title-vacancy">
-                {{this.vacancy.vacancyTitle}}
+                {{vacancy.vacancyTitle}}
             </mat-card-title>
 
         </mat-card-header>
@@ -129,9 +129,9 @@
                 <div class="row">
 
                     <span class="material-icons col-md-4">account_circle</span>
-                    <label class="col-md-4" for="inputdefault">Salário<br />{{this.vacancy.salary}}</label>
-                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{this.vacancy.quantity}} vaga(s)</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{this.vacancy.modalidity}} {{this.vacancy.modalidity == 'Hibrido' ? this.vacancy.semanalQuantity: ''}}</label>
+                    <label class="col-md-4" for="inputdefault">Salário<br />{{vacancy.salary}}</label>
+                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantity}} vaga(s)</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{vacancy.modalidity}} {{vacancy.modalidity == 'Hibrido' ? vacancy.semanalQuantity: ''}}</label>
                     <br />
                     <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
                         <ul class="vacancy-list col-md-8">
@@ -149,10 +149,10 @@
                             <li>Conhecimento de MongoDB é um diferencial</li>
                         </ul>
                     </label><br />
-                    <label class="col-md-4" for="inputdefault">Localização<br />{{this.vacancy.location}}</label><br />
+                    <label class="col-md-4" for="inputdefault">Localização<br />{{vacancy.location}}</label><br />
                     <label class="col-md-4" for="inputdefault">Categoria<br />Tecnologia</label>
                     <div class="description">
-                        <label for="inputdefault">Descrição da vaga<br />{{this.vacancy.description}}</label><br />
+                        <label for="inputdefault">Descrição da vaga<br />{{vacancy.description}}</label><br />
                     </div>
 
                     <div class="description">
@@ -173,73 +173,6 @@
 
 
     </mat-card>
-
-    <mat-card class="vacancies-card">
-
-        <mat-card-header class="header-content">
-            <mat-card-title class="title-vacancy">
-                Consultor Senior
-            </mat-card-title>
-
-        </mat-card-header>
-
-        <mat-card-content class="vacancy-content">
-
-            <div class="container">
-
-                <div class="row">
-
-                    <span class="material-icons col-md-4">account_circle</span>
-                    <label class="col-md-4" for="inputdefault">Salário<br />A combinar</label>
-                    <label class="col-md-4" for="inputdefault">Contratação<br />CLT</label>
-                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />4 vagas</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />Híbrido (2x/semana)
-                    </label>
-                    <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
-                        <ul class="vacancy-list col-md-8">
-                            <li>VR + VT (A combinar)</li>
-                            <li>Convenio Médico</li>
-                            <li>Convenio Odontológico</li>
-                            <li>Gym Pass</li>
-                        </ul>
-                    </label><br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
-                        <ul class="vacancy-list col-md-4">
-                            <li>2 anos de experiência na área</li>
-                            <li>Superior Completo</li>
-                            <li>Conhecimento em arquitetura</li>
-                            <li>Conhecimento de MongoDB é um diferencial</li>
-                        </ul>
-                    </label><br />
-                    <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">
-                        Avaliação da vaga<br />
-                        <ngb-rating class="rate" [max]="5"></ngb-rating>
-                    </label>
-                    <div class="description">
-                        <label for="inputdefault">Descrição da vaga<br />A empresa X está atuando no ramo da tecnologia
-                            a
-                            mais de 10 anos e agora busca um profissional experiente e dedicado</label><br />
-                    </div>
-
-                </div>
-
-            </div>
-
-
-        </mat-card-content>
-
-
-
-
-    </mat-card>
-
-    
-
-
-
-
 
 
     <mat-paginator #paginator class="paginator" [length]="100" [pageSize]="10" [pageSizeOptions]="[1, 5, 25, 100]"
