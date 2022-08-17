@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Observable, of } from 'rxjs';
 import { vacancyDetailsFilter } from 'src/app/Models/Filters/Vacancy/vacancyDetailsFilter';
 import { User } from 'src/app/Models/User/User';
+import { Chart } from 'chart.js';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-vacancies-details',
@@ -10,14 +12,18 @@ import { User } from 'src/app/Models/User/User';
   styleUrls: ['./vacancies-details.component.scss']
 })
 export class VacanciesDetailsComponent implements OnInit {
+  @ViewChild("CandidatoXVaga", {static: true}) elemento: ElementRef;
 
-  constructor() { }
+  constructor(private router: ActivatedRoute) { }
 
   pageEvent!: PageEvent
 
   user: User = new User();
 
   detailsFilter: vacancyDetailsFilter = new vacancyDetailsFilter();
+
+  title = 'Aptidão geral a vaga';
+  vacancyDetailChart = [];
 
   vacancyDetails: Observable<User[]> = of([{
     id: 1,
@@ -41,6 +47,27 @@ export class VacanciesDetailsComponent implements OnInit {
   }])
 
   ngOnInit(): void {
+
+    let vacancyId = this.router.snapshot.params?.['vacancyId'];
+
+     new Chart(this.elemento.nativeElement, {
+      type: 'pie',
+      data: { labels: [
+        'Não',
+        'Sim',
+      ],
+      datasets:[{
+        label: 'Aptidão CandidatoXVaga',
+        data: [60,40],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+        ],
+        hoverOffset: 4
+      }]
+    }
+    });
+   
   }
 
   changeAge(event: any) {

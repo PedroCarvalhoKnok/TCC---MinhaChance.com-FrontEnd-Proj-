@@ -21,4 +21,5 @@ export class User {
     generalRating?: number[];
     generalServicesRating?: number[];
     objective?: string;
+    userVacancyDash?: any[]; 
 }
