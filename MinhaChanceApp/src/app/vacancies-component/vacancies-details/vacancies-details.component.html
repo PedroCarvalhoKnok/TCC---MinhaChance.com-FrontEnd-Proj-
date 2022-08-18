@@ -117,8 +117,8 @@
     </mat-card>
 </div>
 
-<div>
-    <mat-card class="vacancies-card" *ngFor="let detail of vacancyDetails|async |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
+<div *ngFor="let detail of vacancyDetails|async |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
+    <mat-card class="vacancies-card">
 
         <mat-card-header class="header-content">
             <mat-card-title class="title-vacancy">
@@ -183,6 +183,37 @@
 
             </div>
 
+        </mat-card-content>
+
+
+    </mat-card>
+
+    <mat-card class="vacancies-card">
+
+        <mat-card-header class="header-content">
+            <mat-card-title class="title-vacancy">
+                Informações da relação Candidato X Vaga
+            </mat-card-title>
+
+        </mat-card-header>
+
+        <mat-card-content class="vacancy-content">
+
+            <div class="container">
+
+                <div class="row">
+                    
+                    <label class="col-md-6" for="inputdefault">Aptidao</label>
+                    <app-user-vacancy-details-chart class="col-md-8"></app-user-vacancy-details-chart>
+                    <label class="col-md-6" for="inputdefault">Destaque(s)</label>
+                    <app-user-inteligence-details-chart class="col-md-8"></app-user-inteligence-details-chart>
+                    
+
+                </div>
+
+            </div>
+            
+
 
         </mat-card-content>
 
@@ -190,11 +221,10 @@
 
 
     </mat-card>
-
-
-
-    <mat-paginator #paginator class="paginator" [length]="100" [pageSize]="10" [pageSizeOptions]="[1, 5, 25, 100]"
-        (page)="pageEvent = $event" aria-label="Select page">
-    </mat-paginator>
+    
 
 </div>
+
+<mat-paginator #paginator class="paginator" [length]="100" [pageSize]="10" [pageSizeOptions]="[1, 5, 25, 100]"
+        (page)="pageEvent = $event" aria-label="Select page">
+</mat-paginator>

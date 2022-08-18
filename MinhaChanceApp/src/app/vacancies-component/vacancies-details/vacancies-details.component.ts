@@ -3,8 +3,8 @@ import { PageEvent } from '@angular/material/paginator';
 import { Observable, of } from 'rxjs';
 import { vacancyDetailsFilter } from 'src/app/Models/Filters/Vacancy/vacancyDetailsFilter';
 import { User } from 'src/app/Models/User/User';
-import { Chart } from 'chart.js';
 import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-vacancies-details',
@@ -12,9 +12,10 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./vacancies-details.component.scss']
 })
 export class VacanciesDetailsComponent implements OnInit {
-  @ViewChild("CandidatoXVaga", {static: true}) elemento: ElementRef;
 
   constructor(private router: ActivatedRoute) { }
+
+  chart!: any;
 
   pageEvent!: PageEvent
 
@@ -48,26 +49,52 @@ export class VacanciesDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let vacancyId = this.router.snapshot.params?.['vacancyId'];
+    //let vacancyId = this.router.snapshot.params?.['vacancyId'];
 
-     new Chart(this.elemento.nativeElement, {
-      type: 'pie',
-      data: { labels: [
-        'Não',
-        'Sim',
-      ],
-      datasets:[{
-        label: 'Aptidão CandidatoXVaga',
-        data: [60,40],
-        backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-        ],
-        hoverOffset: 4
-      }]
-    }
-    });
-   
+    // this.chart = new Chart("aptidao", {
+    //   type: 'pie',
+    //   data: {
+    //     labels: [
+    //       'Não',
+    //       'Sim',
+    //     ],
+    //     datasets: [{
+    //       label: 'Aptidão Candidato X Vaga',
+    //       data: [60, 40],
+    //       backgroundColor: [
+    //         'rgb(255, 99, 132)',
+    //         'rgb(54, 162, 235)',
+    //       ],
+    //       hoverOffset: 4
+    //     }]
+    //   }
+    // });
+
+    // new Chart('destaque', {
+    //   type: 'bar',
+    //   data: { labels: [
+    //     'Titulo vaga 1',
+    //     'Titulo vaga 2',
+    //     'Titulo vaga 3',
+    //   ],
+    //   datasets:[{
+    //     label: 'Area de destaque de vagas disponiveis de acordo com a inteligencia do candidato',
+    //     data: [80, 76, 64],
+    //     backgroundColor: [
+    //       'rgba(255, 99, 132, 0.2)',
+    //       'rgba(255, 159, 64, 0.2)',
+    //       'rgba(255, 205, 86, 0.2)',
+    //     ],
+    //     borderColor: [
+    //       'rgb(255, 99, 132)',
+    //       'rgb(255, 159, 64)',
+    //       'rgb(255, 205, 86)',
+    //     ],
+    //     borderWidth: 1
+    //   }]
+    // }
+    // });
+
   }
 
   changeAge(event: any) {

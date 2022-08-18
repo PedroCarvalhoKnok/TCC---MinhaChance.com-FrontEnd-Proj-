@@ -1,3 +1,4 @@
+import { Chart } from "chart.js";
 import { Graduation } from "./AcademicGraduation";
 import { UserCertification } from "./Certification";
 import { Experiences } from "./Experiences";
@@ -21,5 +22,6 @@ export class User {
     generalRating?: number[];
     generalServicesRating?: number[];
     objective?: string;
-    userVacancyDash?: any[]; 
+    userVacancyInfo?: any;
+    userInteligenciesInfo?: any;
 }
