@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { User } from 'src/app/Models/User/User';
 
 Chart.register(...registerables)
 
@@ -10,6 +11,8 @@ Chart.register(...registerables)
   styleUrls: ['./user-vacancy-details-chart.component.scss']
 })
 export class UserVacancyDetailsChartComponent implements OnInit {
+
+  userSkills!: User[];
 
   constructor() { }
 
@@ -33,6 +36,13 @@ export class UserVacancyDetailsChartComponent implements OnInit {
         }]
       }
     });
+  }
+
+
+  receiveUserSkills($event){
+
+    this.userSkills = $event
+
   }
 
 }

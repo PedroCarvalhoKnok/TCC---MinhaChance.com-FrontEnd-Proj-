@@ -1,9 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Observable, of } from 'rxjs';
 import { vacancyDetailsFilter } from 'src/app/Models/Filters/Vacancy/vacancyDetailsFilter';
 import { User } from 'src/app/Models/User/User';
 import { ActivatedRoute } from '@angular/router';
+import { VacancyService } from 'src/app/Services/Vacancy/vacancy.service';
+import { UserService } from 'src/app/Services/User/user.service';
+import { Vacancy } from 'src/app/Models/Vacancy/Vacancy';
+import { AnalyticsService } from 'src/app/Services/Analytics/analytics.service';
 
 
 @Component({
@@ -13,9 +17,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class VacanciesDetailsComponent implements OnInit {
 
-  constructor(private router: ActivatedRoute) { }
+  constructor(private router: ActivatedRoute, private vacancyService: VacancyService, private userService: UserService, private analyticsService: AnalyticsService) { }
 
-  chart!: any;
+  @Output() arrayEvent = new EventEmitter<User[]>();
 
   pageEvent!: PageEvent
 
@@ -47,53 +51,17 @@ export class VacanciesDetailsComponent implements OnInit {
 
   }])
 
-  ngOnInit(): void {
+  async ngOnInit() {
 
-    //let vacancyId = this.router.snapshot.params?.['vacancyId'];
+    let vacancyId = this.router.snapshot.params?.['vacancyId'];
 
-    // this.chart = new Chart("aptidao", {
-    //   type: 'pie',
-    //   data: {
-    //     labels: [
-    //       'Não',
-    //       'Sim',
-    //     ],
-    //     datasets: [{
-    //       label: 'Aptidão Candidato X Vaga',
-    //       data: [60, 40],
-    //       backgroundColor: [
-    //         'rgb(255, 99, 132)',
-    //         'rgb(54, 162, 235)',
-    //       ],
-    //       hoverOffset: 4
-    //     }]
-    //   }
-    // });
+    let candidates!: User[];
 
-    // new Chart('destaque', {
-    //   type: 'bar',
-    //   data: { labels: [
-    //     'Titulo vaga 1',
-    //     'Titulo vaga 2',
-    //     'Titulo vaga 3',
-    //   ],
-    //   datasets:[{
-    //     label: 'Area de destaque de vagas disponiveis de acordo com a inteligencia do candidato',
-    //     data: [80, 76, 64],
-    //     backgroundColor: [
-    //       'rgba(255, 99, 132, 0.2)',
-    //       'rgba(255, 159, 64, 0.2)',
-    //       'rgba(255, 205, 86, 0.2)',
-    //     ],
-    //     borderColor: [
-    //       'rgb(255, 99, 132)',
-    //       'rgb(255, 159, 64)',
-    //       'rgb(255, 205, 86)',
-    //     ],
-    //     borderWidth: 1
-    //   }]
-    // }
-    // });
+    await this.userService.getUsersInfoByVacancy(vacancyId).subscribe(users => candidates = users);
+
+    this.arrayEvent.emit(candidates);
+
+    this.vacancyDetails = of(candidates);
 
   }
 
