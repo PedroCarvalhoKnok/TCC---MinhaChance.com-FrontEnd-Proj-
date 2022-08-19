@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Informações da relação Candidato X Vaga</h2>
+<mat-dialog-content class="mat-typography">
+
+
+    <div class="container">
+
+        <div class="row">
+
+            <label class="col-md-6" for="inputdefault">Aptidao</label>
+            <app-user-vacancy-details-chart [user]="data" class="col-md-8"></app-user-vacancy-details-chart>
+            <label class="col-md-6" for="inputdefault">Destaque(s)</label>
+            <app-user-inteligence-details-chart [userIntelligenceVacancyRecommendations]="data" class="col-md-8"></app-user-inteligence-details-chart>
+
+
+        </div>
+
+    </div>
+
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Fechar</button>
+</mat-dialog-actions>

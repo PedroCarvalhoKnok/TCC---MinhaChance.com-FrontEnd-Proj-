@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { User } from 'src/app/Models/User/User';
 
@@ -9,32 +9,34 @@ Chart.register(...registerables)
   templateUrl: './user-inteligence-details-chart.component.html',
   styleUrls: ['./user-inteligence-details-chart.component.scss']
 })
-export class UserInteligenceDetailsChartComponent implements OnInit {
+export class UserInteligenceDetailsChartComponent implements AfterViewInit {
 
-  userIntelligenceVacancyRecommendations!: User[];
+  @Input() userIntelligenceVacancyRecommendations!: User;
 
   constructor() { }
+  
 
-  ngOnInit(): void {
-    new Chart('destaque', {
+  ngAfterViewInit(): void {
+
+    console.log(this.userIntelligenceVacancyRecommendations.id)
+
+    new Chart(`${this.userIntelligenceVacancyRecommendations.id + 1}`, {
       type: 'bar',
-      data: { labels: [
-        'Titulo vaga 1',
-        'Titulo vaga 2',
-        'Titulo vaga 3',
-      ],
+      data: { labels: 
+        this.userIntelligenceVacancyRecommendations.userInteligenciesInfo.vacancies
+      ,
       datasets:[{
         label: 'Area',
-        data: [80, 76, 64],
+        data: this.userIntelligenceVacancyRecommendations.userInteligenciesInfo.skills,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 205, 86, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
         ],
         borderColor: [
           'rgb(255, 99, 132)',
-          'rgb(255, 159, 64)',
-          'rgb(255, 205, 86)',
+          'rgb(255, 99, 132)',
+          'rgb(255, 99, 132)',
         ],
         borderWidth: 1
       }]
@@ -47,11 +49,7 @@ export class UserInteligenceDetailsChartComponent implements OnInit {
       }
     },
     });
+      
   }
-
-  receiveUserSkills($event){
-
-    this.userIntelligenceVacancyRecommendations = $event
-
-  }
+  
 }

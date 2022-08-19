@@ -1,5 +1,6 @@
 import { Chart } from "chart.js";
 import { Graduation } from "./AcademicGraduation";
+import { Address } from "./Address";
 import { UserCertification } from "./Certification";
 import { Experiences } from "./Experiences";
 
@@ -10,8 +11,9 @@ export class User {
     profile!: string;
     email!: string;
     isWorking!: boolean;
-    actualCompany!: string;
-    actualCharge!: string;
+    actualCompany?: string;
+    actualCharge?: string;
+    address!: Address;
     age!: number;
     phone!: string;
     hasVacancyCourse!:boolean;

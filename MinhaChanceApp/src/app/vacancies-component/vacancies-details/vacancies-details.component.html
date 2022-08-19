@@ -178,49 +178,25 @@
                     <div class="description distance-pad-content">
                         <label for="inputdefault">Objetivos<br />{{detail.objective}}</label><br />
                     </div>
+                    <div class="description">
+                        <button type="button" (click)="openMetricsDetails(detail)"  class="btn btn-primary btn-sm space-button">Análise Candidato</button>
+                        <button type="button" class="btn btn-primary btn-sm space-button">Interesse</button>
+                        <button type="button" class="btn btn-danger btn-sm space-button">Sem interesse</button>
+                    </div>
 
                 </div>
 
             </div>
 
-        </mat-card-content>
-
-
-    </mat-card>
-
-    <mat-card class="vacancies-card">
-
-        <mat-card-header class="header-content">
-            <mat-card-title class="title-vacancy">
-                Informações da relação Candidato X Vaga
-            </mat-card-title>
-
-        </mat-card-header>
-
-        <mat-card-content class="vacancy-content">
-
-            <div class="container">
-
-                <div class="row">
-                    
-                    <label class="col-md-6" for="inputdefault">Aptidao</label>
-                    <app-user-vacancy-details-chart class="col-md-8"></app-user-vacancy-details-chart>
-                    <label class="col-md-6" for="inputdefault">Destaque(s)</label>
-                    <app-user-inteligence-details-chart class="col-md-8"></app-user-inteligence-details-chart>
-                    
-
-                </div>
-
-            </div>
-            
-
+           
 
         </mat-card-content>
 
-
-
+        
 
     </mat-card>
+
+    
     
 
 </div>

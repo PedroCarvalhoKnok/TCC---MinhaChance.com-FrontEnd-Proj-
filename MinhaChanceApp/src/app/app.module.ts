@@ -30,6 +30,8 @@ import { VacanciesDetailsComponent } from './vacancies-component/vacancies-detai
 import { VacanciesRegisterComponent } from './vacancies-component/vacancies-register/vacancies-register.component';
 import { UserVacancyDetailsChartComponent } from './charts-component/user-vacancy-details-chart/user-vacancy-details-chart.component';
 import { UserInteligenceDetailsChartComponent } from './charts-component/user-inteligence-details-chart/user-inteligence-details-chart.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { UserVacancyDetailsDialogComponent } from './Dialogs/user-vacancy-details-dialog/user-vacancy-details-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { UserInteligenceDetailsChartComponent } from './charts-component/user-in
     VacanciesRegisterComponent,
     UserVacancyDetailsChartComponent,
     UserInteligenceDetailsChartComponent,
+    UserVacancyDetailsDialogComponent,
     
   ],
   imports: [
@@ -66,6 +69,7 @@ import { UserInteligenceDetailsChartComponent } from './charts-component/user-in
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

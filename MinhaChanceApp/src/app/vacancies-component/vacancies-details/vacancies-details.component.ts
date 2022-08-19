@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, EventEmitter, Output, AfterViewInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Observable, of } from 'rxjs';
 import { vacancyDetailsFilter } from 'src/app/Models/Filters/Vacancy/vacancyDetailsFilter';
@@ -8,6 +8,9 @@ import { VacancyService } from 'src/app/Services/Vacancy/vacancy.service';
 import { UserService } from 'src/app/Services/User/user.service';
 import { Vacancy } from 'src/app/Models/Vacancy/Vacancy';
 import { AnalyticsService } from 'src/app/Services/Analytics/analytics.service';
+import { Chart } from 'chart.js';
+import { MatDialog } from '@angular/material/dialog';
+import { UserVacancyDetailsDialogComponent } from 'src/app/Dialogs/user-vacancy-details-dialog/user-vacancy-details-dialog.component';
 
 
 @Component({
@@ -15,15 +18,15 @@ import { AnalyticsService } from 'src/app/Services/Analytics/analytics.service';
   templateUrl: './vacancies-details.component.html',
   styleUrls: ['./vacancies-details.component.scss']
 })
+
+
 export class VacanciesDetailsComponent implements OnInit {
-
-  constructor(private router: ActivatedRoute, private vacancyService: VacancyService, private userService: UserService, private analyticsService: AnalyticsService) { }
-
-  @Output() arrayEvent = new EventEmitter<User[]>();
+ 
+  constructor(private router: ActivatedRoute, private vacancyService: VacancyService, private userService: UserService, private analyticsService: AnalyticsService, public dialog: MatDialog) { }
 
   pageEvent!: PageEvent
 
-  user: User = new User();
+  users: User[];
 
   detailsFilter: vacancyDetailsFilter = new vacancyDetailsFilter();
 
@@ -38,6 +41,7 @@ export class VacanciesDetailsComponent implements OnInit {
     isWorking: true,
     actualCompany: 'Empresa Y',
     actualCharge: 'Estagiario',
+    address: {streetName: 'rua dos testes', district: 'bairro teste', country: 'Brasil', zipCode: '09060110', streetNumber: 20},
     age: 20,
     phone: '(11) 94567-2834',
     hasVacancyCourse: false,
@@ -47,22 +51,52 @@ export class VacanciesDetailsComponent implements OnInit {
     graduations: [],
     generalRating: [0, 1, 2, 3, 4],
     generalServicesRating: [0, 1, 2, 3],
-    objective: 'Crescimento pessoal e profisional ganhando experiencia'
-
+    objective: 'Crescimento pessoal e profisional ganhando experiencia',
+    userVacancyInfo: {yes: 56, no: 44},
+    userInteligenciesInfo: { intelligence: 'Linguística', vacancies: ['Tradutor e conhecimento em libras'], skills: [67]}
+  },
+  {
+    id: 2,
+    userName: 'Bruna Oliveira',
+    profile: 'Candidato',
+    email: 'bruhh@teste.com',
+    isWorking: false,
+    address: {streetName: 'rua general teste', district: 'bairro abc', country: 'Brasil', zipCode: '09063410', streetNumber: 208},
+    age: 20,
+    phone: '(11) 95566-2939',
+    hasVacancyCourse: true,
+    salaryPretension: 1000.00,
+    experiences: [],
+    certifications: [{id: 1, certificationDescription: 'certificação introdução python', platform: 'MinhaVez!', timeSpent: 10}],
+    graduations: [],
+    generalRating: [],
+    generalServicesRating: [],
+    objective: 'Crescimento pessoal e profisional ganhando experiencia',
+    userVacancyInfo: {yes: 50, no: 50},
+    userInteligenciesInfo: { intelligence: 'Lógica-Matemática', vacancies: ['Estatistico - Iniciante analise de dados','Desenvolvedor Java júnior'], skills: [78,75]}
   }])
 
   async ngOnInit() {
 
-    let vacancyId = this.router.snapshot.params?.['vacancyId'];
+    // let vacancyId = this.router.snapshot.params?.['vacancyId'];
 
-    let candidates!: User[];
+     let candidates = this.vacancyDetails;
 
-    await this.userService.getUsersInfoByVacancy(vacancyId).subscribe(users => candidates = users);
+    // await this.userService.getUsersInfoByVacancy(vacancyId).subscribe(users => candidates = users);
 
-    this.arrayEvent.emit(candidates);
+    
 
-    this.vacancyDetails = of(candidates);
+    candidates.subscribe(candidate => { this.users = candidate; });
 
+
+   // this.vacancyDetails = candidates;
+
+  }
+
+  openMetricsDetails(detail: User){
+    const dialog = this.dialog.open(UserVacancyDetailsDialogComponent, {
+      data: detail
+    });
   }
 
   changeAge(event: any) {
@@ -145,3 +179,4 @@ export class VacanciesDetailsComponent implements OnInit {
 
 
 }
+

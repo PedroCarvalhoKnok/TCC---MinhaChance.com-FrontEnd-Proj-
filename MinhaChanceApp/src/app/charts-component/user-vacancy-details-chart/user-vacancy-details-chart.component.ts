@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { User } from 'src/app/Models/User/User';
 
@@ -10,15 +10,15 @@ Chart.register(...registerables)
   templateUrl: './user-vacancy-details-chart.component.html',
   styleUrls: ['./user-vacancy-details-chart.component.scss']
 })
-export class UserVacancyDetailsChartComponent implements OnInit {
+export class UserVacancyDetailsChartComponent implements AfterViewInit {
 
-  userSkills!: User[];
+  @Input() user!: User;
 
   constructor() { }
 
-  ngOnInit(): void {
-
-    new Chart("aptidao", {
+  
+  ngAfterViewInit(): void {
+    new Chart(`${this.user.id}`, {
       type: 'pie',
       data: {
         labels: [
@@ -27,7 +27,7 @@ export class UserVacancyDetailsChartComponent implements OnInit {
         ],
         datasets: [{
           label: 'Aptidão Candidato X Vaga',
-          data: [60, 40],
+          data: [this.user.userVacancyInfo.no, this.user.userVacancyInfo.yes],
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
@@ -38,11 +38,5 @@ export class UserVacancyDetailsChartComponent implements OnInit {
     });
   }
 
-
-  receiveUserSkills($event){
-
-    this.userSkills = $event
-
-  }
 
 }
