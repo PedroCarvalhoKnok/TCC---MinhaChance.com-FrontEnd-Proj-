@@ -6,6 +6,7 @@ import { Benefit } from 'src/app/Models/Vacancy/Benefit';
 import { Requirement } from 'src/app/Models/Vacancy/Requirement';
 import { Vacancy } from 'src/app/Models/Vacancy/Vacancy';
 import { VacancyService } from 'src/app/Services/Vacancy/vacancy.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vacancies-list',
@@ -93,6 +94,23 @@ export class VacanciesListComponent implements OnInit {
     this.vacancyFilter.salary = +event.value;
   }
 
+  deleteVacancyModal(vacancyId: number){
+    Swal.fire({
+      title: 'Tem certeza que deseja deletar essa vaga?',
+      text: "A ação é irreversível!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim!',
+      cancelButtonText: 'Não!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        this.deleteVacancy(vacancyId);
+      }
+    })
+  }
+
   applyFilters(){
 
     let vacanciesFiltered!: Vacancy [];
@@ -137,6 +155,15 @@ export class VacanciesListComponent implements OnInit {
 
     return vacancyList;
 
+  }
+
+  async deleteVacancy(vacancyId: number){
+    await this.vacancyService.deleteVacancy(vacancyId).subscribe(returnMsg => 
+      Swal.fire(
+        'Deletada!',
+        `${returnMsg}`,
+        'success'
+      ))
   }
 
 }

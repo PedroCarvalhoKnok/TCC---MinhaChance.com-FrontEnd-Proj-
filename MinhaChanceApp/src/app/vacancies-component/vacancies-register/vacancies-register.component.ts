@@ -5,6 +5,7 @@ import { Benefit } from 'src/app/Models/Vacancy/Benefit';
 import { Requirement } from 'src/app/Models/Vacancy/Requirement';
 import { Vacancy } from 'src/app/Models/Vacancy/Vacancy';
 import { VacancyService } from 'src/app/Services/Vacancy/vacancy.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vacancies-register',
@@ -100,8 +101,20 @@ export class VacanciesRegisterComponent implements OnInit {
   }
 
   async postVacancy(vacancy: Vacancy){
-    if(this.formVacancy.valid)
-      await this.vacancyService.postVacancy(vacancy);
+    
+    this.vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
+
+    if(this.formVacancy.valid){
+      
+      await this.vacancyService.postVacancy(vacancy).subscribe(retornMsg => 
+        Swal.fire(
+          {title: `${retornMsg}`,
+           icon: 'success',
+          }));
+      
+    }
+
+    
   }
 
   async editVacancy(vacancy: Vacancy){
@@ -122,8 +135,13 @@ export class VacanciesRegisterComponent implements OnInit {
       
     }
 
-    if(this.formVacancy.valid)
-      await this.vacancyService.editVacancy(vacancy);
+    if(this.formVacancy.valid){
+      await this.vacancyService.editVacancy(vacancy).subscribe(returnMsg => 
+        Swal.fire(
+          {title: `${returnMsg}`,
+           icon: 'success',
+          }));
+    }
   }
 
   addBenefit(benefit: Benefit){

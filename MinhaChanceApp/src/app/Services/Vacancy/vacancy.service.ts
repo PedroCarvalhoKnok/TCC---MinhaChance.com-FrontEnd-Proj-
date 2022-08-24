@@ -38,6 +38,13 @@ export class VacancyService {
     )
   }
 
+  deleteVacancy(vacancyId: number){
+    return this.httpClient.delete<string>(``, this.httpOptions)
+    .pipe(
+      retry(2),
+    )
+  }
+
   getAllVacanciesByUser(userId: number){
     return this.httpClient.get<Vacancy[]>(``, this.httpOptions)
       .pipe(

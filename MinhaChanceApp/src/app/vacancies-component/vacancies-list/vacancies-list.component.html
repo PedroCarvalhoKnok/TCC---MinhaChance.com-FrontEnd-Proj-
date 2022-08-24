@@ -159,7 +159,7 @@
                         <button type="button" [routerLink]="" class="btn btn-primary btn-sm space-button">Editar vaga</button>
                         <button type="button" [routerLink]="" class="btn btn-primary btn-sm space-button">Vaga preenchida</button>
                         <button type="button" [routerLink]="['empresa','vagas','detalhes', vacancy.id]" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
-                        <button type="button"  class="btn btn-danger btn-sm space-button">Excluir vaga</button>
+                        <button (click)="deleteVacancyModal(vacancy.id)" type="button"  class="btn btn-danger btn-sm space-button">Excluir vaga</button>
                     </div>
 
                 </div>

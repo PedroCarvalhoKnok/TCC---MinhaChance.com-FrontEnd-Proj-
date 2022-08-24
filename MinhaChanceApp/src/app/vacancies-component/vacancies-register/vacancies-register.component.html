@@ -47,7 +47,7 @@
                             <mat-form-field class="spacing-margin">
                                 <mat-label class="placeholder-color">Tipo de contratação</mat-label>
                                 <mat-select id="select-contracts" placeholder="Vaga">
-                                    <mat-option *ngFor="let category of contractCategories" value="{{category}}">{{category}}</mat-option>
+                                    <mat-option *ngFor="let category of contractCategories" (click)="changeContractType(category)" value="{{category}}">{{category}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <div
@@ -120,7 +120,7 @@
                             <br />
                             <mat-label>Descrição da vaga</mat-label>
                             <br />
-                            <textarea class="text-area-form" required></textarea>
+                            <textarea id="vacancyDescription" class="text-area-form" required></textarea>
                             <div
                                 *ngIf="formVacancy.get('vacancyDescription')?.invalid && (formVacancy.get('vacancyDescription')?.dirty || formVacancy.get('vacancyDescription')?.touched)">
                                 <p *ngIf="formVacancy.get('vacancyDescription')?.errors?.['required']">
