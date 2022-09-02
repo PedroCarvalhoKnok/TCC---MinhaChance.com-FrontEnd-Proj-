@@ -6,6 +6,7 @@ import { CoursesRegisterComponent } from './courses-component/courses-register/c
 import { VacanciesListComponent } from './vacancies-component/vacancies-list/vacancies-list.component';
 import { VacanciesDetailsComponent } from './vacancies-component/vacancies-details/vacancies-details.component';
 import { VacanciesRegisterComponent } from './vacancies-component/vacancies-register/vacancies-register.component';
+import { SkillsTestComponent } from './skills-test-component/skills-test/skills-test.component';
 
 const routes: Routes = [
   {
@@ -40,7 +41,12 @@ const routes: Routes = [
   {
     path: 'empresa/vagas/:vacancyId',
     component: VacanciesRegisterComponent
+  },
+  {
+    path: 'candidato/teste',
+    component: SkillsTestComponent
   }
+  
 ];
 
 @NgModule({
