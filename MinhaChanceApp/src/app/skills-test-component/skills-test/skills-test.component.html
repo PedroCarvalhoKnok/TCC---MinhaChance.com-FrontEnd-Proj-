@@ -18,38 +18,45 @@
 
         <mat-card-content class="filter-content">
 
-            <table mat-table>
+            <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                 <ng-container matColumnDef="firstRow">
-                    <td mat-cell *matCellDef="let element"><input type="radio" class="btn-check" name="btnradio"
-                            id="firstRow" autocomplete="off">
+                    <th mat-header-cell *matHeaderCellDef class="column"> firstRow </th>
+                    <td class="test" mat-cell *matCellDef="let element">
+                        <input type="radio" class="btn-check" name="btnradio" id="firstRow" autocomplete="off">
                         <label class="btn btn-outline-primary" for="btnradio1">{{element.firstRow}}</label>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="secondRow">
-                    <td mat-cell *matCellDef="let element"><input type="radio" class="btn-check" name="btnradio"
-                            id="secondRow" autocomplete="off">
+                    <th mat-header-cell *matHeaderCellDef class="column"> secondRow </th>
+                    <td mat-cell *matCellDef="let element">
+                        <input type="radio" class="btn-check" name="btnradio" id="secondRow" autocomplete="off">
                         <label class="btn btn-outline-primary" for="btnradio1">{{element.secondRow}}</label>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="thirdRow">
-                    <td mat-cell *matCellDef="let element"><input type="radio" class="btn-check" name="btnradio"
-                            id="thirdRow" autocomplete="off">
+                    <th mat-header-cell *matHeaderCellDef class="column"> thirdRow </th>
+                    <td mat-cell *matCellDef="let element">
+                        <input type="radio" class="btn-check" name="btnradio" id="thirdRow" autocomplete="off">
                         <label class="btn btn-outline-primary" for="btnradio1">{{element.thirdRow}}</label>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="forthRow">
-                    <td mat-cell *matCellDef="let element"><input type="radio" class="btn-check" name="btnradio"
-                            id="forthRow" autocomplete="off">
+                    <th mat-header-cell *matHeaderCellDef class="column"> forthRow </th>
+                    <td mat-cell *matCellDef="let element">
+                        <input type="radio" class="btn-check" name="btnradio" id="forthRow" autocomplete="off">
                         <label class="btn btn-outline-primary" for="btnradio1">{{element.forthRow}}</label>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="fifthRow">
-                    <td mat-cell *matCellDef="let element"><input type="radio" class="btn-check" name="btnradio"
-                            id="fifthRow" autocomplete="off">
+                <ng-container matColumnDef="fifthRow" class="test">
+                    <th mat-header-cell *matHeaderCellDef class="column"> fifthRow </th>
+                    <td mat-cell *matCellDef="let element">
+                        <input type="radio" class="btn-check" name="btnradio" id="fifthRow" autocomplete="off">
                         <label class="btn btn-outline-primary" for="btnradio1">{{element.fifthRow}}</label>
                     </td>
                 </ng-container>
-            </table>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" id="yy" style="height: 5px !important;"></tr>
+            </table> -->
 
 
         </mat-card-content>
@@ -85,7 +92,7 @@
                     <br />
                     <section>
                         <mat-checkbox>
-                            B) Alternativa A
+                            B) Alternativa B
                         </mat-checkbox>
                     </section>
                     <br />
@@ -104,6 +111,24 @@
                     <section>
                         <mat-checkbox>
                             E) Alternativa E
+                        </mat-checkbox>
+                    </section>
+                    <br />
+                    <section>
+                        <mat-checkbox>
+                            F) Alternativa F
+                        </mat-checkbox>
+                    </section>
+                    <br />
+                    <section>
+                        <mat-checkbox>
+                            G) Alternativa G
+                        </mat-checkbox>
+                    </section>
+                    <br />
+                    <section>
+                        <mat-checkbox>
+                            H) Alternativa H
                         </mat-checkbox>
                     </section>
 

@@ -1,169 +1,196 @@
-.vacancies-card{
-    width: 50%;
-    margin-top: 30px;
-    margin-left: 10%;
-    display: flex;
-    height: 280px;
-    background-color: #191645;
-    color: white;
+.vacancies-card {
+  width: 50%;
+  margin-top: 30px;
+  margin-left: 10%;
+  display: flex;
+  height: 280px;
+  background-color: #191645;
+  color: white;
+}
+
+.filter-card {
+  float: right;
+  width: 30%;
+  height: 160vh;
+  border-bottom: 10px;
+  border-color: black;
+  position: relative;
+  display: flex;
+  background-color: #888888;
+  align-content: center;
+  margin-top: -66px;
+
+}
+
+.filter-content {
+  margin-top: 60px;
+  margin-left: -91px;
+  display: flex;
+  width: 100%;
+  padding-left: 20px;
+
+}
+
+.vacancy-content {
+  margin-top: 60px;
+  margin-left: -201px;
+  display: flex;
+  width: 100%;
+  padding-left: 0px;
+  overflow: auto;
+  padding-left: 80px;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.d-inline-flex {
+  font-size: 20px;
+  color: yellow;
+}
+
+.vacancy-list {
+  padding-left: 0px;
+  width: 100%;
+}
+
+.rate {
+  font-size: 30px;
+}
+
+.title-vacancy {
+  width: 250px;
+}
+
+.description {
+  padding-top: 20px;
+  width: 100%;
+  margin-bottom: 10%;
+}
+
+.space-button {
+  margin-left: 20px;
+}
+
+.desc-course {
+  max-width: 300px;
+  overflow-wrap: break-word;
+}
+
+.form-control {
+  width: 100%;
+}
+
+.apply-btn {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.add-vacancy-card {
+  width: 70%;
+  background-color: #191645;
+  border-radius: 0;
+}
+
+.add-title {
+  font-size: 15px;
+  color: white;
+  width: 100%;
+}
+
+.title-vacancy {
+  width: 100%;
+}
+
+.material-icons {
+  color: white;
+}
+
+.paginator {
+  margin-bottom: -3%;
+}
+
+.distance-between {
+  padding-top: 20px;
+}
+
+table mat-table {
+  width: 100%;
+}
+
+.column {
+  visibility: hidden;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  border-bottom-width: 0px;
+}
+
+
+@media (max-width: 750px) {
+
+  .container {
+    margin-left: 30%;
   }
-  
-  .filter-card{
-    float: right;
-    width: 30%;
-    height: 160vh;
-    border-bottom: 10px;
-    border-color: black;
-    position: relative;
-    display: flex;
-    background-color: #888888;
-    align-content: center;
-    margin-top: -66px;
-   
-  }
-  
-  .filter-content{
-    margin-top: 60px;
-    margin-left: -91px;
-    display: flex;
-    width: 100%;
-    padding-left: 20px;
-    
-  }
-  
-  .vacancy-content{
-    margin-top: 60px;
-    margin-left: -201px;
-    display: flex;
-    width: 100%;
-    padding-left: 0px;
-    overflow:auto;
-  }
-  
-  .example-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-  }
-  
-  .example-full-width {
-    width: 100%;
-  }
-  
-  .d-inline-flex{
-    font-size: 20px;
-    color: yellow;
-  }
-  
-  .vacancy-list{
-    padding-left: 0px;
-    width: 100%;
-  }
-  
-  .rate{
-    font-size: 30px;
-  }
-  
-  .title-vacancy{
-    width: 250px;
-  }
-  
-  .description{
-    padding-top: 20px;
-    width: 100%;
-    margin-bottom: 10%;
-  }
-  .space-button{
-    margin-left: 20px;
-  }
-  .desc-course{
-    max-width: 300px;
-    overflow-wrap: break-word;
-  }
-  
-  .form-control{
-    width: 100%;
-  }
-  
-  .apply-btn{
-    margin-top: 10px;
-    width: 100%;
-  }
-  
-  .add-vacancy-card{
+
+}
+
+
+@media (max-width: 625px) {
+
+
+
+  .form-control,
+  .label-filter,
+  .apply-btn,
+  .select-filters {
     width: 70%;
-    background-color: #191645;
-    border-radius: 0;
   }
-  .add-title{
-    font-size: 15px;
-    color: white;
-    width: 100%;
-  }
-  
-  .title-vacancy{
-    width: 100%;
-  }
-  
-  .material-icons{
-    color: white;
-  }
-  .paginator{
-    margin-bottom: -3%;
-  }
-  .distance-between{
-    padding-top: 20px;
-  }
-  
-  @media (max-width: 750px) {
-  
-    .container{
-      margin-left: 30%;
-    }
-     
-  }
-  
-  
-  @media (max-width: 625px) {
-  
-    
-  
-    .form-control, .label-filter, .apply-btn, .select-filters{
-      width: 70%;
-    }
-  
-    
-    
-  }
-  
-  
-  @media (max-width: 510px) {
-  
-   .header-content{
+
+
+
+}
+
+
+@media (max-width: 510px) {
+
+  .header-content {
     width: 200px;
-   }
-  
-   .form-control, .label-filter, .apply-btn, .select-filters{
+  }
+
+  .form-control,
+  .label-filter,
+  .apply-btn,
+  .select-filters {
     width: 70%;
   }
-  
-  .title-vacancy{
+
+  .title-vacancy {
     font-size: 12px;
   }
-  
-  .filter-card{
+
+  .filter-card {
     height: 160vh;
     padding-left: 0px;
     margin-right: -40px;
     width: 130px;
   }
-  .space-button{
+
+  .space-button {
     margin-left: 0;
   }
-  
-  .paginator{
+
+  .paginator {
     margin-bottom: -30%;
   }
-    
-  }
-  
+
+}
