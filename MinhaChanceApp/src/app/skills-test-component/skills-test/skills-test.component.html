@@ -18,45 +18,31 @@
 
         <mat-card-content class="filter-content">
 
-            <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-                <ng-container matColumnDef="firstRow">
-                    <th mat-header-cell *matHeaderCellDef class="column"> firstRow </th>
-                    <td class="test" mat-cell *matCellDef="let element">
-                        <input type="radio" class="btn-check" name="btnradio" id="firstRow" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio1">{{element.firstRow}}</label>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="secondRow">
-                    <th mat-header-cell *matHeaderCellDef class="column"> secondRow </th>
-                    <td mat-cell *matCellDef="let element">
-                        <input type="radio" class="btn-check" name="btnradio" id="secondRow" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio1">{{element.secondRow}}</label>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="thirdRow">
-                    <th mat-header-cell *matHeaderCellDef class="column"> thirdRow </th>
-                    <td mat-cell *matCellDef="let element">
-                        <input type="radio" class="btn-check" name="btnradio" id="thirdRow" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio1">{{element.thirdRow}}</label>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="forthRow">
-                    <th mat-header-cell *matHeaderCellDef class="column"> forthRow </th>
-                    <td mat-cell *matCellDef="let element">
-                        <input type="radio" class="btn-check" name="btnradio" id="forthRow" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio1">{{element.forthRow}}</label>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="fifthRow" class="test">
-                    <th mat-header-cell *matHeaderCellDef class="column"> fifthRow </th>
-                    <td mat-cell *matCellDef="let element">
-                        <input type="radio" class="btn-check" name="btnradio" id="fifthRow" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio1">{{element.fifthRow}}</label>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" id="yy" style="height: 5px !important;"></tr>
-            </table> -->
+            <mat-grid-list cols="5" rowHeight="{{this.heigthProp}}" class="tile-background"
+                (window:resize)="handleSize($event)">
+                <div *ngFor="let element of data">
+                    <mat-grid-tile class="label-numbers">
+                        <label id="{{'item' + element.firstRow}}" class="btn btn-outline-primary label-numbers"
+                            for="btnradio1" (click)="scrollToElement(element.firstRow)">{{element.firstRow}}</label>
+                    </mat-grid-tile>
+                    <mat-grid-tile class="label-numbers">
+                        <label id="{{'item' + element.secondRow}}" class="btn btn-outline-primary label-numbers"
+                            for="btnradio2" (click)="scrollToElement(element.secondRow)">{{element.secondRow}}</label>
+                    </mat-grid-tile>
+                    <mat-grid-tile class="label-numbers">
+                        <label id="{{'item' + element.thirdRow}}" class="btn btn-outline-primary label-numbers"
+                            for="btnradio3" (click)="scrollToElement(element.thirdRow)">{{element.thirdRow}}</label>
+                    </mat-grid-tile>
+                    <mat-grid-tile class="label-numbers">
+                        <label id="{{'item' + element.forthRow}}" class="btn btn-outline-primary label-numbers"
+                            for="btnradio4" (click)="scrollToElement(element.forthRow)">{{element.forthRow}}</label>
+                    </mat-grid-tile>
+                    <mat-grid-tile class="label-numbers">
+                        <label id="{{'item' + element.fifthRow}}" class="btn btn-outline-primary label-numbers"
+                            for="btnradio5" (click)="scrollToElement(element.fifthRow)">{{element.fifthRow}}</label>
+                    </mat-grid-tile>
+                </div>
+            </mat-grid-list>
 
 
         </mat-card-content>
@@ -70,7 +56,7 @@
     <mat-card class="vacancies-card">
 
         <mat-card-header class="header-content">
-            <mat-card-title class="title-vacancy">
+            <mat-card-title id="{{'question' + 1}}" class="title-vacancy">
                 Pergunta 1
             </mat-card-title>
 
@@ -84,54 +70,55 @@
 
                     <h1>Opções</h1>
 
-                    <section>
-                        <mat-checkbox>
-                            A) Alternativa A
-                        </mat-checkbox>
-                    </section>
-                    <br />
-                    <section>
-                        <mat-checkbox>
-                            B) Alternativa B
-                        </mat-checkbox>
-                    </section>
-                    <br />
-                    <section>
-                        <mat-checkbox>
-                            C) Alternativa C
-                        </mat-checkbox>
-                    </section>
-                    <br />
-                    <section>
-                        <mat-checkbox>
-                            D) Alternativa D
-                        </mat-checkbox>
-                    </section>
-                    <br />
-                    <section>
-                        <mat-checkbox>
-                            E) Alternativa E
-                        </mat-checkbox>
-                    </section>
-                    <br />
-                    <section>
-                        <mat-checkbox>
-                            F) Alternativa F
-                        </mat-checkbox>
-                    </section>
-                    <br />
-                    <section>
-                        <mat-checkbox>
-                            G) Alternativa G
-                        </mat-checkbox>
-                    </section>
-                    <br />
-                    <section>
-                        <mat-checkbox>
-                            H) Alternativa H
-                        </mat-checkbox>
-                    </section>
-
+                    <mat-radio-group>
+                        <section>
+                            <mat-radio-button value="false">
+                                A) Alternativa A
+                            </mat-radio-button>
+                        </section>
+                        <br />
+                        <section>
+                            <mat-radio-button [value]="false">
+                                B) Alternativa B
+                            </mat-radio-button>
+                        </section>
+                        <br />
+                        <section>
+                            <mat-radio-button value="false">
+                                C) Alternativa C
+                            </mat-radio-button>
+                        </section>
+                        <br />
+                        <section>
+                            <mat-radio-button [value]="false">
+                                D) Alternativa D
+                            </mat-radio-button>
+                        </section>
+                        <br />
+                        <section>
+                            <mat-radio-button value="false">
+                                E) Alternativa E
+                            </mat-radio-button>
+                        </section>
+                        <br />
+                        <section>
+                            <mat-radio-button [value]="false">
+                                F) Alternativa F
+                            </mat-radio-button>
+                        </section>
+                        <br />
+                        <section>
+                            <mat-radio-button value="false">
+                                G) Alternativa G
+                            </mat-radio-button>
+                        </section>
+                        <br />
+                        <section>
+                            <mat-radio-button [value]="false"> 
+                                H) Alternativa H
+                            </mat-radio-button>
+                        </section>
+                    </mat-radio-group>
 
                 </div>
 

@@ -33,7 +33,6 @@ import { UserInteligenceDetailsChartComponent } from './charts-component/user-in
 import {MatDialogModule} from '@angular/material/dialog';
 import { UserVacancyDetailsDialogComponent } from './Dialogs/user-vacancy-details-dialog/user-vacancy-details-dialog.component';
 import { SkillsTestComponent } from './skills-test-component/skills-test/skills-test.component';
-import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -73,7 +72,7 @@ import {MatTableModule} from '@angular/material/table';
     HttpClientModule,
     FormsModule,
     MatDialogModule,
-    MatTableModule
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
