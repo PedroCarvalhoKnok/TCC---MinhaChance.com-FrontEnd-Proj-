@@ -60,4 +60,10 @@ export class SkillsTestComponent implements OnInit {
 
   }
 
+  setSelectedQuestion(number: number, userAnswer: string){
+    console.log(number);
+    (<HTMLInputElement>document.getElementById(`item${number}`)).className = 'btn btn-primary label-numbers';
+
+  }
+
 }
