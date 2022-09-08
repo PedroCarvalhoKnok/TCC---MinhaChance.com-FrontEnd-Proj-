@@ -33,6 +33,9 @@ import { UserInteligenceDetailsChartComponent } from './charts-component/user-in
 import {MatDialogModule} from '@angular/material/dialog';
 import { UserVacancyDetailsDialogComponent } from './Dialogs/user-vacancy-details-dialog/user-vacancy-details-dialog.component';
 import { SkillsTestComponent } from './skills-test-component/skills-test/skills-test.component';
+import { SkillsResultComponent } from './skills-test-component/skills-result/skills-result.component';
+import { UserInteligenceResultChartComponent } from './charts-component/user-inteligence-result-chart/user-inteligence-result-chart.component';
+import { SkillsStartComponent } from './skills-test-component/skills-start/skills-start.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,9 @@ import { SkillsTestComponent } from './skills-test-component/skills-test/skills-
     UserInteligenceDetailsChartComponent,
     UserVacancyDetailsDialogComponent,
     SkillsTestComponent,
+    SkillsResultComponent,
+    UserInteligenceResultChartComponent,
+    SkillsStartComponent,
     
   ],
   imports: [

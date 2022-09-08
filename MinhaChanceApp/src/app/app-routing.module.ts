@@ -7,6 +7,8 @@ import { VacanciesListComponent } from './vacancies-component/vacancies-list/vac
 import { VacanciesDetailsComponent } from './vacancies-component/vacancies-details/vacancies-details.component';
 import { VacanciesRegisterComponent } from './vacancies-component/vacancies-register/vacancies-register.component';
 import { SkillsTestComponent } from './skills-test-component/skills-test/skills-test.component';
+import { SkillsResultComponent } from './skills-test-component/skills-result/skills-result.component';
+import { SkillsStartComponent } from './skills-test-component/skills-start/skills-start.component';
 
 const routes: Routes = [
   {
@@ -45,6 +47,14 @@ const routes: Routes = [
   {
     path: 'candidato/teste',
     component: SkillsTestComponent
+  },
+  {
+    path: 'candidato/teste/resultado',
+    component: SkillsResultComponent
+  },
+  {
+    path: 'candidato/teste/inicio',
+    component: SkillsStartComponent
   }
   
 ];
