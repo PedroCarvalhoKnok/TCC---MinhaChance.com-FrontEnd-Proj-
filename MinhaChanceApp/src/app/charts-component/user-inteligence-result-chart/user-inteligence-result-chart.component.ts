@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables)
@@ -10,30 +10,34 @@ Chart.register(...registerables)
 })
 export class UserInteligenceResultChartComponent implements OnInit {
 
+  @Input() userResultSkills!: any[];
+
+  @Input() userName!: string;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {
+
+    let skillNameList: any = []
+    let skillPercentualList: any = []
+
+    this.userResultSkills.forEach(skill => {
+      skillNameList.push(skill.name)
+      skillPercentualList.push(skill.skill);
+    })
+
     new Chart(`user-intelligence-result`, {
       type: 'radar',
       data: {
         labels:
-          [
-            'inteligencia 1',
-            'inteligencia 2',
-            'inteligencia 3',
-            'inteligencia 4',
-            'inteligencia 5',
-            'inteligencia 6',
-            'inteligencia 7',
-            'inteligencia 8',
-          ]
+          skillNameList
         ,
         datasets: [{
-          label: 'usuario 1',
-          data: [65, 59, 90, 81, 56, 55, 40, 78],
+          label: this.userName,
+          data: skillPercentualList,
           fill: true,
           backgroundColor: 'rgba(54, 162, 235, 0.2)',
           borderColor: 'rgb(54, 162, 235)',

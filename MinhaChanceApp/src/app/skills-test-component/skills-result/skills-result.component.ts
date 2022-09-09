@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TestService } from 'src/app/Services/Test/test.service';
+import { UserService } from 'src/app/Services/User/user.service';
 
 @Component({
   selector: 'app-skills-result',
@@ -7,9 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SkillsResultComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: ActivatedRoute, private testService: TestService, private userService: UserService) { }
 
-  userSkillsByIntelligence: any = [
+  userSkillsByIntelligence: any[] = [
     {
       name: 'inteligencia1',
       skill: 10,
@@ -53,7 +56,28 @@ export class SkillsResultComponent implements OnInit {
 
   bestIndicatedProfessions!: string;
 
-  ngOnInit(): void {
+  userName: string;
+
+  async ngOnInit() {
+
+    let userId = this.router.snapshot.params?.['userId'];
+
+    if (userId) {
+      await this.testService.getUserTestResults(userId).subscribe(results => {
+        this.userSkillsByIntelligence = results;
+      })
+
+      await this.userService.getUserNameById(userId).subscribe(userName =>{
+        this.userName = userName;
+      })
+    }
+
+    this.userSkillsByIntelligence = this.sortSkillList(this.userSkillsByIntelligence);
+
+    this.firstSkill = this.userSkillsByIntelligence[0];
+
+    this.remainingSkills = this.listRemainingSkills(this.userSkillsByIntelligence);
+
   }
 
 

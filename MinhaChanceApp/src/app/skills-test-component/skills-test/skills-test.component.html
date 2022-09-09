@@ -18,7 +18,7 @@
 
         <mat-card-content class="filter-content">
 
-            <mat-grid-list cols="5" rowHeight="{{this.heigthProp}}" class="tile-background"
+            <mat-grid-list cols="{{this.numberOfColumns}}" rowHeight="{{this.heigthProp}}" class="tile-background"
                 (window:resize)="handleSize($event)">
                 <div *ngFor="let element of data">
                     <mat-grid-tile class="label-numbers">
@@ -53,11 +53,11 @@
 </div>
 
 <div>
-    <mat-card class="vacancies-card">
+    <mat-card class="vacancies-card" *ngFor="let question of this.testQuestions|async; let questionPos = index">
 
         <mat-card-header class="header-content">
-            <mat-card-title id="{{'question' + 1}}" class="title-vacancy">
-                Pergunta 1
+            <mat-card-title id="{{'question' + question.id}}" class="title-vacancy">
+                {{question.questionDescription}}
             </mat-card-title>
 
         </mat-card-header>
@@ -72,50 +72,50 @@
 
                     <mat-radio-group>
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(1, 'A')" value="1">
-                                A) Alternativa A
+                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'A')" value="A">
+                                A) {{question.answerA}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(1, 'B')" value="2">
-                                B) Alternativa B
+                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'B')" value="2">
+                                B) {{question.answerB}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(1, 'C')" value="3">
-                                C) Alternativa C
+                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'C')" value="3">
+                                C) {{question.answerC}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(1, 'D')" value="4">
-                                D) Alternativa D
+                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'D')" value="4">
+                                D) {{question.answerD}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(1, 'E')" value="5">
-                                E) Alternativa E
+                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'E')" value="5">
+                                E) {{question.answerE}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(1, 'F')" value="6">
-                                F) Alternativa F
+                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'F')" value="6">
+                                F) {{question.answerF}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(1, 'G')" value="7">
-                                G) Alternativa G
+                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'G')" value="7">
+                                G) {{question.answerG}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(1, 'H')" value="8"> 
-                                H) Alternativa H
+                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'H')" value="8"> 
+                                H) {{question.answerH}}
                             </mat-radio-button>
                         </section>
                     </mat-radio-group>
@@ -134,3 +134,5 @@
 
 
 </div>
+
+<button (click)="confirmSendSkillTest()" mat-raised-button class="start-button">Enviar teste</button>

@@ -5,7 +5,7 @@
 
         <div class="row">
 
-            <app-user-inteligence-result-chart class="col-lg-4 col-md-6"></app-user-inteligence-result-chart>
+            <app-user-inteligence-result-chart [userResultSkills]="this.userSkillsByIntelligence" [userName]="this.userName" class="col-lg-4 col-md-6"></app-user-inteligence-result-chart>
 
             <mat-card class="col-md-6 conclusion-content">
                 <mat-card-header class="header-content">
@@ -17,16 +17,16 @@
                 <mat-card-content>
                     <p>
                         Segundo os resultados, sua maior aptidão entre as inteligências foi a
-                        xxxx, seguida de xxxx
+                        {{this.firstSkill}}, seguida de {{this.remainingSkills}}
                     </p>
                     <h2>Área</h2>
                     <p>
                         Com tudo, podemos dizer que provavelmente a área do conhecimento que mais se adequaria
-                        seria a(o): xxxx
+                        seria a(o): {{bestIndicatedArea}}
                     </p>
                     <h2>Profissões</h2>
                     <p>
-                        Algumas áreas indicadas seriam xxxx
+                        Algumas áreas indicadas seriam {{bestIndicatedProfessions}}
                     </p>
                 </mat-card-content>
 

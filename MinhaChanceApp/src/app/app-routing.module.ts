@@ -45,15 +45,15 @@ const routes: Routes = [
     component: VacanciesRegisterComponent
   },
   {
-    path: 'candidato/teste',
+    path: 'candidato/:userId/teste',
     component: SkillsTestComponent
   },
   {
-    path: 'candidato/teste/resultado',
+    path: 'candidato/:userId/teste/resultado',
     component: SkillsResultComponent
   },
   {
-    path: 'candidato/teste/inicio',
+    path: 'candidato/:userId/teste/inicio',
     component: SkillsStartComponent
   }
   

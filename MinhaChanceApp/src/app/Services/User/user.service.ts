@@ -21,4 +21,10 @@ export class UserService {
       retry(2)
     )
   }
+
+  getUserNameById(userId: number){
+    return this.httpClient.get<string>('', this.httpOptions).pipe(
+      retry(2)
+    )
+  }
 }
