@@ -36,6 +36,8 @@ import { SkillsTestComponent } from './skills-test-component/skills-test/skills-
 import { SkillsResultComponent } from './skills-test-component/skills-result/skills-result.component';
 import { UserInteligenceResultChartComponent } from './charts-component/user-inteligence-result-chart/user-inteligence-result-chart.component';
 import { SkillsStartComponent } from './skills-test-component/skills-start/skills-start.component';
+import { UsersProfileComponent } from './users-component/users-profile/users-profile.component';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { SkillsStartComponent } from './skills-test-component/skills-start/skill
     SkillsResultComponent,
     UserInteligenceResultChartComponent,
     SkillsStartComponent,
+    UsersProfileComponent,
     
   ],
   imports: [
@@ -78,7 +81,8 @@ import { SkillsStartComponent } from './skills-test-component/skills-start/skill
     HttpClientModule,
     FormsModule,
     MatDialogModule,
-    MatGridListModule
+    MatGridListModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

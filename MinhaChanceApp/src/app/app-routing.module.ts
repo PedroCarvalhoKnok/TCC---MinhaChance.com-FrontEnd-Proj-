@@ -9,6 +9,7 @@ import { VacanciesRegisterComponent } from './vacancies-component/vacancies-regi
 import { SkillsTestComponent } from './skills-test-component/skills-test/skills-test.component';
 import { SkillsResultComponent } from './skills-test-component/skills-result/skills-result.component';
 import { SkillsStartComponent } from './skills-test-component/skills-start/skills-start.component';
+import { UsersProfileComponent } from './users-component/users-profile/users-profile.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,10 @@ const routes: Routes = [
   {
     path: 'candidato/:userId/teste/inicio',
     component: SkillsStartComponent
+  },
+  {
+    path: 'candidato/:userId/perfil',
+    component: UsersProfileComponent
   }
   
 ];
