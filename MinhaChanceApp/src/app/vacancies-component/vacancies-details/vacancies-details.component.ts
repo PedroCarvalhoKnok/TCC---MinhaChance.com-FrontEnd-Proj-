@@ -53,7 +53,8 @@ export class VacanciesDetailsComponent implements OnInit {
     generalServicesRating: [0, 1, 2, 3],
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
     userVacancyInfo: {yes: 56, no: 44},
-    userInteligenciesInfo: { intelligence: 'Linguística', vacancies: ['Tradutor e conhecimento em libras'], skills: [67]}
+    userInteligenciesInfo: { intelligence: 'Linguística', vacancies: ['Tradutor e conhecimento em libras'], skills: [67]},
+    interests: ['Esportes', 'Idiomas', 'Música']
   },
   {
     id: 2,
@@ -73,7 +74,8 @@ export class VacanciesDetailsComponent implements OnInit {
     generalServicesRating: [],
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
     userVacancyInfo: {yes: 50, no: 50},
-    userInteligenciesInfo: { intelligence: 'Lógica-Matemática', vacancies: ['Estatistico - Iniciante analise de dados','Desenvolvedor Java júnior'], skills: [78,75]}
+    userInteligenciesInfo: { intelligence: 'Lógica-Matemática', vacancies: ['Estatistico - Iniciante analise de dados','Desenvolvedor Java júnior'], skills: [78,75]},
+    interests: ['Natação', 'Animes', 'Programação']
   }])
 
   async ngOnInit() {

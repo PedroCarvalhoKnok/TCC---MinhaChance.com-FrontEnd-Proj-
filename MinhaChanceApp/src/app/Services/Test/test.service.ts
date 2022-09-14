@@ -55,6 +55,13 @@ export class TestService {
     )
   }
 
+  changeTest(userAnswers: any[]){
+    return this.httpClient.put<boolean>(``, this.httpOptions)
+    .pipe(
+      retry(2),
+    )
+  }
+
   getQuestions(){
     return this.httpClient.get<Question[]>(``, this.httpOptions)
     .pipe(
@@ -64,6 +71,13 @@ export class TestService {
 
   getUserTestResults(userId: number){
     return this.httpClient.get<any[]>(``, this.httpOptions)
+    .pipe(
+      retry(2),
+    )
+  }
+
+  getTestByUserId(userId: number){
+    return this.httpClient.get<any>(``, this.httpOptions)
     .pipe(
       retry(2),
     )

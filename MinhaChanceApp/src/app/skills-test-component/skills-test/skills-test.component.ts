@@ -88,9 +88,9 @@ export class SkillsTestComponent implements OnInit {
     }
   ])
 
-  constructor(private router: Router,private activeRouter: ActivatedRoute,private testService: TestService) { }
+  constructor(private router: Router, private activeRouter: ActivatedRoute, private testService: TestService) { }
 
-  async ngOnInit(){
+  async ngOnInit() {
 
     this.userId = this.activeRouter.snapshot.params?.['userId'];
 
@@ -253,6 +253,8 @@ export class SkillsTestComponent implements OnInit {
 
     let answerList: any[] = []
 
+    let checkTest: any;
+
     this.testQuestions.subscribe(questions => {
 
       this.validateMissingAnswers(questions);
@@ -263,27 +265,56 @@ export class SkillsTestComponent implements OnInit {
 
     });
 
-    await this.testService.sendTest(answerList).subscribe(result => {
-      if (result) {
-        Swal.fire({
-          title: 'Suas respostas foram registradas com sucesso!',
-          icon: 'success',
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'OK',
-        }).then(async (result) => {
-          if (result.isConfirmed) {
-            this.router.navigate([`/candidato/${this.userId}/teste/resultado`])
-          }
-        })
-      }
-      else {
-        Swal.fire(
-          'Ops algo deu errado no envio!',
-          'Tente novamente',
-          'warning'
-        )
-      }
-    });
+    await this.testService.getTestByUserId(this.userId).subscribe(test => checkTest = test);
+
+    if (!checkTest) {
+
+      await this.testService.sendTest(answerList).subscribe(result => {
+        if (result) {
+          Swal.fire({
+            title: 'Suas respostas foram registradas com sucesso!',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              this.router.navigate([`/candidato/${this.userId}/teste/resultado`])
+            }
+          })
+        }
+        else {
+          Swal.fire(
+            'Ops algo deu errado no envio!',
+            'Tente novamente',
+            'warning'
+          )
+        }
+      });
+    }
+    else {
+
+      await this.testService.changeTest(answerList).subscribe(result => {
+        if (result) {
+          Swal.fire({
+            title: 'Suas respostas foram atualizadas com sucesso!',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              this.router.navigate([`/candidato/${this.userId}/teste/resultado`])
+            }
+          })
+        }
+        else {
+          Swal.fire(
+            'Ops algo deu errado no envio!',
+            'Tente novamente',
+            'warning'
+          )
+        }
+      });
+    }
   }
 
 }

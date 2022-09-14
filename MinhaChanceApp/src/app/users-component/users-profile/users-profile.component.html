@@ -1,9 +1,9 @@
 <div class="center-content">
-    <mat-card class="start-card">
+    <mat-card class="user-card">
 
         <mat-card-title class="center-title">Bem vindo(a), Pedro</mat-card-title>
 
-        <mat-card-content class="start-content">
+        <mat-card-content class="user-content">
             <div class="container">
 
                 <div class="row">
@@ -12,36 +12,35 @@
                     <label class="col-md-4" for="inputdefault">CPF:<br />XXX.XXX.XXX-XX</label>
                     <label class="col-md-4 distance-between" for="inputdefault">Idade<br />18 anos</label>
                     <label class="col-md-4 distance-between" for="inputdefault">Contato<br />(11) 984567459</label>
-                    <div class="description">
-                        <button type="button" [routerLink]="" class="btn btn-primary btn-sm space-button">Editar perfil</button>
-                    </div>
                 </div>
             </div>
         </mat-card-content>
-
+        <mat-card-actions align="end">
+            <button type="button" [routerLink]="" class="btn btn-primary btn-sm space-button">Editar perfil</button>
+        </mat-card-actions>
     </mat-card>
 </div>
 
 <div class="center-content">
-    <mat-card class="start-card">
+    <mat-card class="experiences-card">
 
         <mat-card-title class="center-title">Experiências anteriores</mat-card-title>
 
-        <mat-card-content class="start-content">
+        <mat-card-content class="experiences-content">
             <div class="container">
 
                 <div class="row">
 
-                    <mat-list role="list">
-                        <mat-list-item role="listitem">Descrição:<br />Caixa mercado</mat-list-item>
-                        <mat-list-item role="listitem">Tempo de atuação:<br />12 mes(es)</mat-list-item>
-                        <mat-list-item role="listitem">Idade<br />18 anos</mat-list-item>
+                    <mat-list class="col-md-6" role="list">
+                        <mat-list-item class="mat-item-color" role="listitem">Descrição: Caixa mercado</mat-list-item>
+                        <mat-list-item class="mat-item-color" role="listitem">Duração: 12 mes(es)</mat-list-item>
+                        <mat-list-item class="mat-item-color" role="listitem">Idade 18 anos</mat-list-item>
                     </mat-list>
 
-                    <mat-list role="list">
-                        <mat-list-item role="listitem">Descrição:<br />Empacotamento</mat-list-item>
-                        <mat-list-item role="listitem">Tempo de atuação:<br />6 mes(es)</mat-list-item>
-                        <mat-list-item role="listitem">Idade<br />20 anos</mat-list-item>
+                    <mat-list class="col-md-6" role="list">
+                        <mat-list-item class="mat-item-color" role="listitem">Descrição:Empacotamento</mat-list-item>
+                        <mat-list-item class="mat-item-color" role="listitem">Duração: 6 mes(es)</mat-list-item>
+                        <mat-list-item class="mat-item-color" role="listitem">Idade: 20 anos</mat-list-item>
                     </mat-list>
                 </div>
             </div>
@@ -52,25 +51,27 @@
 
 
 <div class="center-content">
-    <mat-card class="start-card">
+    <mat-card class="objectives-card">
 
         <mat-card-title class="center-title">Interesses e Objetivos</mat-card-title>
 
-        <mat-card-content class="start-content">
+        <mat-card-content class="objectives-content">
             <div class="container">
 
                 <div class="row">
 
-                    <label class="col-md-4" for="inputdefault">Objetivos:<br />Buscar experiência profissional e crescimento pessoal</label>
+                    <label class="col-md-6" for="inputdefault">Objetivos:<br />Buscar experiência profissional e
+                        crescimento pessoal</label>
 
-                    <mat-list role="list">
-                        <mat-list-item role="listitem">Programação</mat-list-item>
-                        <mat-list-item role="listitem">Matemática</mat-list-item>
-                        <mat-list-item role="listitem">Física</mat-list-item>
-                        <mat-list-item role="listitem">Jogos eletrônicos</mat-list-item>
+                    <mat-list class="col-md-6 list-align" role="list">
+                        <div mat-subheader class="mat-item-color">Interesses</div>
+                        <mat-list-item class="mat-item-color" role="listitem">Programação</mat-list-item>
+                        <mat-list-item class="mat-item-color" role="listitem">Matemática</mat-list-item>
+                        <mat-list-item class="mat-item-color" role="listitem">Física</mat-list-item>
+                        <mat-list-item class="mat-item-color" role="listitem">Jogos eletrônicos</mat-list-item>
                     </mat-list>
 
-                    
+
                 </div>
             </div>
         </mat-card-content>
@@ -79,78 +80,128 @@
 </div>
 
 
-<div>
-<mat-card class="vacancies-card">
+<div class="center-content">
+    <mat-card class="user-card">
 
-    <mat-card-header class="header-content">
-        <mat-card-title class="title-vacancy">
-            Vagas pra você
-        </mat-card-title>
+        <mat-card-title class="center-title">Suas aptidões</mat-card-title>
 
-    </mat-card-header>
+        <mat-card-content class="user-content">
+            <div class="container">
 
-    <mat-card-content class="vacancy-content">
+                <div class="row">
 
-        <div class="container">
+                    <app-user-inteligence-result-chart [userResultSkills]="this.userSkillsByIntelligence" [userName]="this.userLogged.userName" class="col-lg-4 col-md-6"></app-user-inteligence-result-chart>
 
-            <div class="row">
-
-                <span class="material-icons col-md-4">account_circle</span>
-                <label class="col-md-4" for="inputdefault">Empresa<br />X</label>
-                <label class="col-md-4" for="inputdefault">Salário<br />A combinar</label>
-                <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />2 vaga(s)</label>
-                <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />Remoto</label>
-                <br />
-                <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
-                    <ul class="vacancy-list col-md-8">
-                        <li>Convenio Médico</li>
-                        <li>Convenio Odontológico</li>
-                        <li>Gym Pass</li>
-                    </ul>
-                </label><br />
-                <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
-                    <ul class="vacancy-list col-md-4">
-                        <li>Interesse e comprometimento</li>
-                        <li>Raciocinio Lógico</li>
-                    </ul>
-                </label><br />
-                <label class="col-md-4" for="inputdefault">Localização<br />São Paulo Centro</label><br />
-                <label class="col-md-4" for="inputdefault">Categoria<br />Tecnologia</label>
-                <div class="description">
-                    <label for="inputdefault">Descrição da vaga<br />Buscamos um estagiário com interesse e comprometimento e que esteja aberto a enfrentar novos desafios</label><br />
                 </div>
-               
-
             </div>
+        </mat-card-content>
 
-        </div>
+        <mat-card-actions align="end">
+            <button type="button" [routerLink]="['candidato', this.userLogged.id, 'teste']" class="btn btn-primary btn-sm space-button">Refazer teste de aptidão</button>
+        </mat-card-actions>
 
-
-    </mat-card-content>
-
-
-
-
-</mat-card>
+    </mat-card>
 </div>
 
+<div>
+    <mat-card class="banner-card">
+
+        <mat-card-header class="header-content">
+            <mat-card-title class="title-vacancy">
+                Vagas para você!
+            </mat-card-title>
+
+        </mat-card-header>
+
+    </mat-card>
+</div>
 
 <div>
     <mat-card class="vacancies-card">
-    
+
         <mat-card-header class="header-content">
             <mat-card-title class="title-vacancy">
-                Cursos pra você
+                Vaga Indicada
             </mat-card-title>
-    
+
         </mat-card-header>
-    
+
         <mat-card-content class="vacancy-content">
-    
+
             <div class="container">
-    
+
                 <div class="row">
-    
+
+                    <label class="col-md-4" for="inputdefault">Empresa<br />X</label>
+                    <label class="col-md-4" for="inputdefault">Salário<br />A combinar</label>
+                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />2 vaga(s)</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />Remoto</label>
+                    <br />
+                    <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
+                        <ul class="vacancy-list col-md-8">
+                            <li>Convenio Médico</li>
+                            <li>Convenio Odontológico</li>
+                            <li>Gym Pass</li>
+                        </ul>
+                    </label><br />
+                    <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
+                        <ul class="vacancy-list col-md-4">
+                            <li>Interesse e comprometimento</li>
+                            <li>Raciocinio Lógico</li>
+                        </ul>
+                    </label><br />
+                    <label class="col-md-4" for="inputdefault">Localização<br />São Paulo Centro</label><br />
+                    <label class="col-md-4" for="inputdefault">Categoria<br />Tecnologia</label>
+                    <div class="description">
+                        <label for="inputdefault">Descrição da vaga<br />Buscamos um estagiário com interesse e
+                            comprometimento e que esteja aberto a enfrentar novos desafios</label><br />
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button type="button" [routerLink]="" class="btn btn-primary btn-sm space-button">Visualizar detalhes vaga</button>
+        </mat-card-actions>
+
+
+    </mat-card>
+</div>
+
+<div>
+    <mat-card class="banner-card">
+
+        <mat-card-header class="header-content">
+            <mat-card-title class="title-vacancy">
+                Cursos para você!
+            </mat-card-title>
+
+        </mat-card-header>
+
+    </mat-card>
+</div>
+
+<div class="distance-bottom">
+    <mat-card class="courses-card">
+
+        <mat-card-header class="header-content">
+            <mat-card-title class="title-vacancy">
+                Cursos indicado
+            </mat-card-title>
+
+        </mat-card-header>
+
+        <mat-card-content class="courses-content">
+
+            <div class="container">
+
+                <div class="row">
+
                     <label class="col-md-4" for="inputdefault">Titulo<br />Introdução ao Java</label>
                     <label class="col-md-4" for="inputdefault">Categoria<br />Tecnologia</label>
                     <label class="col-md-4" for="inputdefault">Relevância para você<br />9 de 10</label>
@@ -160,39 +211,24 @@
                     <br />
                     <label class="col-md-4" for="inputdefault">Dificuldade<br />Iniciante</label><br />
                     <div class="description">
-                        <label for="inputdefault">Descrição do curso<br />Aprenda java do básico ao avançado</label><br />
+                        <label for="inputdefault">Descrição do curso<br />Aprenda java do básico ao
+                            avançado</label><br />
                     </div>
-                   
-    
+
+
                 </div>
-    
+
             </div>
-    
-    
+
+
         </mat-card-content>
-    
-    
-    
-    
+
+        <mat-card-actions>
+            <button type="button" class="btn btn-primary btn-sm space-button">Visualizar curso</button>
+        </mat-card-actions>
+
+
     </mat-card>
-    </div>
+</div>
 
 
-    <div class="center-content">
-        <mat-card class="start-card">
-    
-            <mat-card-title class="center-title">Suas aptidões</mat-card-title>
-    
-            <mat-card-content class="start-content">
-                <div class="container">
-    
-                    <div class="row">
-
-                        <app-user-inteligence-result-chart class="col-lg-4 col-md-6"></app-user-inteligence-result-chart>
-                       
-                    </div>
-                </div>
-            </mat-card-content>
-    
-        </mat-card>
-    </div>

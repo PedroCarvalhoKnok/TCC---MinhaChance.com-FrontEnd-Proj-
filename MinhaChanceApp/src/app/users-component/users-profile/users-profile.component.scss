@@ -1,5 +1,5 @@
 .center-content {
-    height: 100%;
+    height: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,15 +9,24 @@ mat-card-title, p, button{
     color: white;
 }
 
-.start-card{
+.user-card, .experiences-card, .objectives-card{
     background-color: #191645;
     text-align: center;
     height: 300px;
 }
 
-.start-content{
+.user-content, .experiences-conten, .objectives-content{
     text-align: center;
-    margin-top: 20%;
+    margin-top: 5%;
+    color: white;
+}
+
+.list-align{
+  margin-top: -10px;
+}
+
+.mat-item-color{
+  color: white;
 }
 
 .center-title{
@@ -31,45 +40,44 @@ mat-card-title, p, button{
 
 
 .vacancies-card{
-    width: 50%;
-    margin-top: 30px;
-    margin-left: 10%;
+    margin-top: 60px;
+    display: flex;
+    height: 280px;
+    background-color: #191645;
+    right: 0;
+    color: white;
+  }
+
+.courses-card{
+    margin-top: 40px;
+    margin-bottom: 10px;
     display: flex;
     height: 280px;
     background-color: #191645;
     color: white;
-  }
+}
+
+.banner-card{
+  margin-top: 40px;
+  display: flex;
+  width: 100%;
+  height: 50px;
+  background-color: #191645;
+  color: white;
+}
   
-  .filter-card{
-    float: right;
-    width: 30%;
-    height: 160vh;
-    border-bottom: 10px;
-    border-color: black;
-    position: relative;
-    display: flex;
-    background-color: #888888;
-    align-content: center;
-    margin-top: -66px;
-   
-  }
-  
-  .filter-content{
+  .vacancy-content, .courses-content{
     margin-top: 60px;
-    margin-left: -91px;
+    margin-right: 0px;
     display: flex;
     width: 100%;
-    padding-left: 20px;
-    
-  }
-  
-  .vacancy-content{
-    margin-top: 60px;
-    margin-left: -201px;
-    display: flex;
-    width: 100%;
-    padding-left: 0px;
+    padding-right: 0px;
+    right: 0;
     overflow:auto;
+  }
+
+  .distance-bottom{
+    padding-bottom: 100px;
   }
   
   .example-form {

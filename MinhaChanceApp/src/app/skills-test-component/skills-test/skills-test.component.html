@@ -72,49 +72,49 @@
 
                     <mat-radio-group>
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'A')" value="A">
+                            <mat-radio-button checked="{{question.userAnswer == 'A' ? true: false}}" (click)="setSelectedQuestion(questionPos,question.id, 'A')" value="A">
                                 A) {{question.answerA}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'B')" value="2">
+                            <mat-radio-button checked="{{question.userAnswer == 'B' ? true: false}}" (click)="setSelectedQuestion(questionPos,question.id, 'B')" value="2">
                                 B) {{question.answerB}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'C')" value="3">
+                            <mat-radio-button checked="{{question.userAnswer == 'C' ? true: false}}" (click)="setSelectedQuestion(questionPos,question.id, 'C')" value="3">
                                 C) {{question.answerC}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'D')" value="4">
+                            <mat-radio-button checked="{{question.userAnswer == 'D' ? true: false}}" (click)="setSelectedQuestion(questionPos,question.id, 'D')" value="4">
                                 D) {{question.answerD}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'E')" value="5">
+                            <mat-radio-button checked="{{question.userAnswer == 'E' ? true: false}}" (click)="setSelectedQuestion(questionPos,question.id, 'E')" value="5">
                                 E) {{question.answerE}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'F')" value="6">
+                            <mat-radio-button checked="{{question.userAnswer == 'F' ? true: false}}" (click)="setSelectedQuestion(questionPos,question.id, 'F')" value="6">
                                 F) {{question.answerF}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'G')" value="7">
+                            <mat-radio-button checked="{{question.userAnswer == 'G' ? true: false}}" (click)="setSelectedQuestion(questionPos,question.id, 'G')" value="7">
                                 G) {{question.answerG}}
                             </mat-radio-button>
                         </section>
                         <br />
                         <section>
-                            <mat-radio-button (click)="setSelectedQuestion(questionPos,question.id, 'H')" value="8"> 
+                            <mat-radio-button checked="{{question.userAnswer == 'H' ? true: false}}" (click)="setSelectedQuestion(questionPos,question.id, 'H')" value="8"> 
                                 H) {{question.answerH}}
                             </mat-radio-button>
                         </section>

@@ -26,4 +26,5 @@ export class User {
     objective?: string;
     userVacancyInfo?: any;
     userInteligenciesInfo?: any;
+    interests: string[];
 }
