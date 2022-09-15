@@ -26,6 +26,8 @@ export class VacanciesDetailsComponent implements OnInit {
 
   pageEvent!: PageEvent
 
+  vacancyId!: number; 
+
   users: User[];
 
   detailsFilter: vacancyDetailsFilter = new vacancyDetailsFilter();
@@ -80,25 +82,25 @@ export class VacanciesDetailsComponent implements OnInit {
 
   async ngOnInit() {
 
-    // let vacancyId = this.router.snapshot.params?.['vacancyId'];
+     this.vacancyId = this.router.snapshot.params?.['vacancyId'];
+     
 
-     let candidates = this.vacancyDetails;
-
-    // await this.userService.getUsersInfoByVacancy(vacancyId).subscribe(users => candidates = users);
-
-    
-
-    candidates.subscribe(candidate => { this.users = candidate; });
+    // this.vacancyDetails = await this.userService.getUsersByVacancy(this.vacancyId);
+   
 
 
    // this.vacancyDetails = candidates;
 
   }
 
-  openMetricsDetails(detail: User){
-    const dialog = this.dialog.open(UserVacancyDetailsDialogComponent, {
-      data: detail
-    });
+  async openMetricsDetails(detail: User){
+
+    await this.userService.getUserInfoByVacancy(detail.id, this.vacancyId).subscribe(user => {
+      const dialog = this.dialog.open(UserVacancyDetailsDialogComponent, {
+        data: user
+      });
+    })
+    
   }
 
   changeAge(event: any) {

@@ -18,8 +18,14 @@ export class UserService {
   }
 
 
-  getUsersInfoByVacancy(vacancyId: number){
+  getUsersByVacancy(vacancyId: number){
     return this.httpClient.get<User[]>('', this.httpOptions).pipe(
+      retry(2)
+    )
+  }
+
+  getUserInfoByVacancy(userId: number, vacancyId: number){
+    return this.httpClient.get<User>('', this.httpOptions).pipe(
       retry(2)
     )
   }

@@ -38,6 +38,9 @@ import { UserInteligenceResultChartComponent } from './charts-component/user-int
 import { SkillsStartComponent } from './skills-test-component/skills-start/skills-start.component';
 import { UsersProfileComponent } from './users-component/users-profile/users-profile.component';
 import {MatListModule} from '@angular/material/list';
+import { UserInteligenceListChartComponent } from './charts-component/user-inteligence-list-chart/user-inteligence-list-chart.component';
+import { UserVacancyListChartComponent } from './charts-component/user-vacancy-list-chart/user-vacancy-list-chart.component';
+import { UserVacancyListDialogComponent } from './Dialogs/user-vacancy-list-dialog/user-vacancy-list-dialog.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +59,9 @@ import {MatListModule} from '@angular/material/list';
     UserInteligenceResultChartComponent,
     SkillsStartComponent,
     UsersProfileComponent,
+    UserInteligenceListChartComponent,
+    UserVacancyListChartComponent,
+    UserVacancyListDialogComponent,
     
   ],
   imports: [

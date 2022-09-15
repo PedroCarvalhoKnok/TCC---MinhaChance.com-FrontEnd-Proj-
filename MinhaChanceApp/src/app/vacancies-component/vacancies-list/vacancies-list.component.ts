@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Observable, of } from 'rxjs';
 import { vacancyFilter } from 'src/app/Models/Filters/Vacancy/vacancyFilter';
@@ -6,7 +7,9 @@ import { Benefit } from 'src/app/Models/Vacancy/Benefit';
 import { Requirement } from 'src/app/Models/Vacancy/Requirement';
 import { Vacancy } from 'src/app/Models/Vacancy/Vacancy';
 import { VacancyService } from 'src/app/Services/Vacancy/vacancy.service';
+import { UserVacancyListDialogComponent } from 'src/app/Dialogs/user-vacancy-list-dialog/user-vacancy-list-dialog.component';
 import Swal from 'sweetalert2';
+import { UserService } from 'src/app/Services/User/user.service';
 
 @Component({
   selector: 'app-vacancies-list',
@@ -15,9 +18,11 @@ import Swal from 'sweetalert2';
 })
 export class VacanciesListComponent implements OnInit {
 
-  constructor(private vacancyService: VacancyService) { }
+  constructor(private vacancyService: VacancyService,private userService: UserService, public dialog: MatDialog) { }
 
   pageEvent!: PageEvent;
+
+  userId!: number;
 
   fileMocked = new File([], "", {
     type: "",
@@ -155,6 +160,16 @@ export class VacanciesListComponent implements OnInit {
 
     return vacancyList;
 
+  }
+
+  async openMetricsDetails(vacancyId: number){
+
+    await this.userService.getUserInfoByVacancy(this.userId, vacancyId).subscribe(user => {
+      const dialog = this.dialog.open(UserVacancyListDialogComponent, {
+        data: user
+      });
+    })
+   
   }
 
   async deleteVacancy(vacancyId: number){
