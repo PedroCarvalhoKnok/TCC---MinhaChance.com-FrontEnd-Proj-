@@ -18,7 +18,7 @@
                             <br/>
                             <mat-form-field>
                                 <input id="vacancySalary" formControlName="vacancySalary" class="form-control" type="number" [(ngModel)]="this.vacancy.salary"
-                                    matInput autocomplete="off" placeholder="Salário" required/>
+                                    matInput autocomplete="off" placeholder="Salário" readonly="{{this.isConfidential}}"/>
                             </mat-form-field>
                             <div
                                 *ngIf="formVacancy.get('vacancySalary')?.invalid && (formVacancy.get('vacancySalary')?.dirty || formVacancy.get('vacancySalary')?.touched)">
@@ -41,7 +41,7 @@
                             <div
                                 *ngIf="formVacancy.get('vacancyCategory')?.invalid && (formVacancy.get('vacancyCategory')?.dirty || formVacancy.get('vacancyCategory')?.touched)">
                                 <p *ngIf="formVacancy.get('vacancyCategory')?.errors?.['required']">
-                                    Descrição do curso é necessária.
+                                    Categoria da vaga é necessária.
                                 </p>
                             </div>
                             <mat-form-field class="spacing-margin">
@@ -93,7 +93,7 @@
                             <div
                             *ngIf="formVacancy.get('vacancySemanalQuantity')?.invalid && (formVacancy.get('vacancySemanalQuantity')?.dirty || formVacancy.get('vacancySemanalQuantity')?.touched)">
                             <p *ngIf="formVacancy.get('vacancySemanalQuantity')?.errors?.['required']">
-                                Duração do curso é necessária.
+                                Necessário informar é necessária.
                             </p>
                             <p *ngIf="formVacancy.get('vacancySemanalQuantity')?.errors?.['forbiddenDurationTime']">
                                 Duração do curso deve ser maior que 0.
@@ -149,7 +149,7 @@
                 Beneficios
             </mat-card-title>
             <span class="material-icons col-4" (click)="addBenefit(this.benefit)">add_circle_outline</span>
-            <span class="material-icons col-4">remove_circle_outline</span>
+            <span class="material-icons col-4" (click)="removeBenefit()">remove_circle_outline</span>
         </mat-card-header>
 
         <mat-card-content class="benefit-content">
@@ -197,16 +197,73 @@
 </div>
 <!-- Lista de beneficios inseridos -->
 
+<div>
+    <mat-card class="benefit-card" *ngFor="let benefit of this.vacancy.benefits; let benefitIndex = index">
+
+        <mat-card-header class="title-vacancy">
+            <mat-card-title fxLayoutAlign="center" class="title-vacancy">
+                Beneficio
+            </mat-card-title>
+            <span class="material-icons col-4" (click)="editBenefitByIndex(benefitIndex)">add_circle_outline</span>
+            <span class="material-icons col-4" (click)="removeBenefitByIndex(benefitIndex)">remove_circle_outline</span>
+        </mat-card-header>
+
+        <mat-card-content class="benefit-content">
+
+            <div class="container">
+                <div fxLayout="row" fxLayoutAlign="center">
+                    <form [formGroup]="formBenefits">
+                        <div fxLayout="column">
+                            <mat-label class="placeholder-color">Nome do beneficio</mat-label>
+                            <br/>
+                            <mat-form-field>
+                            <input id="benefitDescription" matInput class="form-control" formControlName="benefitDescription" type="text" autocomplete="off"
+                                value="{{benefit.description}}"
+                                placeholder="{{benefit.description}}" required />
+                            </mat-form-field>
+                            <div
+                                *ngIf="formBenefits.get('benefitDescription')?.invalid && (formBenefits.get('benefitDescription')?.dirty || formBenefits.get('benefitDescription')?.touched)">
+                                <p *ngIf="formBenefits.get('benefitDescription')?.errors?.['required']">
+                                    Descrição do beneficio é necessária.
+                                </p>
+                            </div>
+                            <br/>
+                            <mat-label class="placeholder-color">Valor do beneficio (opcional)</mat-label>
+                            <br/>
+                            <mat-form-field>
+                            <input id="benefitValue" matInput class="form-control" formControlName="benefitValue" type="text" autocomplete="off"
+                                value="{{benefit.value}}"
+                                placeholder="{{benefit.value}}" required />
+                            </mat-form-field>
+                            <div
+                                *ngIf="formBenefits.get('benefitValue')?.invalid && (formBenefits.get('benefitValue')?.dirty || formBenefits.get('benefitValue')?.touched)">
+                                <p *ngIf="formBenefits.get('benefitValue')?.errors?.['required']">
+                                    Valor do beneficio é necessário.
+                                </p>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </mat-card-content>
+
+
+    </mat-card>
+</div>
+
 <!-- Lista de beneficios inseridos -->
 <div>
     <mat-card class="requires-card">
 
         <mat-card-header class="title-vacancy">
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
-                Requisitos
+                Requisito
             </mat-card-title>
             <span class="material-icons col-4" (click)="addRequirement(this.requirement)">add_circle_outline</span>
-            <span class="material-icons col-4">remove_circle_outline</span>
+            <span class="material-icons col-4" (click)="removeBenefit()">remove_circle_outline</span>
         </mat-card-header>
 
         <mat-card-content class="requires-content">
@@ -217,10 +274,10 @@
                         <div fxLayout="column">
                            
                             <mat-label class="placeholder-color">Descrição do requisito</mat-label>
-                            <textarea id="requirementDescription" class="text-area-form" required></textarea>
+                            <textarea id="requirementDescription" class="text-area-form"></textarea>
                             <br />
                             <mat-label class="placeholder-color">Diferenciais (opcional)</mat-label>
-                            <textarea id="requirementDifferential" class="text-area-form" required></textarea>
+                            <textarea id="requirementDifferential" class="text-area-form"></textarea>
 
                         </div>
                     </form>
@@ -234,7 +291,42 @@
     </mat-card>
 </div>
 <!-- Lista de requisitos inseridos -->
+<div>
+    <mat-card class="requires-card" *ngFor="let requirement of this.vacancy.requirements; let requirementIndex=index">
 
+        <mat-card-header class="title-vacancy">
+            <mat-card-title fxLayoutAlign="center" class="title-vacancy">
+                Requisitos
+            </mat-card-title>
+            <span class="material-icons col-4" (click)="editRequirementByIndex(requirementIndex)">add_circle_outline</span>
+            <span class="material-icons col-4" (click)="removeRequirementByIndex(requirementIndex)">remove_circle_outline</span>
+        </mat-card-header>
+
+        <mat-card-content class="requires-content">
+
+            <div class="container">
+                <div fxLayout="row" fxLayoutAlign="center">
+                    <form>
+                        <div fxLayout="column">
+                           
+                            <mat-label class="placeholder-color">Descrição do requisito</mat-label>
+                            <textarea id="requirementDescription" class="text-area-form">{{requirement.description}}</textarea>
+                            <br />
+                            <mat-label class="placeholder-color">Diferenciais (opcional)</mat-label>
+                            <textarea id="requirementDifferential" class="text-area-form">{{requirement.differencial}}</textarea>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </mat-card-content>
+
+
+    </mat-card>
+</div>
 <br />
 <!-- Lista de requisitos inseridos -->
-<button (click)="postVacancy(this.vacancy)" mat-raised-button class="submit-btn" color="primary">Cadastrar Vaga</button>
+<button *ngIf="!this.vacancyId" (click)="postVacancy(this.vacancy)" mat-raised-button class="submit-btn" color="primary">Cadastrar Vaga</button>
+<button *ngIf="this.vacancyId" (click)="editVacancy(this.vacancy)" mat-raised-button class="submit-btn" color="primary">Editar Vaga</button>

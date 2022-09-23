@@ -53,4 +53,22 @@ export class UserService {
       retry(2)
     )
   }
+
+  sendEmail(user: User, bodyMessage: string){
+    return this.httpClient.get<boolean>('', this.httpOptions).pipe(
+      retry(2)
+    )
+  }
+
+  postUserCandidature(userId: number, vacancyid: number){
+    return this.httpClient.get<boolean>('', this.httpOptions).pipe(
+      retry(2)
+    )
+  }
+
+  postAffirmativeFeedBack(userId: number, vacancyId: number){
+    return this.httpClient.get<boolean>('', this.httpOptions).pipe(
+      retry(2)
+    )
+  }
 }

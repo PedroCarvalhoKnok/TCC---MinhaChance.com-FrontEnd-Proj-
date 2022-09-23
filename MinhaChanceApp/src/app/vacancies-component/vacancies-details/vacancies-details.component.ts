@@ -11,6 +11,7 @@ import { AnalyticsService } from 'src/app/Services/Analytics/analytics.service';
 import { Chart } from 'chart.js';
 import { MatDialog } from '@angular/material/dialog';
 import { UserVacancyDetailsDialogComponent } from 'src/app/Dialogs/user-vacancy-details-dialog/user-vacancy-details-dialog.component';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -21,12 +22,12 @@ import { UserVacancyDetailsDialogComponent } from 'src/app/Dialogs/user-vacancy-
 
 
 export class VacanciesDetailsComponent implements OnInit {
- 
+
   constructor(private router: ActivatedRoute, private vacancyService: VacancyService, private userService: UserService, private analyticsService: AnalyticsService, public dialog: MatDialog) { }
 
   pageEvent!: PageEvent
 
-  vacancyId!: number; 
+  vacancyId!: number;
 
   users: User[];
 
@@ -43,7 +44,7 @@ export class VacanciesDetailsComponent implements OnInit {
     isWorking: true,
     actualCompany: 'Empresa Y',
     actualCharge: 'Estagiario',
-    address: {streetName: 'rua dos testes', district: 'bairro teste', country: 'Brasil', zipCode: '09060110', streetNumber: 20},
+    address: { streetName: 'rua dos testes', district: 'bairro teste', country: 'Brasil', zipCode: '09060110', streetNumber: 20 },
     age: 20,
     phone: '(11) 94567-2834',
     hasVacancyCourse: false,
@@ -54,8 +55,8 @@ export class VacanciesDetailsComponent implements OnInit {
     generalRating: [0, 1, 2, 3, 4],
     generalServicesRating: [0, 1, 2, 3],
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
-    userVacancyInfo: {yes: 56, no: 44},
-    userInteligenciesInfo: { intelligence: 'Linguística', vacancies: ['Tradutor e conhecimento em libras'], skills: [67]},
+    userVacancyInfo: { yes: 56, no: 44 },
+    userInteligenciesInfo: { intelligence: 'Linguística', vacancies: ['Tradutor e conhecimento em libras'], skills: [67] },
     interests: ['Esportes', 'Idiomas', 'Música']
   },
   {
@@ -64,43 +65,43 @@ export class VacanciesDetailsComponent implements OnInit {
     profile: 'Candidato',
     email: 'bruhh@teste.com',
     isWorking: false,
-    address: {streetName: 'rua general teste', district: 'bairro abc', country: 'Brasil', zipCode: '09063410', streetNumber: 208},
+    address: { streetName: 'rua general teste', district: 'bairro abc', country: 'Brasil', zipCode: '09063410', streetNumber: 208 },
     age: 20,
     phone: '(11) 95566-2939',
     hasVacancyCourse: true,
     salaryPretension: 1000.00,
     experiences: [],
-    certifications: [{id: 1, certificationDescription: 'certificação introdução python', platform: 'MinhaVez!', timeSpent: 10}],
+    certifications: [{ id: 1, certificationDescription: 'certificação introdução python', platform: 'MinhaVez!', timeSpent: 10 }],
     graduations: [],
     generalRating: [],
     generalServicesRating: [],
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
-    userVacancyInfo: {yes: 50, no: 50},
-    userInteligenciesInfo: { intelligence: 'Lógica-Matemática', vacancies: ['Estatistico - Iniciante analise de dados','Desenvolvedor Java júnior'], skills: [78,75]},
+    userVacancyInfo: { yes: 50, no: 50 },
+    userInteligenciesInfo: { intelligence: 'Lógica-Matemática', vacancies: ['Estatistico - Iniciante analise de dados', 'Desenvolvedor Java júnior'], skills: [78, 75] },
     interests: ['Natação', 'Animes', 'Programação']
   }])
 
   async ngOnInit() {
 
-     this.vacancyId = this.router.snapshot.params?.['vacancyId'];
-     
+    this.vacancyId = this.router.snapshot.params?.['vacancyId'];
+
 
     // this.vacancyDetails = await this.userService.getUsersByVacancy(this.vacancyId);
-   
 
 
-   // this.vacancyDetails = candidates;
+
+    // this.vacancyDetails = candidates;
 
   }
 
-  async openMetricsDetails(detail: User){
+  async openMetricsDetails(detail: User) {
 
     await this.userService.getUserInfoByVacancy(detail.id, this.vacancyId).subscribe(user => {
       const dialog = this.dialog.open(UserVacancyDetailsDialogComponent, {
         data: user
       });
     })
-    
+
   }
 
   changeAge(event: any) {
@@ -179,6 +180,64 @@ export class VacanciesDetailsComponent implements OnInit {
 
     return vacancyDetailsList;
 
+  }
+
+  async sendFeedBackToCandidate(feedBack: boolean, user: User) {
+
+    let responseFeedBack!: boolean;
+    let vacancy!: Vacancy
+
+    if (feedBack) {
+
+      await this.userService.postAffirmativeFeedBack(user.id, this.vacancyId).subscribe(response => responseFeedBack = response);
+
+      if (responseFeedBack) {
+
+        this.vacancyService.getVacancy(this.vacancyId).subscribe(vacancyResponse => { vacancy = vacancyResponse });
+
+        await this.userService.sendEmail(user, `Parabéns ${user.userName}! A empresa X está interessada em seu perfil para a vaga ${vacancy.vacancyTitle}`) //utilizar variavel de usuario logado
+        .subscribe(responseEmail => {
+          responseEmail ? 
+          Swal.fire(
+            'Sucesso!',
+            `Candidatura do usuário ${user.userName} concluída com sucesso, um email foi enviado ao mesmo!`,
+            'warning'
+          ):
+          Swal.fire(
+            'Ops, ocorreu um erro!',
+            `Ocorreu um erro ao enviar o email de confirmação ao usuário ${user.userName}, porém sua candidatura foi concluída!`,
+            'warning'
+          );
+        })
+      }
+      else {
+        Swal.fire(
+          'Ops, ocorreu um erro!',
+          `Ocorreu um erro ao efetivar o interesse do candidato ${user.userName}, tente novamente!`,
+          'warning'
+        );
+      }
+
+    }
+    else {
+
+      await this.userService.sendEmail(user, `Olá ${user.userName}! A empresa X não se interessou no seu perfilno momento para vaga ${vacancy.vacancyTitle}, porém vai manter seu currículo salvo para as demais oportunidades que surgir!`) //utilizar variavel de usuario logado
+      .subscribe(responseEmail => {
+        responseEmail ? 
+        Swal.fire(
+          'Sucesso!',
+          `O email de feedback da vaga foi enviado ao candidato ${user.userName} !`,
+          'success'
+        ):
+        Swal.fire(
+          'Ops, ocorreu um erro!',
+          `Ocorreu um erro ao enviar o email de feedback ao candidato ${user.userName}, tente novamente!`,
+          'warning'
+        );
+
+      })
+
+    }
   }
 
 

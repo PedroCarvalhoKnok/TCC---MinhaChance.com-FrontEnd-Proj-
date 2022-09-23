@@ -46,8 +46,6 @@
                     </div>
                 </div>
 
-
-
                 <label class="label-filter" for="typeahead-basic">Vagas Confidenciais</label>
                 <br />
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
@@ -134,19 +132,15 @@
                     <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{vacancy.modalidity}} {{vacancy.modalidity == 'Hibrido' ? vacancy.semanalQuantity: ''}}</label>
                     <br />
                     <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
-                        <ul class="vacancy-list col-md-8">
-                            <li *ngFor="let benefit of this.vacancy.benefits">{{benefit.description}} - {{benefit.value}}</li>
-                            <li>Convenio Médico</li>
-                            <li>Convenio Odontológico</li>
-                            <li>Gym Pass</li>
+                        <ul class="vacancy-list col-md-8" *ngFor="let benefit of this.vacancy.benefits">
+                            <li>Descrição {{benefit.description}}</li>
+                            <li>Valor {{benefit.value}}</li>
                         </ul>
                     </label><br />
                     <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
-                        <ul class="vacancy-list col-md-4">
-                            <li *ngFor="let requirement of this.vacancy.requirements">{{requirement.description}} {{requirement.differencial != undefined ? '- ' + requirement.differencial : ''}}</li>
-                            <li>Superior Completo</li>
-                            <li>Conhecimento em arquitetura</li>
-                            <li>Conhecimento de MongoDB é um diferencial</li>
+                        <ul class="vacancy-list col-md-4" *ngFor="let requirement of this.vacancy.requirements">
+                            <li>Descrição {{requirement.description}}</li>
+                            <li>Diferencial {{requirement.differencial != undefined ? '- ' + requirement.differencial : ''}}</li>
                         </ul>
                     </label><br />
                     <label class="col-md-4" for="inputdefault">Localização<br />{{vacancy.location}}</label><br />
@@ -161,7 +155,7 @@
                         <button type="button" [routerLink]="['empresa','vagas','detalhes', vacancy.id]" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
                         <button (click)="deleteVacancyModal(vacancy.id)" type="button"  class="btn btn-danger btn-sm space-button">Excluir vaga</button>
                         <button (click)="openMetricsDetails(vacancy.id)" type="button" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
-                        <button type="button" class="btn btn-primary btn-sm space-button">Candidatar a vaga</button>
+                        <button (click)="sendEmailCandidature(vacancy)" type="button" class="btn btn-primary btn-sm space-button">Candidatar a vaga</button>
                     </div>
 
                 </div>

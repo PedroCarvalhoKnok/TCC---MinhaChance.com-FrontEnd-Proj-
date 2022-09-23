@@ -22,7 +22,7 @@ export class VacanciesRegisterComponent implements OnInit {
   requirement: Requirement = new Requirement();
 
 
-  contractCategories = ['CLT', 'PJ', 'Estagio'];
+  contractCategories = ['CLT', 'PJ', 'Estagio', 'Jovem Aprendiz', 'Trainee'];
   modalities = ['Presencial', 'Hibrido', 'Remoto'];
   locations: string[] = ['Sao Paulo - Centro', 'Rio de Janeiro - Centro', 'Parana - Curitiba']
 
@@ -36,13 +36,13 @@ export class VacanciesRegisterComponent implements OnInit {
 
   constructor(private vacancyService: VacancyService, private router: ActivatedRoute) { }
 
-  async ngOnInit(){
+  async ngOnInit() {
 
     let vacancyId = this.router.snapshot.params?.['vacancyId'];
 
     this.vacancyId = vacancyId;
 
-    if(this.vacancyId != undefined){
+    if (this.vacancyId != undefined) {
       await this.vacancyService.getVacancy(vacancyId).subscribe(vacancy => this.vacancy = vacancy)
     }
 
@@ -52,101 +52,104 @@ export class VacanciesRegisterComponent implements OnInit {
 
   }
 
-  async getLocationsByUserId(){
+  async getLocationsByUserId() {
     await this.vacancyService.getLocationsByUser(1).subscribe(location => this.locations = location)//user id
   }
 
-  changeContractType(type: string){
+  changeContractType(type: string) {
     this.vacancy.contractType = type;
   }
 
-  changeSalaryDisplay(){
+  changeSalaryDisplay() {
     this.isCombinated = !this.isCombinated
 
-    if(this.isCombinated){
+    if (this.isCombinated) {
       this.vacancy.salary = 0;
       (<HTMLInputElement>document.getElementById('vacancySalary')).disabled = true;
     }
-    else{
+    else {
       (<HTMLInputElement>document.getElementById('vacancySalary')).disabled = false;
     }
 
   }
 
-  confidencialVacancy(){
+  confidencialVacancy() {
+
     this.isConfidential = !this.isConfidential
 
-    this.vacancy.isConfidential = this.isConfidential ? true: false;
-    
+    this.vacancy.isConfidential = this.isConfidential ? true : false;
+
   }
 
-  changeModality(modality: string){
+  changeModality(modality: string) {
 
     this.vacancy.modalidity = modality;
 
-    if(modality == 'Hibrido')
+    if (modality == 'Hibrido')
       this.isHibrid = true;
 
 
   }
 
-  changeLocation(location: string){
+  changeLocation(location: string) {
 
     this.vacancy.location = location;
 
   }
 
-  chooseVacancyImage(event: any){
+  chooseVacancyImage(event: any) {
     this.vacancy.image = event.target.files[0];
   }
 
-  async postVacancy(vacancy: Vacancy){
-    
+  async postVacancy(vacancy: Vacancy) {
+
     this.vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
 
-    if(this.formVacancy.valid){
-      
-      await this.vacancyService.postVacancy(vacancy).subscribe(retornMsg => 
+    if (this.formVacancy.valid) {
+
+      await this.vacancyService.postVacancy(vacancy).subscribe(retornMsg =>
         Swal.fire(
-          {title: `${retornMsg}`,
-           icon: 'success',
+          {
+            title: `${retornMsg}`,
+            icon: 'success',
           }));
-      
+
     }
 
-    
+
   }
 
-  async editVacancy(vacancy: Vacancy){
+  async editVacancy(vacancy: Vacancy) {
 
-    if(this.vacancyBenefitsToBeDeleted.length > 0){
+    if (this.vacancyBenefitsToBeDeleted.length > 0) {
 
-      this.vacancyBenefitsToBeDeleted.forEach(async item => {
-        await this.vacancyService.deleteVacancyBenefit(item.id)
-      })
-      
+      for (let benefitToBeDeleted of this.vacancyBenefitsToBeDeleted) {
+        await this.vacancyService.deleteVacancyBenefit(benefitToBeDeleted.id)
+      }
+
     }
 
-    if(this.vacancyRequirementsToBeDeleted.length > 0){
+    if (this.vacancyRequirementsToBeDeleted.length > 0) {
 
-      this.vacancyRequirementsToBeDeleted.forEach(async item => {
-        await this.vacancyService.deleteVacancyRequirement(item.id)
-      })
-      
+      for (let requirementToBeDeleted of this.vacancyRequirementsToBeDeleted) {
+        await this.vacancyService.deleteVacancyBenefit(requirementToBeDeleted.id)
+      }
+
     }
 
-    if(this.formVacancy.valid){
-      await this.vacancyService.editVacancy(vacancy).subscribe(returnMsg => 
+    if (this.formVacancy.valid) {
+      await this.vacancyService.editVacancy(vacancy).subscribe(returnMsg =>
         Swal.fire(
-          {title: `${returnMsg}`,
-           icon: 'success',
+          {
+            title: `${returnMsg}`,
+            icon: 'success',
           }));
     }
   }
 
-  addBenefit(benefit: Benefit){
+  addBenefit(benefit: Benefit) {
 
-    if(this.formBenefits.valid){
+    if (this.formBenefits.valid) {
       this.benefit.description = (<HTMLInputElement>document.getElementById(`benefitDescription`)).value;
       this.benefit.value = +(<HTMLInputElement>document.getElementById(`benefitValue`)).value;
       this.vacancy.benefits.push(benefit);
@@ -154,56 +157,56 @@ export class VacanciesRegisterComponent implements OnInit {
 
   }
 
-  removeBenefit(){
+  removeBenefit() {
 
     this.vacancy.benefits.pop();
 
   }
 
-  removeRequirement(){
+  removeRequirement() {
 
     this.vacancy.requirements?.pop();
 
   }
 
-  addRequirement(requirement: Requirement){
+  addRequirement(requirement: Requirement) {
 
     requirement.description = (<HTMLInputElement>document.getElementById(`requirementDescription`)).value;
     requirement.differencial = (<HTMLInputElement>document.getElementById(`requirementDifferential`)).value;
 
-    
+
     this.vacancy.requirements?.push(requirement);
 
   }
 
-  editBenefitByIndex(index: number){
+  editBenefitByIndex(index: number) {
     this.vacancy.benefits[index].description = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value;
     this.vacancy.benefits[index].value = +(<HTMLInputElement>document.getElementById(`input-description-${index}`)).value;
   }
 
-  removeBenefitByIndex(index: number){
+  removeBenefitByIndex(index: number) {
 
-    if(this.vacancyId != undefined)
+    if (this.vacancyId != undefined)
       this.vacancyBenefitsToBeDeleted.push(this.vacancy.benefits[index])
-      
-      
+
+
     delete this.vacancy.benefits[index];
-   
+
   }
 
-  removeRequirementByIndex(index: number){
-    
-    if(this.vacancyId != undefined)
-      if(this.vacancy.requirements != undefined)
-        this.vacancyRequirementsToBeDeleted.push(this.vacancy.requirements[index])  
-      
-    
-    delete this.vacancy.requirements??[index];
+  removeRequirementByIndex(index: number) {
+
+    if (this.vacancyId != undefined)
+      if (this.vacancy.requirements != undefined)
+        this.vacancyRequirementsToBeDeleted.push(this.vacancy.requirements[index])
+
+
+    delete this.vacancy.requirements ?? [index];
   }
 
-  editRequirementByIndex(index: number){
-    this.vacancy.requirements != undefined ? this.vacancy.requirements[index].description = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value: '';
-    this.vacancy.requirements != undefined ? this.vacancy.requirements[index].differencial = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value: '';
+  editRequirementByIndex(index: number) {
+    this.vacancy.requirements != undefined ? this.vacancy.requirements[index].description = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value : '';
+    this.vacancy.requirements != undefined ? this.vacancy.requirements[index].differencial = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value : '';
   }
 
   createFormVacancyValidation(): void {
