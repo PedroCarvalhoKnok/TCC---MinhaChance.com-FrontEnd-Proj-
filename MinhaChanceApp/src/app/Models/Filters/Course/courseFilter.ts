@@ -6,6 +6,6 @@ export class courseFilter{
     hasCertification?: boolean;
     hasTest?: boolean;
     questionsQuantity!: number;
-    testDifficulty?: string;
-    testDuration!: number;
+    courseDuration!: number;
+    creationDate?: Date;
 }

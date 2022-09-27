@@ -20,7 +20,7 @@ export class CourseService{
   }
 
   postCourse(course: Course) {
-    return this.httpClient.post<string>(``, this.httpOptions)
+    return this.httpClient.post<boolean>(``, this.httpOptions)
       .pipe(
         retry(2),
         

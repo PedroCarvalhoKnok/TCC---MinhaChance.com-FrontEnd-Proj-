@@ -11,15 +11,12 @@ export class Course {
     courseTitle!: string;
     vacancyId?: number;
     durationTime!: string;
-    testId?: number;
-    certificationId? : number;
     description!: string;
-    creationDate!: string;
+    creationDate?: Date;
+    hasTests!: boolean;
+    hasCertification!: boolean;
     subscribeQuantity!: number;
-    sessionsQuantity?: number;
-    test?: Test;
-    certification?: Certification;
-    sessions?: Session[];
+    questionsQuantity?: number;
     vacancy?: Vacancy;
     category!: string;
 }

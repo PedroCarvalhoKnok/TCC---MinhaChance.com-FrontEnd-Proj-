@@ -59,7 +59,7 @@ export class VacancyService {
       )
   }
 
-  getCategoriesByUser(userId: number){
+  getCategories(){
     return this.httpClient.get<string[]>(``, this.httpOptions)
       .pipe(
         retry(2),

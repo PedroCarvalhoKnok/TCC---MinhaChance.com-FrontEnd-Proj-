@@ -21,23 +21,23 @@
 
             <form class="example-form">
 
-                <div class="form-group">
-                    <label class="label-filter">Porcentagem para aprovação</label>
-                    <input id="approvalPercentual" class="form-control" type="number" />
-                </div>
-
-
                 <label class="label-filter" for="typeahead-basic">Categoria:</label>
                 <div class="col select-filters">
                     <div ngbDropdown class="d-inline-block select-filters">
                         <button type="button" class="btn btn-outline-primary" id="dropdownCategory"
-                            ngbDropdownToggle>{{this.filters.courseCategory == undefined ? 'Categoria': this.filters.courseCategory}}</button>
+                            ngbDropdownToggle>{{this.filters.courseCategory == undefined ? 'Categoria':
+                            this.filters.courseCategory}}</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownCategory">
                             <button *ngFor="let category of categories" (click)="changeCategoryFilter(category)"
                                 ngbDropdownItem>{{category}}</button>
                         </div>
                     </div>
                 </div>
+                <br />
+                <label class="label-filter">Data de criação</label>
+                <br />
+                <input id="creationDate" type="date" class="form-control" />
+                <br />
 
                 <label class="label-filter" for="typeahead-basic">Possui vinculo a vagas:</label>
                 <br />
@@ -59,7 +59,7 @@
                     <br />
                     <input id="subscribeQuantity" class="form-control" type="number" class="form-control" />
                 </div>
-                
+
                 <br />
 
                 <label class="label-filter" for="typeahead-basic">Possui certificado?:</label>
@@ -88,18 +88,14 @@
 
                 </div>
                 <br />
-                <label class="label-filter">Quantidade de questões:</label>
+                <label class="label-filter">Quantidade de questões</label>
                 <br />
                 <input id="questionsQuantity" type="number" class="form-control" />
                 <br />
-                <label class="label-filter">Dificuldade da prova</label>
                 <br />
-                <ngb-rating (rateChange)="difficultyTestRateChange($event)" [max]="5"></ngb-rating>
+                <label class="label-filter">Duração do curso (Horas)</label>
                 <br />
-                <br />
-                <label class="label-filter">Duração da prova (Horas)</label>
-                <br />
-                <mat-slider (change)="testDuration($event)" thumbLabel tickInterval="1" step="1" min="0" max="1000"
+                <mat-slider (change)="courseDuration($event)" thumbLabel tickInterval="1" step="1" min="0" max="1000"
                     aria-label="Horas"></mat-slider>
                 <button (click)="applyFiltersCourses()" type="button" class="btn btn-primary apply-btn">Aplicar</button>
 
@@ -132,23 +128,15 @@
                     <span class="material-icons col-md-4">account_circle</span>
                     <label class="col-md-4" for="inputdefault">Duração <br />{{ course.durationTime }}</label>
                     <label class="col-md-4" for="inputdefault">Criação<br />{{ course.creationDate }}</label><br />
+                    <label class="col-md-4" for="inputdefault">Categoria<br />{{ course.category }}</label><br />
                     <label class="col-md-4" for="inputdefault">Inscrições<br />{{ course.subscribeQuantity
                         }}</label><br />
-                    <label class="col-md-4" for="inputdefault">Sessões<br />
-                        <ul class="session-list">
-                            <li>{{ course.subscribeQuantity }} sessões</li>
-                        </ul>
-                    </label><br />
-                    <label class="col-md-4" for="inputdefault">Possui Certificação?<br />{{ course.certificationId !=
-                        undefined ? 'Sim': 'Não'}}</label>
-                    <label class="col-md-4" for="inputdefault">Possui Prova?<br /> {{ course.test?.id != undefined
+                    <label class="col-md-4" for="inputdefault">Possui Certificação?<br />{{ course.hasCertification ?
+                        'Sim': 'Não'}}</label>
+                    <label class="col-md-4" for="inputdefault">Possui Provas?<br /> {{ course.hasTests != undefined
                         ? 'Sim': 'Não'}}</label><br />
-                    <label class="col-md-4" for="inputdefault">Dificuldade da prova<br /> {{ course.test?.difficulty
-                        }}</label><br />
-                    <label class="col-md-4" for="inputdefault">Quantidade de questões<br /> {{
-                        course.test?.questionsQuantity }}</label>
-                    <label class="col-md-4" for="inputdefault">Percentual de aprovação<br /> {{
-                        course.test?.approvalPercentual }}</label>
+                    <label *ngIf="course.hasTests" class="col-md-4" for="inputdefault">Quantidade de questões<br /> {{
+                        course.questionsQuantity }}</label>
                     <div class="description">
                         <label class="col-md-4" for="inputdefault">Descrição<br /></label><br />
                         <label class="desc-course col-md-4">{{ course.description }}</label>
@@ -156,8 +144,12 @@
                     </div>
 
                     <div class="description">
-                        <button type="button" [routerLink]="['empresa','curso', course.id]" class="btn btn-primary btn-sm">Editar</button>
-                        <button type="button" (click)="deleteCourse(course.id)" class="btn btn-danger btn-sm space-button">Excluir</button>
+                        <button type="button" [routerLink]="['empresa','curso', course.id]"
+                            class="btn btn-primary btn-sm">Editar</button>
+                        <button type="button" (click)="deleteCourse(course.id)"
+                            class="btn btn-danger btn-sm space-button">Excluir</button>
+                        <button type="button" (click)="deleteCourse(course.id)"
+                            class="btn btn-danger btn-sm space-button">Visitar curso</button>
                     </div>
 
 
