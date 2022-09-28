@@ -8,7 +8,6 @@ import { TestService } from 'src/app/Services/Test/test.service';
 import { UserService } from 'src/app/Services/User/user.service';
 import { UserVacancyListDialogComponent } from 'src/app/Dialogs/user-vacancy-list-dialog/user-vacancy-list-dialog.component';
 import { Observable, of } from 'rxjs';
-import { Test } from 'src/app/Models/Course/Test';
 
 @Component({
   selector: 'app-users-profile',
@@ -43,22 +42,19 @@ export class UsersProfileComponent implements OnInit {
     type: "",
   });
 
-  userBestVacancies: Observable<Vacancy[]> = of([{id: 1, vacancyTitle: 'Estagiario Desenvolvimento Java', creationDate: Date.prototype, image: this.fileMocked, quantity: 1, salary: 0, isConfidential: false,contractType: 'Estagio', modalidity: 'Hibrido',semanalQuantity: 2,description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{id:1, description: 'VR + VT', value: 1000}, {id:2, description: 'Convenio medico', value: 500}], requiments: [{id:1, description: 'Cursando ensino superior', differential: undefined}]},
-  {id: 2, vacancyTitle: 'Desenvolvedor Junior', creationDate: Date.prototype, image: this.fileMocked, quantity: 2, salary: 3500, isConfidential: false,contractType: 'CLT', modalidity: 'Remoto',semanalQuantity: 0,description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{id:1, description: 'VR + VT', value: 1000}, {id:2, description: 'Convenio medico', value: 1500}], requiments: [{id:1, description: 'Ensino superior completo', differential: 'Conhecimento básico de .NET'}]},
-  {id: 3, vacancyTitle: 'Consultor Cloud Senior', creationDate: Date.prototype, image: this.fileMocked, quantity: 1, salary: 0, isConfidential: true,contractType: 'CLT', modalidity: 'Remoto',semanalQuantity: 0,description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia',location: 'São Paulo - Centro', benefits: [{id:1, description: 'VR + VT', value: 2000}, {id:2, description: 'Convenio medico', value: 1500}], requiments: [{id:1, description: 'Ensino superior completo', differential: 'Conhecimento avançado de Azure ou AWS'}]},
+  userBestVacancies: Observable<Vacancy[]> = of([{id: 1, vacancyTitle: 'Estagiario Desenvolvimento Java', creationDate: new Date(), image: this.fileMocked, quantity: 1, salary: 0, isConfidential: false,contractType: 'Estagio', modalidity: 'Hibrido',semanalQuantity: 2,description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{id:1, description: 'VR + VT', value: 1000}, {id:2, description: 'Convenio medico', value: 500}], requiments: [{id:1, description: 'Cursando ensino superior', differential: undefined}]},
+  {id: 2, vacancyTitle: 'Desenvolvedor Junior', creationDate: new Date(), image: this.fileMocked, quantity: 2, salary: 3500, isConfidential: false,contractType: 'CLT', modalidity: 'Remoto',semanalQuantity: 0,description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{id:1, description: 'VR + VT', value: 1000}, {id:2, description: 'Convenio medico', value: 1500}], requiments: [{id:1, description: 'Ensino superior completo', differential: 'Conhecimento básico de .NET'}]},
+  {id: 3, vacancyTitle: 'Consultor Cloud Senior', creationDate: new Date(), image: this.fileMocked, quantity: 1, salary: 0, isConfidential: true,contractType: 'CLT', modalidity: 'Remoto',semanalQuantity: 0,description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia',location: 'São Paulo - Centro', benefits: [{id:1, description: 'VR + VT', value: 2000}, {id:2, description: 'Convenio medico', value: 1500}], requiments: [{id:1, description: 'Ensino superior completo', differential: 'Conhecimento avançado de Azure ou AWS'}]},
   ]);
   
-
-  test: Test = { id: 1, certificationId: 1, durationTime: '1 Hora', difficulty: 'Iniciante', questionsQuantity: 9, approvalPercentual: '50%'}
-  test2: Test = { id: 2, certificationId: 0, durationTime: '1 Hora', difficulty: 'Iniciante', questionsQuantity: 9, approvalPercentual: '50%'}
 
   categories: string[] = ['Construção', 'Tecnologia', 'Gestão'];
 
 
   userBestCourses: Observable<Course[]> = of([
-    { id: 1, sessionsQuantity: 4, certificationId: 1, test: this.test, description: 'Curso introdutório ao Python', courseTitle: 'Introdução Python I', creationDate: '19/07/2022', subscribeQuantity: 100, durationTime: '7 Horas', category: 'Tecnologia'},
-    { id: 2, sessionsQuantity: 3, certificationId: undefined, test: this.test2, description: 'Curso Ruby I', courseTitle: 'Introdução Ruby I', creationDate: '19/07/2022', subscribeQuantity: 100, durationTime: '7 Horas', category: 'Tecnologia' },
-    { id: 3, sessionsQuantity: 2, certificationId: 2, test: undefined, description: 'Curso Ruby II', courseTitle: 'Introdução Ruby II', creationDate: '19/07/2022', subscribeQuantity: 10, durationTime: '9 Horas', category: 'Tecnologia' },
+    { id: 1, certificationId: 1, description: 'Curso introdutório ao Python', courseTitle: 'Introdução Python I', creationDate: new Date(), subscribeQuantity: 100, durationTime: '7 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true },
+    { id: 2, description: 'Curso Ruby I', courseTitle: 'Introdução Ruby I', creationDate:  new Date(), subscribeQuantity: 100, durationTime: '7 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true },
+    { id: 3, description: 'Curso Ruby II', courseTitle: 'Introdução Ruby II', creationDate:  new Date(), subscribeQuantity: 10, durationTime: '9 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true },
   ]);
 
   

@@ -1,16 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { Certification } from 'src/app/Models/Course/Certification';
 import { Course } from 'src/app/Models/Course/Course';
-import { Question } from 'src/app/Models/Course/Question';
-import { Session } from 'src/app/Models/Course/Session';
-import { Test } from 'src/app/Models/Course/Test';
-import { AzureBlobStorageService } from 'src/app/Services/Azure/azure-blob-storage.service';
-import { CertificationService } from 'src/app/Services/Certification/certification.service';
 import { CourseService } from 'src/app/Services/Course/course.service';
-import { QuestionService } from 'src/app/Services/Question/question.service';
-import { SessionService } from 'src/app/Services/Session/session.service';
 import { TestService } from 'src/app/Services/Test/test.service';
 import { ActivatedRoute } from '@angular/router';
 import { Vacancy } from 'src/app/Models/Vacancy/Vacancy';
@@ -30,12 +22,6 @@ export class CoursesRegisterComponent implements OnInit {
   formTest!: FormGroup;
   formQuestion!: FormGroup;
   course = new Course();
-  session = new Session();
-  sessions: Session[] = [];
-  certification = new Certification();
-  test = new Test();
-  question = new Question();
-  questions: Question[] = [];
 
   hasCertification: boolean = false;
   hasTest: boolean = false;
@@ -48,7 +34,7 @@ export class CoursesRegisterComponent implements OnInit {
   vacanciesList!: Vacancy[];
   categoriesList!: string[];
 
-  constructor(private router: ActivatedRoute, private vacancyService: VacancyService, private formBuilder: FormBuilder, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private courseService: CourseService, private testService: TestService, private sessionService: SessionService, private questionService: QuestionService) {
+  constructor(private router: ActivatedRoute, private vacancyService: VacancyService, private formBuilder: FormBuilder, private courseService: CourseService, private testService: TestService) {
 
   }
 

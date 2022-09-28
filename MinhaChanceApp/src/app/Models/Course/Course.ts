@@ -1,6 +1,3 @@
-import { Certification } from "./Certification";
-import { Session } from "./Session";
-import { Test } from "./Test";
 import { User } from "../User/User";
 import { Vacancy } from "../Vacancy/Vacancy";
 

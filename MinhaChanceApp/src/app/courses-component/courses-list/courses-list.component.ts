@@ -1,19 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from 'src/app/Models/Course/Course';
-import { Test } from 'src/app/Models/Course/Test';
 import { PageEvent } from '@angular/material/paginator';
 import { Observable, of } from 'rxjs';
 import { courseFilter } from 'src/app/Models/Filters/Course/courseFilter';
 import { CourseService } from 'src/app/Services/Course/course.service';
-import { CertificationService } from 'src/app/Services/Certification/certification.service';
 import { TestService } from 'src/app/Services/Test/test.service';
-import { QuestionService } from 'src/app/Services/Question/question.service';
-import { SessionService } from 'src/app/Services/Session/session.service';
-import { AzureBlobStorageService } from 'src/app/Services/Azure/azure-blob-storage.service';
-import { Session } from 'src/app/Models/Course/Session';
-import { Certification } from 'src/app/Models/Course/Certification';
 import { VacancyService } from 'src/app/Services/Vacancy/vacancy.service';
-import { Question } from 'src/app/Models/Course/Question';
 
 export interface Tile {
   color: string;
@@ -45,7 +37,7 @@ export class CoursesListComponent implements OnInit {
     { id: 3, description: 'Curso Ruby II', courseTitle: 'Introdução Ruby II', creationDate:  new Date(), subscribeQuantity: 10, durationTime: '9 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true },
   ]);
 
-  constructor(private courseService: CourseService, private blobService: AzureBlobStorageService, private certificationService: CertificationService, private testService: TestService, private questionService: QuestionService, private sessionService: SessionService, private vacancyService: VacancyService) { }
+  constructor(private courseService: CourseService, private testService: TestService, private vacancyService: VacancyService) { }
 
   async ngOnInit(): Promise<void> {
     // await this.getCategories();

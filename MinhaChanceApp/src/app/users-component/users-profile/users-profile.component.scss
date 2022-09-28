@@ -1,5 +1,5 @@
 .center-content {
-    height: 70%;
+    height: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,20 +9,30 @@ mat-card-title, p, button{
     color: white;
 }
 
-.user-card, .experiences-card, .objectives-card{
+.user-card,.skill-card, .experiences-card, .objectives-card{
     background-color: #191645;
     text-align: center;
-    height: 300px;
+    height: 90%;
+    width: 80%;
+}
+
+.skill-card{
+  height: 450px;
 }
 
 .user-content, .experiences-conten, .objectives-content{
     text-align: center;
     margin-top: 5%;
     color: white;
+    height: 80%;
+    margin-top: 0;
+    align-items: center;
+    justify-content: center;
 }
 
 .list-align{
   margin-top: -10px;
+  padding-left: 200px;
 }
 
 .mat-item-color{

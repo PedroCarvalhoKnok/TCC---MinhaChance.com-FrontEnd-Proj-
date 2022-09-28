@@ -29,6 +29,8 @@ export class UserInteligenceResultChartComponent implements OnInit {
       skillPercentualList.push(skill.skill);
     })
 
+    console.log(skillPercentualList)
+
     new Chart(`user-intelligence-result`, {
       type: 'radar',
       data: {
@@ -39,13 +41,25 @@ export class UserInteligenceResultChartComponent implements OnInit {
           label: this.userName,
           data: skillPercentualList,
           fill: true,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgb(54, 162, 235)',
-          pointBackgroundColor: 'rgb(54, 162, 235)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(54, 162, 235)'
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          borderColor: 'rgba(255, 255, 255)',
+          pointBackgroundColor: 'rgba(255, 255, 255)',
+          pointBorderColor: '#bf7575',
+          pointHoverBackgroundColor: '#bf7575',
+          pointHoverBorderColor: 'rgba(255, 255, 255)'
         }]
+      },
+      options: {
+       color: 'white',
+       scales: {
+        r:{
+          grid:{
+            color: 'white'
+          }
+        }
+       }
+       
+       
       }
     });
 
