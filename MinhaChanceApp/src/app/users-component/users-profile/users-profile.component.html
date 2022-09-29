@@ -33,13 +33,13 @@
 
                 <div class="row">
 
-                    <mat-list class="col-md-4" role="list">
+                    <mat-list class="col-md-3" role="list">
                         <mat-list-item class="mat-item-color" role="listitem">Descrição: Caixa mercado</mat-list-item>
                         <mat-list-item class="mat-item-color" role="listitem">Duração: 12 mes(es)</mat-list-item>
                         <mat-list-item class="mat-item-color" role="listitem">Idade 18 anos</mat-list-item>
                     </mat-list>
 
-                    <mat-list class="col-md-4" role="list">
+                    <mat-list class="col-md-3" role="list">
                         <mat-list-item class="mat-item-color" role="listitem">Descrição:Empacotamento</mat-list-item>
                         <mat-list-item class="mat-item-color" role="listitem">Duração: 6 mes(es)</mat-list-item>
                         <mat-list-item class="mat-item-color" role="listitem">Idade: 20 anos</mat-list-item>
@@ -93,9 +93,9 @@
         <mat-card-content class="user-content">
             <div class="container">
 
-                <div class="row">
+                <div class="row col-lg-4 col-md-8 col-sm-8">
 
-                    <app-user-inteligence-result-chart [userResultSkills]="this.userSkillsByIntelligence" [userName]="this.userLogged.userName" class="col-lg-4 col-md-4"></app-user-inteligence-result-chart>
+                    <app-user-inteligence-result-chart [userResultSkills]="this.userSkillsByIntelligence" [userName]="this.userLogged.userName"></app-user-inteligence-result-chart>
 
                    
                 </div>
@@ -109,7 +109,7 @@
 </div>
 
 <div>
-    <mat-card class="banner-card">
+    <mat-card class="banner-card-vac">
 
         <mat-card-header class="header-content">
             <mat-card-title class="title-vacancy">
@@ -122,11 +122,11 @@
 </div>
 
 <div>
-    <mat-card class="vacancies-card">
+    <mat-card class="vacancies-card" *ngFor="let vacancy of userBestVacancies|async">
 
         <mat-card-header class="header-content">
             <mat-card-title class="title-vacancy">
-                Vaga Indicada
+                {{vacancy.vacancyTitle}}
             </mat-card-title>
 
         </mat-card-header>
@@ -137,29 +137,27 @@
 
                 <div class="row">
 
-                    <label class="col-md-4" for="inputdefault">Empresa<br />X</label>
-                    <label class="col-md-4" for="inputdefault">Salário<br />A combinar</label>
-                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />2 vaga(s)</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />Remoto</label>
+                    <label class="col-md-4" for="inputdefault">Empresa<br />{{vacancy.id}}</label>
+                    <label class="col-md-4" for="inputdefault">Salário<br />{{vacancy.salary}}</label>
+                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantity}} vaga(s)</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{vacancy.modalidity}}</label>
                     <br />
                     <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
-                        <ul class="vacancy-list col-md-8">
-                            <li>Convenio Médico</li>
-                            <li>Convenio Odontológico</li>
-                            <li>Gym Pass</li>
+                        <ul class="vacancy-list col-md-8" *ngFor="let benefit of this.vacancy.benefits">
+                            <li>Descrição {{benefit.description}}</li>
+                            <li>Valor {{benefit.value}}</li>
                         </ul>
                     </label><br />
                     <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
-                        <ul class="vacancy-list col-md-4">
-                            <li>Interesse e comprometimento</li>
-                            <li>Raciocinio Lógico</li>
+                        <ul class="vacancy-list col-md-4" *ngFor="let requirement of this.vacancy.requirements">
+                            <li>Descrição {{requirement.description}}</li>
+                            <li>Diferencial {{requirement.differencial != undefined ? '- ' + requirement.differencial : ''}}</li>
                         </ul>
                     </label><br />
-                    <label class="col-md-4" for="inputdefault">Localização<br />São Paulo Centro</label><br />
-                    <label class="col-md-4" for="inputdefault">Categoria<br />Tecnologia</label>
+                    <label class="col-md-4" for="inputdefault">Localização<br />{{vacancy.location}}</label><br />
+                    <label class="col-md-4" for="inputdefault">Categoria<br />{{vacancy.category}}</label>
                     <div class="description">
-                        <label for="inputdefault">Descrição da vaga<br />Buscamos um estagiário com interesse e
-                            comprometimento e que esteja aberto a enfrentar novos desafios</label><br />
+                        <label for="inputdefault">Descrição da vaga<br />{{vacancy.description}}</label><br />
                     </div>
 
 
@@ -171,7 +169,7 @@
         </mat-card-content>
 
         <mat-card-actions>
-            <button (click)="openMetricsDetails(1)" type="button" class="btn btn-primary btn-sm space-button">Candidatar a vaga</button>
+            <button (click)="sendCandidature(vacancy)" type="button" class="btn btn-primary btn-sm space-button">Candidatar a vaga</button>
         </mat-card-actions>
 
 
@@ -192,11 +190,11 @@
 </div>
 
 <div class="distance-bottom">
-    <mat-card class="courses-card">
+    <mat-card class="courses-card"  *ngFor="let course of userBestCourses|async">
 
         <mat-card-header class="header-content">
             <mat-card-title class="title-vacancy">
-                Curso indicado
+                {{course.courseTitle}}
             </mat-card-title>
 
         </mat-card-header>
@@ -207,17 +205,14 @@
 
                 <div class="row">
 
-                    <label class="col-md-4" for="inputdefault">Titulo<br />Introdução ao Java</label>
-                    <label class="col-md-4" for="inputdefault">Categoria<br />Tecnologia</label>
+                    <label class="col-md-4" for="inputdefault">Categoria<br />{{course.category}}</label>
                     <label class="col-md-4" for="inputdefault">Relevância para você<br />9 de 10</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Tempo de curso<br /> 20 horas</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Tempo de curso<br /> {{course.durationTime}} hora(s)</label>
                     <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Plataforma<br />Udemy cursos</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Plataforma<br />{{course.durationTime}}</label>
                     <br />
-                    <label class="col-md-4" for="inputdefault">Dificuldade<br />Iniciante</label><br />
                     <div class="description">
-                        <label for="inputdefault">Descrição do curso<br />Aprenda java do básico ao
-                            avançado</label><br />
+                        <label for="inputdefault">Descrição do curso<br />{{course.description}}</label><br />
                     </div>
 
 
@@ -229,7 +224,7 @@
         </mat-card-content>
 
         <mat-card-actions>
-            <button (click)="goToLink" type="button" class="btn btn-primary btn-sm space-button">Visualizar Curso</button>
+            <button (click)="goToLink(course.courseLink)" type="button" class="btn btn-primary btn-sm space-button">Visualizar Curso</button>
         </mat-card-actions>
 
 

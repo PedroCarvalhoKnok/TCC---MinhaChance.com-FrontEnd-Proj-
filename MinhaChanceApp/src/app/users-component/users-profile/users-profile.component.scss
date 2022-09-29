@@ -14,13 +14,14 @@ mat-card-title, p, button{
     text-align: center;
     height: 90%;
     width: 80%;
+    margin: auto;
 }
 
 .skill-card{
   height: 450px;
 }
 
-.user-content, .experiences-conten, .objectives-content{
+.user-content, .experiences-content, .objectives-content{
     text-align: center;
     margin-top: 5%;
     color: white;
@@ -28,11 +29,13 @@ mat-card-title, p, button{
     margin-top: 0;
     align-items: center;
     justify-content: center;
+    overflow: auto;
 }
 
 .list-align{
-  margin-top: -10px;
+  text-align: center;
   padding-left: 200px;
+  margin-bottom: 20px;
 }
 
 .mat-item-color{
@@ -68,10 +71,19 @@ mat-card-title, p, button{
 }
 
 .banner-card{
-  margin-top: 40px;
+  margin-top: 100px;
   display: flex;
   width: 100%;
-  height: 50px;
+  height: 100px;
+  background-color: #191645;
+  color: white;
+}
+
+.banner-card-vac{
+  margin-top: 150px;
+  display: flex;
+  width: 100%;
+  height: 100px;
   background-color: #191645;
   color: white;
 }
@@ -170,6 +182,11 @@ mat-card-title, p, button{
     .container{
       margin-left: 30%;
     }
+
+    .user-content{
+      text-align: start;
+      padding-bottom: 50px;
+    }
      
   }
   
@@ -182,6 +199,10 @@ mat-card-title, p, button{
       width: 70%;
     }
   
+    .list-align{
+      padding-left: 0;
+      margin-bottom: 40px;
+    }
     
     
   }

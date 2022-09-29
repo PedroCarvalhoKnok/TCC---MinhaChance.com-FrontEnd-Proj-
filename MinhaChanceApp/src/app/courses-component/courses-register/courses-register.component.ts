@@ -153,6 +153,12 @@ export class CoursesRegisterComponent implements OnInit {
       courseTitle: new FormControl(this.course.courseTitle, [
         Validators.required,
       ]),
+      courseLink: new FormControl(this.course.courseLink, [
+        Validators.required,
+      ]),
+      coursePlatform: new FormControl(this.course.coursePlatform, [
+        Validators.required,
+      ]),
       courseDuration: new FormControl(this.course.durationTime, [
         Validators.required,
         this.forbiddenDurationTimeValidator(/0/i)

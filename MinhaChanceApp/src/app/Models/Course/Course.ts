@@ -4,6 +4,8 @@ import { Vacancy } from "../Vacancy/Vacancy";
 export class Course {
     id!: number;
     courseimage?: File;
+    courseLink!: string;
+    coursePlatform!: string;
     userId?: string;
     courseTitle!: string;
     vacancyId?: number;

@@ -29,6 +29,30 @@
                                     Titulo do curso é necessário.
                                 </p>
                             </div>
+                            <mat-form-field>
+                                <mat-label class="placeholder-color">Link do curso</mat-label>
+                                <input id="courseLink" class="form-control" [(ngModel)]="this.course.courseLink"
+                                    formControlName="courseLink" type="text" matInput autocomplete="off"
+                                    placeholder="URL do curso" required />
+                            </mat-form-field>
+                            <div
+                                *ngIf="formCourse.get('courseLink')?.invalid && (formCourse.get('courseLink')?.dirty || formCourse.get('courseLink')?.touched)">
+                                <p *ngIf="formCourse.get('courseLink')?.errors?.['required']">
+                                    Link do curso é necessário.
+                                </p>
+                            </div>
+                            <mat-form-field>
+                                <mat-label class="placeholder-color">Plataforma do curso</mat-label>
+                                <input id="coursePlatform" class="form-control" [(ngModel)]="this.course.coursePlatform"
+                                    formControlName="coursePlatform" type="text" matInput autocomplete="off"
+                                    placeholder="Plataforma do curso" required />
+                            </mat-form-field>
+                            <div
+                                *ngIf="formCourse.get('coursePlatform')?.invalid && (formCourse.get('coursePlatform')?.dirty || formCourse.get('coursePlatform')?.touched)">
+                                <p *ngIf="formCourse.get('coursePlatform')?.errors?.['required']">
+                                    Plataforma do curso é necessária.
+                                </p>
+                            </div>
                             <mat-form-field class="spacing-margin">
                                 <mat-label class="placeholder-color">Vaga</mat-label>
                                 <mat-select [value]="this.course.vacancyId" placeholder="Vaga">

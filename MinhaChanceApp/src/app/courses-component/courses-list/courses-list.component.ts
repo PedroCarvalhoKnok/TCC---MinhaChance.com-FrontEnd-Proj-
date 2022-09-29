@@ -32,9 +32,9 @@ export class CoursesListComponent implements OnInit {
 
 
   courses: Observable<Course[]> = of([
-    { id: 1, certificationId: 1, description: 'Curso introdutório ao Python', courseTitle: 'Introdução Python I', creationDate: new Date(), subscribeQuantity: 100, durationTime: '7 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true },
-    { id: 2, description: 'Curso Ruby I', courseTitle: 'Introdução Ruby I', creationDate:  new Date(), subscribeQuantity: 100, durationTime: '7 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true },
-    { id: 3, description: 'Curso Ruby II', courseTitle: 'Introdução Ruby II', creationDate:  new Date(), subscribeQuantity: 10, durationTime: '9 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true },
+    { id: 1, certificationId: 1, description: 'Curso introdutório ao Python', courseTitle: 'Introdução Python I', creationDate: new Date(), subscribeQuantity: 100, durationTime: '7 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true, coursePlatform: 'Udemy', courseLink: 'https://www.udemy.com/pt/' },
+    { id: 2, description: 'Curso Ruby I', courseTitle: 'Introdução Ruby I', creationDate:  new Date(), subscribeQuantity: 100, durationTime: '7 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true, coursePlatform: 'Udemy', courseLink: 'https://www.udemy.com/pt/' },
+    { id: 3, description: 'Curso Ruby II', courseTitle: 'Introdução Ruby II', creationDate:  new Date(), subscribeQuantity: 10, durationTime: '9 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true, coursePlatform: 'Udemy', courseLink: 'https://www.udemy.com/pt/' },
   ]);
 
   constructor(private courseService: CourseService, private testService: TestService, private vacancyService: VacancyService) { }

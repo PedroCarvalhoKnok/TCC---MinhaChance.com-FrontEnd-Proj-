@@ -183,41 +183,52 @@ export class VacanciesListComponent implements OnInit {
   }
 
 
-  async sendEmailCandidature(vacancy: Vacancy) {
+  sendEmailCandidature(vacancy: Vacancy) {
 
     let userLogged!: User;
     let responseCandidature!: boolean;
 
-    await this.userService.getUserInfoById(this.userId).subscribe(user => userLogged = user); //trocar para usuario logado
+    Swal.fire({
+      title: `Tem certeza que deseja se candidatar a vaga ${vacancy.vacancyTitle}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim!',
+      cancelButtonText: 'Não!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await this.userService.getUserInfoById(this.userId).subscribe(user => userLogged = user); //trocar para usuario logado
 
-    if (userLogged) {
-      await this.userService.postUserCandidature(userLogged.id, vacancy.id).subscribe(response => responseCandidature = response);
-      if (responseCandidature) {
+        if (userLogged) {
+          await this.userService.postUserCandidature(userLogged.id, vacancy.id).subscribe(response => responseCandidature = response);
+          if (responseCandidature) {
 
-        await this.userService.sendEmail(userLogged, `Olá ${userLogged.userName}! Sua candidatura para a vaga ${vacancy.vacancyTitle} foi enviada com sucesso, aguarde a resposta da empresa para a próxima etapa. Boa Sorte!`)
-          .subscribe(response => {
-            response ?
-              Swal.fire(
-                'Sucesso!',
-                `Candidatura concluída com sucesso, um email de confirmção foi enviado a sua caixa!`,
-                'success'
-              ) :
-              Swal.fire(
-                'Ops, ocorreu um erro!',
-                `Ocorreu um erro ao enviar o email de confirmação, porém sua canditura foi concluída!`,
-                'warning'
-              );
-          });
+            await this.userService.sendEmail(userLogged, `Olá ${userLogged.userName}! Sua candidatura para a vaga ${vacancy.vacancyTitle} foi enviada com sucesso, aguarde a resposta da empresa para a próxima etapa. Boa Sorte!`)
+              .subscribe(response => {
+                response ?
+                  Swal.fire(
+                    'Sucesso!',
+                    `Candidatura concluída com sucesso, um email de confirmção foi enviado a sua caixa!`,
+                    'success'
+                  ) :
+                  Swal.fire(
+                    'Ops, ocorreu um erro!',
+                    `Ocorreu um erro ao enviar o email de confirmação, porém sua canditura foi concluída!`,
+                    'warning'
+                  );
+              });
+          }
+          else {
+            Swal.fire(
+              'Ops, ocorreu um erro!',
+              `Ocorreu um erro ao efetivar sua candidatura para a vaga ${vacancy.vacancyTitle}, tente novamente!`,
+              'warning'
+            );
+          }
+        }
       }
-      else {
-        Swal.fire(
-          'Ops, ocorreu um erro!',
-          `Ocorreu um erro ao efetivar sua candidatura para a vaga ${vacancy.vacancyTitle}, tente novamente!`,
-          'warning'
-        );
-      }
-    }
-
+    })
 
   }
 
