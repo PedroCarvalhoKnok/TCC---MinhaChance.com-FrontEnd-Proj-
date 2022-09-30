@@ -9,5 +9,5 @@ export class Question {
     answerF: string;
     answerG: string;
     answerH: string;
-    userAnswer: string;
+    userAnswer?: string;
 }

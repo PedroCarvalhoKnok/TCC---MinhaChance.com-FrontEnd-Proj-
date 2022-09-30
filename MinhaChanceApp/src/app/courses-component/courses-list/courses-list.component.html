@@ -2,7 +2,7 @@
     <mat-card class="add-course-card">
 
         <mat-card-header class="title-course">
-            <span class="material-icons">add_circle_outline</span>
+            <span (click)="goToCourseRegister()" class="material-icons">add_circle_outline</span>
             <mat-card-title class="add-title"><a>Crie cursos de capacitação para sua empresa</a></mat-card-title>
         </mat-card-header>
     </mat-card>
@@ -127,7 +127,7 @@
 
                     <span class="material-icons col-md-4">account_circle</span>
                     <label class="col-md-4" for="inputdefault">Duração <br />{{ course.durationTime }}</label>
-                    <label class="col-md-4" for="inputdefault">Criação<br />{{ course.creationDate }}</label><br />
+                    <label class="col-md-4" for="inputdefault">Criação<br />{{ course.creationDate.getDate() }}/{{ course.creationDate.getMonth() + 1 }}/{{ course.creationDate.getFullYear() }} </label><br />
                     <label class="col-md-4" for="inputdefault">Categoria<br />{{ course.category }}</label><br />
                     <label class="col-md-4" for="inputdefault">Plataforma<br />{{ course.coursePlatform }}</label><br />
                     <label class="col-md-4" for="inputdefault">Link<br />{{ course.courseLink }}</label><br />

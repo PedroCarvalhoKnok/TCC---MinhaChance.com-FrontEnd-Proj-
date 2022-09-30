@@ -104,6 +104,7 @@ export class VacanciesRegisterComponent implements OnInit {
   async postVacancy(vacancy: Vacancy) {
 
     this.vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
+    this.vacancy.creationDate = new Date();
 
     if (this.formVacancy.valid) {
 

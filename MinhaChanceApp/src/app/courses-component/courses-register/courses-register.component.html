@@ -29,6 +29,7 @@
                                     Titulo do curso é necessário.
                                 </p>
                             </div>
+                            <br />
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Link do curso</mat-label>
                                 <input id="courseLink" class="form-control" [(ngModel)]="this.course.courseLink"
@@ -41,6 +42,7 @@
                                     Link do curso é necessário.
                                 </p>
                             </div>
+                            <br />
                             <mat-form-field>
                                 <mat-label class="placeholder-color">Plataforma do curso</mat-label>
                                 <input id="coursePlatform" class="form-control" [(ngModel)]="this.course.coursePlatform"
@@ -53,7 +55,8 @@
                                     Plataforma do curso é necessária.
                                 </p>
                             </div>
-                            <mat-form-field class="spacing-margin">
+                            <br />
+                            <mat-form-field>
                                 <mat-label class="placeholder-color">Vaga</mat-label>
                                 <mat-select [value]="this.course.vacancyId" placeholder="Vaga">
                                     <mat-option value="Introdução I">Analista I</mat-option>

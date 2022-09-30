@@ -5,7 +5,15 @@
 
         <div class="row">
 
-            <app-user-inteligence-result-chart [userResultSkills]="this.userSkillsByIntelligence" [userName]="this.userName" class="col-lg-4 col-md-6"></app-user-inteligence-result-chart>
+
+            <mat-card class="col-lg-4 col-md-6 canvas-content">
+                
+
+                <app-user-inteligence-result-chart [userResultSkills]="this.userSkillsByIntelligence" [userName]="this.userName"></app-user-inteligence-result-chart>
+
+
+            </mat-card>
+           
 
             <mat-card class="col-md-6 conclusion-content">
                 <mat-card-header class="header-content">

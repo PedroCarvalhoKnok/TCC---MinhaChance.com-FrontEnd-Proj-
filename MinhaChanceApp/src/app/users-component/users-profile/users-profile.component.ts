@@ -33,8 +33,6 @@ export class UsersProfileComponent implements OnInit {
     experiences: [],
     certifications: [],
     graduations: [],
-    generalRating: [0, 1, 2, 3, 4],
-    generalServicesRating: [0, 1, 2, 3],
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
     interests: ['Esportes', 'Idiomas', 'Música']
   };

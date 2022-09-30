@@ -11,7 +11,7 @@ export class Course {
     vacancyId?: number;
     durationTime!: string;
     description!: string;
-    creationDate?: Date;
+    creationDate!: Date;
     hasTests!: boolean;
     hasCertification!: boolean;
     subscribeQuantity!: number;

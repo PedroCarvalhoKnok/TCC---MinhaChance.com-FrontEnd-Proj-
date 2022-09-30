@@ -92,23 +92,23 @@ export class SkillsTestComponent implements OnInit {
 
   async ngOnInit() {
 
-    this.userId = this.activeRouter.snapshot.params?.['userId'];
+    // this.userId = this.activeRouter.snapshot.params?.['userId'];
 
-    this.testQuestions = await this.testService.getQuestions();
+    // this.testQuestions = await this.testService.getQuestions();
 
-    this.testQuestions.subscribe(questions => {
+    // this.testQuestions.subscribe(questions => {
 
-      let idList: number[] = []
+    //   let idList: number[] = []
 
-      questions.forEach(question => {
-        idList.push(question.id)
-      });
+    //   questions.forEach(question => {
+    //     idList.push(question.id)
+    //   });
 
-      let questionsFormatted = this.splitQuestionsIntoChunks(idList);
+    //   let questionsFormatted = this.splitQuestionsIntoChunks(idList);
 
-      this.data = this.fitFormattedQuestionsIntoGrid(questionsFormatted);
+    //   this.data = this.fitFormattedQuestionsIntoGrid(questionsFormatted);
 
-    })
+    // })
 
   }
 
@@ -225,6 +225,7 @@ export class SkillsTestComponent implements OnInit {
       title: 'Tem certeza que deseja enviar o teste de aptidões?',
       icon: 'warning',
       showCancelButton: true,
+      showConfirmButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sim!',
@@ -271,16 +272,7 @@ export class SkillsTestComponent implements OnInit {
 
       await this.testService.sendTest(answerList).subscribe(result => {
         if (result) {
-          Swal.fire({
-            title: 'Suas respostas foram registradas com sucesso!',
-            icon: 'success',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK',
-          }).then(async (result) => {
-            if (result.isConfirmed) {
-              this.router.navigate([`/candidato/${this.userId}/teste/resultado`])
-            }
-          })
+          this.router.navigate([`/candidato/${this.userId}/teste/resultado`])
         }
         else {
           Swal.fire(
@@ -295,16 +287,7 @@ export class SkillsTestComponent implements OnInit {
 
       await this.testService.changeTest(answerList).subscribe(result => {
         if (result) {
-          Swal.fire({
-            title: 'Suas respostas foram atualizadas com sucesso!',
-            icon: 'success',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK',
-          }).then(async (result) => {
-            if (result.isConfirmed) {
-              this.router.navigate([`/candidato/${this.userId}/teste/resultado`])
-            }
-          })
+          this.router.navigate([`/candidato/${this.userId}/teste/resultado`])
         }
         else {
           Swal.fire(

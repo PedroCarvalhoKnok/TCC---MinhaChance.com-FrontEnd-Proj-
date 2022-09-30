@@ -1,25 +1,42 @@
-h1, label{
+h1,
+label {
     text-align: center;
+    font-size: 30px;
+    margin-top: 20px;
 }
-mat-card-title, p{
+
+mat-card-title,
+p {
     color: white;
 }
 
-h2{
+h2 {
     color: white;
     margin-left: 20px;
 }
 
-.conclusion-content{
+.conclusion-content {
     background-color: #191645;
     overflow: auto;
     height: 50%;
     top: 50px;
-    left: 5%;
+    left: 10%;
     margin-bottom: 120px;
 }
 
+.canvas-content {
+    background-color: #191645;
+    overflow: auto;
+    height: 50%;
+    top: 50px;
+    margin-bottom: 120px;
+}
+
+@media (max-width: 755px) {
+
+    .conclusion-content {
+        left: 0%;
+    }
 
 
-
-
+}

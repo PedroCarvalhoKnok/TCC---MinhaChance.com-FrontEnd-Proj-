@@ -56,27 +56,27 @@ export class SkillsResultComponent implements OnInit {
 
   bestIndicatedProfessions!: string;
 
-  userName: string;
+  userName: string = 'teste';
 
   async ngOnInit() {
 
-    let userId = this.router.snapshot.params?.['userId'];
+    // let userId = this.router.snapshot.params?.['userId'];
 
-    if (userId) {
-      await this.testService.getUserTestResults(userId).subscribe(results => {
-        this.userSkillsByIntelligence = results;
-      })
+    // if (userId) {
+    //   await this.testService.getUserTestResults(userId).subscribe(results => {
+    //     this.userSkillsByIntelligence = results;
+    //   })
 
-      await this.userService.getUserNameById(userId).subscribe(userName =>{
-        this.userName = userName;
-      })
-    }
+    //   await this.userService.getUserNameById(userId).subscribe(userName =>{
+    //     this.userName = userName;
+    //   })
+    // }
 
-    this.userSkillsByIntelligence = this.sortSkillList(this.userSkillsByIntelligence);
+    // this.userSkillsByIntelligence = this.sortSkillList(this.userSkillsByIntelligence);
 
-    this.firstSkill = this.userSkillsByIntelligence[0];
+    // this.firstSkill = this.userSkillsByIntelligence[0];
 
-    this.remainingSkills = this.listRemainingSkills(this.userSkillsByIntelligence);
+    // this.remainingSkills = this.listRemainingSkills(this.userSkillsByIntelligence);
 
   }
 

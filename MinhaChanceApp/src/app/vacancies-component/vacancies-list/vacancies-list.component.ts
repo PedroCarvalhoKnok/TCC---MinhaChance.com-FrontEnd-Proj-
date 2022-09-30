@@ -11,6 +11,7 @@ import { UserVacancyListDialogComponent } from 'src/app/Dialogs/user-vacancy-lis
 import Swal from 'sweetalert2';
 import { UserService } from 'src/app/Services/User/user.service';
 import { User } from 'src/app/Models/User/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vacancies-list',
@@ -19,7 +20,7 @@ import { User } from 'src/app/Models/User/User';
 })
 export class VacanciesListComponent implements OnInit {
 
-  constructor(private vacancyService: VacancyService, private userService: UserService, public dialog: MatDialog) { }
+  constructor(private vacancyService: VacancyService, private userService: UserService, public dialog: MatDialog, private router: Router) { }
 
   pageEvent!: PageEvent;
 
@@ -35,9 +36,9 @@ export class VacanciesListComponent implements OnInit {
 
   vacancyFilter: vacancyFilter = new vacancyFilter();
 
-  vacancies: Observable<Vacancy[]> = of([{ id: 1, vacancyTitle: 'Estagiario Desenvolvimento Java', creationDate: Date.prototype, image: this.fileMocked, quantity: 1, salary: 0, isConfidential: false, contractType: 'Estagio', modalidity: 'Hibrido', semanalQuantity: 2, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 1000 }, { id: 2, description: 'Convenio medico', value: 500 }], requiments: [{ id: 1, description: 'Cursando ensino superior', differential: undefined }] },
-  { id: 2, vacancyTitle: 'Desenvolvedor Junior', creationDate: Date.prototype, image: this.fileMocked, quantity: 2, salary: 3500, isConfidential: false, contractType: 'CLT', modalidity: 'Remoto', semanalQuantity: 0, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 1000 }, { id: 2, description: 'Convenio medico', value: 1500 }], requiments: [{ id: 1, description: 'Ensino superior completo', differential: 'Conhecimento básico de .NET' }] },
-  { id: 3, vacancyTitle: 'Consultor Cloud Senior', creationDate: Date.prototype, image: this.fileMocked, quantity: 1, salary: 0, isConfidential: true, contractType: 'CLT', modalidity: 'Remoto', semanalQuantity: 0, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 2000 }, { id: 2, description: 'Convenio medico', value: 1500 }], requiments: [{ id: 1, description: 'Ensino superior completo', differential: 'Conhecimento avançado de Azure ou AWS' }] },
+  vacancies: Observable<Vacancy[]> = of([{ id: 1, vacancyTitle: 'Estagiario Desenvolvimento Java', creationDate: new Date(), image: this.fileMocked, quantity: 1, salary: 0, isConfidential: false, contractType: 'Estagio', modalidity: 'Hibrido', semanalQuantity: 2, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 1000 }, { id: 2, description: 'Convenio medico', value: 500 }], requirements: [{ id: 1, description: 'Cursando ensino superior', differential: undefined }] },
+  { id: 2, vacancyTitle: 'Desenvolvedor Junior', creationDate: new Date(), image: this.fileMocked, quantity: 2, salary: 3500, isConfidential: false, contractType: 'CLT', modalidity: 'Remoto', semanalQuantity: 0, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 1000 }, { id: 2, description: 'Convenio medico', value: 1500 }], requirements: [{ id: 1, description: 'Ensino superior completo', differential: 'Conhecimento básico de .NET' }] },
+  { id: 3, vacancyTitle: 'Consultor Cloud Senior', creationDate: new Date(), image: this.fileMocked, quantity: 1, salary: 0, isConfidential: true, contractType: 'CLT', modalidity: 'Remoto', semanalQuantity: 0, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 2000 }, { id: 2, description: 'Convenio medico', value: 1500 }], requirements: [{ id: 1, description: 'Ensino superior completo', differential: 'Conhecimento avançado de Azure ou AWS' }] },
   ]);
 
   async ngOnInit() {
@@ -180,6 +181,25 @@ export class VacanciesListComponent implements OnInit {
         `${returnMsg}`,
         'success'
       ))
+  }
+
+  goToVacancyRegister() {
+
+    Swal.fire({
+      title: 'Deseja criar uma nova vaga?',
+      icon: 'warning',
+      confirmButtonColor: '#3085d6',
+      showCancelButton: true,
+      showConfirmButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim!',
+      cancelButtonText: 'Não!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        this.router.navigate([`/empresa/vagas`]);
+      }
+    })
+
   }
 
 

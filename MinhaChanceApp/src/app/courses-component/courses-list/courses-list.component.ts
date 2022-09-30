@@ -6,6 +6,8 @@ import { courseFilter } from 'src/app/Models/Filters/Course/courseFilter';
 import { CourseService } from 'src/app/Services/Course/course.service';
 import { TestService } from 'src/app/Services/Test/test.service';
 import { VacancyService } from 'src/app/Services/Vacancy/vacancy.service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 export interface Tile {
   color: string;
@@ -37,7 +39,7 @@ export class CoursesListComponent implements OnInit {
     { id: 3, description: 'Curso Ruby II', courseTitle: 'Introdução Ruby II', creationDate:  new Date(), subscribeQuantity: 10, durationTime: '9 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true, coursePlatform: 'Udemy', courseLink: 'https://www.udemy.com/pt/' },
   ]);
 
-  constructor(private courseService: CourseService, private testService: TestService, private vacancyService: VacancyService) { }
+  constructor(private courseService: CourseService, private testService: TestService, private vacancyService: VacancyService, private router: Router) { }
 
   async ngOnInit(): Promise<void> {
     // await this.getCategories();
@@ -167,6 +169,25 @@ export class CoursesListComponent implements OnInit {
   async deleteCourse(courseId: number) {
 
     this.courseService.deleteCourse(courseId);
+
+  }
+
+  goToCourseRegister() {
+
+    Swal.fire({
+      title: 'Deseja criar um novo curso?',
+      icon: 'warning',
+      confirmButtonColor: '#3085d6',
+      showCancelButton: true,
+      showConfirmButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim!',
+      cancelButtonText: 'Não!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        this.router.navigate([`/empresa/curso`]);
+      }
+    })
 
   }
 

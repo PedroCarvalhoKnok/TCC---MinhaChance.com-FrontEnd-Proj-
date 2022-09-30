@@ -134,28 +134,31 @@
                 <div class="row">
 
                     <span class="material-icons col-md-4 distance-pad-content">account_circle</span>
-                    <label class="col-md-4 distance-between" for="inputdefault">Status<br />{{detail.isWorking? 'Trabalhando': 'Desempregado'}}</label>
-                    <label *ngIf="detail.isWorking" class="col-md-4 distance-between" for="inputdefault">Empresa atual<br />{{detail.actualCompany}}</label>
-                    <label *ngIf="detail.isWorking" class="col-md-4 distance-between distance-pad-content" for="inputdefault">Cargo atual<br />{{detail.actualCharge}}</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Status<br />{{detail.isWorking? 'Trabalhando': 'Desempregado(a)'}}</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Empresa atual<br />{{detail.isWorking? detail.actualCompany: 'Nãa possui'}}</label>
+                    <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Cargo atual<br />{{detail.isWorking? detail.actualCharge: 'Não Possui'}}</label>
                     <label class="col-md-4 distance-between" for="inputdefault">Idade<br />{{detail.age}} anos</label>
                     <label class="col-md-4 distance-between" for="inputdefault">Email<br />{{detail.email}}</label>
                     <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Contato<br />{{detail.phone}}</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Concluiu curso da vaga?<br />{{detail.hasVacancyCourse ? 'Sim': 'Não'}}</label>
                     <label class="col-md-4 distance-between" for="inputdefault">Pretensão salarial<br />{{detail.salaryPretension}}</label>
-                    <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Experiências anteriores<br />
-                        <ul class="vacancy-list col-md-4">
-                            <li *ngFor="let experience of detail.experiences">Vaga: Estagiário</li>
-                            <li>Tempo: 1 ano(s)</li>
-                            <li>Vaga: Analista de software</li>
-                            <li>Tempo: 2 ano(s)</li>
+                    <label class="col-md-4 distance-between" for="inputdefault">Experiências anteriores<br />
+                        <ul class="vacancy-list col-md-4"  *ngFor="let experience of detail.experiences">
+                            <li>{{experience.chargeDescription}}</li>
+                            <li>{{experience.company}}</li>
+                            <li> {{experience.timeSpent}}</li>
                         </ul>
-                    </label><br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Formação Acadêmica<br />
+                    </label><br />                    
+                    <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Formação Acadêmica<br />
                         <ul *ngFor="let graduation of detail.graduations" class="vacancy-list col-md-4">
                             <li>{{graduation.graduationDescription}}</li>
                             <li>{{graduation.course}}</li>
                             <li>{{graduation.institute}}</li>
                             <li>{{graduation.timeSpent}}</li>
+                        </ul>
+                    </label><br />
+                    <label class="col-md-4 distance-between" for="inputdefault">Interesses<br />
+                        <ul class="vacancy-list col-md-4"  *ngFor="let interest of detail.interests">
+                            <li>{{interest}}</li>
                         </ul>
                     </label><br />
                     <label class="col-md-4 distance-between" for="inputdefault">Certificados<br />
@@ -165,15 +168,6 @@
                             <li>{{certification.timeSpent}}</li>
                         </ul>
                     </label><br />
-                    <label class="col-md-4 distance-pad-content" for="inputdefault">
-                        Avaliação Geral<br />
-                        <ngb-rating [readonly]='true' class="rate" [max]="5"></ngb-rating>
-                    </label>
-                    <br />
-                    <label class="col-md-4 distance-pad-content" for="inputdefault">
-                        Avaliação Serviços<br />
-                        <ngb-rating [readonly]='true' class="rate" [max]="5"></ngb-rating>
-                    </label>
                     <br/>
                     <div class="description distance-pad-content">
                         <label for="inputdefault">Objetivos<br />{{detail.objective}}</label><br />
