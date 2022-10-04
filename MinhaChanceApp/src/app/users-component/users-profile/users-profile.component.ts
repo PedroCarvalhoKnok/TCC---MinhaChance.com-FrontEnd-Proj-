@@ -9,6 +9,7 @@ import { UserService } from 'src/app/Services/User/user.service';
 import { UserVacancyListDialogComponent } from 'src/app/Dialogs/user-vacancy-list-dialog/user-vacancy-list-dialog.component';
 import { Observable, of } from 'rxjs';
 import Swal from 'sweetalert2';
+import { Role } from 'src/app/Enums/role';
 
 @Component({
   selector: 'app-users-profile',
@@ -34,7 +35,8 @@ export class UsersProfileComponent implements OnInit {
     certifications: [],
     graduations: [],
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
-    interests: ['Esportes', 'Idiomas', 'Música']
+    interests: ['Esportes', 'Idiomas', 'Música'],
+    role: Role.Candidate
   };
 
   fileMocked = new File([], "", {

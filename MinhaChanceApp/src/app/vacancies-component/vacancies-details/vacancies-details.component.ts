@@ -12,6 +12,7 @@ import { Chart } from 'chart.js';
 import { MatDialog } from '@angular/material/dialog';
 import { UserVacancyDetailsDialogComponent } from 'src/app/Dialogs/user-vacancy-details-dialog/user-vacancy-details-dialog.component';
 import Swal from 'sweetalert2';
+import { Role } from 'src/app/Enums/role';
 
 
 @Component({
@@ -55,7 +56,8 @@ export class VacanciesDetailsComponent implements OnInit {
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
     userVacancyInfo: { yes: 56, no: 44 },
     userInteligenciesInfo: { intelligence: 'Linguística', vacancies: ['Tradutor e conhecimento em libras'], skills: [67] },
-    interests: ['Esportes', 'Idiomas', 'Música']
+    interests: ['Esportes', 'Idiomas', 'Música'],
+    role: Role.Candidate
   },
   {
     id: 2,
@@ -74,7 +76,8 @@ export class VacanciesDetailsComponent implements OnInit {
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
     userVacancyInfo: { yes: 50, no: 50 },
     userInteligenciesInfo: { intelligence: 'Lógica-Matemática', vacancies: ['Estatistico - Iniciante analise de dados', 'Desenvolvedor Java júnior'], skills: [78, 75] },
-    interests: ['Natação', 'Animes', 'Programação']
+    interests: ['Natação', 'Animes', 'Programação'],
+    role: Role.Candidate
   }])
 
   async ngOnInit() {

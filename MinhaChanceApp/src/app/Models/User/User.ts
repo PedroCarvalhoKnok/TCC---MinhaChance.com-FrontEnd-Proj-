@@ -1,4 +1,5 @@
 import { Chart } from "chart.js";
+import { Role } from "src/app/Enums/role";
 import { Graduation } from "./AcademicGraduation";
 import { Address } from "./Address";
 import { UserCertification } from "./Certification";
@@ -25,4 +26,6 @@ export class User {
     userVacancyInfo?: any;
     userInteligenciesInfo?: any;
     interests: string[];
+    role: Role;
+    token?: string;
 }

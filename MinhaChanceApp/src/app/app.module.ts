@@ -41,6 +41,7 @@ import {MatListModule} from '@angular/material/list';
 import { UserInteligenceListChartComponent } from './charts-component/user-inteligence-list-chart/user-inteligence-list-chart.component';
 import { UserVacancyListChartComponent } from './charts-component/user-vacancy-list-chart/user-vacancy-list-chart.component';
 import { UserVacancyListDialogComponent } from './Dialogs/user-vacancy-list-dialog/user-vacancy-list-dialog.component';
+import { LoginComponentComponent } from './login-component/login-component.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import { UserVacancyListDialogComponent } from './Dialogs/user-vacancy-list-dial
     UserInteligenceListChartComponent,
     UserVacancyListChartComponent,
     UserVacancyListDialogComponent,
-    
+    LoginComponentComponent,
   ],
   imports: [
     BrowserModule,

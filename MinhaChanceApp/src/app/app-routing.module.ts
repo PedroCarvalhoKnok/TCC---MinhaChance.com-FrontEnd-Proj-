@@ -10,6 +10,7 @@ import { SkillsTestComponent } from './skills-test-component/skills-test/skills-
 import { SkillsResultComponent } from './skills-test-component/skills-result/skills-result.component';
 import { SkillsStartComponent } from './skills-test-component/skills-start/skills-start.component';
 import { UsersProfileComponent } from './users-component/users-profile/users-profile.component';
+import { LoginComponentComponent } from './login-component/login-component.component';
 
 const routes: Routes = [
   {
@@ -60,7 +61,13 @@ const routes: Routes = [
   {
     path: 'candidato/:userId/perfil',
     component: UsersProfileComponent
-  }
+  },
+  {
+    path: 'login',
+    component: LoginComponentComponent
+  },
+  
+  { path: '**', redirectTo: 'home' }
   
 ];
 
