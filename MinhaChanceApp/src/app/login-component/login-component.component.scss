@@ -1,0 +1,37 @@
+.center-content {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+mat-card-title, p, button{
+    color: white;
+}
+
+.start-card{
+    background-color: #191645;
+    text-align: center;
+    width: 60%;
+    height: 60%;
+}
+
+.start-content{
+    text-align: center;
+    margin-top: 15%;
+}
+
+.center-title{
+    text-align: center;
+}
+
+.start-button{
+    color: black;
+    width: 70%;
+
+}
+
+.input{
+    width: 60%;
+    text-align: center;
+}

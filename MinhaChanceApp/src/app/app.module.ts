@@ -42,6 +42,7 @@ import { UserInteligenceListChartComponent } from './charts-component/user-intel
 import { UserVacancyListChartComponent } from './charts-component/user-vacancy-list-chart/user-vacancy-list-chart.component';
 import { UserVacancyListDialogComponent } from './Dialogs/user-vacancy-list-dialog/user-vacancy-list-dialog.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
+import { UsersRegisterComponent } from './users-component/users-register/users-register.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { LoginComponentComponent } from './login-component/login-component.compo
     UserVacancyListChartComponent,
     UserVacancyListDialogComponent,
     LoginComponentComponent,
+    UsersRegisterComponent,
   ],
   imports: [
     BrowserModule,

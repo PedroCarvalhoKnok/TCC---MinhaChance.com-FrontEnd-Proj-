@@ -1,1 +1,50 @@
-<p>login-component works!</p>
+<div class="center-content">
+    <mat-card class="start-card">
+
+        <mat-card-title class="center-title">Login {{this.userRole}}</mat-card-title>
+
+        <mat-card-content class="start-content">
+            <div class="container">
+                <form [formGroup]="formLogin">
+                    <div class="column">
+                        <mat-form-field class="input">
+                            <mat-label class="placeholder-color">Email</mat-label>
+                            <input id="userEmail" class="form-control" [(ngModel)]="this.email"
+                                formControlName="userEmail" type="text" matInput autocomplete="off" placeholder="Email"
+                                required />
+                        </mat-form-field>
+                        <div
+                            *ngIf="formLogin.get('userEmail')?.invalid && (formLogin.get('userEmail')?.dirty || formLogin.get('userEmail')?.touched)">
+                            <p *ngIf="formLogin.get('userEmail')?.errors?.['required']">
+                                Email é necessário.
+                            </p>
+                        </div>
+                        <div
+                            *ngIf="formLogin.get('userEmail')?.invalid && (formLogin.get('userEmail')?.dirty || formLogin.get('userEmail')?.touched)">
+                            <p *ngIf="formLogin.get('userEmail')?.errors?.['pattern']">
+                                Email está em um formato incorreto.
+                            </p>
+                        </div>
+                        <br />
+                        <mat-form-field class="input">
+                            <mat-label class="placeholder-color">Senha</mat-label>
+                            <input id="userPassword" class="form-control" [(ngModel)]="this.passWord"
+                                formControlName="userPassword" type="password" matInput autocomplete="off"
+                                placeholder="Senha" required />
+                        </mat-form-field>
+                        <div
+                            *ngIf="formLogin.get('userPassword')?.invalid && (formLogin.get('userPassword')?.dirty || formLogin.get('userPassword')?.touched)">
+                            <p *ngIf="formLogin.get('userPassword')?.errors?.['required']">
+                                Senha é necessária.
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button (click)="onLogin()" mat-raised-button class="start-button">Entrar</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

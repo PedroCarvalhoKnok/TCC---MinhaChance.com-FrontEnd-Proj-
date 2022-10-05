@@ -3,15 +3,63 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
 import { Role } from '../Enums/role';
+import { User } from '../Models/User/User';
+
+// const users = [
+//     { id: 1, username: 'admin', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Candidate },
+//     { id: 2, username: 'user', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.Company }
+// ];
+
+const users = [{
+    id: 1,
+    userName: 'Daniel Silva',
+    profile: 'Candidato',
+    passWord: 'abc',
+    email: 'daniel.teste123@teste.com',
+    isWorking: true,
+    actualCompany: 'Empresa Y',
+    actualCharge: 'Estagiario',
+    address: { streetName: 'rua dos testes', district: 'bairro teste', country: 'Brasil', zipCode: '09060110', streetNumber: 20 },
+    age: 20,
+    phone: '(11) 94567-2834',
+    hasVacancyCourse: false,
+    salaryPretension: 2000.00,
+    experiences: [],
+    certifications: [],
+    graduations: [],
+    objective: 'Crescimento pessoal e profisional ganhando experiencia',
+    userVacancyInfo: { yes: 56, no: 44 },
+    userInteligenciesInfo: { intelligence: 'Linguística', vacancies: ['Tradutor e conhecimento em libras'], skills: [67] },
+    interests: ['Esportes', 'Idiomas', 'Música'],
+    role: Role.Candidate
+  },
+  {
+    id: 2,
+    userName: 'Bruna Oliveira',
+    profile: 'Candidato',
+    passWord: 'abc',
+    email: 'bruhh@teste.com',
+    isWorking: false,
+    address: { streetName: 'rua general teste', district: 'bairro abc', country: 'Brasil', zipCode: '09063410', streetNumber: 208 },
+    age: 20,
+    phone: '(11) 95566-2939',
+    hasVacancyCourse: true,
+    salaryPretension: 1000.00,
+    experiences: [],
+    certifications: [{ id: 1, certificationDescription: 'certificação introdução python', platform: 'MinhaVez!', timeSpent: 10 }],
+    graduations: [],
+    objective: 'Crescimento pessoal e profisional ganhando experiencia',
+    userVacancyInfo: { yes: 50, no: 50 },
+    userInteligenciesInfo: { intelligence: 'Lógica-Matemática', vacancies: ['Estatistico - Iniciante analise de dados', 'Desenvolvedor Java júnior'], skills: [78, 75] },
+    interests: ['Natação', 'Animes', 'Programação'],
+    role: Role.Candidate
+  }]
 
 
-const users = [
-    { id: 1, username: 'admin', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Candidate },
-    { id: 2, username: 'user', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.Company }
-];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
+
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body } = request;
 
@@ -36,13 +84,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function authenticate() {
             const { username, password } = body;
-            const user = users.find(x => x.username === username && x.password === password);
+            const user = users.find(x => x.userName === username && x.passWord === password);
             if (!user) return error('Username or password is incorrect');
             return ok({
                 id: user.id,
-                username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
+                username: user.userName,
                 role: user.role,
                 token: `fake-jwt-token.${user.id}`
             });

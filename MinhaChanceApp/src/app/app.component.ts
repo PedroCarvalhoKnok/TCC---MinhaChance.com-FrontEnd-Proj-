@@ -21,6 +21,10 @@ export class AppComponent {
     return this.user && this.user.role === Role.Candidate;
   }
 
+  get isAuthenticated() {
+    return this.user;
+  }
+
   logout() {
     this.authenticationService.logout();
   }

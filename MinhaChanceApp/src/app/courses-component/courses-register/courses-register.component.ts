@@ -17,10 +17,6 @@ import Swal from 'sweetalert2';
 export class CoursesRegisterComponent implements OnInit {
 
   formCourse!: FormGroup;
-  formSession!: FormGroup;
-  formCertification!: FormGroup;
-  formTest!: FormGroup;
-  formQuestion!: FormGroup;
   course = new Course();
 
   hasCertification: boolean = false;

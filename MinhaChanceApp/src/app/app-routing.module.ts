@@ -63,7 +63,7 @@ const routes: Routes = [
     component: UsersProfileComponent
   },
   {
-    path: 'login',
+    path: 'login/:user',
     component: LoginComponentComponent
   },
   

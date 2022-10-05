@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { User } from 'src/app/Models/User/User';
 import { environment } from 'src/app/Configs/apiconfig';
+import { Role } from 'src/app/Enums/role';
 
 
 
@@ -36,8 +37,9 @@ export class AuthenticationService {
 
 logout() {
   // remove user from local storage to log user out
+  let user = JSON.parse(localStorage.getItem('user')!);
   localStorage.removeItem('user');
   this.userSubject.next(new User());
-  this.router.navigate(['/login']);
+  user.role === Role.Candidate ? this.router.navigate(['/login/candidato']): this.router.navigate(['/login/empresa'])
 }
 }
