@@ -1,0 +1,202 @@
+<div class="container">
+    <form [formGroup]="formUserDetails">
+        <div class="row">
+            <mat-label>Objetivo</mat-label>
+            <br />
+            <textarea id="vacancyDescription" class="text-area-form" required></textarea>
+            <!-- <div
+                *ngIf="formVacancy.get('vacancyDescription')?.invalid && (formVacancy.get('vacancyDescription')?.dirty || formVacancy.get('vacancyDescription')?.touched)">
+                <p *ngIf="formVacancy.get('vacancyDescription')?.errors?.['required']">
+                    Descrição do curso é necessária.
+                </p>
+            </div> -->
+            <section>
+                <mat-checkbox>
+                    Trabalhando
+                </mat-checkbox>
+            </section>
+            <mat-form-field class="col-md-4">
+                <mat-label class="placeholder-color">Empresa atual</mat-label>
+                <input id="userEmail" class="form-control" ngModel="this.user.actualCompany" formControlName="userEmail"
+                    type="text" matInput autocomplete="off" placeholder="Empresa atual" required />
+            </mat-form-field>
+            <mat-form-field class="col-md-4">
+                <mat-label class="placeholder-color">Cargo atual</mat-label>
+                <input id="userEmail" class="form-control" ngModel="this.user.actualCharge" formControlName="userEmail"
+                    type="text" matInput autocomplete="off" placeholder="Cargo atual" required />
+            </mat-form-field>
+            <mat-form-field class="col-md-4">
+                <mat-label class="placeholder-color">Pretensão salarial</mat-label>
+                <input id="userEmail" class="form-control" ngModel="this.user.salaryPretension"
+                    formControlName="userEmail" type="text" matInput autocomplete="off" placeholder="Pretensão salarial"
+                    required />
+            </mat-form-field>
+
+
+
+
+        </div>
+    </form>
+
+    <mat-card class="benefit-card">
+
+        <mat-card-header class="title-vacancy">
+            <mat-card-title fxLayoutAlign="center" class="title-vacancy">
+                Experiências anteriores
+            </mat-card-title>
+            <span class="material-icons col-4">add_circle_outline</span>
+            <span class="material-icons col-4">remove_circle_outline</span>
+        </mat-card-header>
+
+        <mat-card-content class="benefit-content">
+
+            <div class="container">
+
+                <form [formGroup]="formUserExperiences">
+                    <div class="column">
+                        <mat-label class="placeholder-color col-md-4">Nome do beneficio</mat-label>
+                        <br />
+                        <mat-form-field>
+                            <input id="benefitDescription" matInput class="form-control"
+                                formControlName="benefitDescription" type="text" autocomplete="off"
+                                placeholder="Nome do beneficio" required />
+                        </mat-form-field>
+                        <!-- <div
+                                *ngIf="formBenefits.get('benefitDescription')?.invalid && (formBenefits.get('benefitDescription')?.dirty || formBenefits.get('benefitDescription')?.touched)">
+                                <p *ngIf="formBenefits.get('benefitDescription')?.errors?.['required']">
+                                    Descrição do beneficio é necessária.
+                                </p>
+                            </div> -->
+                        <br />
+                        <mat-label class="placeholder-color">Valor do beneficio (opcional)</mat-label>
+                        <br />
+                        <mat-form-field>
+                            <input id="benefitValue" matInput class="form-control" formControlName="benefitValue"
+                                type="text" autocomplete="off" placeholder="Valor do beneficio" required />
+                        </mat-form-field>
+                        <!-- <div
+                                *ngIf="formBenefits.get('benefitValue')?.invalid && (formBenefits.get('benefitValue')?.dirty || formBenefits.get('benefitValue')?.touched)">
+                                <p *ngIf="formBenefits.get('benefitValue')?.errors?.['required']">
+                                    Valor do beneficio é necessário.
+                                </p>
+                            </div> -->
+
+                    </div>
+                </form>
+
+            </div>
+
+
+        </mat-card-content>
+
+
+    </mat-card>
+
+    <mat-card class="benefit-card">
+
+        <mat-card-header class="title-vacancy">
+            <mat-card-title fxLayoutAlign="center" class="title-vacancy">
+                Formações anteriores
+            </mat-card-title>
+            <span class="material-icons col-4">add_circle_outline</span>
+            <span class="material-icons col-4">remove_circle_outline</span>
+        </mat-card-header>
+
+        <mat-card-content class="benefit-content">
+
+            <div class="container">
+
+                <form [formGroup]="formUserGraduation">
+                    <div class="column">
+                        <mat-label class="placeholder-color col-md-4">Nome do beneficio</mat-label>
+                        <br />
+                        <mat-form-field>
+                            <input id="benefitDescription" matInput class="form-control"
+                                formControlName="benefitDescription" type="text" autocomplete="off"
+                                placeholder="Nome do beneficio" required />
+                        </mat-form-field>
+                        <!-- <div
+                                *ngIf="formBenefits.get('benefitDescription')?.invalid && (formBenefits.get('benefitDescription')?.dirty || formBenefits.get('benefitDescription')?.touched)">
+                                <p *ngIf="formBenefits.get('benefitDescription')?.errors?.['required']">
+                                    Descrição do beneficio é necessária.
+                                </p>
+                            </div> -->
+                        <br />
+                        <mat-label class="placeholder-color">Valor do beneficio (opcional)</mat-label>
+                        <br />
+                        <mat-form-field>
+                            <input id="benefitValue" matInput class="form-control" formControlName="benefitValue"
+                                type="text" autocomplete="off" placeholder="Valor do beneficio" required />
+                        </mat-form-field>
+                        <!-- <div
+                                *ngIf="formBenefits.get('benefitValue')?.invalid && (formBenefits.get('benefitValue')?.dirty || formBenefits.get('benefitValue')?.touched)">
+                                <p *ngIf="formBenefits.get('benefitValue')?.errors?.['required']">
+                                    Valor do beneficio é necessário.
+                                </p>
+                            </div> -->
+
+                    </div>
+                </form>
+
+            </div>
+
+
+        </mat-card-content>
+
+
+    </mat-card>
+
+    <mat-card class="benefit-card">
+
+        <mat-card-header class="title-vacancy">
+            <mat-card-title fxLayoutAlign="center" class="title-vacancy">
+                Certificações
+            </mat-card-title>
+            <span class="material-icons col-4">add_circle_outline</span>
+            <span class="material-icons col-4">remove_circle_outline</span>
+        </mat-card-header>
+
+        <mat-card-content class="benefit-content">
+
+            <div class="container">
+
+                <form [formGroup]="formUserCertification">
+                    <div class="column">
+                        <mat-label class="placeholder-color col-md-4">Nome do beneficio</mat-label>
+                        <br />
+                        <mat-form-field>
+                            <input id="benefitDescription" matInput class="form-control"
+                                formControlName="benefitDescription" type="text" autocomplete="off"
+                                placeholder="Nome do beneficio" required />
+                        </mat-form-field>
+                        <!-- <div
+                                *ngIf="formBenefits.get('benefitDescription')?.invalid && (formBenefits.get('benefitDescription')?.dirty || formBenefits.get('benefitDescription')?.touched)">
+                                <p *ngIf="formBenefits.get('benefitDescription')?.errors?.['required']">
+                                    Descrição do beneficio é necessária.
+                                </p>
+                            </div> -->
+                        <br />
+                        <mat-label class="placeholder-color">Valor do beneficio (opcional)</mat-label>
+                        <br />
+                        <mat-form-field>
+                            <input id="benefitValue" matInput class="form-control" formControlName="benefitValue"
+                                type="text" autocomplete="off" placeholder="Valor do beneficio" required />
+                        </mat-form-field>
+                        <!-- <div
+                                *ngIf="formBenefits.get('benefitValue')?.invalid && (formBenefits.get('benefitValue')?.dirty || formBenefits.get('benefitValue')?.touched)">
+                                <p *ngIf="formBenefits.get('benefitValue')?.errors?.['required']">
+                                    Valor do beneficio é necessário.
+                                </p>
+                            </div> -->
+
+                    </div>
+                </form>
+
+            </div>
+
+
+        </mat-card-content>
+
+
+    </mat-card>
+</div>

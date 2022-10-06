@@ -43,6 +43,10 @@ import { UserVacancyListChartComponent } from './charts-component/user-vacancy-l
 import { UserVacancyListDialogComponent } from './Dialogs/user-vacancy-list-dialog/user-vacancy-list-dialog.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
 import { UsersRegisterComponent } from './users-component/users-register/users-register.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { UsersDataComponent } from './users-component/users-data/users-data.component';
+import { UsersDetailsComponent } from './users-component/users-details/users-details.component';
+import { UsersInterestsComponent } from './users-component/users-interests/users-interests.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +70,9 @@ import { UsersRegisterComponent } from './users-component/users-register/users-r
     UserVacancyListDialogComponent,
     LoginComponentComponent,
     UsersRegisterComponent,
+    UsersDataComponent,
+    UsersDetailsComponent,
+    UsersInterestsComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,7 +98,8 @@ import { UsersRegisterComponent } from './users-component/users-register/users-r
     FormsModule,
     MatDialogModule,
     MatGridListModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

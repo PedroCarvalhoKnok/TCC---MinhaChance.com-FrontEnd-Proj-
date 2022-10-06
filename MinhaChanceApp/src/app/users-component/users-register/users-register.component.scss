@@ -1,0 +1,43 @@
+.center-content {
+    height: 70%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.tab-content{
+    margin-top: 60px;
+    background-color: #191645;
+    border-radius: 10px;
+}
+
+mat-card-title, p, button, .label-color{
+    color: white;
+}
+
+.start-card{
+    background-color: #191645;
+    text-align: center;
+    width: 60%;
+    height: 60%;
+}
+
+.start-content{
+    text-align: center;
+    margin-top: 15%;
+}
+
+.center-title{
+    text-align: center;
+}
+
+.start-button{
+    color: black;
+    width: 70%;
+
+}
+
+.input{
+    width: 60%;
+    text-align: center;
+}

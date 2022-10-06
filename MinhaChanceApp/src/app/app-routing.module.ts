@@ -11,6 +11,7 @@ import { SkillsResultComponent } from './skills-test-component/skills-result/ski
 import { SkillsStartComponent } from './skills-test-component/skills-start/skills-start.component';
 import { UsersProfileComponent } from './users-component/users-profile/users-profile.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
+import { UsersRegisterComponent } from './users-component/users-register/users-register.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,10 @@ const routes: Routes = [
   {
     path: 'login/:user',
     component: LoginComponentComponent
+  },
+  {
+    path: ':user/cadastrar',
+    component: UsersRegisterComponent
   },
   
   { path: '**', redirectTo: 'home' }
