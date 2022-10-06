@@ -13,7 +13,7 @@ export class UsersDetailsComponent implements OnInit {
   formUserExperiences: FormGroup;
   formUserGraduation: FormGroup;
   formUserCertification: FormGroup;
-  user: User;
+  user: User = new User();
 
   constructor() { }
 

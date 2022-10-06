@@ -3,8 +3,8 @@
         <div class="row">
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Nome Completo</mat-label>
-                <input id="userEmail" class="form-control" ngModel="user.userName"
-                    type="text" matInput autocomplete="off" placeholder="Nome Completo" required />
+                <input id="userEmail" class="form-control" [(ngModel)]="this.user.userName" formControlName="userName" type="text" matInput
+                    autocomplete="off" placeholder="Nome Completo" required />
             </mat-form-field>
             <!-- <div
                 *ngIf="formUserData.get('userEmail')?.invalid && (formUserData.get('userEmail')?.dirty || formUserData.get('userEmail')?.touched)">
@@ -14,8 +14,8 @@
             </div> -->
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Nome do Usuário</mat-label>
-                <input id="userEmail" class="form-control" ngModel="this.user.profile" formControlName="userEmail"
-                    type="text" matInput autocomplete="off" placeholder="Nome de usuário" required />
+                <input id="userEmail" class="form-control" [(ngModel)]="this.user.profile" formControlName="profileName" type="text" matInput
+                    autocomplete="off" placeholder="Nome de usuário" required />
             </mat-form-field>
             <!-- <div
                 *ngIf="formUserData.get('userEmail')?.invalid && (formUserData.get('userEmail')?.dirty || formUserData.get('userEmail')?.touched)">
@@ -25,8 +25,8 @@
             </div> -->
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Email</mat-label>
-                <input id="userEmail" class="form-control" ngModel="this.user.email" formControlName="userEmail"
-                    type="text" matInput autocomplete="off" placeholder="Email" required />
+                <input id="userEmail" class="form-control" [(ngModel)]="this.user.email" formControlName="email" type="text" matInput
+                    autocomplete="off" placeholder="Email" required />
             </mat-form-field>
             <!-- <div
                 *ngIf="formUserData.get('userEmail')?.invalid && (formUserData.get('userEmail')?.dirty || formUserData.get('userEmail')?.touched)">
@@ -36,9 +36,8 @@
             </div> -->
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Senha</mat-label>
-                <input id="userPassword" class="form-control" ngModel="this.user.passWord"
-                    formControlName="userPassword" type="password" matInput autocomplete="off" placeholder="Senha"
-                    required />
+                <input id="userPassword" class="form-control" [(ngModel)]="this.user.passWord" formControlName="passWord" type="password" matInput
+                    autocomplete="off" placeholder="Senha" required />
             </mat-form-field>
             <!-- <div
                 *ngIf="formUserData.get('userPassword')?.invalid && (formUserData.get('userPassword')?.dirty || formUserData.get('userPassword')?.touched)">
@@ -48,8 +47,8 @@
             </div> -->
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Confirmar Senha</mat-label>
-                <input id="userPassword" class="form-control" formControlName="userPassword" type="password" matInput
-                    autocomplete="off" placeholder="Senha" required />
+                <input id="userPassword" class="form-control" type="password" matInput autocomplete="off"
+                    placeholder="Senha" required />
             </mat-form-field>
             <!-- <div
                 *ngIf="formUserData.get('userPassword')?.invalid && (formUserData.get('userPassword')?.dirty || formUserData.get('userPassword')?.touched)">
@@ -59,8 +58,8 @@
             </div> -->
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Idade</mat-label>
-                <input id="userPassword" class="form-control" ngModel="this.user.age" formControlName="userPassword"
-                    type="number" matInput autocomplete="off" placeholder="Senha" required />
+                <input id="userPassword" class="form-control" [(ngModel)]="this.user.age" formControlName="age" type="number" matInput
+                    autocomplete="off" placeholder="Senha" required />
             </mat-form-field>
             <!-- <div
                 *ngIf="formUserData.get('userPassword')?.invalid && (formUserData.get('userPassword')?.dirty || formUserData.get('userPassword')?.touched)">
@@ -70,9 +69,8 @@
             </div> -->
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Bairro</mat-label>
-                <input id="userPassword" class="form-control" ngModel="this.user.address.district"
-                    formControlName="userPassword" type="text" matInput autocomplete="off" placeholder="Bairro"
-                    required />
+                <input id="userPassword" class="form-control" [(ngModel)]="this.address.district" formControlName="district" type="text" matInput
+                    autocomplete="off" placeholder="Bairro" required />
             </mat-form-field>
             <!-- <div
                 *ngIf="formUserData.get('userPassword')?.invalid && (formUserData.get('userPassword')?.dirty || formUserData.get('userPassword')?.touched)">
@@ -82,8 +80,8 @@
             </div> -->
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">CEP</mat-label>
-                <input id="userPassword" class="form-control" ngModel="this.user.address.zipCode"
-                    formControlName="userPassword" type="text" matInput autocomplete="off" placeholder="CEP" required />
+                <input id="userPassword" class="form-control" [(ngModel)]="this.address.zipCode" formControlName="zipCode" type="text" matInput
+                    autocomplete="off" placeholder="CEP" required />
             </mat-form-field>
             <!-- <div
                 *ngIf="formUserData.get('userPassword')?.invalid && (formUserData.get('userPassword')?.dirty || formUserData.get('userPassword')?.touched)">
@@ -93,8 +91,8 @@
             </div> -->
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Rua</mat-label>
-                <input id="userPassword" class="form-control" ngModel="this.user.address.streetName"
-                    formControlName="userPassword" type="text" matInput autocomplete="off" placeholder="Rua" required />
+                <input id="userPassword" class="form-control" [(ngModel)]="this.address.streetName" formControlName="streetName" type="text"
+                    matInput autocomplete="off" placeholder="Rua" required />
             </mat-form-field>
             <!-- <div
                 *ngIf="formUserData.get('userPassword')?.invalid && (formUserData.get('userPassword')?.dirty || formUserData.get('userPassword')?.touched)">
@@ -104,9 +102,8 @@
             </div> -->
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Número</mat-label>
-                <input id="userPassword" class="form-control" ngModel="this.user.address.streetNumber"
-                    formControlName="userPassword" type="number" matInput autocomplete="off" placeholder="Número"
-                    required />
+                <input id="userPassword" class="form-control" [(ngModel)]="this.address.streetNumber" formControlName="streetNumber" type="number"
+                    matInput autocomplete="off" placeholder="Número" required />
             </mat-form-field>
             <!-- <div
                 *ngIf="formUserData.get('userPassword')?.invalid && (formUserData.get('userPassword')?.dirty || formUserData.get('userPassword')?.touched)">
@@ -116,13 +113,13 @@
             </div> -->
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Complemento</mat-label>
-                <input id="userPassword" class="form-control" ngModel="this.user.address.complement"
-                    formControlName="userPassword" type="text" matInput autocomplete="off" placeholder="Complemento">
+                <input id="userPassword" class="form-control" [(ngModel)]="this.address.complement" type="text"
+                    matInput autocomplete="off" placeholder="Complemento" />
             </mat-form-field>
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Contato</mat-label>
-                <input id="userPassword" class="form-control" ngModel="this.user.phone"
-                    formControlName="userPassword" type="phone" matInput autocomplete="off" placeholder="Contato">
+                <input id="userPassword" class="form-control" [(ngModel)]="this.user.phone" formControlName="contact" type="phone" matInput
+                    autocomplete="off" placeholder="Contato" />
             </mat-form-field>
             <!-- <div
                 *ngIf="formUserData.get('userPassword')?.invalid && (formUserData.get('userPassword')?.dirty || formUserData.get('userPassword')?.touched)">

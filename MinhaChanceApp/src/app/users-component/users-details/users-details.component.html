@@ -1,5 +1,5 @@
 <div class="container">
-    <form [formGroup]="formUserDetails">
+    <form>
         <div class="row">
             <mat-label>Objetivo</mat-label>
             <br />
@@ -17,18 +17,18 @@
             </section>
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Empresa atual</mat-label>
-                <input id="userEmail" class="form-control" ngModel="this.user.actualCompany" formControlName="userEmail"
+                <input id="userEmail" class="form-control" [(ngModel)]="this.user.actualCompany"
                     type="text" matInput autocomplete="off" placeholder="Empresa atual" required />
             </mat-form-field>
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Cargo atual</mat-label>
-                <input id="userEmail" class="form-control" ngModel="this.user.actualCharge" formControlName="userEmail"
+                <input id="userEmail" class="form-control" [(ngModel)]="this.user.actualCharge"
                     type="text" matInput autocomplete="off" placeholder="Cargo atual" required />
             </mat-form-field>
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Pretensão salarial</mat-label>
-                <input id="userEmail" class="form-control" ngModel="this.user.salaryPretension"
-                    formControlName="userEmail" type="text" matInput autocomplete="off" placeholder="Pretensão salarial"
+                <input id="userEmail" class="form-control" [(ngModel)]="this.user.salaryPretension"
+                    type="text" matInput autocomplete="off" placeholder="Pretensão salarial"
                     required />
             </mat-form-field>
 
@@ -52,14 +52,14 @@
 
             <div class="container">
 
-                <form [formGroup]="formUserExperiences">
-                    <div class="column">
-                        <mat-label class="placeholder-color col-md-4">Nome do beneficio</mat-label>
-                        <br />
-                        <mat-form-field>
+                <form>
+                    <div class="row">
+
+                        <mat-form-field class="col-md-4">
+                            <mat-label class="placeholder-color">Nome da empresa</mat-label>
                             <input id="benefitDescription" matInput class="form-control"
-                                formControlName="benefitDescription" type="text" autocomplete="off"
-                                placeholder="Nome do beneficio" required />
+                                type="text" autocomplete="off"
+                                placeholder="Nome da empresa" required />
                         </mat-form-field>
                         <!-- <div
                                 *ngIf="formBenefits.get('benefitDescription')?.invalid && (formBenefits.get('benefitDescription')?.dirty || formBenefits.get('benefitDescription')?.touched)">
@@ -67,11 +67,10 @@
                                     Descrição do beneficio é necessária.
                                 </p>
                             </div> -->
-                        <br />
-                        <mat-label class="placeholder-color">Valor do beneficio (opcional)</mat-label>
-                        <br />
-                        <mat-form-field>
-                            <input id="benefitValue" matInput class="form-control" formControlName="benefitValue"
+
+                        <mat-form-field class="col-md-4">
+                            <mat-label class="placeholder-color">Cargo</mat-label>
+                            <input id="benefitValue" matInput class="form-control"
                                 type="text" autocomplete="off" placeholder="Valor do beneficio" required />
                         </mat-form-field>
                         <!-- <div
@@ -80,6 +79,11 @@
                                     Valor do beneficio é necessário.
                                 </p>
                             </div> -->
+                        <mat-form-field class="col-md-4">
+                            <mat-label class="placeholder-color">Tempo de atividade (Meses)</mat-label>
+                            <input id="benefitValue" matInput class="form-control"
+                                type="number" autocomplete="off" placeholder="Valor do beneficio" required />
+                        </mat-form-field>
 
                     </div>
                 </form>
@@ -106,14 +110,14 @@
 
             <div class="container">
 
-                <form [formGroup]="formUserGraduation">
-                    <div class="column">
-                        <mat-label class="placeholder-color col-md-4">Nome do beneficio</mat-label>
-                        <br />
-                        <mat-form-field>
+                <form>
+                    <div class="row">
+
+                        <mat-form-field class="col-md-4">
+                            <mat-label class="placeholder-color">Institução de ensino</mat-label>
                             <input id="benefitDescription" matInput class="form-control"
-                                formControlName="benefitDescription" type="text" autocomplete="off"
-                                placeholder="Nome do beneficio" required />
+                                type="text" autocomplete="off"
+                                placeholder="Institução de ensino" required />
                         </mat-form-field>
                         <!-- <div
                                 *ngIf="formBenefits.get('benefitDescription')?.invalid && (formBenefits.get('benefitDescription')?.dirty || formBenefits.get('benefitDescription')?.touched)">
@@ -121,12 +125,11 @@
                                     Descrição do beneficio é necessária.
                                 </p>
                             </div> -->
-                        <br />
-                        <mat-label class="placeholder-color">Valor do beneficio (opcional)</mat-label>
-                        <br />
-                        <mat-form-field>
-                            <input id="benefitValue" matInput class="form-control" formControlName="benefitValue"
-                                type="text" autocomplete="off" placeholder="Valor do beneficio" required />
+                        <mat-form-field class="col-md-4">
+                            <mat-label class="placeholder-color">Curso</mat-label>
+                            <input id="benefitDescription" matInput class="form-control"
+                                type="text" autocomplete="off" placeholder="Curso"
+                                required />
                         </mat-form-field>
                         <!-- <div
                                 *ngIf="formBenefits.get('benefitValue')?.invalid && (formBenefits.get('benefitValue')?.dirty || formBenefits.get('benefitValue')?.touched)">
@@ -134,6 +137,22 @@
                                     Valor do beneficio é necessário.
                                 </p>
                             </div> -->
+                        <mat-form-field class="col-md-4">
+                            <mat-label class="placeholder-color">Descrição do curso</mat-label>
+                            <textarea id="benefitDescription" class="text-area-form" required></textarea>
+                        </mat-form-field>
+                        <!-- <div
+                                *ngIf="formBenefits.get('benefitValue')?.invalid && (formBenefits.get('benefitValue')?.dirty || formBenefits.get('benefitValue')?.touched)">
+                                <p *ngIf="formBenefits.get('benefitValue')?.errors?.['required']">
+                                    Valor do beneficio é necessário.
+                                </p>
+                            </div> -->
+                        <mat-form-field class="col-md-4">
+                            <mat-label class="placeholder-color">Tempo decorrido</mat-label>
+                            <input id="benefitDescription" matInput class="form-control"
+                                type="number" autocomplete="off"
+                                placeholder="Tempo decorrido" required />
+                        </mat-form-field>
 
                     </div>
                 </form>
@@ -160,14 +179,23 @@
 
             <div class="container">
 
-                <form [formGroup]="formUserCertification">
-                    <div class="column">
-                        <mat-label class="placeholder-color col-md-4">Nome do beneficio</mat-label>
-                        <br />
-                        <mat-form-field>
+                <form>
+                    <div class="row">
+                        <mat-form-field class="col-md-4">
+                            <mat-label class="placeholder-color">Plataforma</mat-label>
                             <input id="benefitDescription" matInput class="form-control"
-                                formControlName="benefitDescription" type="text" autocomplete="off"
-                                placeholder="Nome do beneficio" required />
+                                type="text" autocomplete="off"
+                                placeholder="Plataforma" required />
+                        </mat-form-field>
+                        <!-- <div
+                           *ngIf="formBenefits.get('benefitValue')?.invalid && (formBenefits.get('benefitValue')?.dirty || formBenefits.get('benefitValue')?.touched)">
+                           <p *ngIf="formBenefits.get('benefitValue')?.errors?.['required']">
+                               Valor do beneficio é necessário.
+                           </p>
+                       </div> -->
+                        <mat-form-field class="col-md-4">
+                            <mat-label class="placeholder-color">Descrição certificado</mat-label>
+                            <textarea id="benefitDescription" class="text-area-form" required></textarea>
                         </mat-form-field>
                         <!-- <div
                                 *ngIf="formBenefits.get('benefitDescription')?.invalid && (formBenefits.get('benefitDescription')?.dirty || formBenefits.get('benefitDescription')?.touched)">
@@ -175,12 +203,11 @@
                                     Descrição do beneficio é necessária.
                                 </p>
                             </div> -->
-                        <br />
-                        <mat-label class="placeholder-color">Valor do beneficio (opcional)</mat-label>
-                        <br />
-                        <mat-form-field>
-                            <input id="benefitValue" matInput class="form-control" formControlName="benefitValue"
-                                type="text" autocomplete="off" placeholder="Valor do beneficio" required />
+                        <mat-form-field class="col-md-4">
+                            <mat-label class="placeholder-color">Tempo de curso</mat-label>
+                            <input id="benefitDescription" matInput class="form-control"
+                                type="number" autocomplete="off"
+                                placeholder="Tempo decorrido" required />
                         </mat-form-field>
                         <!-- <div
                                 *ngIf="formBenefits.get('benefitValue')?.invalid && (formBenefits.get('benefitValue')?.dirty || formBenefits.get('benefitValue')?.touched)">
