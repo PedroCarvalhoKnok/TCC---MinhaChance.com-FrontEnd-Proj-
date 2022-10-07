@@ -11,7 +11,7 @@ import { User } from 'src/app/Models/User/User';
 export class UsersDataComponent implements OnInit {
 
   formUserData!: FormGroup;
-  user: User = new User()
+  user: User = new User();
   address: Address = new Address();
 
   constructor() { }

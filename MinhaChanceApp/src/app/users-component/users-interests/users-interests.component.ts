@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Interest } from 'src/app/Models/User/Interest';
 
 @Component({
   selector: 'app-users-interests',
@@ -8,11 +9,22 @@ import { FormGroup } from '@angular/forms';
 })
 export class UsersInterestsComponent implements OnInit {
 
-  formUserInterest: FormGroup;
+  formUserInterest!: FormGroup;
+  interest: Interest = new Interest();
 
   constructor() { }
 
   ngOnInit(): void {
+    this.createFormUserInterestsValidation();
   }
 
+
+  createFormUserInterestsValidation(): void {
+    this.formUserInterest = new FormGroup({
+      description: new FormControl(this.interest.description, [
+        Validators.required
+      ])
+    });
+
+  }
 }

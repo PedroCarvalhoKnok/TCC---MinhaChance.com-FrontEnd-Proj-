@@ -5,12 +5,12 @@
             <mat-label>Descrição do interesse</mat-label>
             <br />
             <textarea id="vacancyDescription" class="text-area-form" required></textarea>
-            <!-- <div
-                *ngIf="formUserData.get('userEmail')?.invalid && (formUserData.get('userEmail')?.dirty || formUserData.get('userEmail')?.touched)">
-                <p *ngIf="formUserData.get('userEmail')?.errors?.['required']">
-                    Nome Completo é necessário.
+            <div
+                *ngIf="formUserInterest.get('description')?.invalid && (formUserInterest.get('description')?.dirty || formUserInterest.get('description')?.touched)">
+                <p *ngIf="formUserInterest.get('description')?.errors?.['required']">
+                    Interesse é necessário.
                 </p>
-            </div> -->
+            </div>
            
 
         </div>
