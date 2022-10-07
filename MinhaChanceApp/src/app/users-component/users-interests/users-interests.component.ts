@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Interest } from 'src/app/Models/User/Interest';
 
@@ -10,7 +10,7 @@ import { Interest } from 'src/app/Models/User/Interest';
 export class UsersInterestsComponent implements OnInit {
 
   formUserInterest!: FormGroup;
-  interest: Interest = new Interest();
+  @Input() interest: Interest = new Interest();
 
   constructor() { }
 

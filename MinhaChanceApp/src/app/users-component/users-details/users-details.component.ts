@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Graduation } from 'src/app/Models/User/AcademicGraduation';
 import { UserCertification } from 'src/app/Models/User/Certification';
@@ -16,10 +16,10 @@ export class UsersDetailsComponent implements OnInit {
   formUserExperiences!: FormGroup;
   formUserGraduation!: FormGroup;
   formUserCertification!: FormGroup;
-  user: User = new User();
-  experience: Experiences = new Experiences();
-  graduation: Graduation = new Graduation();
-  certification: UserCertification = new UserCertification();
+  @Input() user!: User;
+  @Input() experience!: Experiences;
+  @Input() graduation!: Graduation;
+  @Input() certification!: UserCertification;
 
   constructor() { }
 

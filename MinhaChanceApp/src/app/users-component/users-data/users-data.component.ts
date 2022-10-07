@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Address } from 'src/app/Models/User/Address';
 import { User } from 'src/app/Models/User/User';
@@ -11,8 +11,8 @@ import { User } from 'src/app/Models/User/User';
 export class UsersDataComponent implements OnInit {
 
   formUserData!: FormGroup;
-  user: User = new User();
-  address: Address = new Address();
+  @Input() user!: User;
+  @Input() address!: Address;
 
   constructor() { }
 
