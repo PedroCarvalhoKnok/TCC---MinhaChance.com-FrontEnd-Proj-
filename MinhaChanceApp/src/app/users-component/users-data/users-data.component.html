@@ -47,15 +47,15 @@
             </div>
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Confirmar Senha</mat-label>
-                <input id="userPassword" class="form-control" type="password" matInput autocomplete="off"
+                <input id="confirmPassword" class="form-control" type="password" matInput autocomplete="off"
                     placeholder="Senha" required />
             </mat-form-field>
-            <!-- <div
-                *ngIf="formUserData.get('userPassword')?.invalid && (formUserData.get('userPassword')?.dirty || formUserData.get('userPassword')?.touched)">
-                <p *ngIf="formUserData.get('userPassword')?.errors?.['required']">
+            <div
+                *ngIf="this.isConfirmed">
+                <p>
                     Confirmar a senha é necessário.
                 </p>
-            </div> -->
+            </div>
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Idade</mat-label>
                 <input id="userPassword" class="form-control" [(ngModel)]="this.user.age" formControlName="age" type="number" matInput
@@ -127,7 +127,9 @@
                     Contato é necessário.
                 </p>
             </div>
-
         </div>
     </form>
+    <button (click)="sendUserData()" type="button" class="btn btn-outline-primary" id="dropdownCategory">
+        Concluído
+    </button>
 </div>

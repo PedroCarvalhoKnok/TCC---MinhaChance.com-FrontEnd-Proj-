@@ -4,6 +4,7 @@ import { Graduation } from "./AcademicGraduation";
 import { Address } from "./Address";
 import { UserCertification } from "./Certification";
 import { Experiences } from "./Experiences";
+import { Interest } from "./Interest";
 
 export class User {
     id!: number;
@@ -22,10 +23,10 @@ export class User {
     experiences?: Experiences[];
     graduations?: Graduation[];
     certifications?: UserCertification[];
+    interests: Interest[];
     objective?: string;
     userVacancyInfo?: any;
     userInteligenciesInfo?: any;
-    interests: string[];
     role: Role;
     token?: string;
 }

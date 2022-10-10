@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Address } from 'src/app/Models/User/Address';
 import { User } from 'src/app/Models/User/User';
+import { UserService } from 'src/app/Services/User/user.service';
 
 @Component({
   selector: 'app-users-data',
@@ -11,14 +13,27 @@ import { User } from 'src/app/Models/User/User';
 export class UsersDataComponent implements OnInit {
 
   formUserData!: FormGroup;
-  @Input() user!: User;
-  @Input() address!: Address;
+  user: User = new User();
+  address: Address = new Address();
+  isConfirmed: boolean = false;
+  userId: number;
+  @Output() sendUserEvent = new EventEmitter<User>();
 
-  constructor() { }
+  constructor(private router: ActivatedRoute, private userService: UserService) { }
 
   ngOnInit(): void {
 
     this.createFormUserDataValidation();
+
+    this.userId = this.router.snapshot.params?.['userId'];
+
+    if(this.userId){
+
+      this.userService.getUserInfoById(this.userId).subscribe(user => {
+        this.user = user;
+      })
+      
+    }
   }
 
 
@@ -54,7 +69,30 @@ export class UsersDataComponent implements OnInit {
       contact: new FormControl(this.user.phone, [
         Validators.required,
       ]),
+
     });
+
+  }
+  
+
+  validateConfirmPassword(){
+
+    let confirmPassword = (<HTMLInputElement>(document.getElementById('confirmPassword'))).value;
+
+    this.isConfirmed = this.user.passWord === confirmPassword ? true: false;
+
+    return this.isConfirmed;
+
+  }
+
+  sendUserData(){
+
+    if(!this.validateConfirmPassword())
+      return;
+
+    this.user.address = this.address;
+
+    this.sendUserEvent.emit(this.user);
 
   }
 

@@ -56,7 +56,7 @@ export class VacanciesDetailsComponent implements OnInit {
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
     userVacancyInfo: { yes: 56, no: 44 },
     userInteligenciesInfo: { intelligence: 'Linguística', vacancies: ['Tradutor e conhecimento em libras'], skills: [67] },
-    interests: ['Esportes', 'Idiomas', 'Música'],
+    interests: [{description: 'Música'}, {description: 'Futebol'}, {description: 'Filmes e séries'}],
     role: Role.Candidate
   },
   {
@@ -76,7 +76,7 @@ export class VacanciesDetailsComponent implements OnInit {
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
     userVacancyInfo: { yes: 50, no: 50 },
     userInteligenciesInfo: { intelligence: 'Lógica-Matemática', vacancies: ['Estatistico - Iniciante analise de dados', 'Desenvolvedor Java júnior'], skills: [78, 75] },
-    interests: ['Natação', 'Animes', 'Programação'],
+    interests: [{description: 'Natação'}, {description: 'Artes'}, {description: 'Filmes e séries'}],
     role: Role.Candidate
   }])
 

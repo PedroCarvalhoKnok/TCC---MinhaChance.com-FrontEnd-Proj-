@@ -64,11 +64,11 @@ const routes: Routes = [
     component: UsersProfileComponent
   },
   {
-    path: 'login/:user',
+    path: ':user/login',
     component: LoginComponentComponent
   },
   {
-    path: ':user/cadastrar',
+    path: ':user/cadastrar/:userId',
     component: UsersRegisterComponent
   },
   

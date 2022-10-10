@@ -71,4 +71,16 @@ export class UserService {
       retry(2)
     )
   }
+
+  postUserRegister(user: User){
+    return this.httpClient.post<boolean>('', this.httpOptions).pipe(
+      retry(2)
+    )
+  }
+
+  editUser(user: User){
+    return this.httpClient.put<boolean>('', this.httpOptions).pipe(
+      retry(2)
+    )
+  }
 }

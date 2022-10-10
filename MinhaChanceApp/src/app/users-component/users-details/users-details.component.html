@@ -3,19 +3,19 @@
         <div class="row">
             <mat-label>Objetivo</mat-label>
             <br />
-            <textarea id="vacancyDescription" class="text-area-form" required></textarea>
+            <textarea id="userObjective" class="text-area-form" required>{{this.user.objective}}</textarea>
             <div
-                *ngIf="formUserDetails.get('vacancyDescription')?.invalid && (formUserDetails.get('vacancyDescription')?.dirty || formUserDetails.get('vacancyDescription')?.touched)">
-                <p *ngIf="formUserDetails.get('vacancyDescription')?.errors?.['required']">
+                *ngIf="this.needObjective">
+                <p>
                     Objetivo é necessário.
                 </p>
             </div>
             <section class="pad-top">
-                <mat-checkbox>
+                <mat-checkbox (change)="changeIsWorking()">
                     Trabalhando
                 </mat-checkbox>
             </section>
-            <mat-form-field class="col-md-4">
+            <mat-form-field *ngIf="IsWorking" class="col-md-4">
                 <mat-label class="placeholder-color">Empresa atual</mat-label>
                 <input id="userEmail" class="form-control" [(ngModel)]="this.user.actualCompany"
                     formControlName="actualCompany" type="text" matInput autocomplete="off" placeholder="Empresa atual"
@@ -27,7 +27,7 @@
                     Empresa atual é necessário.
                 </p>
             </div>
-            <mat-form-field class="col-md-4">
+            <mat-form-field *ngIf="IsWorking" class="col-md-4">
                 <mat-label class="placeholder-color">Cargo atual</mat-label>
                 <input id="userEmail" class="form-control" [(ngModel)]="this.user.actualCharge"
                     formControlName="actualCharge" type="text" matInput autocomplete="off" placeholder="Cargo atual"
@@ -62,8 +62,8 @@
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
                 Experiências anteriores
             </mat-card-title>
-            <span class="material-icons col-4">add_circle_outline</span>
-            <span class="material-icons col-4">remove_circle_outline</span>
+            <span (click)="this.addExperience()" class="material-icons col-4">add_circle_outline</span>
+            <span (click)="this.removeExperience()" class="material-icons col-4">remove_circle_outline</span>
         </mat-card-header>
 
         <mat-card-content class="benefit-content">
@@ -75,7 +75,7 @@
 
                         <mat-form-field>
                             <mat-label class="placeholder-color">Nome da empresa</mat-label>
-                            <input id="benefitDescription" matInput class="form-control" formControlName="companyName"
+                            <input id="companyName" matInput class="form-control" formControlName="companyName" [(ngModel)]="this.experience.company"
                                 type="text" autocomplete="off" placeholder="Nome da empresa" required />
                         </mat-form-field>
                         <div
@@ -87,7 +87,7 @@
 
                         <mat-form-field>
                             <mat-label class="placeholder-color">Cargo</mat-label>
-                            <input id="benefitValue" matInput class="form-control" formControlName="chargeDescription"
+                            <input id="chargeDescription" matInput class="form-control" [(ngModel)]="this.experience.chargeDescription" formControlName="chargeDescription"
                                 type="text" autocomplete="off" placeholder="Valor do beneficio" required />
                         </mat-form-field>
                         <div
@@ -98,7 +98,7 @@
                         </div>
                         <mat-form-field>
                             <mat-label class="placeholder-color">Tempo de atividade (Meses)</mat-label>
-                            <input id="benefitValue" matInput class="form-control" formControlName="timeSpent"
+                            <input id="timeSpentExperience" matInput class="form-control" [(ngModel)]="this.experience.timeSpent" formControlName="timeSpent"
                                 type="number" autocomplete="off" placeholder="Valor do beneficio" required />
                         </mat-form-field>
                         <div
@@ -119,26 +119,23 @@
     </mat-card>
 
     <!-- lista experiencia anteriores cadastradas -->
-    <!-- <mat-card class="benefit-card">
+    <mat-card class="benefit-card" *ngFor="let experience of this.experiences; let position = index">
 
         <mat-card-header class="title-vacancy">
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
-                Experiências anteriores
+                Experiência anterior
             </mat-card-title>
-            <span class="material-icons col-4">add_circle_outline</span>
-            <span class="material-icons col-4">remove_circle_outline</span>
         </mat-card-header>
 
         <mat-card-content class="benefit-content">
 
             <div class="container">
-
-                <form [formGroup]="formUserExperiences">
+                
                     <div class="column">
 
                         <mat-form-field>
                             <mat-label class="placeholder-color">Nome da empresa</mat-label>
-                            <input id="benefitDescription" matInput class="form-control" formControlName="companyName"
+                            <input value="{{experience.company}}" id="benefitDescription" matInput class="form-control" formControlName="companyName"
                                 type="text" autocomplete="off" placeholder="Nome da empresa" required />
                         </mat-form-field>
                         <div
@@ -150,7 +147,7 @@
 
                         <mat-form-field>
                             <mat-label class="placeholder-color">Cargo</mat-label>
-                            <input id="benefitValue" matInput class="form-control" formControlName="chargeDescription"
+                            <input value="{{experience.chargeDescription}}" id="benefitValue" matInput class="form-control" formControlName="chargeDescription"
                                 type="text" autocomplete="off" placeholder="Valor do beneficio" required />
                         </mat-form-field>
                         <div
@@ -161,7 +158,7 @@
                         </div>
                         <mat-form-field>
                             <mat-label class="placeholder-color">Tempo de atividade (Meses)</mat-label>
-                            <input id="benefitValue" matInput class="form-control" formControlName="timeSpent"
+                            <input value="{{experience.timeSpent}}" id="benefitValue" matInput class="form-control" formControlName="timeSpent"
                                 type="number" autocomplete="off" placeholder="Valor do beneficio" required />
                         </mat-form-field>
                         <div
@@ -171,15 +168,19 @@
                             </p>
                         </div>
                     </div>
-                </form>
 
             </div>
 
 
         </mat-card-content>
 
+        <mat-card-actions align="end">
+            <button (click)="editExperienceByIndex(position)" mat-button>Editar</button>
+            <button (click)="removeExperienceByIndex(position)" mat-button>Remover</button>
+        </mat-card-actions>
 
-    </mat-card> -->
+
+    </mat-card>
 
     <!-- lista experiencia anteriores cadastradas -->
 
@@ -189,8 +190,8 @@
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
                 Formações anteriores
             </mat-card-title>
-            <span class="material-icons col-4">add_circle_outline</span>
-            <span class="material-icons col-4">remove_circle_outline</span>
+            <span (click)="this.addGraduation" class="material-icons col-4">add_circle_outline</span>
+            <span (click)="this.removeGraduation" class="material-icons col-4">remove_circle_outline</span>
         </mat-card-header>
 
         <mat-card-content class="benefit-content">
@@ -202,7 +203,7 @@
 
                         <mat-form-field>
                             <mat-label class="placeholder-color">Institução de ensino</mat-label>
-                            <input id="benefitDescription" matInput class="form-control" formControlName="institute"
+                            <input id="institute" matInput class="form-control" [(ngModel)]="this.graduation.institute" formControlName="institute"
                                 type="text" autocomplete="off" placeholder="Institução de ensino" required />
                         </mat-form-field>
                         <div
@@ -213,7 +214,7 @@
                         </div>
                         <mat-form-field>
                             <mat-label class="placeholder-color">Curso</mat-label>
-                            <input id="benefitDescription" matInput class="form-control" formControlName="course"
+                            <input id="course" matInput class="form-control" [(ngModel)]="this.graduation.course" formControlName="course"
                                 type="text" autocomplete="off" placeholder="Curso" required />
                         </mat-form-field>
                         <div
@@ -233,7 +234,7 @@
                         </div>
                         <mat-form-field>
                             <mat-label class="placeholder-color">Tempo decorrido</mat-label>
-                            <input id="benefitDescription" matInput class="form-control" formControlName="timeSpent"
+                            <input id="timeSpentGraduation" matInput class="form-control" [(ngModel)]="this.graduation.timeSpent" formControlName="timeSpent"
                                 type="number" autocomplete="off" placeholder="Tempo decorrido" required />
                         </mat-form-field>
                         <div
@@ -255,14 +256,12 @@
     </mat-card>
 
     <!-- lista formações anteriores cadastradas -->
-    <!-- <mat-card class="benefit-card">
+    <mat-card class="benefit-card" *ngFor="let graduation of this.graduations; let position = index">
 
         <mat-card-header class="title-vacancy">
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
-                Formações anteriores
+                Formação anterior
             </mat-card-title>
-            <span class="material-icons col-4">add_circle_outline</span>
-            <span class="material-icons col-4">remove_circle_outline</span>
         </mat-card-header>
 
         <mat-card-content class="benefit-content">
@@ -274,7 +273,7 @@
 
                         <mat-form-field>
                             <mat-label class="placeholder-color">Institução de ensino</mat-label>
-                            <input id="benefitDescription" matInput class="form-control" formControlName="institute"
+                            <input id="benefitDescription" value="{{graduation.institute}}" matInput class="form-control" formControlName="institute"
                                 type="text" autocomplete="off" placeholder="Institução de ensino" required />
                         </mat-form-field>
                         <div
@@ -285,7 +284,7 @@
                         </div>
                         <mat-form-field>
                             <mat-label class="placeholder-color">Curso</mat-label>
-                            <input id="benefitDescription" matInput class="form-control" formControlName="course"
+                            <input id="benefitDescription" value="{{graduation.course}}" matInput class="form-control" formControlName="course"
                                 type="text" autocomplete="off" placeholder="Curso" required />
                         </mat-form-field>
                         <div
@@ -296,7 +295,7 @@
                         </div>
                         <br />
                         <mat-label>Descrição do curso</mat-label>
-                        <textarea id="courseDescription" class="text-area-form" required></textarea>
+                        <textarea id="courseDescriptionEdit" class="text-area-form" required>{{graduation.graduationDescription}}</textarea>
                         <div
                             *ngIf="formUserGraduation.get('graduationDescription')?.invalid && (formUserGraduation.get('graduationDescription')?.dirty || formUserGraduation.get('graduationDescription')?.touched)">
                             <p *ngIf="formUserGraduation.get('graduationDescription')?.errors?.['required']">
@@ -305,7 +304,7 @@
                         </div>
                         <mat-form-field>
                             <mat-label class="placeholder-color">Tempo decorrido</mat-label>
-                            <input id="benefitDescription" matInput class="form-control" formControlName="timeSpent"
+                            <input value="{{graduation.timeSpent}}" id="benefitDescription" matInput class="form-control" formControlName="timeSpent"
                                 type="number" autocomplete="off" placeholder="Tempo decorrido" required />
                         </mat-form-field>
                         <div
@@ -323,8 +322,13 @@
 
         </mat-card-content>
 
+        <mat-card-actions align="end">
+            <button (click)="editGraduationByIndex(position)" mat-button>Editar</button>
+            <button (click)="removeGraduationByIndex(position)" mat-button>Remover</button>
+        </mat-card-actions>
 
-    </mat-card> -->
+
+    </mat-card>
     <!-- lista formações anteriores cadastradas -->
 
     <mat-card class="benefit-card">
@@ -333,8 +337,8 @@
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
                 Certificações
             </mat-card-title>
-            <span class="material-icons col-4">add_circle_outline</span>
-            <span class="material-icons col-4">remove_circle_outline</span>
+            <span (click)="this.addCertification" class="material-icons col-4">add_circle_outline</span>
+            <span (click)="this.removeCertification" class="material-icons col-4">remove_circle_outline</span>
         </mat-card-header>
 
         <mat-card-content class="benefit-content">
@@ -345,7 +349,7 @@
                     <div class="column">
                         <mat-form-field>
                             <mat-label class="placeholder-color">Plataforma</mat-label>
-                            <input id="benefitDescription" matInput class="form-control" formControlName="platform"
+                            <input id="platform" matInput class="form-control" [(ngModel)]="this.certification.platform" formControlName="platform"
                                 type="text" autocomplete="off" placeholder="Plataforma" required />
                         </mat-form-field>
                         <div
@@ -354,24 +358,18 @@
                                 Plataforma é necessário.
                             </p>
                         </div>
-                        <mat-label>Descrição do curso</mat-label>
+                        <mat-label>Descrição do certificado</mat-label>
                         <br />
-                        <textarea id="courseDescription" class="text-area-form" required></textarea>
-                        <div
-                            *ngIf="formUserGraduation.get('graduationDescription')?.invalid && (formUserGraduation.get('graduationDescription')?.dirty || formUserGraduation.get('graduationDescription')?.touched)">
-                            <p *ngIf="formUserGraduation.get('graduationDescription')?.errors?.['required']">
-                                Descrição é necessário.
-                            </p>
-                        </div>
+                        <textarea id="certificationDescription" class="text-area-form" required>{{certification.certificationDescription}}</textarea>
                         <div
                             *ngIf="formUserCertification.get('certificationDescription')?.invalid && (formUserCertification.get('certificationDescription')?.dirty || formUserCertification.get('certificationDescription')?.touched)">
                             <p *ngIf="formUserCertification.get('certificationDescription')?.errors?.['required']">
-                                Descrição do certificado é necessária.
+                                Descrição é necessário.
                             </p>
                         </div>
                         <mat-form-field>
                             <mat-label class="placeholder-color">Tempo de curso</mat-label>
-                            <input id="benefitDescription" matInput class="form-control" type="number"
+                            <input id="timeSpentCertification" matInput class="form-control" [(ngModel)]="this.certification.timeSpent" type="number"
                                 autocomplete="off" placeholder="Tempo decorrido" required />
                         </mat-form-field>
                         <div
@@ -392,26 +390,23 @@
 
     </mat-card>
 
-<!-- lista certificações cadastradas -->
-    <!-- <mat-card class="benefit-card">
+    <!-- lista certificações cadastradas -->
+    <mat-card class="benefit-card" *ngFor="let certification of this.certifications; let position = index">
 
         <mat-card-header class="title-vacancy">
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
-                Certificações
+                Certificação
             </mat-card-title>
-            <span class="material-icons col-4">add_circle_outline</span>
-            <span class="material-icons col-4">remove_circle_outline</span>
         </mat-card-header>
 
         <mat-card-content class="benefit-content">
 
             <div class="container">
-
-                <form [formGroup]="formUserCertification">
+                
                     <div class="column">
                         <mat-form-field>
                             <mat-label class="placeholder-color">Plataforma</mat-label>
-                            <input id="benefitDescription" matInput class="form-control" formControlName="platform"
+                            <input id="benefitDescription" value="{{certification.platform}}" matInput class="form-control" formControlName="platform"
                                 type="text" autocomplete="off" placeholder="Plataforma" required />
                         </mat-form-field>
                         <div
@@ -422,7 +417,7 @@
                         </div>
                         <mat-label>Descrição do curso</mat-label>
                         <br />
-                        <textarea id="courseDescription" class="text-area-form" required></textarea>
+                        <textarea id="courseDescription" class="text-area-form" required>{{certification.certificationDescription}}</textarea>
                         <div
                             *ngIf="formUserGraduation.get('graduationDescription')?.invalid && (formUserGraduation.get('graduationDescription')?.dirty || formUserGraduation.get('graduationDescription')?.touched)">
                             <p *ngIf="formUserGraduation.get('graduationDescription')?.errors?.['required']">
@@ -437,7 +432,7 @@
                         </div>
                         <mat-form-field>
                             <mat-label class="placeholder-color">Tempo de curso</mat-label>
-                            <input id="benefitDescription" matInput class="form-control" type="number"
+                            <input id="benefitDescription" matInput class="form-control" value="{{certification.timeSpent}}" type="number"
                                 autocomplete="off" placeholder="Tempo decorrido" required />
                         </mat-form-field>
                         <div
@@ -448,15 +443,23 @@
                         </div>
 
                     </div>
-                </form>
 
             </div>
 
 
         </mat-card-content>
 
+        <mat-card-actions align="end">
+            <button (click)="editCertificationByIndex(position)" mat-button>Editar</button>
+            <button (click)="removeCertificationByIndex(position)" mat-button>Remover</button>
+        </mat-card-actions>
 
-    </mat-card> -->
-    
-<!-- lista certificações cadastradas -->
+
+    </mat-card>
+
+    <!-- lista certificações cadastradas -->
+
+    <button (click)="sendUserDetail()" type="button" class="btn btn-outline-primary" id="dropdownCategory">
+        Concluído
+    </button>
 </div>
