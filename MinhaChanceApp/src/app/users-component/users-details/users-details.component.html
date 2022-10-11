@@ -17,7 +17,7 @@
             </section>
             <mat-form-field *ngIf="IsWorking" class="col-md-4">
                 <mat-label class="placeholder-color">Empresa atual</mat-label>
-                <input id="userEmail" class="form-control" [(ngModel)]="this.user.actualCompany"
+                <input id="userEmail" class="form-control" ngModel="{{this.user.actualCompany}}"
                     formControlName="actualCompany" type="text" matInput autocomplete="off" placeholder="Empresa atual"
                     required />
             </mat-form-field>
@@ -29,7 +29,7 @@
             </div>
             <mat-form-field *ngIf="IsWorking" class="col-md-4">
                 <mat-label class="placeholder-color">Cargo atual</mat-label>
-                <input id="userEmail" class="form-control" [(ngModel)]="this.user.actualCharge"
+                <input id="userEmail" class="form-control" ngModel="{{this.user.actualCharge}}"
                     formControlName="actualCharge" type="text" matInput autocomplete="off" placeholder="Cargo atual"
                     required />
             </mat-form-field>
@@ -41,7 +41,7 @@
             </div>
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Pretensão salarial</mat-label>
-                <input id="userEmail" class="form-control" [(ngModel)]="this.user.salaryPretension"
+                <input id="userEmail" class="form-control" ngModel="{{this.user.salaryPretension}}"
                     formControlName="salaryPretension" type="text" matInput autocomplete="off"
                     placeholder="Pretensão salarial" required />
             </mat-form-field>
@@ -75,7 +75,7 @@
 
                         <mat-form-field>
                             <mat-label class="placeholder-color">Nome da empresa</mat-label>
-                            <input id="companyName" matInput class="form-control" formControlName="companyName" [(ngModel)]="this.experience.company"
+                            <input id="companyName" matInput class="form-control" formControlName="companyName"
                                 type="text" autocomplete="off" placeholder="Nome da empresa" required />
                         </mat-form-field>
                         <div
@@ -87,7 +87,7 @@
 
                         <mat-form-field>
                             <mat-label class="placeholder-color">Cargo</mat-label>
-                            <input id="chargeDescription" matInput class="form-control" [(ngModel)]="this.experience.chargeDescription" formControlName="chargeDescription"
+                            <input id="chargeDescription" matInput class="form-control" formControlName="chargeDescription"
                                 type="text" autocomplete="off" placeholder="Valor do beneficio" required />
                         </mat-form-field>
                         <div
@@ -98,7 +98,7 @@
                         </div>
                         <mat-form-field>
                             <mat-label class="placeholder-color">Tempo de atividade (Meses)</mat-label>
-                            <input id="timeSpentExperience" matInput class="form-control" [(ngModel)]="this.experience.timeSpent" formControlName="timeSpent"
+                            <input id="timeSpentExperience" matInput class="form-control" formControlName="timeSpent"
                                 type="number" autocomplete="off" placeholder="Valor do beneficio" required />
                         </mat-form-field>
                         <div
@@ -203,7 +203,7 @@
 
                         <mat-form-field>
                             <mat-label class="placeholder-color">Institução de ensino</mat-label>
-                            <input id="institute" matInput class="form-control" [(ngModel)]="this.graduation.institute" formControlName="institute"
+                            <input id="institute" matInput class="form-control" formControlName="institute"
                                 type="text" autocomplete="off" placeholder="Institução de ensino" required />
                         </mat-form-field>
                         <div
@@ -214,7 +214,7 @@
                         </div>
                         <mat-form-field>
                             <mat-label class="placeholder-color">Curso</mat-label>
-                            <input id="course" matInput class="form-control" [(ngModel)]="this.graduation.course" formControlName="course"
+                            <input id="course" matInput class="form-control" formControlName="course"
                                 type="text" autocomplete="off" placeholder="Curso" required />
                         </mat-form-field>
                         <div
@@ -234,7 +234,7 @@
                         </div>
                         <mat-form-field>
                             <mat-label class="placeholder-color">Tempo decorrido</mat-label>
-                            <input id="timeSpentGraduation" matInput class="form-control" [(ngModel)]="this.graduation.timeSpent" formControlName="timeSpent"
+                            <input id="timeSpentGraduation" matInput class="form-control"  formControlName="timeSpent"
                                 type="number" autocomplete="off" placeholder="Tempo decorrido" required />
                         </mat-form-field>
                         <div
@@ -349,7 +349,7 @@
                     <div class="column">
                         <mat-form-field>
                             <mat-label class="placeholder-color">Plataforma</mat-label>
-                            <input id="platform" matInput class="form-control" [(ngModel)]="this.certification.platform" formControlName="platform"
+                            <input id="platform" matInput class="form-control" formControlName="platform"
                                 type="text" autocomplete="off" placeholder="Plataforma" required />
                         </mat-form-field>
                         <div
@@ -369,7 +369,7 @@
                         </div>
                         <mat-form-field>
                             <mat-label class="placeholder-color">Tempo de curso</mat-label>
-                            <input id="timeSpentCertification" matInput class="form-control" [(ngModel)]="this.certification.timeSpent" type="number"
+                            <input id="timeSpentCertification" matInput class="form-control" type="number"
                                 autocomplete="off" placeholder="Tempo decorrido" required />
                         </mat-form-field>
                         <div

@@ -42,7 +42,7 @@ export class UsersDetailsComponent implements OnInit {
 
     this.userId = this.router.snapshot.params?.['userId'];
 
-    if(this.userId){
+    if (this.userId) {
 
       await this.userService.getUserInfoById(this.userId).subscribe(user => {
         this.user = user;
@@ -50,7 +50,7 @@ export class UsersDetailsComponent implements OnInit {
         this.graduations = user.graduations!;
         this.certifications = user.certifications!;
       })
-      
+
     }
   }
 
@@ -60,6 +60,10 @@ export class UsersDetailsComponent implements OnInit {
 
   addExperience() {
     if (this.formUserExperiences.valid) {
+      this.experience.company = (<HTMLInputElement>(document.getElementById('companyName'))).value;
+      this.experience.chargeDescription = (<HTMLInputElement>(document.getElementById('chargeDescription'))).value;
+      this.experience.timeSpent = +(<HTMLInputElement>(document.getElementById('timeSpentExperience'))).value;
+
       this.experiences.push(this.experience);
     }
   }
@@ -83,7 +87,12 @@ export class UsersDetailsComponent implements OnInit {
 
   addGraduation() {
     if (this.formUserGraduation.valid) {
+      this.graduation.institute = (<HTMLInputElement>(document.getElementById('institute'))).value;
+      this.graduation.course = (<HTMLInputElement>(document.getElementById('course'))).value;
       this.graduation.graduationDescription = (<HTMLInputElement>(document.getElementById('courseDescription'))).value;
+      this.graduation.timeSpent = +(<HTMLInputElement>(document.getElementById('timeSpentGraduation'))).value;
+      this.graduation.graduationDescription = (<HTMLInputElement>(document.getElementById('courseDescription'))).value;
+
       this.graduations.push(this.graduation);
     }
   }
@@ -108,7 +117,11 @@ export class UsersDetailsComponent implements OnInit {
 
   addCertification() {
     if (this.formUserCertification.valid) {
+
+      this.certification.platform = (<HTMLInputElement>(document.getElementById('platform'))).value;
+      this.certification.timeSpent = +(<HTMLInputElement>(document.getElementById('courseDescription'))).value;
       this.certification.certificationDescription = (<HTMLInputElement>(document.getElementById('certificationDescription'))).value;
+
       this.certifications.push(this.certification);
     }
   }
@@ -132,11 +145,13 @@ export class UsersDetailsComponent implements OnInit {
 
   sendUserDetail() {
 
-    if (!this.user.objective){
+    if (!this.user.objective) {
       this.needObjective = true;
       return;
     }
-    
+
+    if (!this.formUserExperiences.valid || !this.formUserGraduation.valid || !this.formUserCertification.valid)
+      return;
 
     if (this.formUserDetails.valid) {
       this.user.objective = (<HTMLInputElement>(document.getElementById('userObjective'))).value;

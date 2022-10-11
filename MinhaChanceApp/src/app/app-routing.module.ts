@@ -68,7 +68,11 @@ const routes: Routes = [
     component: LoginComponentComponent
   },
   {
-    path: ':user/cadastrar/:userId',
+    path: ':user/cadastrar',
+    component: UsersRegisterComponent
+  },
+  {
+    path: ':user/editar/:userId',
     component: UsersRegisterComponent
   },
   

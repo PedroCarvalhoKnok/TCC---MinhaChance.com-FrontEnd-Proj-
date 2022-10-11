@@ -12,6 +12,8 @@ export class User {
     passWord?: string;
     profile!: string;
     email!: string;
+    cpf?: string;
+    cnpj?: string;
     isWorking!: boolean;
     actualCompany?: string;
     actualCharge?: string;

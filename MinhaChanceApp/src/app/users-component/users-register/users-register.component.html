@@ -1,24 +1,28 @@
 <div class="center-content">
 
+    <div class="column">
 
-    <mat-tab-group class="tab-content" mat-align-tabs="center">
-        <mat-tab class="label-color" label="Dados cadastrais">
-            <app-users-data (sendUserEvent)="bindUserData($event)" class="label-color"></app-users-data>
-        </mat-tab>
-        <mat-tab *ngIf="this.isCandidate" class="label-color" label="Detalhes do candidato">
-            <app-users-details (sendDetailsEvent)="bindUserDetails($event)" class="label-color"></app-users-details>
-        </mat-tab>
-        <mat-tab *ngIf="this.isCandidate" class="label-color" label="Interesses do candidato">
-            <app-users-interests (sendInterestEvent)="bindUserInterests($event)" class="label-color"></app-users-interests>
-        </mat-tab>
-    </mat-tab-group>
+        <mat-tab-group class="tab-content" mat-align-tabs="center">
+            <mat-tab class="label-color" label="Dados cadastrais">
+                <app-users-data (sendUserEvent)="bindUserData($event)" class="label-color"></app-users-data>
+            </mat-tab>
+            <mat-tab *ngIf="this.isCandidate" class="label-color" label="Detalhes do candidato">
+                <app-users-details (sendDetailsEvent)="bindUserDetails($event)" class="label-color"></app-users-details>
+            </mat-tab>
+            <mat-tab *ngIf="this.isCandidate" class="label-color" label="Interesses do candidato">
+                <app-users-interests (sendInterestEvent)="bindUserInterests($event)" class="label-color">
+                </app-users-interests>
+            </mat-tab>
 
-    <button *ngIf="!this.userId" (click)="postUser()" type="button" class="btn btn-outline-primary" id="dropdownCategory">
-        Enviar
-    </button>
+        </mat-tab-group>
 
-    <button *ngIf="this.userId" (click)="editUser()" type="button" class="btn btn-outline-primary" id="dropdownCategory">
-        Editar
-    </button>
-    
+        <button *ngIf="!this.userId" (click)="postUser()" type="button" class="btn btn-outline-primary btnSend">
+            Enviar
+        </button>
+
+        <button *ngIf="this.userId" (click)="editUser()" type="button" class="btn btn-outline-primary btnSend">
+            Editar
+        </button>
+    </div>
+
 </div>

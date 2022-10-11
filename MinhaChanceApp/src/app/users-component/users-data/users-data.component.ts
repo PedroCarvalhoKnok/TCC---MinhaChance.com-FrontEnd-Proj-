@@ -17,6 +17,7 @@ export class UsersDataComponent implements OnInit {
   address: Address = new Address();
   isConfirmed: boolean = false;
   userId: number;
+  isCandidate: boolean;
   @Output() sendUserEvent = new EventEmitter<User>();
 
   constructor(private router: ActivatedRoute, private userService: UserService) { }
@@ -26,6 +27,7 @@ export class UsersDataComponent implements OnInit {
     this.createFormUserDataValidation();
 
     this.userId = this.router.snapshot.params?.['userId'];
+    this.isCandidate = this.router.snapshot.params?.['user'] === 'candidato' ? true: false;
 
     if(this.userId){
 
@@ -48,8 +50,15 @@ export class UsersDataComponent implements OnInit {
       email: new FormControl(this.user.email, [
         Validators.required
       ]),
-      passWord: new FormControl(this.user.passWord, [
+      cpf: new FormControl(this.user.cpf, [
         Validators.required
+      ]),
+      cnpj: new FormControl(this.user.cnpj, [
+        Validators.required
+      ]),
+      passWord: new FormControl(this.user.passWord, [
+        Validators.required,
+        Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')
       ]),
       age: new FormControl(this.user.age, [
         Validators.required,
@@ -88,6 +97,9 @@ export class UsersDataComponent implements OnInit {
   sendUserData(){
 
     if(!this.validateConfirmPassword())
+      return;
+
+    if(!this.formUserData.valid)
       return;
 
     this.user.address = this.address;

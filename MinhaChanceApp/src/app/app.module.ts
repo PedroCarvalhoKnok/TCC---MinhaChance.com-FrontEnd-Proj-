@@ -47,6 +47,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { UsersDataComponent } from './users-component/users-data/users-data.component';
 import { UsersDetailsComponent } from './users-component/users-details/users-details.component';
 import { UsersInterestsComponent } from './users-component/users-interests/users-interests.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { UsersInterestsComponent } from './users-component/users-interests/users
     MatDialogModule,
     MatGridListModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
