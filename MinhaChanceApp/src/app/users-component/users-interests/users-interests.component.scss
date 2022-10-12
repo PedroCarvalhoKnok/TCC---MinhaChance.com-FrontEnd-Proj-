@@ -1,36 +1,44 @@
-.benefit-card, .requires-card{
-    width: 100%;
-    margin-top: 30px;
-    display: flex;
-    height: 350px;
-    background-color: #191645;
-    color: white;
+.benefit-card,
+.requires-card {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  height: 350px;
+  background-color: #191645;
+  color: white;
 }
 
 
-.benefit-content, .requires-content{
-    margin-top: 60px;
-    margin-left: -100%;
-    display: flex;
-    padding-left: 0px;
-    overflow:auto;
-    color: white;
-    width: 100%;
+.benefit-content,
+.requires-content {
+  margin-top: 60px;
+  margin-left: -100%;
+  display: flex;
+  padding-left: 0px;
+  color: white;
+  width: 100%;
 }
 
-.title-vacancy{
-    width: 100%;
- }
+.title-vacancy {
+  width: 100%;
+}
 
- .text-area-form, .container, .session-area-form {
-    width: 80%;
-  }
+.text-area-form,
+.container,
+.session-area-form {
+  width: 80%;
+}
 
-  .row, .pad-top{
-    margin-top: 20px;
-  }
+.row,
+.pad-top {
+  margin-top: 20px;
+}
 
-  
+
 .form-control {
-    width: 100%;
-  }
+  width: 100%;
+}
+
+.container{
+  height: 400px;
+}
