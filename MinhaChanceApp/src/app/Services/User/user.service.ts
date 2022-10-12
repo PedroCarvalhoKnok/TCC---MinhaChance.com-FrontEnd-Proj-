@@ -73,7 +73,7 @@ export class UserService {
   }
 
   postUserRegister(user: User){
-    return this.httpClient.post<boolean>('', this.httpOptions).pipe(
+    return this.httpClient.post<User>('', this.httpOptions).pipe(
       retry(2)
     )
   }

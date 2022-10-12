@@ -14,87 +14,48 @@
            
 
         </div>
+
     </form>
-</div>
-<mat-card class="benefit-card">
+    <mat-card class="benefit-card">
 
-    <mat-card-header class="title-vacancy">
-        <mat-card-title fxLayoutAlign="center" class="title-vacancy">
-            Interesses
-        </mat-card-title>
-        <span (click)="this.addInterest" class="material-icons col-4">add_circle_outline</span>
-        <span (click)="this.removeInterest" class="material-icons col-4">remove_circle_outline</span>
-    </mat-card-header>
-
-    <mat-card-content class="benefit-content">
-
-        <div class="container">
-            <form [formGroup]="formUserInterest">
-
-                <div class="row">
-                    <mat-label>Descrição do interesse</mat-label>
-                    <br />
-                    <textarea id="interestDescription" class="text-area-form" required></textarea>
-                    <div
-                        *ngIf="formUserInterest.get('description')?.invalid && (formUserInterest.get('description')?.dirty || formUserInterest.get('description')?.touched)">
-                        <p *ngIf="formUserInterest.get('description')?.errors?.['required']">
-                            Interesse é necessário.
-                        </p>
+        <mat-card-header class="title-vacancy">
+            <mat-card-title fxLayoutAlign="center" class="title-vacancy">
+                Interesses
+            </mat-card-title>
+            <span (click)="this.addInterest" class="material-icons col-4">add_circle_outline</span>
+            <span (click)="this.removeInterest" class="material-icons col-4">remove_circle_outline</span>
+        </mat-card-header>
+    
+        <mat-card-content class="benefit-content">
+    
+            <div class="container">
+                <form [formGroup]="formUserInterest">
+    
+                    <div class="row">
+                        <mat-label>Descrição do interesse</mat-label>
+                        <br />
+                        <textarea id="interestDescription" class="text-area-form" required></textarea>
+                        <div
+                            *ngIf="formUserInterest.get('description')?.invalid && (formUserInterest.get('description')?.dirty || formUserInterest.get('description')?.touched)">
+                            <p *ngIf="formUserInterest.get('description')?.errors?.['required']">
+                                Interesse é necessário.
+                            </p>
+                        </div>
+    
+    
                     </div>
-
-
-                </div>
-            </form>
-
-        </div>
-
-
-    </mat-card-content>
+                </form>
+    
+            </div>
+    
+    
+        </mat-card-content>
+    
+        
+    
+    </mat-card>
 
     <button (click)="sendUserInterests()" type="button" class="btn btn-outline-primary" id="dropdownCategory">
         Concluído
     </button>
-
-</mat-card>
-
-
-<mat-card class="benefit-card" *ngFor="let interest of this.interests; let position = index">
-
-    <mat-card-header class="title-vacancy">
-        <mat-card-title fxLayoutAlign="center" class="title-vacancy">
-            Interesse
-        </mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content class="benefit-content">
-
-        <div class="container">
-
-
-            <div class="row">
-                <mat-label>Descrição do interesse</mat-label>
-                <br />
-                <textarea id="interestDescription" class="text-area-form" required>{{interest}}</textarea>
-                <div
-                    *ngIf="formUserInterest.get('description')?.invalid && (formUserInterest.get('description')?.dirty || formUserInterest.get('description')?.touched)">
-                    <p *ngIf="formUserInterest.get('description')?.errors?.['required']">
-                        Interesse é necessário.
-                    </p>
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-
-    </mat-card-content>
-
-    <mat-card-actions align="end">
-        <button (click)="editInterestByIndex(position)" mat-button>Editar</button>
-        <button (click)="removeInterestByIndex(position)" mat-button>Remover</button>
-    </mat-card-actions>
-
-
-</mat-card>
+</div>

@@ -18,7 +18,7 @@ mat-card-title, p, button{
 
 .start-content{
     text-align: center;
-    margin-top: 15%;
+    margin-top: 5%;
 }
 
 .center-title{
@@ -28,10 +28,17 @@ mat-card-title, p, button{
 .start-button{
     color: black;
     width: 70%;
-
+    height: 60px;
+    border-radius: 10px;
 }
 
 .input{
     width: 60%;
     text-align: center;
+}
+
+.image{
+    height: 150px;
+    width: 150px;
+    margin-bottom: 50px;
 }

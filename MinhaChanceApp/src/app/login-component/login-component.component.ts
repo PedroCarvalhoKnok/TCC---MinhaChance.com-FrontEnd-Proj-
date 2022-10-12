@@ -13,10 +13,12 @@ import { AuthenticationService } from '../Services/Authentication/authentication
 })
 export class LoginComponentComponent implements OnInit {
 
-  email: string;
+  cpf: string;
+  cnpj: string;
   passWord: string;
   formLogin!: FormGroup;
   userRole: string;
+  isCandidate: boolean;
 
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -32,15 +34,18 @@ export class LoginComponentComponent implements OnInit {
     let user = this.route.snapshot.params?.['user'];
 
     this.userRole = user === 'candidato' ? 'Candidato': 'Empresa';
+    this.isCandidate = user === 'candidato' ? true: false;
 
     this.createFormLoginValidation();
   }
 
   createFormLoginValidation(): void {
     this.formLogin = new FormGroup({
-      userEmail: new FormControl(this.email, [
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      cpf: new FormControl(this.cpf, [
+        Validators.required
+      ]),
+      cnpj: new FormControl(this.cnpj, [
+        Validators.required
       ]),
       userPassword: new FormControl(this.passWord, [
         Validators.required,
@@ -55,7 +60,9 @@ export class LoginComponentComponent implements OnInit {
       return;
     }
 
-    this.authenticationService.login(this.email, this.passWord)
+    let userDoc: string = this.userRole === 'candidato' ? this.cpf: this.cnpj;
+
+    this.authenticationService.login(userDoc, this.passWord)
       .pipe(first())
       .subscribe({
         next: () => {

@@ -202,7 +202,7 @@ export class VacanciesRegisterComponent implements OnInit {
         this.vacancyRequirementsToBeDeleted.push(this.vacancy.requirements[index])
 
 
-    delete this.vacancy.requirements ?? [index];
+    delete this.vacancy.requirements??[index];
   }
 
   editRequirementByIndex(index: number) {

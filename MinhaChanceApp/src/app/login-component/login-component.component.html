@@ -1,28 +1,36 @@
 <div class="center-content">
     <mat-card class="start-card">
 
-        <mat-card-title class="center-title">Login {{this.userRole}}</mat-card-title>
+        <mat-card-title class="center-title">Entrar como {{this.userRole}}</mat-card-title>
 
         <mat-card-content class="start-content">
             <div class="container">
                 <form [formGroup]="formLogin">
                     <div class="column">
-                        <mat-form-field class="input">
-                            <mat-label class="placeholder-color">Email</mat-label>
-                            <input id="userEmail" class="form-control" [(ngModel)]="this.email"
-                                formControlName="userEmail" type="text" matInput autocomplete="off" placeholder="Email"
+                        <img class="image" src="{{ this.isCandidate ? 'https://cdn-icons-png.flaticon.com/512/4412/4412797.png' : 'https://cdn-icons-png.flaticon.com/512/2660/2660513.png'}}"/>
+                        <br/>
+                        <mat-form-field *ngIf="isCandidate" class="input">
+                            <mat-label class="placeholder-color">CPF</mat-label>
+                            <input mask="000.000.000-00" id="userEmail" class="form-control" [(ngModel)]="this.cpf"
+                                formControlName="userEmail" type="text" matInput autocomplete="off" placeholder="CPF"
                                 required />
                         </mat-form-field>
                         <div
-                            *ngIf="formLogin.get('userEmail')?.invalid && (formLogin.get('userEmail')?.dirty || formLogin.get('userEmail')?.touched)">
-                            <p *ngIf="formLogin.get('userEmail')?.errors?.['required']">
-                                Email é necessário.
+                            *ngIf="formLogin.get('cpf')?.invalid && (formLogin.get('cpf')?.dirty || formLogin.get('cpf')?.touched)">
+                            <p *ngIf="formLogin.get('cpf')?.errors?.['required']">
+                                CPF é necessário.
                             </p>
                         </div>
+                        <mat-form-field *ngIf="!isCandidate" class="input">
+                            <mat-label class="placeholder-color">CNPJ</mat-label>
+                            <input mask="00.000.000/0000-00" id="userEmail" class="form-control" [(ngModel)]="this.cnpj"
+                                formControlName="userEmail" type="text" matInput autocomplete="off" placeholder="CNPJ"
+                                required />
+                        </mat-form-field>
                         <div
-                            *ngIf="formLogin.get('userEmail')?.invalid && (formLogin.get('userEmail')?.dirty || formLogin.get('userEmail')?.touched)">
-                            <p *ngIf="formLogin.get('userEmail')?.errors?.['pattern']">
-                                Email está em um formato incorreto.
+                            *ngIf="formLogin.get('cnpj')?.invalid && (formLogin.get('cnpj')?.dirty || formLogin.get('cnpj')?.touched)">
+                            <p *ngIf="formLogin.get('cnpj')?.errors?.['required']">
+                                CNPJ é necessário.
                             </p>
                         </div>
                         <br />
