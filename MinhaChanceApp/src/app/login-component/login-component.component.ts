@@ -19,6 +19,7 @@ export class LoginComponentComponent implements OnInit {
   formLogin!: FormGroup;
   userRole: string;
   isCandidate: boolean;
+  hide: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,

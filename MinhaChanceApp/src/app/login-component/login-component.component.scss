@@ -1,5 +1,5 @@
 .center-content {
-    height: 100%;
+    height: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,13 +12,13 @@ mat-card-title, p, button{
 .start-card{
     background-color: #191645;
     text-align: center;
-    width: 60%;
-    height: 60%;
+    width: 40%;
+    height: 100%;
+    margin-top: 10px;
 }
 
 .start-content{
     text-align: center;
-    margin-top: 5%;
 }
 
 .center-title{
@@ -38,7 +38,25 @@ mat-card-title, p, button{
 }
 
 .image{
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
     margin-bottom: 50px;
+}
+
+input{
+    background-color: white;
+    color: white;
+}
+
+.placeholder-color{
+    color: white;
+}
+
+.form-control{
+    height: 30px;
+    border-radius: 10px;
+}
+
+.icon{
+    height: 20px;
 }

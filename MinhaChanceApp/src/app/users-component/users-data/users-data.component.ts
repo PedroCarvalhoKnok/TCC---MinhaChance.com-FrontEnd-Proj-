@@ -2,7 +2,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Address } from 'src/app/Models/User/Address';
+import { Schooling } from 'src/app/Models/User/Schooling';
 import { User } from 'src/app/Models/User/User';
+import { SchoolingService } from 'src/app/Services/Schooling/schooling.service';
 import { UserService } from 'src/app/Services/User/user.service';
 
 @Component({
@@ -18,16 +20,19 @@ export class UsersDataComponent implements OnInit {
   isConfirmed: boolean = false;
   userId: number;
   isCandidate: boolean;
+  schoolings!: Schooling[];
   @Output() sendUserEvent = new EventEmitter<User>();
 
-  constructor(private router: ActivatedRoute, private userService: UserService) { }
+  constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService) { }
 
-  ngOnInit(): void {
+   ngOnInit(): void {
 
     this.createFormUserDataValidation();
 
     this.userId = this.router.snapshot.params?.['userId'];
     this.isCandidate = this.router.snapshot.params?.['user'] === 'candidato' ? true: false;
+
+    this.getSchoolings()
 
     if(this.userId){
 
@@ -36,6 +41,13 @@ export class UsersDataComponent implements OnInit {
       })
       
     }
+
+  }
+
+  async getSchoolings(){
+
+    await this.schoolingService.getSchoolings().subscribe(schoolings => { this.schoolings = schoolings});
+
   }
 
 
@@ -59,6 +71,9 @@ export class UsersDataComponent implements OnInit {
       passWord: new FormControl(this.user.passWord, [
         Validators.required,
         Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')
+      ]),
+      birthDate: new FormControl(this.user.birthDate, [
+        Validators.required,
       ]),
       age: new FormControl(this.user.age, [
         Validators.required,

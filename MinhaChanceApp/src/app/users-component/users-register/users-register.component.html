@@ -16,13 +16,16 @@
 
         </mat-tab-group>
 
-        <button *ngIf="!this.userId" (click)="postUser()" type="button" class="btn btn-outline-primary btnSend">
-            Enviar
+
+        <button *ngIf="!this.userId" (click)="confirmPostUser()" type="button" class="btn btn-outline-primary btnSend">
+            Enviar dados
         </button>
 
         <button *ngIf="this.userId" (click)="confirmEditUser()" type="button" class="btn btn-outline-primary btnSend">
-            Editar
+            Editar dados
         </button>
+
+        
     </div>
 
 </div>

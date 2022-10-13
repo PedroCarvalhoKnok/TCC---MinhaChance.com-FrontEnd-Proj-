@@ -57,6 +57,7 @@ export class VacanciesDetailsComponent implements OnInit {
     userVacancyInfo: { yes: 56, no: 44 },
     userInteligenciesInfo: { intelligence: 'Linguística', vacancies: ['Tradutor e conhecimento em libras'], skills: [67] },
     interests: [{description: 'Música'}, {description: 'Futebol'}, {description: 'Filmes e séries'}],
+    schooling: {id: 1, description: 'Ensino Médio Completo'},
     role: Role.Candidate
   },
   {
@@ -77,6 +78,7 @@ export class VacanciesDetailsComponent implements OnInit {
     userVacancyInfo: { yes: 50, no: 50 },
     userInteligenciesInfo: { intelligence: 'Lógica-Matemática', vacancies: ['Estatistico - Iniciante analise de dados', 'Desenvolvedor Java júnior'], skills: [78, 75] },
     interests: [{description: 'Natação'}, {description: 'Artes'}, {description: 'Filmes e séries'}],
+    schooling: {id: 1, description: 'Ensino Médio Completo'},
     role: Role.Candidate
   }])
 

@@ -7,10 +7,12 @@
             <div class="container">
                 <form [formGroup]="formLogin">
                     <div class="column">
-                        <img class="image" src="{{ this.isCandidate ? 'https://cdn-icons-png.flaticon.com/512/4412/4412797.png' : 'https://cdn-icons-png.flaticon.com/512/2660/2660513.png'}}"/>
-                        <br/>
+                        <img class="image"
+                            src="{{ this.isCandidate ? 'https://cdn-icons-png.flaticon.com/512/4412/4412797.png' : 'https://cdn-icons-png.flaticon.com/512/2660/2660513.png'}}" />
+                        <br />
+                        <mat-label *ngIf="isCandidate" class="placeholder-color">CPF</mat-label>
+                        <br />
                         <mat-form-field *ngIf="isCandidate" class="input">
-                            <mat-label class="placeholder-color">CPF</mat-label>
                             <input mask="000.000.000-00" id="userEmail" class="form-control" [(ngModel)]="this.cpf"
                                 formControlName="userEmail" type="text" matInput autocomplete="off" placeholder="CPF"
                                 required />
@@ -21,8 +23,9 @@
                                 CPF é necessário.
                             </p>
                         </div>
+                        <br />
+                        <mat-label *ngIf="!isCandidate" class="placeholder-color">CNPJ</mat-label>
                         <mat-form-field *ngIf="!isCandidate" class="input">
-                            <mat-label class="placeholder-color">CNPJ</mat-label>
                             <input mask="00.000.000/0000-00" id="userEmail" class="form-control" [(ngModel)]="this.cnpj"
                                 formControlName="userEmail" type="text" matInput autocomplete="off" placeholder="CNPJ"
                                 required />
@@ -34,11 +37,18 @@
                             </p>
                         </div>
                         <br />
+                        <mat-label class="placeholder-color">Senha</mat-label>
+                        <br />
                         <mat-form-field class="input">
-                            <mat-label class="placeholder-color">Senha</mat-label>
+
                             <input id="userPassword" class="form-control" [(ngModel)]="this.passWord"
-                                formControlName="userPassword" type="password" matInput autocomplete="off"
-                                placeholder="Senha" required />
+                                formControlName="userPassword" [type]="hide ? 'password' : 'text'" matInput autocomplete="off"
+                                required>
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                                [attr.aria-pressed]="hide">
+                                <mat-icon class="icon">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+
                         </mat-form-field>
                         <div
                             *ngIf="formLogin.get('userPassword')?.invalid && (formLogin.get('userPassword')?.dirty || formLogin.get('userPassword')?.touched)">

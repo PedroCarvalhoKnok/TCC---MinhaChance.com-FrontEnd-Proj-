@@ -15,6 +15,7 @@ export class UsersRegisterComponent implements OnInit {
   user: User = new User();
   isCandidate!: boolean;
   userId: number;
+  actualDate!: Date;
 
   constructor(private userService: UserService, private router: ActivatedRoute, private route: Router) { }
 
@@ -50,6 +51,33 @@ export class UsersRegisterComponent implements OnInit {
 
   }
 
+  formatMonth(mes: number): string{
+
+    let mesFormatted = mes < 10 ? `0${mes}` : mes.toString();
+
+    return mesFormatted;
+
+  }
+
+  formatCreationDate(){
+
+    this.actualDate = new Date();
+    var data =
+    this.actualDate.getDate() +
+      "/" +
+      this.formatMonth(this.actualDate.getMonth() + 1) +
+      "/" +
+      this.actualDate.getFullYear() +
+      " " +
+      this.actualDate.getHours() +
+      ":" +
+      this.actualDate.getMinutes() +
+      ":" +
+      this.actualDate.getSeconds();
+
+    return data;
+  }
+
   validateGoToUserTest(user: User) {
 
     Swal.fire({
@@ -72,9 +100,11 @@ export class UsersRegisterComponent implements OnInit {
 
   }
 
-  async registerUser() {
+  async postCandidate() {
 
-    await this.userService.postUserRegister(this.user).subscribe(user => {
+    this.user.creationDate = this.formatCreationDate();
+
+    await this.userService.postCandidateRegister(this.user).subscribe(user => {
       user ?
         Swal.fire(
           'Sucesso!',
@@ -94,10 +124,27 @@ export class UsersRegisterComponent implements OnInit {
 
   }
 
-  async postUser() {
+  async postCompany() {
+
+    await this.userService.postCompanyRegister(this.user).subscribe(user => {
+      user ?
+        Swal.fire(
+          'Sucesso!',
+          `Dados cadastrados com sucesso!`,
+          'success'
+        ): Swal.fire(
+          'Ops, ocorreu um erro!',
+          `Ocorreu um erro ao criar o usuário, tente novamente!`,
+          'warning'
+        );
+    })
+
+  }
+
+  async confirmPostUser() {
 
     Swal.fire({
-      title: 'Deseja enviar os dados de usuário?',
+      title: 'Deseja enviar os dados informados?',
       icon: 'warning',
       confirmButtonColor: '#3085d6',
       showCancelButton: true,
@@ -107,7 +154,12 @@ export class UsersRegisterComponent implements OnInit {
       cancelButtonText: 'Não!'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await this.registerUser();
+
+        if (this.isCandidate)
+          await this.postCandidate();
+        else
+          await this.postCompany();
+
       }
     })
 
@@ -115,9 +167,26 @@ export class UsersRegisterComponent implements OnInit {
 
   }
 
-  async editUser() {
+  async editCandidate() {
 
-    await this.userService.editUser(this.user).subscribe(feedBack => {
+    await this.userService.editCandidate(this.user).subscribe(feedBack => {
+      feedBack ?
+        Swal.fire(
+          'Sucesso!',
+          `Dados editados com sucesso!`,
+          'success'
+        ) : Swal.fire(
+          'Ops, ocorreu um erro!',
+          `Ocorreu um erro ao editar o usuário, tente novamente!`,
+          'warning'
+        );
+    })
+
+  }
+
+  async editCompany() {
+
+    await this.userService.editCompany(this.user).subscribe(feedBack => {
       feedBack ?
         Swal.fire(
           'Sucesso!',
@@ -135,7 +204,7 @@ export class UsersRegisterComponent implements OnInit {
   async confirmEditUser() {
 
     Swal.fire({
-      title: 'Deseja editar os dados de usuário?',
+      title: 'Deseja editar seus dados?',
       icon: 'warning',
       confirmButtonColor: '#3085d6',
       showCancelButton: true,
@@ -145,15 +214,15 @@ export class UsersRegisterComponent implements OnInit {
       cancelButtonText: 'Não!'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await this.editUser();
+        if (this.isCandidate)
+          await this.editCandidate();
+        else
+          await this.editCompany();
       }
     })
 
 
-
   }
-
-
 
 
 }

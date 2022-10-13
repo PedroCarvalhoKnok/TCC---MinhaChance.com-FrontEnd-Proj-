@@ -35,6 +35,23 @@
                 </p>
             </div>
             <mat-form-field *ngIf="isCandidate" class="col-md-4">
+                <mat-label class="placeholder-color">Data de nascimento</mat-label>
+                <input id="userEmail" class="form-control" [(ngModel)]="this.user.birthDate" formControlName="birthDate" type="date" matInput
+                    autocomplete="off" required />
+            </mat-form-field>
+            <div
+                *ngIf="formUserData.get('birthDate')?.invalid && (formUserData.get('birthDate')?.dirty || formUserData.get('birthDate')?.touched)">
+                <p *ngIf="formUserData.get('birthDate')?.errors?.['required']">
+                    Data de nascimento é necessário.
+                </p>
+            </div>
+            <mat-form-field *ngIf="isCandidate" class="col-md-4">
+                <mat-label class="placeholder-color">Escolaridade</mat-label>
+                <mat-select [value]="this.user.schoolingId" placeholder="Escolaridade">
+                    <mat-option *ngFor="let schooling of schoolings" value="{{schooling.id}}">{{schooling.description}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="isCandidate" class="col-md-4">
                 <mat-label class="placeholder-color">CPF</mat-label>
                 <input mask="000.000.000-00" id="userEmail" class="form-control" [(ngModel)]="this.user.cpf" formControlName="cpf" type="text" matInput
                     autocomplete="off" placeholder="CPF" required />

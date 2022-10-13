@@ -36,6 +36,7 @@ export class UsersProfileComponent implements OnInit {
     graduations: [],
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
     interests: [{description: 'Música'}, {description: 'Futebol'}, {description: 'Filmes e séries'}],
+    schooling: {id: 1, description: 'Ensino Médio Completo'},
     role: Role.Candidate
   };
 
