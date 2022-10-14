@@ -1,4 +1,4 @@
-export class Schooling {
+export interface Schooling {
     id: number;
-    description: string;
+    descricao: string;
 }

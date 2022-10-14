@@ -21,6 +21,8 @@ export class User {
     actualCompany?: string;
     actualCharge?: string;
     address!: Address;
+    companyPort?: string;
+    companyArea?: string;
     schoolingId?: number;
     schooling!: Schooling
     age!: number;

@@ -29,6 +29,8 @@ export class UsersRegisterComponent implements OnInit {
 
   bindUserData(data: User) {
     this.user = data;
+
+    console.log(this.user);
   }
 
   bindUserDetails(details: User) {
@@ -43,11 +45,15 @@ export class UsersRegisterComponent implements OnInit {
     this.user.graduations = details.graduations;
     this.user.certifications = details.certifications;
 
+    console.log(this.user);
+
   }
 
   bindUserInterests(interests: User) {
 
     this.user.interests = interests.interests;
+
+    console.log(this.user);
 
   }
 

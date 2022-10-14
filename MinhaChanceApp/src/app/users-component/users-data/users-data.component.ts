@@ -14,7 +14,8 @@ import { UserService } from 'src/app/Services/User/user.service';
 })
 export class UsersDataComponent implements OnInit {
 
-  formUserData!: FormGroup;
+  formCandidateData!: FormGroup;
+  formCompanyData!: FormGroup;
   user: User = new User();
   address: Address = new Address();
   isConfirmed: boolean = false;
@@ -25,34 +26,49 @@ export class UsersDataComponent implements OnInit {
 
   constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService) { }
 
-   ngOnInit(): void {
+  ngOnInit(): void {
 
-    this.createFormUserDataValidation();
+
 
     this.userId = this.router.snapshot.params?.['userId'];
-    this.isCandidate = this.router.snapshot.params?.['user'] === 'candidato' ? true: false;
+
+    if (this.router.snapshot.params?.['user'] === 'candidato') {
+      this.isCandidate = true;
+      this.createFormCandidateDataValidation();
+    }
+    else {
+      this.isCandidate = false;
+      this.createFormCompanyDataValidation();
+    }
 
     this.getSchoolings()
 
-    if(this.userId){
+    if (this.userId) {
 
       this.userService.getUserInfoById(this.userId).subscribe(user => {
         this.user = user;
       })
-      
+
     }
 
   }
 
-  async getSchoolings(){
+  async getSchoolings() {
 
-    await this.schoolingService.getSchoolings().subscribe(schoolings => { this.schoolings = schoolings});
+    // let x: any = await this.schoolingService.getSchoolings().subscribe(data => {return data});
+
+    // console.log(x);
+
+    await this.schoolingService.getSchoolings().subscribe((data: Schooling[]) => { 
+      console.log(data); 
+      this.schoolings = data;
+    });
 
   }
 
 
-  createFormUserDataValidation(): void {
-    this.formUserData = new FormGroup({
+  createFormCandidateDataValidation(): void {
+    this.formCandidateData = new FormGroup({
       userName: new FormControl(this.user.userName, [
         Validators.required
       ]),
@@ -63,9 +79,6 @@ export class UsersDataComponent implements OnInit {
         Validators.required
       ]),
       cpf: new FormControl(this.user.cpf, [
-        Validators.required
-      ]),
-      cnpj: new FormControl(this.user.cnpj, [
         Validators.required
       ]),
       passWord: new FormControl(this.user.passWord, [
@@ -97,25 +110,73 @@ export class UsersDataComponent implements OnInit {
     });
 
   }
-  
 
-  validateConfirmPassword(){
+
+  createFormCompanyDataValidation(): void {
+    this.formCompanyData = new FormGroup({
+      profileName: new FormControl(this.user.profile, [
+        Validators.required
+      ]),
+      email: new FormControl(this.user.email, [
+        Validators.required
+      ]),
+      cnpj: new FormControl(this.user.cnpj, [
+        Validators.required
+      ]),
+      companyArea: new FormControl(this.user.companyArea, [
+        Validators.required
+      ]),
+      passWord: new FormControl(this.user.passWord, [
+        Validators.required,
+        Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')
+      ]),
+      district: new FormControl(this.address.district, [
+        Validators.required,
+      ]),
+      zipCode: new FormControl(this.address.zipCode, [
+        Validators.required,
+      ]),
+      streetName: new FormControl(this.address.streetName, [
+        Validators.required,
+      ]),
+      streetNumber: new FormControl(this.address.streetNumber, [
+        Validators.required,
+      ]),
+      contact: new FormControl(this.user.phone, [
+        Validators.required,
+      ]),
+    });
+
+  }
+
+  validateConfirmPassword() {
 
     let confirmPassword = (<HTMLInputElement>(document.getElementById('confirmPassword'))).value;
 
-    this.isConfirmed = this.user.passWord === confirmPassword ? true: false;
+    console.log(this.user.passWord)
+    console.log(confirmPassword)
+
+    this.isConfirmed = this.user.passWord === confirmPassword ? false : true;
 
     return this.isConfirmed;
 
   }
 
-  sendUserData(){
+  sendUserData() {
 
-    if(!this.validateConfirmPassword())
+    if (this.validateConfirmPassword())
       return;
 
-    if(!this.formUserData.valid)
-      return;
+    if (this.isCandidate) {
+      if (!this.formCandidateData.valid)
+        return;
+    }
+    else {
+
+      if (!this.formCompanyData.valid)
+        return;
+
+    }
 
     this.user.address = this.address;
 
