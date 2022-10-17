@@ -4,6 +4,7 @@ import { UserService } from 'src/app/Services/User/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Role } from 'src/app/Enums/role';
 
 @Component({
   selector: 'app-users-register',
@@ -69,12 +70,12 @@ export class UsersRegisterComponent implements OnInit {
 
     this.actualDate = new Date();
     var data =
-    this.actualDate.getDate() +
-      "/" +
+    this.actualDate.getFullYear() +
+      "-" +
       this.formatMonth(this.actualDate.getMonth() + 1) +
-      "/" +
-      this.actualDate.getFullYear() +
-      " " +
+      "-" +
+      this.actualDate.getDate() +
+      "T" +
       this.actualDate.getHours() +
       ":" +
       this.actualDate.getMinutes() +
@@ -109,9 +110,11 @@ export class UsersRegisterComponent implements OnInit {
   async postCandidate() {
 
     this.user.creationDate = this.formatCreationDate();
+    this.user.role = Role.Candidate;
 
     await this.userService.postCandidateRegister(this.user).subscribe(user => {
-      user ?
+      console.log(user);
+      user === "Candidato cadastrado com sucesso!" ?
         Swal.fire(
           'Sucesso!',
           `Dados cadastrados com sucesso!`,
@@ -131,6 +134,8 @@ export class UsersRegisterComponent implements OnInit {
   }
 
   async postCompany() {
+
+    this.user.role = Role.Company;
 
     await this.userService.postCompanyRegister(this.user).subscribe(user => {
       user ?

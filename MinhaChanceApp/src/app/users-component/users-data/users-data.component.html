@@ -35,9 +35,9 @@
                 </p>
             </div>
             <mat-form-field class="col-md-4">
-                <mat-label class="placeholder-color">Escolaridade</mat-label>
-                <mat-select placeholder="Escolaridade">
-                    <mat-option *ngFor="let schooling of this.schoolings">{{schooling.descricao}}</mat-option>
+                <mat-label>Escolaridade</mat-label>
+                <mat-select (valueChange)="changeSchooling($event)" placeholder="Escolaridade">
+                    <mat-option [value]="schooling.id" *ngFor="let schooling of this.schoolings">{{schooling.descricao}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="col-md-4">

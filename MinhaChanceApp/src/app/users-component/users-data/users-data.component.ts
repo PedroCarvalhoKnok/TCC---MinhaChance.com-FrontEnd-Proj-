@@ -22,6 +22,7 @@ export class UsersDataComponent implements OnInit {
   userId: number;
   isCandidate: boolean;
   schoolings!: Schooling[];
+  schoolingSelected!: number;
   @Output() sendUserEvent = new EventEmitter<User>();
 
   constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService) { }
@@ -55,14 +56,19 @@ export class UsersDataComponent implements OnInit {
 
   async getSchoolings() {
 
-    // let x: any = await this.schoolingService.getSchoolings().subscribe(data => {return data});
+    await this.schoolingService.getSchoolings().subscribe(data => {
+     this.schoolings = data
 
-    // console.log(x);
-
-    await this.schoolingService.getSchoolings().subscribe((data: Schooling[]) => { 
-      console.log(data); 
-      this.schoolings = data;
+    
     });
+
+
+  }
+
+  changeSchooling(schoolId: number){
+
+    this.user.schoolingId = schoolId;
+    
 
   }
 

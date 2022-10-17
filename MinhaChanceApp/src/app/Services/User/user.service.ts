@@ -72,7 +72,9 @@ export class UserService {
   }
 
   postCandidateRegister(user: User) {
-    return this.httpClient.post<User>(this.urlCandidate, {
+
+    console.log(user);
+    return this.httpClient.post<any>(this.urlCandidate, {
       "nome": user.userName,
       "cpf": user.cpf,
       "dataNascimento": user.birthDate,

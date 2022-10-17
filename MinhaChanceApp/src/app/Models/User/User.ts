@@ -24,7 +24,7 @@ export class User {
     companyPort?: string;
     companyArea?: string;
     schoolingId?: number;
-    schooling!: Schooling
+    schooling?: Schooling;
     age!: number;
     phone!: string;
     hasVacancyCourse!:boolean;

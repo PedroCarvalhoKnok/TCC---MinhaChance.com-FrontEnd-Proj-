@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Schooling } from 'src/app/Models/User/Schooling';
 import { retry, catchError } from 'rxjs/operators';
@@ -17,6 +17,18 @@ export class SchoolingService {
 
 
   getSchoolings() {
+
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Access-Control-Allow-Origin': '*',
+  //     'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'
+  // })
+
+  //   return this.httpClient.get<any>(this.urlSchooling, {headers: headers}).toPromise().then(function (resp) {
+  //     return resp;
+  //   }, function (err) {
+  //     return err;
+  //   });
 
     return this.httpClient.get<Schooling[]>(this.urlSchooling).pipe(
       retry(2),

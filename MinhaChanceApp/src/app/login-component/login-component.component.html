@@ -25,6 +25,7 @@
                         </div>
                         <br />
                         <mat-label *ngIf="!isCandidate" class="placeholder-color">CNPJ</mat-label>
+                        <br />
                         <mat-form-field *ngIf="!isCandidate" class="input">
                             <input mask="00.000.000/0000-00" id="userEmail" class="form-control" [(ngModel)]="this.cnpj"
                                 formControlName="userEmail" type="text" matInput autocomplete="off" placeholder="CNPJ"
