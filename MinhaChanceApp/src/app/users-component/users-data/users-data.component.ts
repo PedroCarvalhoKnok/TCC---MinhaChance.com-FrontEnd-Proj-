@@ -23,9 +23,12 @@ export class UsersDataComponent implements OnInit {
   isCandidate: boolean;
   schoolings!: Schooling[];
   schoolingSelected!: number;
+  companySize!: string;
   @Output() sendUserEvent = new EventEmitter<User>();
 
-  constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService) { }
+  constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService) { 
+
+  }
 
   ngOnInit(): void {
 
@@ -36,13 +39,13 @@ export class UsersDataComponent implements OnInit {
     if (this.router.snapshot.params?.['user'] === 'candidato') {
       this.isCandidate = true;
       this.createFormCandidateDataValidation();
+      this.getSchoolings()
     }
     else {
       this.isCandidate = false;
       this.createFormCompanyDataValidation();
     }
-
-    this.getSchoolings()
+    console.log(this.userId)    
 
     if (this.userId) {
 
@@ -70,6 +73,12 @@ export class UsersDataComponent implements OnInit {
     this.user.schoolingId = schoolId;
     
 
+  }
+
+  changeCompanySize(size: string){
+
+    this.user.companyPort = size;
+    
   }
 
 
@@ -121,6 +130,9 @@ export class UsersDataComponent implements OnInit {
   createFormCompanyDataValidation(): void {
     this.formCompanyData = new FormGroup({
       profileName: new FormControl(this.user.profile, [
+        Validators.required
+      ]),
+      companyName: new FormControl(this.user.userName, [
         Validators.required
       ]),
       email: new FormControl(this.user.email, [

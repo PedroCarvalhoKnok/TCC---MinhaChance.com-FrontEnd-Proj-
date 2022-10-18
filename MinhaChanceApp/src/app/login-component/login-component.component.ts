@@ -16,7 +16,8 @@ export class LoginComponentComponent implements OnInit {
   cpf: string;
   cnpj: string;
   passWord: string;
-  formLogin!: FormGroup;
+  formLoginCandidate!: FormGroup;
+  formLoginCompany!: FormGroup;
   userRole: string;
   isCandidate: boolean;
   hide: boolean = false;
@@ -34,17 +35,30 @@ export class LoginComponentComponent implements OnInit {
 
     let user = this.route.snapshot.params?.['user'];
 
-    this.userRole = user === 'candidato' ? 'Candidato': 'Empresa';
-    this.isCandidate = user === 'candidato' ? true: false;
+    this.userRole = user === 'candidato' ? 'Candidato' : 'Empresa';
+    this.isCandidate = user === 'candidato' ? true : false;
 
-    this.createFormLoginValidation();
+    if (this.isCandidate)
+      this.createFormLoginCandidateValidation();
+    else
+      this.createFormLoginCompanyValidation();
+
   }
 
-  createFormLoginValidation(): void {
-    this.formLogin = new FormGroup({
+  createFormLoginCandidateValidation(): void {
+    this.formLoginCandidate = new FormGroup({
       cpf: new FormControl(this.cpf, [
         Validators.required
       ]),
+      userPassword: new FormControl(this.passWord, [
+        Validators.required,
+      ])
+    });
+
+  }
+
+  createFormLoginCompanyValidation(): void {
+    this.formLoginCompany = new FormGroup({
       cnpj: new FormControl(this.cnpj, [
         Validators.required
       ]),
@@ -57,11 +71,24 @@ export class LoginComponentComponent implements OnInit {
 
   async onLogin() {
 
-    if (this.formLogin.invalid) {
-      return;
+    if (this.isCandidate) {
+
+      if (this.formLoginCandidate.invalid) {
+        return;
+      }
+    }
+    else{
+
+      if (this.formLoginCompany.invalid) {
+        return;
+      }
+
     }
 
-    let userDoc: string = this.userRole === 'candidato' ? this.cpf: this.cnpj;
+    let userDoc: string = this.isCandidate ? this.cpf : this.cnpj;
+
+    console.log(userDoc)
+    console.log(this.passWord)
 
     this.authenticationService.login(userDoc, this.passWord)
       .pipe(first())

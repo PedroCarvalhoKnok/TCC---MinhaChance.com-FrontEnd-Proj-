@@ -4,36 +4,65 @@
         <mat-card-title class="center-title">Entrar como {{this.userRole}}</mat-card-title>
 
         <mat-card-content class="start-content">
-            <div class="container">
-                <form [formGroup]="formLogin">
+            <div *ngIf="this.isCandidate" class="container">
+                <form [formGroup]="formLoginCandidate">
                     <div class="column">
                         <img class="image"
-                            src="{{ this.isCandidate ? 'https://cdn-icons-png.flaticon.com/512/4412/4412797.png' : 'https://cdn-icons-png.flaticon.com/512/2660/2660513.png'}}" />
+                            src="https://cdn-icons-png.flaticon.com/512/4412/4412797.png" />
                         <br />
                         <mat-label *ngIf="isCandidate" class="placeholder-color">CPF</mat-label>
                         <br />
                         <mat-form-field *ngIf="isCandidate" class="input">
                             <input mask="000.000.000-00" id="userEmail" class="form-control" [(ngModel)]="this.cpf"
-                                formControlName="userEmail" type="text" matInput autocomplete="off" placeholder="CPF"
+                                formControlName="cpf" type="text" matInput autocomplete="off" placeholder="CPF"
                                 required />
                         </mat-form-field>
                         <div
-                            *ngIf="formLogin.get('cpf')?.invalid && (formLogin.get('cpf')?.dirty || formLogin.get('cpf')?.touched)">
-                            <p *ngIf="formLogin.get('cpf')?.errors?.['required']">
+                            *ngIf="formLoginCandidate.get('cpf')?.invalid && (formLoginCandidate.get('cpf')?.dirty || formLoginCandidate.get('cpf')?.touched)">
+                            <p *ngIf="formLoginCandidate.get('cpf')?.errors?.['required']">
                                 CPF é necessário.
                             </p>
                         </div>
+                        <br />
+                        <mat-label class="placeholder-color">Senha</mat-label>
+                        <br />
+                        <mat-form-field class="input">
+
+                            <input id="userPassword" class="form-control" [(ngModel)]="this.passWord"
+                                formControlName="userPassword" [type]="hide ? 'password' : 'text'" matInput autocomplete="off"
+                                required>
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                                [attr.aria-pressed]="hide">
+                                <mat-icon class="icon">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+
+                        </mat-form-field>
+                        <div
+                            *ngIf="formLoginCandidate.get('userPassword')?.invalid && (formLoginCandidate.get('userPassword')?.dirty || formLoginCandidate.get('userPassword')?.touched)">
+                            <p *ngIf="formLoginCandidate.get('userPassword')?.errors?.['required']">
+                                Senha é necessária.
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div *ngIf="!this.isCandidate" class="container">
+                <form [formGroup]="formLoginCompany">
+                    <div class="column">
+                        <img class="image"
+                            src="https://cdn-icons-png.flaticon.com/512/2660/2660513.png" />
                         <br />
                         <mat-label *ngIf="!isCandidate" class="placeholder-color">CNPJ</mat-label>
                         <br />
                         <mat-form-field *ngIf="!isCandidate" class="input">
                             <input mask="00.000.000/0000-00" id="userEmail" class="form-control" [(ngModel)]="this.cnpj"
-                                formControlName="userEmail" type="text" matInput autocomplete="off" placeholder="CNPJ"
+                                formControlName="cnpj" type="text" matInput autocomplete="off" placeholder="CNPJ"
                                 required />
                         </mat-form-field>
                         <div
-                            *ngIf="formLogin.get('cnpj')?.invalid && (formLogin.get('cnpj')?.dirty || formLogin.get('cnpj')?.touched)">
-                            <p *ngIf="formLogin.get('cnpj')?.errors?.['required']">
+                            *ngIf="formLoginCompany.get('cnpj')?.invalid && (formLoginCompany.get('cnpj')?.dirty || formLoginCompany.get('cnpj')?.touched)">
+                            <p *ngIf="formLoginCompany.get('cnpj')?.errors?.['required']">
                                 CNPJ é necessário.
                             </p>
                         </div>
@@ -52,8 +81,8 @@
 
                         </mat-form-field>
                         <div
-                            *ngIf="formLogin.get('userPassword')?.invalid && (formLogin.get('userPassword')?.dirty || formLogin.get('userPassword')?.touched)">
-                            <p *ngIf="formLogin.get('userPassword')?.errors?.['required']">
+                            *ngIf="formLoginCompany.get('userPassword')?.invalid && (formLoginCompany.get('userPassword')?.dirty || formLoginCompany.get('userPassword')?.touched)">
+                            <p *ngIf="formLoginCompany.get('userPassword')?.errors?.['required']">
                                 Senha é necessária.
                             </p>
                         </div>

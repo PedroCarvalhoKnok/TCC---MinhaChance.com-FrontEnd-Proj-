@@ -137,6 +137,8 @@ export class UsersRegisterComponent implements OnInit {
 
     this.user.role = Role.Company;
 
+    console.log(this.user);
+
     await this.userService.postCompanyRegister(this.user).subscribe(user => {
       user ?
         Swal.fire(

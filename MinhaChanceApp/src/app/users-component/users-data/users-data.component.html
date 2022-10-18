@@ -176,20 +176,31 @@
     <form [formGroup]="formCompanyData">
         <div class="row">
             <mat-form-field class="col-md-4">
-                <mat-label class="placeholder-color">Nome da empresa</mat-label>
+                <mat-label class="placeholder-color">Nome fantasia da empresa</mat-label>
                 <input id="userEmail" class="form-control" [(ngModel)]="this.user.profile" formControlName="profileName" type="text" matInput
-                    autocomplete="off" placeholder="Nome da empresa" required />
+                    autocomplete="off" placeholder="Nome fantasia da empresa" required />
             </mat-form-field>
             <div
                 *ngIf="formCompanyData.get('profileName')?.invalid && (formCompanyData.get('profileName')?.dirty || formCompanyData.get('profileName')?.touched)">
                 <p *ngIf="formCompanyData.get('profileName')?.errors?.['required']">
-                    Nome da empresa é necessário.
+                    Nome fantasia é necessário.
+                </p>
+            </div>
+            <mat-form-field class="col-md-4">
+                <mat-label class="placeholder-color">Nome real da empresa</mat-label>
+                <input id="userEmail" class="form-control" [(ngModel)]="this.user.userName" formControlName="companyName" type="text" matInput
+                    autocomplete="off" placeholder="Nome real da empresa" required />
+            </mat-form-field>
+            <div
+                *ngIf="formCompanyData.get('companyName')?.invalid && (formCompanyData.get('companyName')?.dirty || formCompanyData.get('companyName')?.touched)">
+                <p *ngIf="formCompanyData.get('companyName')?.errors?.['required']">
+                    Nome real é necessário.
                 </p>
             </div>
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Área de atuação</mat-label>
                 <input id="userEmail" class="form-control" [(ngModel)]="this.user.companyArea" formControlName="companyArea" type="text" matInput
-                    autocomplete="off" placeholder="Nome da empresa" required />
+                    autocomplete="off" placeholder="Área de atuação" required />
             </mat-form-field>
             <div
                 *ngIf="formCompanyData.get('companyArea')?.invalid && (formCompanyData.get('companyArea')?.dirty || formCompanyData.get('companyArea')?.touched)">
@@ -199,7 +210,7 @@
             </div>
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Porte da empresa</mat-label>
-                <mat-select [value]="this.user.companyPort" placeholder="porte">
+                <mat-select (valueChange)="changeCompanySize($event)" placeholder="Porte">
                     <mat-option value="Pequena">Pequena</mat-option>
                     <mat-option value="Média">Média</mat-option>
                     <mat-option value="Grande">Grande</mat-option>
@@ -208,11 +219,11 @@
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">CNPJ</mat-label>
                 <input mask="00.000.000/0000-00" id="userEmail" class="form-control" [(ngModel)]="this.user.cnpj" formControlName="cnpj" type="text" matInput
-                    autocomplete="off" placeholder="Nome de usuário" required />
+                    autocomplete="off" placeholder="CNPJ" required />
             </mat-form-field>
             <div
-                *ngIf="formCandidateData.get('cnpj')?.invalid && (formCandidateData.get('cnpj')?.dirty || formCandidateData.get('cnpj')?.touched)">
-                <p *ngIf="formCandidateData.get('cnpj')?.errors?.['required']">
+                *ngIf="formCompanyData.get('cnpj')?.invalid && (formCompanyData.get('cnpj')?.dirty || formCompanyData.get('cnpj')?.touched)">
+                <p *ngIf="formCompanyData.get('cnpj')?.errors?.['required']">
                     CNPJ é necessário.
                 </p>
             </div>
@@ -222,8 +233,8 @@
                     autocomplete="off" placeholder="examplo@dominio.com" required />
             </mat-form-field>
             <div
-                *ngIf="formCandidateData.get('email')?.invalid && (formCandidateData.get('email')?.dirty || formCandidateData.get('email')?.touched)">
-                <p *ngIf="formCandidateData.get('email')?.errors?.['required']">
+                *ngIf="formCompanyData.get('email')?.invalid && (formCompanyData.get('email')?.dirty || formCompanyData.get('email')?.touched)">
+                <p *ngIf="formCompanyData.get('email')?.errors?.['required']">
                     Email é necessário.
                 </p>
             </div>
@@ -233,14 +244,14 @@
                     autocomplete="off" placeholder="Senha" required />
             </mat-form-field>
             <div
-                *ngIf="formCandidateData.get('passWord')?.invalid && (formCandidateData.get('passWord')?.dirty || formCandidateData.get('passWord')?.touched)">
-                <p *ngIf="formCandidateData.get('passWord')?.errors?.['required']">
+                *ngIf="formCompanyData.get('passWord')?.invalid && (formCompanyData.get('passWord')?.dirty || formCompanyData.get('passWord')?.touched)">
+                <p *ngIf="formCompanyData.get('passWord')?.errors?.['required']">
                     Senha é necessária.
                 </p>
             </div>
             <div
-                *ngIf="formCandidateData.get('passWord')?.invalid && (formCandidateData.get('passWord')?.dirty || formCandidateData.get('passWord')?.touched)">
-                <p *ngIf="formCandidateData.get('passWord')?.errors?.['pattern']">
+                *ngIf="formCompanyData.get('passWord')?.invalid && (formCompanyData.get('passWord')?.dirty || formCompanyData.get('passWord')?.touched)">
+                <p *ngIf="formCompanyData.get('passWord')?.errors?.['pattern']">
                     Senha deve conter no mínimo: 6 caracteres, 1 letra minuscula, 1 maiuscula, 1 número e caracter especial.
                 </p>
             </div>
@@ -261,19 +272,19 @@
                     autocomplete="off" placeholder="Bairro" required />
             </mat-form-field>
             <div
-                *ngIf="formCandidateData.get('district')?.invalid && (formCandidateData.get('district')?.dirty || formCandidateData.get('district')?.touched)">
-                <p *ngIf="formCandidateData.get('district')?.errors?.['required']">
+                *ngIf="formCompanyData.get('district')?.invalid && (formCompanyData.get('district')?.dirty || formCompanyData.get('district')?.touched)">
+                <p *ngIf="formCompanyData.get('district')?.errors?.['required']">
                     Bairro é necessário.
                 </p>
             </div>
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">CEP</mat-label>
-                <input id="userPassword" mask="00000-000" class="form-control" [(ngModel)]="this.address.zipCode" formControlName="zipCode" type="text" matInput
+                <input mask="00000-000" id="userPassword" class="form-control" [(ngModel)]="this.address.zipCode" formControlName="zipCode" type="text" matInput
                     autocomplete="off" placeholder="CEP" required />
             </mat-form-field>
             <div
-                *ngIf="formCandidateData.get('zipCode')?.invalid && (formCandidateData.get('zipCode')?.dirty || formCandidateData.get('zipCode')?.touched)">
-                <p *ngIf="formCandidateData.get('zipCode')?.errors?.['required']">
+                *ngIf="formCompanyData.get('zipCode')?.invalid && (formCompanyData.get('zipCode')?.dirty || formCompanyData.get('zipCode')?.touched)">
+                <p *ngIf="formCompanyData.get('zipCode')?.errors?.['required']">
                     CEP é necessário.
                 </p>
             </div>
@@ -283,8 +294,8 @@
                     matInput autocomplete="off" placeholder="Rua" required />
             </mat-form-field>
             <div
-                *ngIf="formCandidateData.get('streetName')?.invalid && (formCandidateData.get('streetName')?.dirty || formCandidateData.get('streetName')?.touched)">
-                <p *ngIf="formCandidateData.get('streetName')?.errors?.['required']">
+                *ngIf="formCompanyData.get('streetName')?.invalid && (formCompanyData.get('streetName')?.dirty || formCompanyData.get('streetName')?.touched)">
+                <p *ngIf="formCompanyData.get('streetName')?.errors?.['required']">
                     Rua é necessária.
                 </p>
             </div>
@@ -294,8 +305,8 @@
                     matInput autocomplete="off" placeholder="Número" required />
             </mat-form-field>
             <div
-                *ngIf="formCandidateData.get('streetNumber')?.invalid && (formCandidateData.get('streetNumber')?.dirty || formCandidateData.get('streetNumber')?.touched)">
-                <p *ngIf="formCandidateData.get('streetNumber')?.errors?.['required']">
+                *ngIf="formCompanyData.get('streetNumber')?.invalid && (formCompanyData.get('streetNumber')?.dirty || formCompanyData.get('streetNumber')?.touched)">
+                <p *ngIf="formCompanyData.get('streetNumber')?.errors?.['required']">
                     Número é necessário.
                 </p>
             </div>
@@ -306,12 +317,12 @@
             </mat-form-field>
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Contato</mat-label>
-                <input id="userPassword" mask="(00) 00000-0000" class="form-control" [(ngModel)]="this.user.phone" formControlName="contact" type="phone" matInput
+                <input mask="(00) 00000-0000" id="userPassword" class="form-control" [(ngModel)]="this.user.phone" formControlName="contact" type="phone" matInput
                     autocomplete="off" placeholder="Contato" />
             </mat-form-field>
             <div
-                *ngIf="formCandidateData.get('contact')?.invalid && (formCandidateData.get('contact')?.dirty || formCandidateData.get('contact')?.touched)">
-                <p *ngIf="formCandidateData.get('contact')?.errors?.['required']">
+                *ngIf="formCompanyData.get('contact')?.invalid && (formCompanyData.get('contact')?.dirty || formCompanyData.get('contact')?.touched)">
+                <p *ngIf="formCompanyData.get('contact')?.errors?.['required']">
                     Contato é necessário.
                 </p>
             </div>

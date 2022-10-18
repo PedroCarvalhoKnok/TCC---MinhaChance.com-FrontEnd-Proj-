@@ -88,24 +88,26 @@ export class UserService {
   }
 
   postCompanyRegister(user: User) {
-    return this.httpClient.post<User>(this.urlCompany, {
+    console.log(this.urlCompany);
+    return this.httpClient.post<any>(this.urlCompany, {
       "nomeFantasia": user.userName,
       "razaoSocial": user.profile,
       "cnpj": user.cnpj,
-      "ramoAtuacao": "todos",
-      "porte": "grande"
+      "senha": user.passWord,
+      "ramoAtuacao": user.companyArea,
+      "porte": user.companyPort
     }).pipe(
       retry(2)
     )
   }
 
   editCandidate(user: User) {
-    return this.httpClient.put<boolean>(this.urlCandidate, {
+    return this.httpClient.put<boolean>(this.urlCandidate + '/3', {
       "nome": user.userName,
       "cpf": user.cpf,
       "dataNascimento": user.birthDate,
       "idSituacaoEmpregaticia": user.isWorking ? 1 : 2,
-      "dataCadastro": "2022/10/05",
+      "dataCadastro": "2022/10/17",
       "idEscolaridade": user.schoolingId,
       "idProfissao": 1
     }).pipe(
@@ -114,12 +116,12 @@ export class UserService {
   }
 
   editCompany(user: User) {
-    return this.httpClient.put<boolean>(this.urlCompany, {
+    return this.httpClient.put<boolean>(this.urlCompany + '/2', {
       "nomeFantasia": user.userName,
       "razaoSocial": user.profile,
       "cnpj": user.cnpj,
-      "ramoAtuacao": "todos",
-      "porte": "grande"
+      "ramoAtuacao": user.companyArea,
+      "porte": user.companyPort
     }).pipe(
       retry(2)
     )
