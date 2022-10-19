@@ -22,15 +22,15 @@ export class UsersDataComponent implements OnInit {
   userId: number;
   isCandidate: boolean;
   schoolings!: Schooling[];
-  schoolingSelected!: number;
+  schoolingSelected: number = 0;
   companySize!: string;
   @Output() sendUserEvent = new EventEmitter<User>();
 
-  constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService) { 
+  constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService) {
 
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
 
 
 
@@ -45,40 +45,74 @@ export class UsersDataComponent implements OnInit {
       this.isCandidate = false;
       this.createFormCompanyDataValidation();
     }
-    console.log(this.userId)    
+    console.log(this.userId)
 
     if (this.userId) {
 
-      this.userService.getUserInfoById(this.userId).subscribe(user => {
-        this.user = user;
-      })
+      if (this.isCandidate) {
+
+        await this.userService.getCandidateInfoById(this.userId).subscribe(user => {
+          
+          
+          this.user.cpf = user[0].cpf;
+          this.user.birthDate = this.formatDate(user[0].dataNascimento);
+          this.schoolingSelected = user[0].idEscolaridade;
+          this.user.isWorking = user[0].idSituacaoEmpregaticia == 1 ? true: false;
+
+        });
+
+        
+      }
+      else{
+
+        await this.userService.getCompanyInfoById(this.userId).subscribe(company => {
+          
+          console.log(company)
+          
+          this.user.profile = company[0].nomeFantasia;
+          this.user.userName = company[0].razaoSocial;
+          this.user.cnpj = company[0].cnpj;
+          this.user.companyArea = company[0].ramoAtuacao;
+          this.user.companyPort = company[0].porte;
+
+        });
+
+      }
 
     }
+
+  }
+
+  formatDate(date: string): string{
+
+    date = `${date.split('-')[0]}-${date.split('-')[1]}-${date.split('-')[2][0]}${date.split('-')[2][1]}`;
+
+    return date;
 
   }
 
   async getSchoolings() {
 
     await this.schoolingService.getSchoolings().subscribe(data => {
-     this.schoolings = data
+      this.schoolings = data
 
-    
+
     });
 
 
   }
 
-  changeSchooling(schoolId: number){
+  changeSchooling(schoolId: number) {
 
     this.user.schoolingId = schoolId;
-    
+
 
   }
 
-  changeCompanySize(size: string){
+  changeCompanySize(size: string) {
 
     this.user.companyPort = size;
-    
+
   }
 
 

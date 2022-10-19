@@ -4,40 +4,52 @@
   <span class="name-icon">Minha Chance</span>
   <span class="example-spacer-menu"></span>
 
-  <button mat-icon-button class="menu-icon" title="Início">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" title="Início">
     <mat-icon class="material-icons">home</mat-icon>
     <a class="text-menu">Inicio</a>
   </button>
   <span class="example-spacer-menu-items"></span>
-  <button mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon" title="Vagas">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon" title="Vagas">
     <mat-icon class="material-icons">
       work
     </mat-icon>
     <a class="text-menu">Vagas</a>
   </button>
   <span class="example-spacer-menu-items"></span>
-  <button mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon" title="Colaboradores">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon" title="Colaboradores">
     <mat-icon class="material-icons">
       construction
       </mat-icon>
       <a class="text-menu-fix">Colaboradores</a>
   </button>
   <span class="example-spacer-menu-items"></span>
-  <button mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon" title="Cursos">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon" title="Cursos">
     <mat-icon class="material-icons">
         school
     </mat-icon>
     <a class="text-menu">Cursos</a>
   </button>
   <span class="example-spacer"></span>
-  <button type="button" class="btn btn-outline-secondary me-2" placement="bottom"
+  <button *ngIf="isAuthenticated" type="button" class="btn btn-outline-secondary me-2" placement="bottom"
   ngbPopover="Seja bem vindo(a), usuario" popoverTitle="Usuario">
     <mat-icon class="side-icon"><span class="material-icons">
       account_circle
       </span></mat-icon>
   </button>
-  <button mat-icon-button class="side-icon" aria-label="Example icon-button with share icon">
+  <button *ngIf="!isAuthenticated" type="button" class="btn btn-outline-secondary me-2" placement="bottom"
+  ngbPopover="Criar usuário" popoverTitle="Usuario">
+    <mat-icon class="side-icon"><span class="material-icons">
+      add
+      </span></mat-icon>
+  </button>
+  <button *ngIf="isAuthenticated" mat-icon-button class="side-icon" aria-label="Example icon-button with share icon">
     <mat-icon class="side-icon">logout</mat-icon>
+  </button>
+  <button *ngIf="!isAuthenticated" type="button" class="btn btn-outline-secondary me-2" placement="bottom"
+  ngbPopover="Entrar como" popoverTitle="Usuario">
+    <mat-icon class="side-icon"><span class="material-icons">
+      login
+      </span></mat-icon>
   </button>
 </mat-toolbar>
 
@@ -49,26 +61,26 @@
       Desenvolvido por:
   </span>
   <span class="example-spacer"></span>
-  <button mat-icon-button class="menu-icon-mobile" aria-label="Example icon-button with heart icon" title="Início">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile" aria-label="Example icon-button with heart icon" title="Início">
     <mat-icon class="material-icons">home</mat-icon>
     <span>Inicio</span>
   </button>
   <span class="example-spacer-menu-items"></span>
-  <button mat-icon-button class="menu-icon-mobile" aria-label="Example icon-button with heart icon" title="Vagas">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile" aria-label="Example icon-button with heart icon" title="Vagas">
     <span class="material-icons">
       work
     </span>
     <a>Vagas</a>
   </button>
   <span class="example-spacer-menu-items"></span>
-  <button mat-icon-button class="menu-icon-mobile" aria-label="Example icon-button with heart icon" title="Colaboradores">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile" aria-label="Example icon-button with heart icon" title="Colaboradores">
     <span class="material-icons">
       construction
       </span>
       <a>Colaboradores</a>
   </button>
   <span class="example-spacer-menu-items-fix"></span>
-  <button mat-icon-button class="menu-icon-mobile" aria-label="Example icon-button with heart icon" title="Cursos">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile" aria-label="Example icon-button with heart icon" title="Cursos">
     <span class="material-icons">
       <span class="material-icons">
         school

@@ -28,7 +28,7 @@ export class UsersInterestsComponent implements OnInit {
 
     if(this.userId){
 
-      await this.userService.getUserInfoById(this.userId).subscribe(user => {
+      await this.userService.getCandidateInfoById(this.userId).subscribe(user => {
         this.interests = user.interests;
       })
       

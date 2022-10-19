@@ -17,7 +17,7 @@ export class AuthenticationService {
   public user: Observable<User>
 
   constructor(private router: Router, private http: HttpClient) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')!));
+    this.userSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('user')!));
     this.user = this.userSubject.asObservable();
   }
 
@@ -34,7 +34,7 @@ export class AuthenticationService {
       .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         console.log(user);
-        localStorage.setItem('user', JSON.stringify(user));
+        sessionStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
         return user;
       }));
@@ -42,8 +42,8 @@ export class AuthenticationService {
 
   logout() {
     // remove user from local storage to log user out
-    let user = JSON.parse(localStorage.getItem('user')!);
-    localStorage.removeItem('user');
+    let user = JSON.parse(sessionStorage.getItem('user')!);
+    sessionStorage.removeItem('user');
     this.userSubject.next(new User());
     user.role === Role.Candidate ? this.router.navigate(['/login/candidato']) : this.router.navigate(['/login/empresa'])
   }

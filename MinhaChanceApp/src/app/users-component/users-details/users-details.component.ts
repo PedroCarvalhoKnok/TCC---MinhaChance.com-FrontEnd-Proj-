@@ -44,7 +44,7 @@ export class UsersDetailsComponent implements OnInit {
 
     if (this.userId) {
 
-      await this.userService.getUserInfoById(this.userId).subscribe(user => {
+      await this.userService.getCandidateInfoById(this.userId).subscribe(user => {
         this.user = user;
         this.experiences = user.experiences!;
         this.graduations = user.graduations!;

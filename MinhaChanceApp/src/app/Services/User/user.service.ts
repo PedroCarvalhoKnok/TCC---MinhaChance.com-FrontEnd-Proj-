@@ -35,8 +35,15 @@ export class UserService {
     )
   }
 
-  getUserInfoById(userId: number) {
-    return this.httpClient.get<User>('',).pipe(
+  getCandidateInfoById(userId: number) {
+    
+    return this.httpClient.get<any>(this.urlCandidate + `/${userId}`,).pipe(
+      retry(2)
+    )
+  }
+
+  getCompanyInfoById(userId: number) {
+    return this.httpClient.get<any>(this.urlCompany + `/${userId}`,).pipe(
       retry(2)
     )
   }

@@ -218,7 +218,7 @@ export class VacanciesListComponent implements OnInit {
       cancelButtonText: 'Não!'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await this.userService.getUserInfoById(this.userId).subscribe(user => userLogged = user); //trocar para usuario logado
+        await this.userService.getCandidateInfoById(this.userId).subscribe(user => userLogged = user); //trocar para usuario logado
 
         if (userLogged) {
           await this.userService.postUserCandidature(userLogged.id, vacancy.id).subscribe(response => responseCandidature = response);

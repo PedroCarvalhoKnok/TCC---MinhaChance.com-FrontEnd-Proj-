@@ -106,7 +106,7 @@ export class UsersProfileComponent implements OnInit {
 
     if (userId != undefined) {
 
-      await this.userService.getUserInfoById(userId).subscribe(user => { this.userLogged = user });
+      await this.userService.getCandidateInfoById(userId).subscribe(user => { this.userLogged = user });
 
       await this.testService.getUserTestResults(userId).subscribe(results => { this.userSkillsByIntelligence = results })
 

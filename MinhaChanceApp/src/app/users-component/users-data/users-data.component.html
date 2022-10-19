@@ -35,8 +35,8 @@
                 </p>
             </div>
             <mat-form-field class="col-md-4">
-                <mat-label>Escolaridade</mat-label>
-                <mat-select (valueChange)="changeSchooling($event)" placeholder="Escolaridade">
+                <mat-label class="placeholder-color">Escolaridade</mat-label>
+                <mat-select [value]="this.schoolingSelected" (valueChange)="changeSchooling($event)" placeholder="Escolaridade">
                     <mat-option [value]="schooling.id" *ngFor="let schooling of this.schoolings">{{schooling.descricao}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -210,7 +210,7 @@
             </div>
             <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">Porte da empresa</mat-label>
-                <mat-select (valueChange)="changeCompanySize($event)" placeholder="Porte">
+                <mat-select [value]="this.user.companyPort" (valueChange)="changeCompanySize($event)" placeholder="Porte">
                     <mat-option value="Pequena">Pequena</mat-option>
                     <mat-option value="Média">Média</mat-option>
                     <mat-option value="Grande">Grande</mat-option>
