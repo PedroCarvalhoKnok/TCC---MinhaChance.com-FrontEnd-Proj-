@@ -31,19 +31,25 @@ export class VacanciesRegisterComponent implements OnInit {
   isHibrid: boolean = false;
 
   vacancyId!: number;
-  vacancyBenefitsToBeDeleted!: Benefit[];
-  vacancyRequirementsToBeDeleted!: Requirement[];
+  vacancyBenefitsToBeDeleted: Benefit[] = [];
+  vacancyRequirementsToBeDeleted: Requirement[] = [];
 
   constructor(private vacancyService: VacancyService, private router: ActivatedRoute) { }
 
   async ngOnInit() {
 
-    let vacancyId = this.router.snapshot.params?.['vacancyId'];
+    this.vacancyId = this.router.snapshot.params?.['vacancyId'];
 
-    this.vacancyId = vacancyId;
-
-    if (this.vacancyId != undefined) {
-      await this.vacancyService.getVacancy(vacancyId).subscribe(vacancy => this.vacancy = vacancy)
+    if (this.vacancyId) {
+      await this.vacancyService.getVacancy(this.vacancyId).subscribe(vacancy => {
+        console.log(vacancy);
+        this.vacancy.userId = vacancy[0].idEmpresas;
+        this.vacancy.id = vacancy[0].id;
+        this.vacancy.vacancyTitle = vacancy[0].titulo;
+        this.vacancy.quantity = vacancy[0].quantidade;
+        (<HTMLInputElement>document.getElementById('vacancyDescription')).value = vacancy[0].descricao;
+        (<HTMLInputElement>document.getElementById(`benefitDescription`)).value = vacancy[0].beneficios; //alterar
+      })
     }
 
     this.createFormVacancyValidation();
@@ -105,17 +111,23 @@ export class VacanciesRegisterComponent implements OnInit {
 
     this.vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
     this.vacancy.creationDate = new Date();
+    //this.vacancy.userId = JSON.parse(sessionStorage.getItem('user')!).id; usar
+    this.vacancy.userId = 2; //alterar
+
+    this.vacancy.benefit = this.vacancy.benefits[0]; //alterar
 
     if (this.formVacancy.valid) {
 
-      await this.vacancyService.postVacancy(vacancy).subscribe(retornMsg =>
-        Swal.fire(
-          {
-            title: `${retornMsg}`,
-            icon: 'success',
-          }));
+    console.log(vacancy);
 
-    }
+    await this.vacancyService.postVacancy(vacancy).subscribe(retornMsg =>
+      Swal.fire(
+        {
+          title: `${retornMsg.message}`,
+          icon: 'success',
+        }));
+
+     }
 
 
   }
@@ -133,27 +145,32 @@ export class VacanciesRegisterComponent implements OnInit {
     if (this.vacancyRequirementsToBeDeleted.length > 0) {
 
       for (let requirementToBeDeleted of this.vacancyRequirementsToBeDeleted) {
-        await this.vacancyService.deleteVacancyBenefit(requirementToBeDeleted.id)
+        await this.vacancyService.deleteVacancyRequirement(requirementToBeDeleted.id)
       }
 
     }
+
+    this.vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
+    this.vacancy.benefit = this.vacancy.benefits[0]; //alterar
 
     if (this.formVacancy.valid) {
       await this.vacancyService.editVacancy(vacancy).subscribe(returnMsg =>
         Swal.fire(
           {
-            title: `${returnMsg}`,
+            title: `${returnMsg.message}`,
             icon: 'success',
           }));
     }
   }
 
-  addBenefit(benefit: Benefit) {
+  addBenefit() {
 
     if (this.formBenefits.valid) {
       this.benefit.description = (<HTMLInputElement>document.getElementById(`benefitDescription`)).value;
       this.benefit.value = +(<HTMLInputElement>document.getElementById(`benefitValue`)).value;
-      this.vacancy.benefits.push(benefit);
+      
+      this.vacancy.benefits.push(this.benefit);
+
     }
 
   }
@@ -174,8 +191,7 @@ export class VacanciesRegisterComponent implements OnInit {
 
     requirement.description = (<HTMLInputElement>document.getElementById(`requirementDescription`)).value;
     requirement.differencial = (<HTMLInputElement>document.getElementById(`requirementDifferential`)).value;
-
-
+    
     this.vacancy.requirements?.push(requirement);
 
   }
@@ -202,7 +218,7 @@ export class VacanciesRegisterComponent implements OnInit {
         this.vacancyRequirementsToBeDeleted.push(this.vacancy.requirements[index])
 
 
-    delete this.vacancy.requirements??[index];
+    delete this.vacancy.requirements ?? [index];
   }
 
   editRequirementByIndex(index: number) {
@@ -212,10 +228,11 @@ export class VacanciesRegisterComponent implements OnInit {
 
   createFormVacancyValidation(): void {
     this.formVacancy = new FormGroup({
+      vacancyTitle: new FormControl(this.vacancy.vacancyTitle, [
+        Validators.required
+      ]),
       vacancySalary: new FormControl(this.vacancy.salary, [
         Validators.required,
-        this.forbiddenDurationTimeValidator(/0/i),
-        this.forbiddenDurationTimeValidator(/[-0-9]+/i)
       ]),
       contractType: new FormControl(this.vacancy.contractType, [
         Validators.required
@@ -226,7 +243,6 @@ export class VacanciesRegisterComponent implements OnInit {
       vacancyQuantity: new FormControl(this.vacancy.quantity, [
         Validators.required,
         this.forbiddenDurationTimeValidator(/0/i),
-        this.forbiddenDurationTimeValidator(/[-0-9]+/i)
       ]),
       vacancySemanalQuantity: new FormControl(this.vacancy.semanalQuantity, [
         Validators.required,
@@ -253,8 +269,6 @@ export class VacanciesRegisterComponent implements OnInit {
       ]),
       benefitValue: new FormControl(this.benefit.value, [
         Validators.required,
-        this.forbiddenDurationTimeValidator(/0/i),
-        this.forbiddenDurationTimeValidator(/[-0-9]+/i)
       ])
     });
 

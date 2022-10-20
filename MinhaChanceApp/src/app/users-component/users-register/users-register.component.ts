@@ -26,6 +26,25 @@ export class UsersRegisterComponent implements OnInit {
 
     this.userId = this.router.snapshot.params?.['userId'];
 
+    if (this.userId) {
+      let userLogged = JSON.parse(sessionStorage.getItem('user')!);
+      if (this.userId != userLogged.id) {
+        
+        Swal.fire({
+          title: 'Não é possivel editar outro perfil',
+          icon: 'warning',
+          confirmButtonColor: '#3085d6',          
+          showConfirmButton: true,         
+          confirmButtonText: 'OK'         
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            this.route.navigate([`${this.userId}/perfil`]);
+          }
+
+        })
+      }
+    }
+
   }
 
   bindUserData(data: User) {
@@ -58,7 +77,7 @@ export class UsersRegisterComponent implements OnInit {
 
   }
 
-  formatMonth(mes: number): string{
+  formatMonth(mes: number): string {
 
     let mesFormatted = mes < 10 ? `0${mes}` : mes.toString();
 
@@ -66,11 +85,11 @@ export class UsersRegisterComponent implements OnInit {
 
   }
 
-  formatCreationDate(){
+  formatCreationDate() {
 
     this.actualDate = new Date();
     var data =
-    this.actualDate.getFullYear() +
+      this.actualDate.getFullYear() +
       "-" +
       this.formatMonth(this.actualDate.getMonth() + 1) +
       "-" +
@@ -145,7 +164,7 @@ export class UsersRegisterComponent implements OnInit {
           'Sucesso!',
           `Dados cadastrados com sucesso!`,
           'success'
-        ): Swal.fire(
+        ) : Swal.fire(
           'Ops, ocorreu um erro!',
           `Ocorreu um erro ao criar o usuário, tente novamente!`,
           'warning'

@@ -3,6 +3,7 @@ import { Requirement } from "./Requirement";
 
 export class Vacancy {
     id!: number;
+    userId?: number;
     vacancyTitle!: string;
     creationDate!: Date;
     quantity!: number;
@@ -15,8 +16,8 @@ export class Vacancy {
     description!: string;
     benefit?: Benefit;
     requirement?: Requirement;
-    benefits!: Benefit[];
-    requirements?: Requirement[];
+    benefits: Benefit[] = [];
+    requirements?: Requirement[] = [];
     category!: string;
     location?: string;
 }

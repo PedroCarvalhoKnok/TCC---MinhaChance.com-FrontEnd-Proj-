@@ -12,6 +12,8 @@ import { SkillsStartComponent } from './skills-test-component/skills-start/skill
 import { UsersProfileComponent } from './users-component/users-profile/users-profile.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
 import { UsersRegisterComponent } from './users-component/users-register/users-register.component';
+import { AuthGuard } from './Helpers/auth.guard';
+import { Role } from './Enums/role';
 
 const routes: Routes = [
   {
@@ -19,48 +21,70 @@ const routes: Routes = [
     component: HomeComponentComponent
   },
   {
-    path: 'empresa/curso/buscar',
+    path: 'curso/buscar',
     component: CoursesListComponent
   },
   {
     path: 'empresa/curso',
-    component: CoursesRegisterComponent
+    component: CoursesRegisterComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Company] }
   }
   ,
   {
     path: 'empresa/curso/:courseId',
-    component: CoursesRegisterComponent
+    component: CoursesRegisterComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Company] }
   },
   {
-    path: 'empresa/vagas/buscar',
+    path: 'vagas/buscar',
     component: VacanciesListComponent
   },
   {
     path: 'empresa/vagas/detalhes/:vacancyId',
-    component: VacanciesDetailsComponent
+    component: VacanciesDetailsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Company] }
   },
   {
-    path: 'empresa/vagas',
-    component: VacanciesRegisterComponent
+    path: 'empresa/vagas/cadastrar',
+    component: VacanciesRegisterComponent,
+    // canActivate: [AuthGuard],
+    // data: { roles: [Role.Company] }
   },
   {
-    path: 'empresa/vagas/:vacancyId',
-    component: VacanciesRegisterComponent
+    path: 'empresa/vagas/editar/:vacancyId',
+    component: VacanciesRegisterComponent,
+    // canActivate: [AuthGuard],
+    // data: { roles: [Role.Company] }
+  },
+  {
+    path: 'empresa/vagas/editar/:vacancyId',
+    component: VacanciesRegisterComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Company] }
   },
   {
     path: 'candidato/:userId/teste',
-    component: SkillsTestComponent
+    component: SkillsTestComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Candidate] }
   },
   {
     path: 'candidato/:userId/teste/resultado',
-    component: SkillsResultComponent
+    component: SkillsResultComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Candidate] }
   },
   {
     path: 'candidato/:userId/teste/inicio',
-    component: SkillsStartComponent
+    component: SkillsStartComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Candidate] }
   },
   {
-    path: 'candidato/:userId/perfil',
+    path: ':userId/perfil',
     component: UsersProfileComponent
   },
   {

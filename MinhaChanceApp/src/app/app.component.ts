@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Role } from './Enums/role';
 import { User } from './Models/User/User';
 import { AuthenticationService } from './Services/Authentication/authentication.service';
@@ -13,7 +14,7 @@ export class AppComponent {
   user: User;
   title: string = 'MinhaVezApp'
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService, private router: Router) {
     this.authenticationService.user.subscribe(x => this.user = x);
   }
 
@@ -23,6 +24,29 @@ export class AppComponent {
 
   get isAuthenticated() {
     return this.user;
+  }
+  
+  goToRegisterCandidate(){
+
+    location.href = '/candidato/cadastrar';
+
+  }
+
+  goToRegisterCompany(){
+
+    location.href = '/empresa/cadastrar';
+    
+  }
+
+  goToLoginCandidate(){
+
+    location.href = '/candidato/login';
+  }
+
+  goToLoginCompany(){
+    
+    location.href = '/empresa/login';
+   
   }
 
   logout() {

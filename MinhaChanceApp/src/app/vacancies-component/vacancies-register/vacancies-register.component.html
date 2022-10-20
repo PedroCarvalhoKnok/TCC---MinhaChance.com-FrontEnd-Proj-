@@ -14,6 +14,13 @@
                 <div fxLayout="row" fxLayoutAlign="center">
                     <form [formGroup]="formVacancy">
                         <div fxLayout="column">
+                            <mat-label class="placeholder-color">Título da vaga</mat-label>
+                            <br/>
+                            <mat-form-field>
+                                <input id="vacancyTitle" formControlName="vacancySalary" class="form-control" type="text" [(ngModel)]="this.vacancy.vacancyTitle"
+                                    matInput autocomplete="off" placeholder="Título"/>
+                            </mat-form-field>
+                            <br/>
                             <mat-label class="placeholder-color">Salário da vaga</mat-label>
                             <br/>
                             <mat-form-field>
@@ -148,7 +155,7 @@
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
                 Beneficios
             </mat-card-title>
-            <span class="material-icons col-4" (click)="addBenefit(this.benefit)">add_circle_outline</span>
+            <span class="material-icons col-4" (click)="addBenefit()">add_circle_outline</span>
             <span class="material-icons col-4" (click)="removeBenefit()">remove_circle_outline</span>
         </mat-card-header>
 
@@ -204,8 +211,6 @@
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
                 Beneficio
             </mat-card-title>
-            <span class="material-icons col-4" (click)="editBenefitByIndex(benefitIndex)">add_circle_outline</span>
-            <span class="material-icons col-4" (click)="removeBenefitByIndex(benefitIndex)">remove_circle_outline</span>
         </mat-card-header>
 
         <mat-card-content class="benefit-content">
@@ -298,8 +303,6 @@
             <mat-card-title fxLayoutAlign="center" class="title-vacancy">
                 Requisitos
             </mat-card-title>
-            <span class="material-icons col-4" (click)="editRequirementByIndex(requirementIndex)">add_circle_outline</span>
-            <span class="material-icons col-4" (click)="removeRequirementByIndex(requirementIndex)">remove_circle_outline</span>
         </mat-card-header>
 
         <mat-card-content class="requires-content">

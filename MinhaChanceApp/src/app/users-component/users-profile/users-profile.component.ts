@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'src/app/Models/Course/Course';
 import { User } from 'src/app/Models/User/User';
 import { Vacancy } from 'src/app/Models/Vacancy/Vacancy';
@@ -97,16 +97,15 @@ export class UsersProfileComponent implements OnInit {
 
   ];
 
-  constructor(private userService: UserService, private testService: TestService, private router: ActivatedRoute, public dialog: MatDialog) { }
+  constructor(private userService: UserService, private testService: TestService, private router: ActivatedRoute, public dialog: MatDialog, private route: Router) { }
 
   async ngOnInit() {
 
     let userId = this.router.snapshot.params?.['userId'];
 
-
     if (userId != undefined) {
 
-      await this.userService.getCandidateInfoById(userId).subscribe(user => { this.userLogged = user });
+      this.userLogged = JSON.parse(sessionStorage.getItem('user')!);
 
       await this.testService.getUserTestResults(userId).subscribe(results => { this.userSkillsByIntelligence = results })
 
@@ -124,6 +123,14 @@ export class UsersProfileComponent implements OnInit {
         data: user
       });
     })
+
+  }
+
+  editUserProfile(){
+
+    let userId = this.router.snapshot.params?.['userId'];
+
+    this.route.navigate([`/${this.userLogged.role}/editar/${userId}`]);
 
   }
 

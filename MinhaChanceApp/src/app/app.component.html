@@ -1,4 +1,3 @@
-
 <!-- Toobar -->
 <mat-toolbar class="toolbar">
   <span class="name-icon">Minha Chance</span>
@@ -9,48 +8,66 @@
     <a class="text-menu">Inicio</a>
   </button>
   <span class="example-spacer-menu-items"></span>
-  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon" title="Vagas">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon"
+    title="Vagas">
     <mat-icon class="material-icons">
       work
     </mat-icon>
     <a class="text-menu">Vagas</a>
   </button>
   <span class="example-spacer-menu-items"></span>
-  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon" title="Colaboradores">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon"
+    title="Colaboradores">
     <mat-icon class="material-icons">
       construction
-      </mat-icon>
-      <a class="text-menu-fix">Colaboradores</a>
+    </mat-icon>
+    <a class="text-menu-fix">Colaboradores</a>
   </button>
   <span class="example-spacer-menu-items"></span>
-  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon" title="Cursos">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon"
+    title="Cursos">
     <mat-icon class="material-icons">
-        school
+      school
     </mat-icon>
     <a class="text-menu">Cursos</a>
   </button>
   <span class="example-spacer"></span>
   <button *ngIf="isAuthenticated" type="button" class="btn btn-outline-secondary me-2" placement="bottom"
-  ngbPopover="Seja bem vindo(a), usuario" popoverTitle="Usuario">
+    ngbPopover="Seja bem vindo(a), usuario" popoverTitle="Usuario">
     <mat-icon class="side-icon"><span class="material-icons">
-      account_circle
+        account_circle
       </span></mat-icon>
   </button>
-  <button *ngIf="!isAuthenticated" type="button" class="btn btn-outline-secondary me-2" placement="bottom"
-  ngbPopover="Criar usuário" popoverTitle="Usuario">
-    <mat-icon class="side-icon"><span class="material-icons">
-      add
-      </span></mat-icon>
+  <button *ngIf="!isAuthenticated" type="button" class="btn btn-outline-primary me-2" placement="bottom"
+    [ngbPopover]="popContentCreate">
+    Criar conta como
   </button>
   <button *ngIf="isAuthenticated" mat-icon-button class="side-icon" aria-label="Example icon-button with share icon">
     <mat-icon class="side-icon">logout</mat-icon>
   </button>
-  <button *ngIf="!isAuthenticated" type="button" class="btn btn-outline-secondary me-2" placement="bottom"
-  ngbPopover="Entrar como" popoverTitle="Usuario">
-    <mat-icon class="side-icon"><span class="material-icons">
-      login
-      </span></mat-icon>
+  <button *ngIf="!isAuthenticated" type="button" class="btn btn-outline-primary me-2" placement="bottom"
+    [ngbPopover]="popContentLogin">
+    Entrar como
   </button>
+
+  <ng-template #popContentCreate>
+    <div>
+      <button class="btnPop" (click)="goToRegisterCandidate()">Candidato</button>
+      <br/>
+      <br/>
+      <button class="btnPop" (click)="goToRegisterCompany()">Empresa</button>
+    </div>
+  </ng-template>
+
+  <ng-template #popContentLogin>
+    <div>
+      <button class="btnPop" (click)="goToLoginCandidate()">Candidato</button>
+      <br/>
+      <br/>
+      <button class="btnPop" (click)="goToLoginCompany()">Empresa</button>
+    </div>
+  </ng-template>
+
 </mat-toolbar>
 
 <router-outlet></router-outlet>
@@ -58,40 +75,42 @@
 <!-- Footer -->
 <mat-toolbar class="footer">
   <span class="footer-icon">
-      Desenvolvido por:
+    Desenvolvido por:
   </span>
   <span class="example-spacer"></span>
-  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile" aria-label="Example icon-button with heart icon" title="Início">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile"
+    aria-label="Example icon-button with heart icon" title="Início">
     <mat-icon class="material-icons">home</mat-icon>
     <span>Inicio</span>
   </button>
   <span class="example-spacer-menu-items"></span>
-  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile" aria-label="Example icon-button with heart icon" title="Vagas">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile"
+    aria-label="Example icon-button with heart icon" title="Vagas">
     <span class="material-icons">
       work
     </span>
     <a>Vagas</a>
   </button>
   <span class="example-spacer-menu-items"></span>
-  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile" aria-label="Example icon-button with heart icon" title="Colaboradores">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile"
+    aria-label="Example icon-button with heart icon" title="Colaboradores">
     <span class="material-icons">
       construction
-      </span>
-      <a>Colaboradores</a>
+    </span>
+    <a>Colaboradores</a>
   </button>
   <span class="example-spacer-menu-items-fix"></span>
-  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile" aria-label="Example icon-button with heart icon" title="Cursos">
+  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile"
+    aria-label="Example icon-button with heart icon" title="Cursos">
     <span class="material-icons">
       <span class="material-icons">
         school
-        </span>
       </span>
-      <a>Cursos</a>
+    </span>
+    <a>Cursos</a>
   </button>
   <span class="footer-icon">
     Português - Brasil
   </span>
 
 </mat-toolbar>
-
-
