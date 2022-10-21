@@ -153,6 +153,34 @@ export class UsersProfileComponent implements OnInit {
 
   }
 
+  formatMonth(mes: number): string {
+
+    let mesFormatted = mes < 10 ? `0${mes}` : mes.toString();
+
+    return mesFormatted;
+
+  }
+
+  formatCreationDate() {
+
+    let actualDate: Date = new Date();
+
+    var data =
+      actualDate.getFullYear() +
+      "/" +
+      this.formatMonth(actualDate.getMonth() + 1) +
+      "/" +
+      actualDate.getDate() +
+      "T" +
+      actualDate.getHours() +
+      ":" +
+      actualDate.getMinutes() +
+      ":" +
+      actualDate.getSeconds();
+
+    return data;
+  }
+
 
 
   sendCandidature(vacancy: Vacancy) {
@@ -172,7 +200,7 @@ export class UsersProfileComponent implements OnInit {
       if (result.isConfirmed) {
 
         if (this.userLogged) {
-          await this.userService.postUserCandidature(this.userLogged.id, vacancy.id).subscribe(response => responseCandidature = response);
+          await this.userService.postUserCandidature(this.userLogged.id, vacancy.id, this.formatCreationDate()).subscribe(response => responseCandidature = response);
           if (responseCandidature) {
 
             await this.userService.sendEmail(this.userLogged, `Olá ${this.userLogged.userName}! Sua candidatura para a vaga ${vacancy.vacancyTitle} foi enviada com sucesso, aguarde a resposta da empresa para a próxima etapa. Boa Sorte!`)

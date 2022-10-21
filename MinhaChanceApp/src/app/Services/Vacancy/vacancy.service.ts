@@ -36,6 +36,21 @@ export class VacancyService {
       )
   }
 
+  getVacanciesForCandidates() {
+    return this.httpClient.get<any>(`${this.urlVaga}`)
+      .pipe(
+        retry(2),
+      )
+  }
+
+  getVacanciesByCompany(userId: number) {
+    console.log(userId);
+    return this.httpClient.get<any>(`${this.urlVaga}/${userId}`)
+      .pipe(
+        retry(2),
+      )
+  }
+
   editVacancy(vacancy: Vacancy) {
     console.log(vacancy)
     return this.httpClient.put<any>(`${this.urlVaga}/${vacancy.id}`, {
@@ -51,7 +66,7 @@ export class VacancyService {
   }
 
   deleteVacancy(vacancyId: number) {
-    return this.httpClient.delete<string>(``)
+    return this.httpClient.delete<any>(`${this.urlVaga}/${vacancyId}`)
       .pipe(
         retry(2),
       )

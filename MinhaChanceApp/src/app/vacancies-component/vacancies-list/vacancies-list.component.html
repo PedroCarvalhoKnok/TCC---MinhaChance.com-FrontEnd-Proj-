@@ -127,11 +127,11 @@
                 <div class="row">
 
                     <span class="material-icons col-md-4">account_circle</span>
-                    <label class="col-md-4" for="inputdefault">Salário<br />{{vacancy.salary}}</label>
+                    <!-- <label class="col-md-4" for="inputdefault">Salário<br />{{vacancy.salary}}</label> -->
                     <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantity}} vaga(s)</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{vacancy.modalidity}} {{vacancy.modalidity == 'Hibrido' ? vacancy.semanalQuantity: ''}}</label>
-                    <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
+                    <!-- <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{vacancy.modalidity}} {{vacancy.modalidity == 'Hibrido' ? vacancy.semanalQuantity: ''}}</label> -->
+                    <!-- <br /> -->
+                    <!-- <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
                         <ul class="vacancy-list col-md-8" *ngFor="let benefit of this.vacancy.benefits">
                             <li>Descrição {{benefit.description}}</li>
                             <li>Valor {{benefit.value}}</li>
@@ -142,21 +142,21 @@
                             <li>Descrição {{requirement.description}}</li>
                             <li>Diferencial {{requirement.differencial != undefined ? '- ' + requirement.differencial : ''}}</li>
                         </ul>
-                    </label><br />
-                    <label class="col-md-4" for="inputdefault">Localização<br />{{vacancy.location}}</label><br />
+                    </label><br /> -->
+                    <!-- <label class="col-md-4" for="inputdefault">Localização<br />{{vacancy.location}}</label><br />
                     <label class="col-md-4" for="inputdefault">Categoria<br />{{vacancy.category}}</label>
-                    <label class="col-md-4" for="inputdefault">Criação<br />{{ vacancy.creationDate.getDate() }}/{{ vacancy.creationDate.getMonth() + 1 }}/{{ vacancy.creationDate.getFullYear() }}</label>
+                    <label class="col-md-4" for="inputdefault">Criação<br />{{ vacancy.creationDate.getDate() }}/{{ vacancy.creationDate.getMonth() + 1 }}/{{ vacancy.creationDate.getFullYear() }}</label> -->
                     <div class="description">
                         <label for="inputdefault">Descrição da vaga<br />{{vacancy.description}}</label><br />
                     </div>
 
                     <div class="description">
-                        <button type="button" [routerLink]="" class="btn btn-primary btn-sm space-button">Editar vaga</button>
+                        <button type="button" (click)="goEditVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Editar vaga</button>
                         <button type="button" [routerLink]="" class="btn btn-primary btn-sm space-button">Vaga preenchida</button>
-                        <button type="button" [routerLink]="['empresa','vagas','detalhes', vacancy.id]" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
+                        <button type="button" (click)="goDetailsVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
                         <button (click)="deleteVacancyModal(vacancy.id)" type="button"  class="btn btn-danger btn-sm space-button">Excluir vaga</button>
                         <button (click)="openMetricsDetails(vacancy.id)" type="button" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
-                        <button (click)="sendEmailCandidature(vacancy)" type="button" class="btn btn-primary btn-sm space-button">Candidatar a vaga</button>
+                        <button (click)="sendCandidature(vacancy)" type="button" class="btn btn-primary btn-sm space-button">Candidatar a vaga</button>
                     </div>
 
                 </div>

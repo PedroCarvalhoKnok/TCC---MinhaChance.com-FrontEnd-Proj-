@@ -13,6 +13,7 @@ export class UserService {
 
   urlCandidate = `${environment.urlBaseApi}/candidatos`;
   urlCompany = `${environment.urlBaseApi}/empresas`;
+  urlVacancyUser = `${environment.urlBaseApi}/candidatoVaga`;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -36,7 +37,7 @@ export class UserService {
   }
 
   getCandidateInfoById(userId: number) {
-    
+
     return this.httpClient.get<any>(this.urlCandidate + `/${userId}`,).pipe(
       retry(2)
     )
@@ -66,14 +67,19 @@ export class UserService {
     )
   }
 
-  postUserCandidature(userId: number, vacancyid: number) {
-    return this.httpClient.get<boolean>('').pipe(
+  postUserCandidature(userId: number, vacancyid: number, candidatureDate: string) {
+    return this.httpClient.post<any>(this.urlVacancyUser, {
+      "idCandidato": userId,
+      "idVaga": vacancyid,
+      "dataCandidatura": candidatureDate,
+      "status": "em andamento"
+    }).pipe(
       retry(2)
     )
   }
 
   postAffirmativeFeedBack(userId: number, vacancyId: number) {
-    return this.httpClient.get<boolean>('').pipe(
+    return this.httpClient.get<any>('').pipe(
       retry(2)
     )
   }

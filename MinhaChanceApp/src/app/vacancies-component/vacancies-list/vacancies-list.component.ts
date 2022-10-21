@@ -24,7 +24,7 @@ export class VacanciesListComponent implements OnInit {
 
   pageEvent!: PageEvent;
 
-  userId!: number;
+  userLogged: User = new User();
 
   fileMocked = new File([], "", {
     type: "",
@@ -36,14 +36,41 @@ export class VacanciesListComponent implements OnInit {
 
   vacancyFilter: vacancyFilter = new vacancyFilter();
 
-  vacancies: Observable<Vacancy[]> = of([{ id: 1, vacancyTitle: 'Estagiario Desenvolvimento Java', creationDate: new Date(), image: this.fileMocked, quantity: 1, salary: 0, isConfidential: false, contractType: 'Estagio', modalidity: 'Hibrido', semanalQuantity: 2, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 1000 }, { id: 2, description: 'Convenio medico', value: 500 }], requirements: [{ id: 1, description: 'Cursando ensino superior', differential: undefined }] },
-  { id: 2, vacancyTitle: 'Desenvolvedor Junior', creationDate: new Date(), image: this.fileMocked, quantity: 2, salary: 3500, isConfidential: false, contractType: 'CLT', modalidity: 'Remoto', semanalQuantity: 0, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 1000 }, { id: 2, description: 'Convenio medico', value: 1500 }], requirements: [{ id: 1, description: 'Ensino superior completo', differential: 'Conhecimento básico de .NET' }] },
-  { id: 3, vacancyTitle: 'Consultor Cloud Senior', creationDate: new Date(), image: this.fileMocked, quantity: 1, salary: 0, isConfidential: true, contractType: 'CLT', modalidity: 'Remoto', semanalQuantity: 0, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 2000 }, { id: 2, description: 'Convenio medico', value: 1500 }], requirements: [{ id: 1, description: 'Ensino superior completo', differential: 'Conhecimento avançado de Azure ou AWS' }] },
-  ]);
+  // vacancies: Observable<Vacancy[]> = of([{ id: 1, vacancyTitle: 'Estagiario Desenvolvimento Java', creationDate: new Date(), image: this.fileMocked, quantity: 1, salary: 0, isConfidential: false, contractType: 'Estagio', modalidity: 'Hibrido', semanalQuantity: 2, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 1000 }, { id: 2, description: 'Convenio medico', value: 500 }], requirements: [{ id: 1, description: 'Cursando ensino superior', differential: undefined }] },
+  // { id: 2, vacancyTitle: 'Desenvolvedor Junior', creationDate: new Date(), image: this.fileMocked, quantity: 2, salary: 3500, isConfidential: false, contractType: 'CLT', modalidity: 'Remoto', semanalQuantity: 0, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 1000 }, { id: 2, description: 'Convenio medico', value: 1500 }], requirements: [{ id: 1, description: 'Ensino superior completo', differential: 'Conhecimento básico de .NET' }] },
+  // { id: 3, vacancyTitle: 'Consultor Cloud Senior', creationDate: new Date(), image: this.fileMocked, quantity: 1, salary: 0, isConfidential: true, contractType: 'CLT', modalidity: 'Remoto', semanalQuantity: 0, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 2000 }, { id: 2, description: 'Convenio medico', value: 1500 }], requirements: [{ id: 1, description: 'Ensino superior completo', differential: 'Conhecimento avançado de Azure ou AWS' }] },
+  // ]);
+
+  vacancies: Observable<Vacancy[]> = of([]);
 
   async ngOnInit() {
 
     // this.vacancies = await this.vacancyService.getAllVacanciesByUser(1); //user id
+
+    //this.userLogged = JSON.parse(sessionStorage.getItem('user')!);
+    //let userId = 2
+
+    this.userLogged.id = 3;
+
+    await this.vacancyService.getVacanciesForCandidates().subscribe(vacancies => {
+      console.log(vacancies);
+      this.vacancies = of(vacancies);
+    });
+
+    // if(this.userLogged.role === 'Candidate'){
+
+    // await this.vacancyService.getVacanciesForCandidates().subscribe(vacancies => {
+    //   this.vacancies = vacancies;
+    // });
+
+    // }
+    // else{
+
+    //   await this.vacancyService.getVacanciesByCompany(this.userLogged.id).subscribe(vacancies => {
+    //     this.vacancies = vacancies;
+    //   });
+
+    // }
 
   }
 
@@ -124,14 +151,17 @@ export class VacanciesListComponent implements OnInit {
 
     this.vacancyFilter.vacancyQuantity = +(<HTMLInputElement>document.getElementById(`maxVacancyQuantity`)).value;
     this.vacancyFilter.vacancyCategory = (<HTMLInputElement>document.getElementById(`vacancyCategory`)).value;
+    console.log(this.vacancyFilter);
+    this.vacancies.subscribe(vacancies => {
 
-    this.vacancies.subscribe(vacancies => vacanciesFiltered = vacancies)
+      this.vacancies = of(this.filterVacancyList(vacancies));
 
-    this.vacancies = of(this.filterVacancyList(vacanciesFiltered));
+    })
+
 
   }
 
-  filterVacancyList(vacancyList: Vacancy[]) {
+  filterVacancyList(vacancyList: Vacancy[]): Vacancy[] {
     if (this.vacancyFilter.isConfidential) {
       vacancyList = vacancyList.filter(vacancy => vacancy.isConfidential);
     }
@@ -156,17 +186,33 @@ export class VacanciesListComponent implements OnInit {
       vacancyList = vacancyList.filter(vacancy => vacancy.location == this.vacancyFilter.location);
     }
 
+    if (this.vacancyFilter.vacancyQuantity != 0) {
+      vacancyList = vacancyList.filter(vacancy => vacancy.quantity <= this.vacancyFilter.vacancyQuantity);
+    }
+
     if (this.vacancyFilter.salary != 0) {
-      vacancyList = vacancyList.filter(vacancy => vacancy.salary == this.vacancyFilter.salary && !vacancy.isConfidential);
+      vacancyList = vacancyList.filter(vacancy => vacancy.salary <= this.vacancyFilter.salary && !vacancy.isConfidential);
     }
 
     return vacancyList;
 
   }
 
+  goEditVacancy(vacancyId: number) {
+
+    this.router.navigate([`empresa/vagas/editar/${vacancyId}`]);
+
+  }
+
+  goDetailsVacancy(vacancyId: number) {
+
+    this.router.navigate([`empresa/vagas/detalhes/${vacancyId}`]);
+
+  }
+
   async openMetricsDetails(vacancyId: number) {
 
-    await this.userService.getUserInfoByVacancy(this.userId, vacancyId).subscribe(user => {
+    await this.userService.getUserInfoByVacancy(this.userLogged.id, vacancyId).subscribe(user => {
       const dialog = this.dialog.open(UserVacancyListDialogComponent, {
         data: user
       });
@@ -177,10 +223,14 @@ export class VacanciesListComponent implements OnInit {
   async deleteVacancy(vacancyId: number) {
     await this.vacancyService.deleteVacancy(vacancyId).subscribe(returnMsg =>
       Swal.fire(
-        'Deletada!',
-        `${returnMsg}`,
+        'Vaga deletada com sucesso!',
+        `${returnMsg.message}`,
         'success'
-      ))
+      ).then(async (result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
+      }))
   }
 
   goToVacancyRegister() {
@@ -202,11 +252,37 @@ export class VacanciesListComponent implements OnInit {
 
   }
 
+  formatMonth(mes: number): string {
 
-  sendEmailCandidature(vacancy: Vacancy) {
+    let mesFormatted = mes < 10 ? `0${mes}` : mes.toString();
 
-    let userLogged!: User;
-    let responseCandidature!: boolean;
+    return mesFormatted;
+
+  }
+
+  formatCreationDate() {
+
+    let actualDate: Date = new Date();
+
+    var data =
+      actualDate.getFullYear() +
+      "/" +
+      this.formatMonth(actualDate.getMonth() + 1) +
+      "/" +
+      actualDate.getDate() +
+      "T" +
+      actualDate.getHours() +
+      ":" +
+      actualDate.getMinutes() +
+      ":" +
+      actualDate.getSeconds();
+
+    return data;
+  }
+
+
+  sendCandidature(vacancy: Vacancy) {
+
 
     Swal.fire({
       title: `Tem certeza que deseja se candidatar a vaga ${vacancy.vacancyTitle}?`,
@@ -218,34 +294,42 @@ export class VacanciesListComponent implements OnInit {
       cancelButtonText: 'Não!'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await this.userService.getCandidateInfoById(this.userId).subscribe(user => userLogged = user); //trocar para usuario logado
 
-        if (userLogged) {
-          await this.userService.postUserCandidature(userLogged.id, vacancy.id).subscribe(response => responseCandidature = response);
-          if (responseCandidature) {
+        console.log(this.userLogged)
 
-            await this.userService.sendEmail(userLogged, `Olá ${userLogged.userName}! Sua candidatura para a vaga ${vacancy.vacancyTitle} foi enviada com sucesso, aguarde a resposta da empresa para a próxima etapa. Boa Sorte!`)
-              .subscribe(response => {
-                response ?
-                  Swal.fire(
-                    'Sucesso!',
-                    `Candidatura concluída com sucesso, um email de confirmção foi enviado a sua caixa!`,
-                    'success'
-                  ) :
-                  Swal.fire(
-                    'Ops, ocorreu um erro!',
-                    `Ocorreu um erro ao enviar o email de confirmação, porém sua canditura foi concluída!`,
-                    'warning'
-                  );
-              });
-          }
-          else {
+        if (this.userLogged) {
+          await this.userService.postUserCandidature(this.userLogged.id, vacancy.id, this.formatCreationDate()).subscribe(response => {
             Swal.fire(
-              'Ops, ocorreu um erro!',
-              `Ocorreu um erro ao efetivar sua candidatura para a vaga ${vacancy.vacancyTitle}, tente novamente!`,
-              'warning'
-            );
+              'Sucesso!',
+              `${response.message}`,
+              'success'
+            )
           }
+          );
+          // if (responseCandidature) {
+
+          //   await this.userService.sendEmail(userLogged, `Olá ${userLogged.userName}! Sua candidatura para a vaga ${vacancy.vacancyTitle} foi enviada com sucesso, aguarde a resposta da empresa para a próxima etapa. Boa Sorte!`)
+          //     .subscribe(response => {
+          //       response ?
+          //         Swal.fire(
+          //           'Sucesso!',
+          //           `Candidatura concluída com sucesso, um email de confirmção foi enviado a sua caixa!`,
+          //           'success'
+          //         ) :
+          //         Swal.fire(
+          //           'Ops, ocorreu um erro!',
+          //           `Ocorreu um erro ao enviar o email de confirmação, porém sua canditura foi concluída!`,
+          //           'warning'
+          //         );
+          //     });
+          // }
+          // else {
+          //   Swal.fire(
+          //     'Ops, ocorreu um erro!',
+          //     `Ocorreu um erro ao efetivar sua candidatura para a vaga ${vacancy.vacancyTitle}, tente novamente!`,
+          //     'warning'
+          //   );
+          // }
         }
       }
     })

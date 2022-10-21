@@ -44,8 +44,8 @@ const routes: Routes = [
   {
     path: 'empresa/vagas/detalhes/:vacancyId',
     component: VacanciesDetailsComponent,
-    canActivate: [AuthGuard],
-    data: { roles: [Role.Company] }
+    // canActivate: [AuthGuard],
+    // data: { roles: [Role.Company] }
   },
   {
     path: 'empresa/vagas/cadastrar',
