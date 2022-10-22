@@ -37,8 +37,9 @@ export class VacanciesDetailsComponent implements OnInit {
   title = 'Aptidão geral a vaga';
   vacancyDetailChart = [];
 
-  vacancyDetails: Observable<User[]> = of([{
-    id: 1,
+  vacancyDetails: Observable<any[]> = of([{
+    id: 3,
+    userId: 3,
     userName: 'Daniel Silva',
     profile: 'Candidato',
     email: 'daniel.teste123@teste.com',
@@ -56,12 +57,13 @@ export class VacanciesDetailsComponent implements OnInit {
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
     userVacancyInfo: { yes: 56, no: 44 },
     userInteligenciesInfo: { intelligence: 'Linguística', vacancies: ['Tradutor e conhecimento em libras'], skills: [67] },
-    interests: [{description: 'Música'}, {description: 'Futebol'}, {description: 'Filmes e séries'}],
-    schooling: {id: 1, descricao: 'Ensino Médio Completo'},
+    interests: [{ description: 'Música' }, { description: 'Futebol' }, { description: 'Filmes e séries' }],
+    schooling: { id: 1, descricao: 'Ensino Médio Completo' },
     role: Role.Candidate
   },
   {
-    id: 2,
+    id: 4,
+    userId: 3,
     userName: 'Bruna Oliveira',
     profile: 'Candidato',
     email: 'bruhh@teste.com',
@@ -77,8 +79,8 @@ export class VacanciesDetailsComponent implements OnInit {
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
     userVacancyInfo: { yes: 50, no: 50 },
     userInteligenciesInfo: { intelligence: 'Lógica-Matemática', vacancies: ['Estatistico - Iniciante analise de dados', 'Desenvolvedor Java júnior'], skills: [78, 75] },
-    interests: [{description: 'Natação'}, {description: 'Artes'}, {description: 'Filmes e séries'}],
-    schooling: {id: 1, descricao: 'Ensino Médio Completo'},
+    interests: [{ description: 'Natação' }, { description: 'Artes' }, { description: 'Filmes e séries' }],
+    schooling: { id: 1, descricao: 'Ensino Médio Completo' },
     role: Role.Candidate
   }])
 
@@ -139,7 +141,7 @@ export class VacanciesDetailsComponent implements OnInit {
 
   applyFilters() {
 
-    let vacancyDetailsListFiltered!: User[];
+    let vacancyDetailsListFiltered!: any[];
     this.detailsFilter.actualCompany = (<HTMLInputElement>document.getElementById(`actualCompany`)).value;
     this.detailsFilter.actualCharge = (<HTMLInputElement>document.getElementById(`actualCharge`)).value;
 
@@ -149,10 +151,13 @@ export class VacanciesDetailsComponent implements OnInit {
 
   }
 
-  filterVacancyList(vacancyDetailsList: User[]) {
+  filterVacancyList(vacancyDetailsList: any[]): any[] {
 
-    if (this.detailsFilter.status)
-      vacancyDetailsList = vacancyDetailsList.filter(detail => detail.isWorking = true)
+    //chamar get de listagem de detalhes
+    
+
+    if (this.detailsFilter.status != undefined)
+      vacancyDetailsList = vacancyDetailsList.filter(detail => detail.isWorking == this.detailsFilter.status)
 
     if (this.detailsFilter.actualCompany != '')
       vacancyDetailsList = vacancyDetailsList.filter(detail => detail.actualCompany = this.detailsFilter.actualCompany)
@@ -160,13 +165,13 @@ export class VacanciesDetailsComponent implements OnInit {
     if (this.detailsFilter.actualCharge != '')
       vacancyDetailsList = vacancyDetailsList.filter(detail => detail.actualCharge = this.detailsFilter.actualCharge)
 
-    if (this.detailsFilter.age != 0)
+    if (this.detailsFilter.age != 0 && this.detailsFilter.age)
       vacancyDetailsList = vacancyDetailsList.filter(detail => detail.age = this.detailsFilter.age)
 
-    if (this.detailsFilter.experienceTime != 0)
+    if (this.detailsFilter.experienceTime != 0 && this.detailsFilter.experienceTime)
       vacancyDetailsList = vacancyDetailsList.filter(detail => detail.experiences != undefined ? detail.experiences.map(experience => experience.timeSpent).reduce((acc, sum) => acc + sum) >= this.detailsFilter.experienceTime : undefined)
 
-    if (this.detailsFilter.salaryPretension != 0)
+    if (this.detailsFilter.salaryPretension != 0  && this.detailsFilter.salaryPretension)
       vacancyDetailsList = vacancyDetailsList.filter(detail => detail.salaryPretension >= this.detailsFilter.salaryPretension)
 
     if (this.detailsFilter.hasVacancyCourse)
@@ -183,60 +188,99 @@ export class VacanciesDetailsComponent implements OnInit {
 
   }
 
-  async sendFeedBackToCandidate(feedBack: boolean, user: User) {
+  formatMonth(mes: number): string {
 
-    let responseFeedBack!: boolean;
-    let vacancy!: Vacancy
+    let mesFormatted = mes < 10 ? `0${mes}` : mes.toString();
+
+    return mesFormatted;
+
+  }
+
+  formatCreationDate() {
+
+    let actualDate: Date = new Date();
+
+    var data =
+      actualDate.getFullYear() +
+      "/" +
+      this.formatMonth(actualDate.getMonth() + 1) +
+      "/" +
+      actualDate.getDate() +
+      "T" +
+      actualDate.getHours() +
+      ":" +
+      actualDate.getMinutes() +
+      ":" +
+      actualDate.getSeconds();
+
+    return data;
+  }
+
+  async sendFeedBackToCandidate(feedBack: boolean, candidateVacancy: any) {
 
     if (feedBack) {
 
-      await this.userService.postAffirmativeFeedBack(user.id, this.vacancyId).subscribe(response => responseFeedBack = response);
-
-      if (responseFeedBack) {
-
-        this.vacancyService.getVacancy(this.vacancyId).subscribe(vacancyResponse => { vacancy = vacancyResponse });
-
-        await this.userService.sendEmail(user, `Parabéns ${user.userName}! A empresa X está interessada em seu perfil para a vaga ${vacancy.vacancyTitle}`) //utilizar variavel de usuario logado
-        .subscribe(responseEmail => {
-          responseEmail ? 
-          Swal.fire(
-            'Sucesso!',
-            `Candidatura do usuário ${user.userName} concluída com sucesso, um email foi enviado ao mesmo!`,
-            'warning'
-          ):
-          Swal.fire(
-            'Ops, ocorreu um erro!',
-            `Ocorreu um erro ao enviar o email de confirmação ao usuário ${user.userName}, porém sua candidatura foi concluída!`,
-            'warning'
-          );
-        })
-      }
-      else {
+      await this.userService.postAffirmativeFeedBack(candidateVacancy.id, candidateVacancy.userId, this.vacancyId).subscribe(response => {
         Swal.fire(
-          'Ops, ocorreu um erro!',
-          `Ocorreu um erro ao efetivar o interesse do candidato ${user.userName}, tente novamente!`,
-          'warning'
-        );
-      }
+          'Sucesso!',
+          `${response.message}`,
+          'success'
+        )
+      });
+
+      // if (responseFeedBack) {
+
+      //   this.vacancyService.getVacancy(this.vacancyId).subscribe(vacancyResponse => { vacancy = vacancyResponse });
+
+      //   await this.userService.sendEmail(user, `Parabéns ${user.userName}! A empresa X está interessada em seu perfil para a vaga ${vacancy.vacancyTitle}`) //utilizar variavel de usuario logado
+      //   .subscribe(responseEmail => {
+      //     responseEmail ? 
+      //     Swal.fire(
+      //       'Sucesso!',
+      //       `Candidatura do usuário ${user.userName} concluída com sucesso, um email foi enviado ao mesmo!`,
+      //       'warning'
+      //     ):
+      //     Swal.fire(
+      //       'Ops, ocorreu um erro!',
+      //       `Ocorreu um erro ao enviar o email de confirmação ao usuário ${user.userName}, porém sua candidatura foi concluída!`,
+      //       'warning'
+      //     );
+      //   })
+      // }
+      // else {
+      //   Swal.fire(
+      //     'Ops, ocorreu um erro!',
+      //     `Ocorreu um erro ao efetivar o interesse do candidato ${user.userName}, tente novamente!`,
+      //     'warning'
+      //   );
+      // }
 
     }
     else {
 
-      await this.userService.sendEmail(user, `Olá ${user.userName}! A empresa X não se interessou no seu perfilno momento para vaga ${vacancy.vacancyTitle}, porém vai manter seu currículo salvo para as demais oportunidades que surgir!`) //utilizar variavel de usuario logado
-      .subscribe(responseEmail => {
-        responseEmail ? 
+      await this.userService.postNegativeFeedBack(candidateVacancy.id, candidateVacancy.userId, this.vacancyId).subscribe(response => {
         Swal.fire(
-          'Sucesso!',
-          `O email de feedback da vaga foi enviado ao candidato ${user.userName} !`,
-          'success'
-        ):
-        Swal.fire(
-          'Ops, ocorreu um erro!',
-          `Ocorreu um erro ao enviar o email de feedback ao candidato ${user.userName}, tente novamente!`,
+          'Atenção!',
+          `${response.message}`,
           'warning'
-        );
+        )
+      });
 
-      })
+      // await this.userService.sendEmail(user, `Olá ${user.userName}! A empresa X não se interessou no seu perfilno momento para vaga ${vacancy.vacancyTitle}, porém vai manter seu currículo salvo para as demais oportunidades que surgir!`) //utilizar variavel de usuario logado
+      // .subscribe(responseEmail => {
+      //   responseEmail ? 
+      //   Swal.fire(
+      //     'Sucesso!',
+      //     `O email de feedback da vaga foi enviado ao candidato ${user.userName} !`,
+      //     'success'
+      //   ):
+      //   Swal.fire(
+      //     'Ops, ocorreu um erro!',
+      //     `Ocorreu um erro ao enviar o email de feedback ao candidato ${user.userName}, tente novamente!`,
+      //     'warning'
+      //   );
+
+      // })
 
     }
   }

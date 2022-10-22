@@ -31,7 +31,7 @@ export class VacanciesRegisterComponent implements OnInit {
   isHibrid: boolean = false;
 
   vacancyId!: number;
-  vacancyBenefitsToBeDeleted: Benefit[] = [];
+  vacancyBenefitsToBeDeleted: string[] = [];
   vacancyRequirementsToBeDeleted: Requirement[] = [];
 
   constructor(private vacancyService: VacancyService, private router: ActivatedRoute) { }
@@ -113,8 +113,7 @@ export class VacanciesRegisterComponent implements OnInit {
     this.vacancy.creationDate = new Date();
     //this.vacancy.userId = JSON.parse(sessionStorage.getItem('user')!).id; usar
     this.vacancy.userId = 2; //alterar
-
-    this.vacancy.benefit = this.vacancy.benefits[0]; //alterar
+    
 
     if (this.formVacancy.valid) {
 
@@ -134,13 +133,13 @@ export class VacanciesRegisterComponent implements OnInit {
 
   async editVacancy(vacancy: Vacancy) {
 
-    if (this.vacancyBenefitsToBeDeleted.length > 0) {
+    // if (this.vacancyBenefitsToBeDeleted.length > 0) {
 
-      for (let benefitToBeDeleted of this.vacancyBenefitsToBeDeleted) {
-        await this.vacancyService.deleteVacancyBenefit(benefitToBeDeleted.id)
-      }
+    //   for (let benefitToBeDeleted of this.vacancyBenefitsToBeDeleted) {
+    //     await this.vacancyService.deleteVacancyBenefit(benefitToBeDeleted.id)
+    //   }
 
-    }
+    // }
 
     if (this.vacancyRequirementsToBeDeleted.length > 0) {
 
@@ -151,7 +150,6 @@ export class VacanciesRegisterComponent implements OnInit {
     }
 
     this.vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
-    this.vacancy.benefit = this.vacancy.benefits[0]; //alterar
 
     if (this.formVacancy.valid) {
       await this.vacancyService.editVacancy(vacancy).subscribe(returnMsg =>
@@ -169,7 +167,7 @@ export class VacanciesRegisterComponent implements OnInit {
       this.benefit.description = (<HTMLInputElement>document.getElementById(`benefitDescription`)).value;
       this.benefit.value = +(<HTMLInputElement>document.getElementById(`benefitValue`)).value;
       
-      this.vacancy.benefits.push(this.benefit);
+      this.vacancy.benefits.push(this.benefit.description);
 
     }
 
@@ -197,8 +195,8 @@ export class VacanciesRegisterComponent implements OnInit {
   }
 
   editBenefitByIndex(index: number) {
-    this.vacancy.benefits[index].description = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value;
-    this.vacancy.benefits[index].value = +(<HTMLInputElement>document.getElementById(`input-description-${index}`)).value;
+    this.vacancy.benefits[index] = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value;
+    //this.vacancy.benefits[index] = +(<HTMLInputElement>document.getElementById(`input-description-${index}`)).value;
   }
 
   removeBenefitByIndex(index: number) {

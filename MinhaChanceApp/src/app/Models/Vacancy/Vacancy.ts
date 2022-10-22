@@ -16,7 +16,7 @@ export class Vacancy {
     description!: string;
     benefit?: Benefit;
     requirement?: Requirement;
-    benefits: Benefit[] = [];
+    benefits: string[] = [];
     requirements?: Requirement[] = [];
     category!: string;
     location?: string;

@@ -78,10 +78,40 @@ export class UserService {
     )
   }
 
-  postAffirmativeFeedBack(userId: number, vacancyId: number) {
-    return this.httpClient.get<any>('').pipe(
+  postAffirmativeFeedBack(candidateVacancyId: number, candidateId: number, vacancyId: number) {
+    console.log(vacancyId)
+    console.log(candidateId)
+    console.log(candidateVacancyId)
+    return this.httpClient.put<any>(this.urlVacancyUser + `/${candidateVacancyId}`, {
+      "idCandidato": candidateId,
+      "idVaga": vacancyId,
+      "dataCandidatura": "2022/10/05",
+      "status": "aprovado"
+    }).pipe(
       retry(2)
     )
+  }
+
+  postNegativeFeedBack(candidateVacancyId: number, candidateId: number, vacancyId: number) {
+    return this.httpClient.put<any>(this.urlVacancyUser + `/${candidateVacancyId}`, {
+      "idCandidato": candidateId,
+      "idVaga": vacancyId,
+      "dataCandidatura": "2022/10/05",
+      "status": "desaprovado"
+    }).pipe(
+      retry(2)
+    )
+  }
+
+  finishVacancy(vacancyId: number) {
+    console.log(vacancyId)
+    return this.httpClient.put<any>(`${this.urlVacancyUser}/${vacancyId}`, {
+      "idVaga": vacancyId,
+      "status": "preenchida"
+    })
+      .pipe(
+        retry(2),
+      )
   }
 
   postCandidateRegister(user: User) {

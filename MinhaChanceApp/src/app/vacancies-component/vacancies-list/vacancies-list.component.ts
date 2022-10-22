@@ -66,11 +66,25 @@ export class VacanciesListComponent implements OnInit {
     // }
     // else{
 
-    //   await this.vacancyService.getVacanciesByCompany(this.userLogged.id).subscribe(vacancies => {
+    //   await this.vacancyService.getVacanciesByUser(this.userLogged.id).subscribe(vacancies => {
     //     this.vacancies = vacancies;
     //   });
 
     // }
+
+  }
+
+  async finishVacancy(vacancyId: number) {
+
+    await this.userService.finishVacancy(vacancyId).subscribe(response => {
+
+      Swal.fire(
+        'Sucesso!',
+        `${response.message}`,
+        'success'
+      )
+
+    })
 
   }
 
@@ -162,8 +176,11 @@ export class VacanciesListComponent implements OnInit {
   }
 
   filterVacancyList(vacancyList: Vacancy[]): Vacancy[] {
-    if (this.vacancyFilter.isConfidential) {
-      vacancyList = vacancyList.filter(vacancy => vacancy.isConfidential);
+
+    //chamar get de listagem de vagas
+
+    if (this.vacancyFilter.isConfidential != undefined) {
+      vacancyList = vacancyList.filter(vacancy => vacancy.isConfidential == this.vacancyFilter.isConfidential);
     }
 
     if (this.vacancyFilter.isPresential) {
@@ -172,7 +189,7 @@ export class VacanciesListComponent implements OnInit {
 
     if (this.vacancyFilter.benefits.length > 0) {
       this.vacancyFilter.benefits.forEach(benefitFilter => {
-        vacancyList = vacancyList.filter(vacancy => vacancy.benefits.filter(benefit => benefitFilter == benefit.description));
+        vacancyList = vacancyList.filter(vacancy => vacancy.benefits.filter(benefit => benefitFilter == benefit));
       })
     }
 
@@ -186,11 +203,11 @@ export class VacanciesListComponent implements OnInit {
       vacancyList = vacancyList.filter(vacancy => vacancy.location == this.vacancyFilter.location);
     }
 
-    if (this.vacancyFilter.vacancyQuantity != 0) {
+    if (this.vacancyFilter.vacancyQuantity != 0 && this.vacancyFilter.vacancyQuantity) {
       vacancyList = vacancyList.filter(vacancy => vacancy.quantity <= this.vacancyFilter.vacancyQuantity);
     }
 
-    if (this.vacancyFilter.salary != 0) {
+    if (this.vacancyFilter.salary != 0 && this.vacancyFilter.salary) {
       vacancyList = vacancyList.filter(vacancy => vacancy.salary <= this.vacancyFilter.salary && !vacancy.isConfidential);
     }
 
@@ -278,6 +295,14 @@ export class VacanciesListComponent implements OnInit {
       actualDate.getSeconds();
 
     return data;
+  }
+
+  async getPersonalCandidatures() {
+
+    await this.vacancyService.getVacanciesByUser(this.userLogged.id).subscribe(candidateVacancy => {
+      this.vacancies = candidateVacancy
+    })
+
   }
 
 

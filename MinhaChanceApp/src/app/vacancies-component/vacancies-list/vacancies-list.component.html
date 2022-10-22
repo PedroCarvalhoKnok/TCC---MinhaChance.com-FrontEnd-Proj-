@@ -4,6 +4,8 @@
         <mat-card-header class="title-vacancy">
             <span (click)="goToVacancyRegister()" class="material-icons">add_circle_outline</span>
             <mat-card-title class="add-title"><a>Crie vagas e oportunidades para sua empresa</a></mat-card-title>
+            <span (click)="getPersonalCandidatures()" class="material-icons">verified</span>
+            <mat-card-title class="add-title"><a>Minhas candidaturas</a></mat-card-title>
         </mat-card-header>
     </mat-card>
 </div>
@@ -14,8 +16,6 @@
         <mat-card-header>
             <mat-card-title>Filtro</mat-card-title>
         </mat-card-header>
-
-
 
         <mat-card-content class="filter-content">
 
@@ -131,13 +131,12 @@
                     <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantity}} vaga(s)</label>
                     <!-- <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{vacancy.modalidity}} {{vacancy.modalidity == 'Hibrido' ? vacancy.semanalQuantity: ''}}</label> -->
                     <!-- <br /> -->
-                    <!-- <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
-                        <ul class="vacancy-list col-md-8" *ngFor="let benefit of this.vacancy.benefits">
-                            <li>Descrição {{benefit.description}}</li>
-                            <li>Valor {{benefit.value}}</li>
+                    <label class="col-md-4" for="inputdefault">Beneficios da vaga<br />
+                        <ul class="vacancy-list col-md-4" *ngFor="let benefit of this.vacancy.benefits">
+                            <li>Descrição {{benefit}}</li>
                         </ul>
                     </label><br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
+                    <!-- <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
                         <ul class="vacancy-list col-md-4" *ngFor="let requirement of this.vacancy.requirements">
                             <li>Descrição {{requirement.description}}</li>
                             <li>Diferencial {{requirement.differencial != undefined ? '- ' + requirement.differencial : ''}}</li>
@@ -152,7 +151,7 @@
 
                     <div class="description">
                         <button type="button" (click)="goEditVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Editar vaga</button>
-                        <button type="button" [routerLink]="" class="btn btn-primary btn-sm space-button">Vaga preenchida</button>
+                        <button type="button" (click)="finishVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Vaga preenchida</button>
                         <button type="button" (click)="goDetailsVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
                         <button (click)="deleteVacancyModal(vacancy.id)" type="button"  class="btn btn-danger btn-sm space-button">Excluir vaga</button>
                         <button (click)="openMetricsDetails(vacancy.id)" type="button" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>

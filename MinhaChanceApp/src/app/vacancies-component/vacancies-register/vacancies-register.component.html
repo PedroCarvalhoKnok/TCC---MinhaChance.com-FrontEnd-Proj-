@@ -223,8 +223,8 @@
                             <br/>
                             <mat-form-field>
                             <input id="benefitDescription" matInput class="form-control" formControlName="benefitDescription" type="text" autocomplete="off"
-                                value="{{benefit.description}}"
-                                placeholder="{{benefit.description}}" required />
+                                value="{{benefit}}"
+                                placeholder="{{benefit}}" required />
                             </mat-form-field>
                             <div
                                 *ngIf="formBenefits.get('benefitDescription')?.invalid && (formBenefits.get('benefitDescription')?.dirty || formBenefits.get('benefitDescription')?.touched)">
@@ -233,19 +233,6 @@
                                 </p>
                             </div>
                             <br/>
-                            <mat-label class="placeholder-color">Valor do beneficio (opcional)</mat-label>
-                            <br/>
-                            <mat-form-field>
-                            <input id="benefitValue" matInput class="form-control" formControlName="benefitValue" type="text" autocomplete="off"
-                                value="{{benefit.value}}"
-                                placeholder="{{benefit.value}}" required />
-                            </mat-form-field>
-                            <div
-                                *ngIf="formBenefits.get('benefitValue')?.invalid && (formBenefits.get('benefitValue')?.dirty || formBenefits.get('benefitValue')?.touched)">
-                                <p *ngIf="formBenefits.get('benefitValue')?.errors?.['required']">
-                                    Valor do beneficio é necessário.
-                                </p>
-                            </div>
 
                         </div>
                     </form>
