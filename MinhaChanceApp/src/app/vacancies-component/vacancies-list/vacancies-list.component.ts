@@ -57,20 +57,26 @@ export class VacanciesListComponent implements OnInit {
       this.vacancies = of(vacancies);
     });
 
-    // if(this.userLogged.role === 'Candidate'){
+   //this.getUsers();
+    
+  }
 
-    // await this.vacancyService.getVacanciesForCandidates().subscribe(vacancies => {
-    //   this.vacancies = vacancies;
-    // });
+  async getUsers() {
 
-    // }
-    // else{
+    if (this.userLogged.role === 'Candidate') {
 
-    //   await this.vacancyService.getVacanciesByUser(this.userLogged.id).subscribe(vacancies => {
-    //     this.vacancies = vacancies;
-    //   });
+      await this.vacancyService.getVacanciesForCandidates().subscribe(vacancies => {
+        this.vacancies = vacancies;
+      });
 
-    // }
+    }
+    else {
+
+      await this.vacancyService.getVacanciesByUser(this.userLogged.id).subscribe(vacancies => {
+        this.vacancies = vacancies;
+      });
+
+    }
 
   }
 
@@ -166,6 +172,9 @@ export class VacanciesListComponent implements OnInit {
     this.vacancyFilter.vacancyQuantity = +(<HTMLInputElement>document.getElementById(`maxVacancyQuantity`)).value;
     this.vacancyFilter.vacancyCategory = (<HTMLInputElement>document.getElementById(`vacancyCategory`)).value;
     console.log(this.vacancyFilter);
+
+    //this.getUsers();
+
     this.vacancies.subscribe(vacancies => {
 
       this.vacancies = of(this.filterVacancyList(vacancies));
@@ -176,8 +185,6 @@ export class VacanciesListComponent implements OnInit {
   }
 
   filterVacancyList(vacancyList: Vacancy[]): Vacancy[] {
-
-    //chamar get de listagem de vagas
 
     if (this.vacancyFilter.isConfidential != undefined) {
       vacancyList = vacancyList.filter(vacancy => vacancy.isConfidential == this.vacancyFilter.isConfidential);
