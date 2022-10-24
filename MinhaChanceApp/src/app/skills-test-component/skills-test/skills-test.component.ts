@@ -37,53 +37,41 @@ export class SkillsTestComponent implements OnInit {
     {
       id: 1,
       questionDescription: 'pergunta 1',
-      answerA: 'A',
-      answerB: 'B',
-      answerC: 'C',
-      answerD: 'D',
-      answerE: 'E',
-      answerF: 'F',
-      answerG: 'G',
-      answerH: 'H',
+      intelligenceType: 'Logica-Matematica',
+      answerOne: 'A',
+      answerTwo: 'B',
+      answerTree: 'C',
+      answerFour: 'D',
       userAnswer: 'D',
     },
     {
       id: 2,
       questionDescription: 'pergunta 2',
-      answerA: 'A',
-      answerB: 'B',
-      answerC: 'C',
-      answerD: 'D',
-      answerE: 'E',
-      answerF: 'F',
-      answerG: 'G',
-      answerH: 'H',
+      intelligenceType: 'Linguistica',
+      answerOne: 'A',
+      answerTwo: 'B',
+      answerTree: 'C',
+      answerFour: 'D',
       userAnswer: 'C',
     },
     {
       id: 3,
       questionDescription: 'pergunta 3',
-      answerA: 'A',
-      answerB: 'B',
-      answerC: 'C',
-      answerD: 'D',
-      answerE: 'E',
-      answerF: 'F',
-      answerG: 'G',
-      answerH: 'H',
+      intelligenceType: 'Cinética',
+      answerOne: 'A',
+      answerTwo: 'B',
+      answerTree: 'C',
+      answerFour: 'D',
       userAnswer: 'G',
     },
     {
       id: 4,
       questionDescription: 'pergunta 4',
-      answerA: 'A',
-      answerB: 'B',
-      answerC: 'C',
-      answerD: 'D',
-      answerE: 'E',
-      answerF: 'F',
-      answerG: 'G',
-      answerH: 'H',
+      intelligenceType: 'Musical',
+      answerOne: 'A',
+      answerTwo: 'B',
+      answerTree: 'C',
+      answerFour: 'D',
       userAnswer: 'H',
     }
   ])
@@ -241,13 +229,11 @@ export class SkillsTestComponent implements OnInit {
 
     let questionMissing = questions.find(question => question.userAnswer === '')
     if (questionMissing) {
-      Swal.fire(
-        'Algo deu errado!',
-        'Verifique se todas as perguntas foram respondidas',
-        'warning'
-      )
+      return false;
 
     }
+    else
+      return true;
   }
 
   async sendSkillTest() {
@@ -256,9 +242,47 @@ export class SkillsTestComponent implements OnInit {
 
     let checkTest: any;
 
-    this.testQuestions.subscribe(questions => {
+    this.testQuestions.subscribe(async questions => {
 
-      this.validateMissingAnswers(questions);
+      if (!this.validateMissingAnswers(questions)) {
+
+        Swal.fire(
+          'Atenção!',
+          'Responda todas as perguntas do teste antes de envia-lo',
+          'warning'
+        )
+
+        return;
+
+      }
+
+
+      await this.testService.sendTest(questions).subscribe(result => {
+        if (result) {
+
+          Swal.fire({
+            title: 'Deseja visualizar seus resultados do teste de aptidão?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim!',
+            cancelButtonText: 'Não!'
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              this.router.navigate([`/candidato/${this.userId}/teste/resultado`]);
+            }
+          })
+
+        }
+        else {
+          Swal.fire(
+            'Ops algo deu errado no envio!',
+            'Tente novamente',
+            'warning'
+          )
+        }
+      });
 
       questions.forEach(question => {
         answerList.push({ id: question.id, userAnswer: question.userAnswer })
@@ -266,38 +290,38 @@ export class SkillsTestComponent implements OnInit {
 
     });
 
-    await this.testService.getTestByUserId(this.userId).subscribe(test => checkTest = test);
+    // await this.testService.getTestByUserId(this.userId).subscribe(test => checkTest = test);
 
-    if (!checkTest) {
+    // if (!checkTest) {
 
-      await this.testService.sendTest(answerList).subscribe(result => {
-        if (result) {
-          this.router.navigate([`/candidato/${this.userId}/teste/resultado`])
-        }
-        else {
-          Swal.fire(
-            'Ops algo deu errado no envio!',
-            'Tente novamente',
-            'warning'
-          )
-        }
-      });
-    }
-    else {
+    //   await this.testService.sendTest(answerList).subscribe(result => {
+    //     if (result) {
+    //       this.router.navigate([`/candidato/${this.userId}/teste/resultado`])
+    //     }
+    //     else {
+    //       Swal.fire(
+    //         'Ops algo deu errado no envio!',
+    //         'Tente novamente',
+    //         'warning'
+    //       )
+    //     }
+    //   });
+    // }
+    // else {
 
-      await this.testService.changeTest(answerList).subscribe(result => {
-        if (result) {
-          this.router.navigate([`/candidato/${this.userId}/teste/resultado`])
-        }
-        else {
-          Swal.fire(
-            'Ops algo deu errado no envio!',
-            'Tente novamente',
-            'warning'
-          )
-        }
-      });
-    }
+    //   await this.testService.changeTest(answerList).subscribe(result => {
+    //     if (result) {
+    //       this.router.navigate([`/candidato/${this.userId}/teste/resultado`])
+    //     }
+    //     else {
+    //       Swal.fire(
+    //         'Ops algo deu errado no envio!',
+    //         'Tente novamente',
+    //         'warning'
+    //       )
+    //     }
+    //   });
+    // }
   }
 
 }

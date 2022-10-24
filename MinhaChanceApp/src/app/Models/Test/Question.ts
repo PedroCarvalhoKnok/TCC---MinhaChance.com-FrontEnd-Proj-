@@ -1,13 +1,10 @@
 export class Question {
     id: number;
     questionDescription: string;
-    answerA: string;
-    answerB: string;
-    answerC: string;
-    answerD: string;
-    answerE: string;
-    answerF: string;
-    answerG: string;
-    answerH: string;
+    intelligenceType: string;
+    answerOne: string;
+    answerTwo: string;
+    answerTree: string;
+    answerFour: string;
     userAnswer?: string;
 }
