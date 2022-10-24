@@ -11,15 +11,14 @@ export class AnalyticsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json',
-                               'Authorization': `Bearer token` })
-  }
 
 
   getVancancyUserSkills(vacancy: Vacancy, candidates: User[]){
-    return this.httpClient.get<User[]>('', this.httpOptions).pipe(
+    return this.httpClient.get<User[]>('').pipe(
       retry(2)
     )
   }
+
+
+  
 }
