@@ -19,7 +19,7 @@
         <mat-card-content class="filter-content">
 
             <mat-grid-list cols="{{this.numberOfColumns}}" rowHeight="{{this.heigthProp}}" class="tile-background"
-                (window:resize)="handleSize($event)">
+            (window:resize)="handleSize($event)">
                 <div *ngFor="let element of data">
                     <mat-grid-tile class="label-numbers">
                         <label id="{{'item' + element.firstRow}}" class="btn btn-outline-primary label-numbers"
@@ -57,7 +57,7 @@
 
         <mat-card-header class="header-content">
             <mat-card-title id="{{'question' + question.id}}" class="title-vacancy">
-                {{question.questionDescription}}
+               {{question.id}}) {{question.questionDescription}}
             </mat-card-title>
 
         </mat-card-header>
@@ -68,7 +68,7 @@
 
                 <div class="row">
 
-                    <h1>Opções</h1>
+                    <h1>Alternativas</h1>
 
                     <mat-radio-group>
                         <section>

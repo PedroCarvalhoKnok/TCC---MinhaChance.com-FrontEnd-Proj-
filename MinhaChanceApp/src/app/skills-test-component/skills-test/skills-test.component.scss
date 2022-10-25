@@ -8,10 +8,14 @@
   color: white;
 }
 
+.header-content{
+  width: 100%;
+}
+
 .filter-card {
   float: right;
   width: 30%;
-  height: 160vh;
+  height: 100%;
   border-bottom: 10px;
   border-color: black;
   position: relative;
@@ -35,9 +39,7 @@
   margin-top: 60px;
   margin-left: -201px;
   display: flex;
-  padding-left: 0px;
   overflow: auto;
-  padding-left: 80px;
   width: 100%;
 }
 

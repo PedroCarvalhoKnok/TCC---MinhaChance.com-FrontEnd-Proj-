@@ -35,7 +35,7 @@ export class SkillsTestComponent implements OnInit {
     { firstRow: 66, secondRow: 67, thirdRow: 68, forthRow: 69, fifthRow: 70 },
   ];
 
-  heigthProp: string = '1:0.6';
+  heigthProp: string = '1:0.4';
 
   userId: number;
 
@@ -49,23 +49,23 @@ export class SkillsTestComponent implements OnInit {
 
     this.userId = this.activeRouter.snapshot.params?.['userId'];
 
-    this.statusEdit = this.activeRouter.snapshot.params?.['status'] === 'refazer' ? true : false;
+    //this.statusEdit = this.activeRouter.snapshot.params?.['status'] === 'refazer' ? true : false;
 
-    this.testQuestions = await this.testService.getQuestions();
+   // this.testQuestions = await this.testService.getQuestions();
 
-    this.testQuestions.subscribe(questions => {
+    // this.testQuestions.subscribe(questions => {
 
-      let idList: number[] = []
+    //   let idList: number[] = []
 
-      questions.forEach(question => {
-        idList.push(question.id)
-      });
+    //   questions.forEach(question => {
+    //     idList.push(question.id)
+    //   });
 
-      let questionsFormatted = this.splitQuestionsIntoChunks(idList);
+    //   let questionsFormatted = this.splitQuestionsIntoChunks(idList);
 
-      this.data = this.fitFormattedQuestionsIntoGrid(questionsFormatted);
+    //   this.data = this.fitFormattedQuestionsIntoGrid(questionsFormatted);
 
-    })
+    // })
 
   }
 
@@ -138,6 +138,7 @@ export class SkillsTestComponent implements OnInit {
   }
 
   handleSize(event) {
+    
     if (event.target.innerWidth < 1000)
       this.heigthProp = '1:0.6'
     if (event.target.innerWidth >= 800 && event.target.innerWidth <= 1000)
