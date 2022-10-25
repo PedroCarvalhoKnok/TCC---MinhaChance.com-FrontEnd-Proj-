@@ -66,10 +66,10 @@ const routes: Routes = [
     data: { roles: [Role.Company] }
   },
   {
-    path: 'candidato/:userId/teste',
+    path: 'candidato/:userId/teste/:status',
     component: SkillsTestComponent,
-    canActivate: [AuthGuard],
-    data: { roles: [Role.Candidate] }
+    // canActivate: [AuthGuard],
+    // data: { roles: [Role.Candidate] }
   },
   {
     path: 'candidato/:userId/teste/resultado',

@@ -12,43 +12,38 @@ export class TestService {
 
   constructor(private httpClient: HttpClient) { }
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer token`
-    })
-  }
+ 
 
   sendTest(userAnswers: any[]) {
-    return this.httpClient.post<boolean>(``, this.httpOptions)
+    return this.httpClient.post<any>(``, {})
       .pipe(
         retry(2),
       )
   }
 
   changeTest(userAnswers: any[]) {
-    return this.httpClient.put<boolean>(``, this.httpOptions)
+    return this.httpClient.put<any>(``, {})
       .pipe(
         retry(2),
       )
   }
 
   getQuestions() {
-    return this.httpClient.get<Question[]>(``, this.httpOptions)
+    return this.httpClient.get<Question[]>(``)
       .pipe(
         retry(2),
       )
   }
 
   getUserTestResults(userId: number) {
-    return this.httpClient.get<any[]>(``, this.httpOptions)
+    return this.httpClient.get<any[]>(``)
       .pipe(
         retry(2),
       )
   }
 
   getTestByUserId(userId: number) {
-    return this.httpClient.get<any>(``, this.httpOptions)
+    return this.httpClient.get<any>(``)
       .pipe(
         retry(2),
       )
@@ -56,21 +51,42 @@ export class TestService {
 
   analyzeUserAnswers(userAnswers: any[]){
 
+    let results: any = []
+
     let logicAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Logica-Matematica');
+
+    console.log(logicAnswers);
 
     let linguisticAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Linguistica');
 
     let musicalAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Musical');
 
-    let kinesthesicAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Cinética');
+    let kinesthesicAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Cinetica');
 
     let spacialAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Espacial-Visual');
 
-    let interAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Interpersonal');
+    let interAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Interpessoal');
 
-    let intraAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Intrapersonal');
+    let intraAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Intrapessoal');
 
-    this.calculateAnswersType(logicAnswers);
+    results.push({intelligenceType: 'Logica-Matematica', result: this.calculateAnswersType(logicAnswers)});
+
+    results.push({intelligenceType: 'Linguistica', result: this.calculateAnswersType(linguisticAnswers)});
+
+    results.push({intelligenceType: 'Musical', result: this.calculateAnswersType(musicalAnswers)});
+
+    results.push({intelligenceType: 'Logica-Matematica', result: this.calculateAnswersType(kinesthesicAnswers)});
+
+    results.push({intelligenceType: 'Logica-Matematica', result: this.calculateAnswersType(spacialAnswers)});
+
+    results.push({intelligenceType: 'Logica-Matematica', result: this.calculateAnswersType(interAnswers)});
+
+    results.push({intelligenceType: 'Logica-Matematica', result: this.calculateAnswersType(intraAnswers)}); 
+
+    console.log(results);
+
+
+    return results;
 
     
 
@@ -80,7 +96,11 @@ export class TestService {
 
     let totalAnswerType = typeAnswers.length;
 
+    console.log(totalAnswerType)
+
     let percentualAnswerOne = (typeAnswers.filter(answer => answer.userAnswer === '1').length / totalAnswerType) * 100;
+
+    console.log(percentualAnswerOne)
 
     let percentualAnswerTwo = (typeAnswers.filter(answer => answer.userAnswer === '2').length / totalAnswerType) * 100;
 

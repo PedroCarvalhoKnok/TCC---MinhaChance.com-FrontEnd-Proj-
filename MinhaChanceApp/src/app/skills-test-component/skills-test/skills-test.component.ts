@@ -6,6 +6,7 @@ import { Question } from 'src/app/Models/Test/Question';
 import { TestService } from 'src/app/Services/Test/test.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
+import { questions } from 'src/environments/environment';
 
 
 @Component({
@@ -27,76 +28,44 @@ export class SkillsTestComponent implements OnInit {
     { firstRow: 31, secondRow: 32, thirdRow: 33, forthRow: 34, fifthRow: 35 },
     { firstRow: 36, secondRow: 37, thirdRow: 38, forthRow: 39, fifthRow: 40 },
     { firstRow: 41, secondRow: 42, thirdRow: 43, forthRow: 44, fifthRow: 45 },
+    { firstRow: 46, secondRow: 47, thirdRow: 48, forthRow: 49, fifthRow: 50 },
+    { firstRow: 51, secondRow: 52, thirdRow: 53, forthRow: 54, fifthRow: 55 },
+    { firstRow: 56, secondRow: 57, thirdRow: 58, forthRow: 59, fifthRow: 60 },
+    { firstRow: 61, secondRow: 62, thirdRow: 63, forthRow: 64, fifthRow: 65 },
+    { firstRow: 66, secondRow: 67, thirdRow: 68, forthRow: 69, fifthRow: 70 },
   ];
 
   heigthProp: string = '1:0.6';
 
   userId: number;
 
-  testQuestions: Observable<Question[]> = of([
-    {
-      id: 1,
-      questionDescription: 'pergunta 1',
-      intelligenceType: 'Logica-Matematica',
-      answerOne: 'A',
-      answerTwo: 'B',
-      answerTree: 'C',
-      answerFour: 'D',
-      userAnswer: 'D',
-    },
-    {
-      id: 2,
-      questionDescription: 'pergunta 2',
-      intelligenceType: 'Linguistica',
-      answerOne: 'A',
-      answerTwo: 'B',
-      answerTree: 'C',
-      answerFour: 'D',
-      userAnswer: 'C',
-    },
-    {
-      id: 3,
-      questionDescription: 'pergunta 3',
-      intelligenceType: 'Cinética',
-      answerOne: 'A',
-      answerTwo: 'B',
-      answerTree: 'C',
-      answerFour: 'D',
-      userAnswer: 'G',
-    },
-    {
-      id: 4,
-      questionDescription: 'pergunta 4',
-      intelligenceType: 'Musical',
-      answerOne: 'A',
-      answerTwo: 'B',
-      answerTree: 'C',
-      answerFour: 'D',
-      userAnswer: 'H',
-    }
-  ])
+  statusEdit: boolean = false;
+
+  testQuestions: Observable<Question[]> = of(questions)
 
   constructor(private router: Router, private activeRouter: ActivatedRoute, private testService: TestService) { }
 
   async ngOnInit() {
 
-    // this.userId = this.activeRouter.snapshot.params?.['userId'];
+    this.userId = this.activeRouter.snapshot.params?.['userId'];
 
-    // this.testQuestions = await this.testService.getQuestions();
+    this.statusEdit = this.activeRouter.snapshot.params?.['status'] === 'refazer' ? true : false;
 
-    // this.testQuestions.subscribe(questions => {
+    this.testQuestions = await this.testService.getQuestions();
 
-    //   let idList: number[] = []
+    this.testQuestions.subscribe(questions => {
 
-    //   questions.forEach(question => {
-    //     idList.push(question.id)
-    //   });
+      let idList: number[] = []
 
-    //   let questionsFormatted = this.splitQuestionsIntoChunks(idList);
+      questions.forEach(question => {
+        idList.push(question.id)
+      });
 
-    //   this.data = this.fitFormattedQuestionsIntoGrid(questionsFormatted);
+      let questionsFormatted = this.splitQuestionsIntoChunks(idList);
 
-    // })
+      this.data = this.fitFormattedQuestionsIntoGrid(questionsFormatted);
+
+    })
 
   }
 
@@ -227,20 +196,18 @@ export class SkillsTestComponent implements OnInit {
 
   validateMissingAnswers(questions: Question[]) {
 
-    let questionMissing = questions.find(question => question.userAnswer === '')
-    if (questionMissing) {
-      return false;
+    let questionMissing = questions.filter(question => question.userAnswer === '').length;
 
-    }
+    console.log(questionMissing)
+
+    if (questionMissing < 25)
+      return false;
     else
       return true;
+
   }
 
   async sendSkillTest() {
-
-    let answerList: any[] = []
-
-    let checkTest: any;
 
     this.testQuestions.subscribe(async questions => {
 
@@ -248,45 +215,70 @@ export class SkillsTestComponent implements OnInit {
 
         Swal.fire(
           'Atenção!',
-          'Responda todas as perguntas do teste antes de envia-lo',
+          'Responda no mínimo 25 perguntas do teste antes de enviá-lo',
           'warning'
         )
 
         return;
-
       }
 
+      let results = this.testService.analyzeUserAnswers(questions);
 
-      await this.testService.sendTest(questions).subscribe(result => {
-        if (result) {
 
-          Swal.fire({
-            title: 'Deseja visualizar seus resultados do teste de aptidão?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sim!',
-            cancelButtonText: 'Não!'
-          }).then(async (result) => {
-            if (result.isConfirmed) {
-              this.router.navigate([`/candidato/${this.userId}/teste/resultado`]);
-            }
-          })
+      if (!this.statusEdit) {
 
-        }
-        else {
-          Swal.fire(
-            'Ops algo deu errado no envio!',
-            'Tente novamente',
-            'warning'
-          )
-        }
-      });
+        await this.testService.sendTest(results).subscribe(result => {
 
-      questions.forEach(question => {
-        answerList.push({ id: question.id, userAnswer: question.userAnswer })
-      });
+          if (result) {
+
+            Swal.fire({
+              title: 'Deseja visualizar seus resultados do teste de aptidão?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Sim!',
+              cancelButtonText: 'Não!'
+            }).then(async (result) => {
+              if (result.isConfirmed) {
+                this.router.navigate([`/candidato/${this.userId}/teste/resultado`]);
+              }
+            })
+
+          }
+          else {
+            Swal.fire(
+              'Ops algo deu errado no envio!',
+              'Tente novamente',
+              'warning'
+            )
+          }
+        });
+
+
+      }
+      else {
+
+        await this.testService.changeTest(results).subscribe(result => {
+          if (result) {
+
+            Swal.fire(
+              'Sucesso!',
+              'Resultado do teste de aptidão atualizados',
+              'success'
+            )
+
+          }
+          else {
+            Swal.fire(
+              'Ops algo deu errado no envio!',
+              'Tente novamente',
+              'warning'
+            )
+          }
+        });
+
+      }
 
     });
 
