@@ -74,8 +74,8 @@ const routes: Routes = [
   {
     path: 'candidato/:userId/teste/resultado',
     component: SkillsResultComponent,
-    canActivate: [AuthGuard],
-    data: { roles: [Role.Candidate] }
+    // canActivate: [AuthGuard],
+    // data: { roles: [Role.Candidate] }
   },
   {
     path: 'candidato/:userId/teste/inicio',

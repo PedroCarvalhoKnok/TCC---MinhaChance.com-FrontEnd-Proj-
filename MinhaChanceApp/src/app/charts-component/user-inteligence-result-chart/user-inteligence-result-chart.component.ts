@@ -1,5 +1,8 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
+import { TestService } from 'src/app/Services/Test/test.service';
+import { UserService } from 'src/app/Services/User/user.service';
 
 Chart.register(...registerables)
 
@@ -8,60 +11,77 @@ Chart.register(...registerables)
   templateUrl: './user-inteligence-result-chart.component.html',
   styleUrls: ['./user-inteligence-result-chart.component.scss']
 })
-export class UserInteligenceResultChartComponent implements OnInit {
+export class UserInteligenceResultChartComponent {
 
-  @Input() userResultSkills!: any[];
+  @Input() userResultSkills!: any;
+
+  skillPercentualList: any[] = [];
 
   @Input() userName!: string;
 
-  constructor() { }
+  constructor(private router: ActivatedRoute, private testService: TestService, private userService: UserService) { }
 
-  ngOnInit(): void {
-  }
+  async ngAfterViewInit(){
 
-  ngAfterViewInit(): void {
+    let skillNameList: any = ['cinestesica', 'espacial', 'interpessoal', 'intrapessoal', 'linguistica', 'matematica', 'musical']
 
-    let skillNameList: any = []
-    let skillPercentualList: any = []
+    let userId = this.router.snapshot.params?.['userId'];
 
-    this.userResultSkills.forEach(skill => {
-      skillNameList.push(skill.name)
-      skillPercentualList.push(skill.skill);
-    })
+    await this.userService.getCandidateInfoById(userId).subscribe(async user => {
 
-    console.log(skillPercentualList)
+      await this.testService.getUserTestResults(user[0].idTesteIM).subscribe(imResult => {
+        console.log(imResult)
 
-    new Chart(`user-intelligence-result`, {
-      type: 'radar',
-      data: {
-        labels:
-          skillNameList
-        ,
-        datasets: [{
-          label: this.userName,
-          data: skillPercentualList,
-          fill: true,
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
-          borderColor: 'rgba(255, 255, 255)',
-          pointBackgroundColor: 'rgba(255, 255, 255)',
-          pointBorderColor: '#bf7575',
-          pointHoverBackgroundColor: '#bf7575',
-          pointHoverBorderColor: 'rgba(255, 255, 255)'
-        }]
-      },
-      options: {
-       color: 'white',
-       scales: {
-        r:{
-          grid:{
-            color: 'white'
+        this.skillPercentualList.push(imResult[0].cinestesica);
+        this.skillPercentualList.push(imResult[0].espacial);
+        this.skillPercentualList.push(imResult[0].interpessoal);
+        this.skillPercentualList.push(imResult[0].intrapessoal);
+        this.skillPercentualList.push(imResult[0].linguistica);
+        this.skillPercentualList.push(imResult[0].matematica);
+        this.skillPercentualList.push(imResult[0].musical);
+
+
+        new Chart(`user-intelligence-result`, {
+          type: 'radar',
+          data: {
+            labels:
+              skillNameList
+            ,
+            datasets: [{
+              label: this.userName,
+              data: this.skillPercentualList,
+              fill: true,
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              borderColor: 'rgba(255, 255, 255)',
+              pointBackgroundColor: 'rgba(255, 255, 255)',
+              pointBorderColor: '#bf7575',
+              pointHoverBackgroundColor: '#bf7575',
+              pointHoverBorderColor: 'rgba(255, 255, 255)'
+            }]
+          },
+          options: {
+            color: 'white',
+            scales: {
+              r: {
+                grid: {
+                  color: 'white'
+                }
+              }
+            }
+    
+    
           }
-        }
-       }
-       
-       
-      }
+        });
+
+        
+      })
+
     });
+
+
+   
+
+    
 
   }
 

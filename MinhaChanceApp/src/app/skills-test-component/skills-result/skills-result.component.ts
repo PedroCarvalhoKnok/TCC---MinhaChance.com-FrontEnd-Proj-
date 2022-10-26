@@ -12,45 +12,11 @@ export class SkillsResultComponent implements OnInit {
 
   constructor(private router: ActivatedRoute, private testService: TestService, private userService: UserService) { }
 
-  userSkillsByIntelligence: any[] = [
-    {
-      name: 'inteligencia1',
-      skill: 10,
-    },
-    {
-      name: 'inteligencia2',
-      skill: 20,
-    },
-    {
-      name: 'inteligencia3',
-      skill: 30,
-    },
-    {
-      name: 'inteligencia4',
-      skill: 40,
-    },
-    {
-      name: 'inteligencia5',
-      skill: 50,
-    },
-    {
-      name: 'inteligencia6',
-      skill: 60,
-    },
-    {
-      name: 'inteligencia7',
-      skill: 70,
-    },
-    {
-      name: 'inteligencia8',
-      skill: 10,
-    },
+  userSkillsByIntelligence: any = [];
 
-  ];
+  firstSkill: string;
 
-  firstSkill!: string;
-
-  remainingSkills!: string;
+  remainingSkills: string = '';
 
   bestIndicatedArea!: string;
 
@@ -60,7 +26,37 @@ export class SkillsResultComponent implements OnInit {
 
   async ngOnInit() {
 
-    // let userId = this.router.snapshot.params?.['userId'];
+    let userId = this.router.snapshot.params?.['userId'];
+
+
+    let sortedSkills: any = []
+
+    await this.userService.getCandidateInfoById(userId).subscribe(async user => {
+
+      await this.testService.getUserTestResults(user[0].idTesteIM).subscribe(imResult => {
+        this.userSkillsByIntelligence = imResult[0];
+        console.log(this.userSkillsByIntelligence)
+        sortedSkills.push({ intelligenceType: 'cinestesica', result: this.userSkillsByIntelligence.cinestesica })
+        sortedSkills.push({ intelligenceType: 'espacial', result: this.userSkillsByIntelligence.espacial })
+        sortedSkills.push({ intelligenceType: 'interpessoal', result: this.userSkillsByIntelligence.interpessoal })
+        sortedSkills.push({ intelligenceType: 'intrapessoal', result: this.userSkillsByIntelligence.intrapessoal })
+        sortedSkills.push({ intelligenceType: 'linguistica', result: this.userSkillsByIntelligence.espacial })
+        sortedSkills.push({ intelligenceType: 'matematica', result: this.userSkillsByIntelligence.matematica })
+        sortedSkills.push({ intelligenceType: 'musical', result: this.userSkillsByIntelligence.musical })
+
+        sortedSkills = this.sortSkillList(sortedSkills);
+
+        this.setFirstSkill(sortedSkills);
+
+        this.setRemainingSkills(sortedSkills);
+
+        console.log(this.firstSkill)
+
+        console.log(this.remainingSkills)
+
+      })
+
+    });
 
     // if (userId) {
     //   await this.testService.getUserTestResults(userId).subscribe(results => {
@@ -80,11 +76,36 @@ export class SkillsResultComponent implements OnInit {
 
   }
 
+  setFirstSkill(skillsList) {
+
+    this.firstSkill = skillsList[0].intelligenceType;
+
+  }
+
+  setRemainingSkills(skillsList) {
+
+    skillsList.splice(0, 1);
+
+    for (const [index, value] of skillsList.entries()) {
+
+      if (index == 0)
+        this.remainingSkills += `${value.intelligenceType}, `;
+
+      if (index == skillsList.length - 1)
+        this.remainingSkills += ` e ${value.intelligenceType}`;
+
+      else
+        this.remainingSkills += `, ${value.intelligenceType}`;
+
+    }
+
+  }
+
 
   sortSkillList(skillList) {
 
     return skillList.sort(function (first, second) {
-      return second.skill - first.skill;
+      return second.result - first.result;
     });
 
   }

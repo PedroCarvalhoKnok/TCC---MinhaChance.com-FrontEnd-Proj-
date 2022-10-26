@@ -7,6 +7,7 @@ import { TestService } from 'src/app/Services/Test/test.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { questions } from 'src/environments/environment';
+import { UserService } from 'src/app/Services/User/user.service';
 
 
 @Component({
@@ -39,15 +40,19 @@ export class SkillsTestComponent implements OnInit {
 
   userId: number;
 
+  userImId: number;
+
   statusEdit: boolean = false;
 
   testQuestions: Observable<Question[]> = of(questions)
 
-  constructor(private router: Router, private activeRouter: ActivatedRoute, private testService: TestService) { }
+  constructor(private router: Router, private activeRouter: ActivatedRoute, private testService: TestService, private userService: UserService) { }
 
   async ngOnInit() {
 
     this.userId = this.activeRouter.snapshot.params?.['userId'];
+
+    await this.userService.getCandidateInfoById(this.userId).subscribe(user => {this.userImId = user[0].idTesteIM;});
 
     //this.statusEdit = this.activeRouter.snapshot.params?.['status'] === 'refazer' ? true : false;
 
@@ -201,7 +206,7 @@ export class SkillsTestComponent implements OnInit {
 
     console.log(questionMissing)
 
-    if (questionMissing < 25)
+    if (questionMissing < 32)
       return false;
     else
       return true;
@@ -212,23 +217,25 @@ export class SkillsTestComponent implements OnInit {
 
     this.testQuestions.subscribe(async questions => {
 
-      if (!this.validateMissingAnswers(questions)) {
+      // if (!this.validateMissingAnswers(questions)) {
 
-        Swal.fire(
-          'Atenção!',
-          'Responda no mínimo 25 perguntas do teste antes de enviá-lo',
-          'warning'
-        )
+      //   Swal.fire(
+      //     'Atenção!',
+      //     'Responda no mínimo 32 perguntas do teste antes de enviá-lo',
+      //     'warning'
+      //   )
 
-        return;
-      }
+      //   return;
+      // }
+
+      console.log(questions);
 
       let results = this.testService.analyzeUserAnswers(questions);
 
-
       if (!this.statusEdit) {
+       
 
-        await this.testService.sendTest(results).subscribe(result => {
+        await this.testService.sendTest(results, this.userImId).subscribe(result => {
 
           if (result) {
 
@@ -260,7 +267,7 @@ export class SkillsTestComponent implements OnInit {
       }
       else {
 
-        await this.testService.changeTest(results).subscribe(result => {
+        await this.testService.sendTest(results, this.userImId).subscribe(result => {
           if (result) {
 
             Swal.fire(
