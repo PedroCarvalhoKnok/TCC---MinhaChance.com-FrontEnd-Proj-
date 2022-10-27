@@ -43,7 +43,7 @@ export class VacancyService {
       )
   }
 
-  getVacanciesByUser(userId: number) {
+  getVacanciesForCompanies(userId: number) {
     console.log(userId);
     return this.httpClient.get<any>(`${this.urlVaga}/${userId}`)
       .pipe(

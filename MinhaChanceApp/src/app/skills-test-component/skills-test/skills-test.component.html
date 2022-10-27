@@ -94,6 +94,12 @@
                                 4) {{question.answerFour}}
                             </mat-radio-button>
                         </section>
+                        <br />
+                        <section>
+                            <mat-radio-button checked="{{question.userAnswer == '5' ? true: false}}" (click)="setSelectedQuestion(questionPos,question.id, '5')" value="5">
+                                5) {{question.answerFive}}
+                            </mat-radio-button>
+                        </section>
                     </mat-radio-group>
 
                 </div>

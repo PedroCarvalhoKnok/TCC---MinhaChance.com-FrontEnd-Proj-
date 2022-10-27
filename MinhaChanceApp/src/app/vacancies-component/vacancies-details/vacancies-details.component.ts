@@ -37,60 +37,65 @@ export class VacanciesDetailsComponent implements OnInit {
   title = 'Aptidão geral a vaga';
   vacancyDetailChart = [];
 
-  vacancyDetails: Observable<any[]> = of([{
-    id: 3,
-    userId: 3,
-    userName: 'Daniel Silva',
-    profile: 'Candidato',
-    email: 'daniel.teste123@teste.com',
-    isWorking: true,
-    actualCompany: 'Empresa Y',
-    actualCharge: 'Estagiario',
-    address: { streetName: 'rua dos testes', district: 'bairro teste', country: 'Brasil', zipCode: '09060110', streetNumber: 20 },
-    age: 20,
-    phone: '(11) 94567-2834',
-    hasVacancyCourse: false,
-    salaryPretension: 2000.00,
-    experiences: [],
-    certifications: [],
-    graduations: [],
-    objective: 'Crescimento pessoal e profisional ganhando experiencia',
-    userVacancyInfo: { yes: 56, no: 44 },
-    userInteligenciesInfo: { intelligence: 'Linguística', vacancies: ['Tradutor e conhecimento em libras'], skills: [67] },
-    interests: [{ description: 'Música' }, { description: 'Futebol' }, { description: 'Filmes e séries' }],
-    schooling: { id: 1, descricao: 'Ensino Médio Completo' },
-    role: Role.Candidate
-  },
-  {
-    id: 4,
-    userId: 3,
-    userName: 'Bruna Oliveira',
-    profile: 'Candidato',
-    email: 'bruhh@teste.com',
-    isWorking: false,
-    address: { streetName: 'rua general teste', district: 'bairro abc', country: 'Brasil', zipCode: '09063410', streetNumber: 208 },
-    age: 20,
-    phone: '(11) 95566-2939',
-    hasVacancyCourse: true,
-    salaryPretension: 1000.00,
-    experiences: [],
-    certifications: [{ id: 1, certificationDescription: 'certificação introdução python', platform: 'MinhaVez!', timeSpent: 10 }],
-    graduations: [],
-    objective: 'Crescimento pessoal e profisional ganhando experiencia',
-    userVacancyInfo: { yes: 50, no: 50 },
-    userInteligenciesInfo: { intelligence: 'Lógica-Matemática', vacancies: ['Estatistico - Iniciante analise de dados', 'Desenvolvedor Java júnior'], skills: [78, 75] },
-    interests: [{ description: 'Natação' }, { description: 'Artes' }, { description: 'Filmes e séries' }],
-    schooling: { id: 1, descricao: 'Ensino Médio Completo' },
-    role: Role.Candidate
-  }])
+  // vacancyDetails: Observable<any[]> = of([{
+  //   id: 3,
+  //   userId: 3,
+  //   userName: 'Daniel Silva',
+  //   profile: 'Candidato',
+  //   email: 'daniel.teste123@teste.com',
+  //   isWorking: true,
+  //   actualCompany: 'Empresa Y',
+  //   actualCharge: 'Estagiario',
+  //   address: { streetName: 'rua dos testes', district: 'bairro teste', country: 'Brasil', zipCode: '09060110', streetNumber: 20 },
+  //   age: 20,
+  //   phone: '(11) 94567-2834',
+  //   hasVacancyCourse: false,
+  //   salaryPretension: 2000.00,
+  //   experiences: [],
+  //   certifications: [],
+  //   graduations: [],
+  //   objective: 'Crescimento pessoal e profisional ganhando experiencia',
+  //   userVacancyInfo: { yes: 56, no: 44 },
+  //   userInteligenciesInfo: { intelligence: 'Linguística', vacancies: ['Tradutor e conhecimento em libras'], skills: [67] },
+  //   interests: [{ description: 'Música' }, { description: 'Futebol' }, { description: 'Filmes e séries' }],
+  //   schooling: { id: 1, descricao: 'Ensino Médio Completo' },
+  //   role: Role.Candidate
+  // },
+  // {
+  //   id: 4,
+  //   userId: 3,
+  //   userName: 'Bruna Oliveira',
+  //   profile: 'Candidato',
+  //   email: 'bruhh@teste.com',
+  //   isWorking: false,
+  //   address: { streetName: 'rua general teste', district: 'bairro abc', country: 'Brasil', zipCode: '09063410', streetNumber: 208 },
+  //   age: 20,
+  //   phone: '(11) 95566-2939',
+  //   hasVacancyCourse: true,
+  //   salaryPretension: 1000.00,
+  //   experiences: [],
+  //   certifications: [{ id: 1, certificationDescription: 'certificação introdução python', platform: 'MinhaVez!', timeSpent: 10 }],
+  //   graduations: [],
+  //   objective: 'Crescimento pessoal e profisional ganhando experiencia',
+  //   userVacancyInfo: { yes: 50, no: 50 },
+  //   userInteligenciesInfo: { intelligence: 'Lógica-Matemática', vacancies: ['Estatistico - Iniciante analise de dados', 'Desenvolvedor Java júnior'], skills: [78, 75] },
+  //   interests: [{ description: 'Natação' }, { description: 'Artes' }, { description: 'Filmes e séries' }],
+  //   schooling: { id: 1, descricao: 'Ensino Médio Completo' },
+  //   role: Role.Candidate
+  // }])
+
+  vacancyDetails: Observable<any[]> = of([]);
 
   async ngOnInit() {
 
     this.vacancyId = this.router.snapshot.params?.['vacancyId'];
 
+    await this.userService.getCandidatesByVacancy(this.vacancyId).subscribe(candidates => {
+      console.log(candidates);
+      this.vacancyDetails = of(candidates);
+    });
 
-    // this.vacancyDetails = await this.userService.getUsersByVacancy(this.vacancyId);
-
+    console.log(this.vacancyDetails);
 
 
     // this.vacancyDetails = candidates;
@@ -154,7 +159,7 @@ export class VacanciesDetailsComponent implements OnInit {
   filterVacancyList(vacancyDetailsList: any[]): any[] {
 
     //chamar get de listagem de detalhes
-    
+
 
     if (this.detailsFilter.status != undefined)
       vacancyDetailsList = vacancyDetailsList.filter(detail => detail.isWorking == this.detailsFilter.status)
@@ -171,7 +176,7 @@ export class VacanciesDetailsComponent implements OnInit {
     if (this.detailsFilter.experienceTime != 0 && this.detailsFilter.experienceTime)
       vacancyDetailsList = vacancyDetailsList.filter(detail => detail.experiences != undefined ? detail.experiences.map(experience => experience.timeSpent).reduce((acc, sum) => acc + sum) >= this.detailsFilter.experienceTime : undefined)
 
-    if (this.detailsFilter.salaryPretension != 0  && this.detailsFilter.salaryPretension)
+    if (this.detailsFilter.salaryPretension != 0 && this.detailsFilter.salaryPretension)
       vacancyDetailsList = vacancyDetailsList.filter(detail => detail.salaryPretension >= this.detailsFilter.salaryPretension)
 
     if (this.detailsFilter.hasVacancyCourse)

@@ -14,14 +14,24 @@ export class UserService {
   urlCandidate = `${environment.urlBaseApi}/candidatos`;
   urlCompany = `${environment.urlBaseApi}/empresas`;
   urlVacancyUser = `${environment.urlBaseApi}/candidatoVaga`;
+  urlCandidatesPerVacancy = `${environment.urlBaseApi}/CandidatosPorVaga`;
+  urlVacancyPerCandidate = `${environment.urlBaseApi}/vagasPorCandidato`;
 
   constructor(private httpClient: HttpClient) { }
 
 
-  getUsersByVacancy(vacancyId: number) {
-    return this.httpClient.get<User[]>('',).pipe(
+  getCandidatesByVacancy(vacancyId: number) {
+    return this.httpClient.get<any>(`${this.urlCandidatesPerVacancy}/${vacancyId}`,).pipe(
       retry(2)
     )
+  }
+
+  getVacanciesByCandidate(candidateId: number){
+
+    return this.httpClient.get<any>(`${this.urlVacancyPerCandidate}/${candidateId}`,).pipe(
+      retry(2)
+    )
+
   }
 
   getUserInfoByVacancy(userId: number, vacancyId: number) {

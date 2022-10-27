@@ -23,7 +23,7 @@ export class UserInteligenceResultChartComponent {
 
   async ngAfterViewInit(){
 
-    let skillNameList: any = ['cinestesica', 'espacial', 'interpessoal', 'intrapessoal', 'linguistica', 'matematica', 'musical']
+    let skillNameList: any = ['cinestesica', 'espacial', 'interpessoal', 'intrapessoal', 'linguistica', 'matematica', 'musical', 'naturalista']
 
     let userId = this.router.snapshot.params?.['userId'];
 
@@ -39,6 +39,7 @@ export class UserInteligenceResultChartComponent {
         this.skillPercentualList.push(imResult[0].linguistica);
         this.skillPercentualList.push(imResult[0].matematica);
         this.skillPercentualList.push(imResult[0].musical);
+        this.skillPercentualList.push(imResult[0].naturalista);
 
 
         new Chart(`user-intelligence-result`, {

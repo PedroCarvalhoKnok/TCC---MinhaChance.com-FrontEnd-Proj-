@@ -2,9 +2,10 @@ export class Question {
     id: number;
     questionDescription: string;
     intelligenceType: string;
-    answerOne?: string = 'Discordo totalmente';
-    answerTwo?: string = 'Discordo parcialmente';
-    answerTree?: string = 'Concordo parcialmente';
-    answerFour?: string = 'Concordo totalmente';
+    answerOne?: string;
+    answerTwo?: string;
+    answerTree?: string;
+    answerFour?: string;
+    answerFive?: string;
     userAnswer?: string;
 }

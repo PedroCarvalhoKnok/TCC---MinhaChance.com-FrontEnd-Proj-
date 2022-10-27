@@ -97,13 +97,15 @@ export class TestService {
 
     let musicalAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Musical' && answer.userAnswer);
 
-    let kinesthesicAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Cinetica' && answer.userAnswer);
+    let kinesthesicAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Cinestesica' && answer.userAnswer);
 
     let spacialAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Espacial-Visual' && answer.userAnswer);
 
     let interAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Interpessoal' && answer.userAnswer);
 
     let intraAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Intrapessoal' && answer.userAnswer);
+
+    let naturalistAnswers = userAnswers.filter(answer => answer.intelligenceType === 'Naturalista' && answer.userAnswer);
 
     results.push({intelligenceType: 'Logica-Matematica', result: logicAnswers.length > 0 ? this.calculateAnswersType(logicAnswers) : 0});
 
@@ -117,7 +119,9 @@ export class TestService {
 
     results.push({intelligenceType: 'Interpessoal', result: interAnswers.length > 0 ? this.calculateAnswersType(interAnswers) : 0});
 
-    results.push({intelligenceType: 'Intrapessoal', result: intraAnswers.length > 0 ? this.calculateAnswersType(intraAnswers) : 0}); 
+    results.push({intelligenceType: 'Intrapessoal', result: intraAnswers.length > 0 ? this.calculateAnswersType(intraAnswers) : 0});
+    
+    results.push({intelligenceType: 'Naturalista', result: naturalistAnswers.length > 0 ? this.calculateAnswersType(naturalistAnswers) : 0});
 
     console.log(results);
 
@@ -137,11 +141,13 @@ export class TestService {
 
     let productAnswerTwo = (typeAnswers.filter(answer => answer.userAnswer === '2').length * 1);
 
-    let productAnswerTree = (typeAnswers.filter(answer => answer.userAnswer === '3').length * 3);
+    let productAnswerTree = (typeAnswers.filter(answer => answer.userAnswer === '3').length * 2);
 
-    let productAnswerFour = (typeAnswers.filter(answer => answer.userAnswer === '4').length * 4);
+    let productAnswerFour = (typeAnswers.filter(answer => answer.userAnswer === '4').length * 3);
 
-    let finalTypeResult =  (productAnswerOne + productAnswerTwo + productAnswerTree + productAnswerFour) / totalAnswerType;
+    let productAnswerFive = (typeAnswers.filter(answer => answer.userAnswer === '5').length * 4);
+
+    let finalTypeResult =  (productAnswerOne + productAnswerTwo + productAnswerTree + productAnswerFour + productAnswerFive) / totalAnswerType;
 
     let finalTypePercentage = (finalTypeResult / 4) * 100;
 

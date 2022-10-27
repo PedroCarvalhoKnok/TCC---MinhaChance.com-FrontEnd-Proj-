@@ -22,6 +22,8 @@ export class SkillsResultComponent implements OnInit {
 
   bestIndicatedProfessions!: string;
 
+  description!: string;
+
   userName: string = 'teste';
 
   async ngOnInit() {
@@ -43,6 +45,7 @@ export class SkillsResultComponent implements OnInit {
         sortedSkills.push({ intelligenceType: 'linguistica', result: this.userSkillsByIntelligence.espacial })
         sortedSkills.push({ intelligenceType: 'matematica', result: this.userSkillsByIntelligence.matematica })
         sortedSkills.push({ intelligenceType: 'musical', result: this.userSkillsByIntelligence.musical })
+        sortedSkills.push({ intelligenceType: 'naturalista', result: this.userSkillsByIntelligence.naturalista })
 
         sortedSkills = this.sortSkillList(sortedSkills);
 
@@ -79,6 +82,8 @@ export class SkillsResultComponent implements OnInit {
   setFirstSkill(skillsList) {
 
     this.firstSkill = skillsList[0].intelligenceType;
+
+    this.fillBestIndicationAreaProfession(skillsList[0].intelligenceType);
 
   }
 
@@ -126,14 +131,47 @@ export class SkillsResultComponent implements OnInit {
 
   fillBestIndicationAreaProfession(bestSkill) {
 
-    switch (bestSkill.name) {
-      case 'inteligencia1':
-        this.bestIndicatedArea = 'Exatas'
-        this.bestIndicatedProfessions = 'voltadas ao exercício do raciocínio e aplicação da lógica e da matemática para problemas do dia a dia, como: Engenharia, matemática, física, química...';
+    switch (bestSkill) {
+
+      case 'cinestesica':
+        this.bestIndicatedArea = 'Cinestesia'
+        this.bestIndicatedProfessions = 'dançarino(a), demonstradores(as), atores(as), atletas, professores físicos, esportistas, soldados, bombeiros(as), socorristas, artistas de performance e ergonomistas';
+        this.description = 'movimento e controle corporal, destreza manual, agilidade e balanceamento físico e coordenação do corpo e dos olhos'
         break;
-      case 'inteligencia2':
-        this.bestIndicatedArea = 'Linguística'
-        this.bestIndicatedProfessions = 'voltadas à comunicação entre pessoas e aprendizado de linguas distintas, como: Letras, comunicação social, dublagem, tradução...';
+      case 'espacial':
+        this.bestIndicatedArea = 'Visuais/Design/Criação';
+        this.bestIndicatedProfessions = 'artista, designer, cartunista, ilustrador(a), arquiteto(a), fotografo(a), escultor(a), urbanista e invertor(a)';
+        this.description = 'visualização, percepção espacial, interpretação e criação de imagens visuais, imaginação de imagens e expressões, diferenciação de imagem e significado e espaço e efeito';
+        break;
+      case 'interpessoal':
+        this.bestIndicatedArea = 'Comunicação/Contato Humano';
+        this.bestIndicatedProfessions = 'psicólogo(a), terapeuta, profissional de RH, mediador(a), líder, político(a), educador(a), vendedor(a), professor(a), médico(a) e mentor(a).';
+        this.description = 'habilidade de percepção de outra pessoa, interpretação de comportamentos e cmunicações sociais, além da compreensão do relacionamento entre pessoas e situações externo a você.';
+        break;
+      case 'intrapessoal':
+        this.bestIndicatedArea = 'Introspecção/Estudo interior';
+        this.bestIndicatedProfessions = 'focado(a) na inteligência emocional e no processo de auto-avaliação e mudanças de seus pensamentos, emoções, crenças e opiniões e quaisquer profissões que envolvam com o conhecimento interior de você.';
+        this.description = 'auto conhecimento, subjetividade, capacidade de auto entendimento, sentir e reconhecer os outros e o mundo em relação ao seu eu e reconhecer os processos necessários para sua mudança interior.';
+        break;
+      case 'linguistica':
+        this.bestIndicatedArea = 'Letras/Comunicação/Idiomas'
+        this.bestIndicatedProfessions = 'escritor(a), advogado(a), jornalista, orador(a), professor(a) de idiomas, poeta(ista), editor(a), linguista, tradutor(a) e apresentador(a)';
+        this.description = 'Palavras, linguas, escrita, fala, retenção, interpretação audio e textual, explicação de ideias, diferenciação de falas e significados (contexto).';
+        break;
+      case 'matematica':
+        this.bestIndicatedArea = 'Logica/Matematica/Naturais'
+        this.bestIndicatedProfessions = 'cientista, engenheiro(a), especialista em computação, contador(a), banqueiro(a), estatistico(a), fisico(a), quimico(a), matematico(a), pesquisadores e analistas';
+        this.description = 'pensamento lógico e racional, detecção de padrões, dedução científica racional, analíse de problemas, abstração e compreensão matemática, entendimento lógico de causa e efeito ou resultado.';
+        break;
+      case 'musical':
+        this.bestIndicatedArea = 'Musica/Produção/Composição'
+        this.bestIndicatedProfessions = 'musico(ista), cantor(a), compositor(a), dj, produtor(a) musical, afinador(a) de instrumentos, conselheiros de aúdio e professor(a) musical';
+        this.description = 'habilidade musical, conhecimento musical, apreciação e utilização sonora, reconhecimento de padrões de tons, ritmos, notas e escalas e reconhecimento entre musica e sentimento.';
+        break;
+      case 'naturalista':
+        this.bestIndicatedArea = 'Biologicas/Ecológia'
+        this.bestIndicatedProfessions = 'biologo(a), cientista, veterinario(a), ecologista, oceanografo(a), conscientizador(a) e professor(a)';
+        this.description = 'percepção ambiental, realizar classificações, distinções e manipolações do ecossistema, interação homem-meio ambiente e conscientização sustentável.';
         break;
 
     }

@@ -26,6 +26,8 @@ export class VacanciesListComponent implements OnInit {
 
   userLogged: User = new User();
 
+  userCandidaturesRequired: boolean = false;
+
   fileMocked = new File([], "", {
     type: "",
   });
@@ -57,26 +59,47 @@ export class VacanciesListComponent implements OnInit {
       this.vacancies = of(vacancies);
     });
 
-   //this.getUsers();
-    
+    //this.getUsers();
+
   }
 
   async getUsers() {
 
-    if (this.userLogged.role === 'Candidate') {
+    if (this.userLogged.role === 'Candidate' && !this.userCandidaturesRequired) {
 
       await this.vacancyService.getVacanciesForCandidates().subscribe(vacancies => {
         this.vacancies = vacancies;
       });
 
     }
-    else {
+    if (this.userLogged.role === 'Candidate' && this.userCandidaturesRequired) {
 
-      await this.vacancyService.getVacanciesByUser(this.userLogged.id).subscribe(vacancies => {
+      await this.userService.getVacanciesByCandidate(this.userLogged.id).subscribe(vacancies => {
+
+        this.vacancies = of(vacancies);
+
+      })
+
+    }
+    if (this.userLogged.role === 'Company') {
+
+      await this.vacancyService.getVacanciesForCompanies(this.userLogged.id).subscribe(vacancies => {
         this.vacancies = vacancies;
       });
 
     }
+
+  }
+
+  async getCandidateVacancies() {
+
+    this.userCandidaturesRequired = true;
+
+    await this.userService.getVacanciesByCandidate(this.userLogged.id).subscribe(vacancies => {
+
+      this.vacancies = of(vacancies);
+
+    })
 
   }
 
@@ -303,15 +326,6 @@ export class VacanciesListComponent implements OnInit {
 
     return data;
   }
-
-  async getPersonalCandidatures() {
-
-    await this.vacancyService.getVacanciesByUser(this.userLogged.id).subscribe(candidateVacancy => {
-      this.vacancies = candidateVacancy
-    })
-
-  }
-
 
   sendCandidature(vacancy: Vacancy) {
 
