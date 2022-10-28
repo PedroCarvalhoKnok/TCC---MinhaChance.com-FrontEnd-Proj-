@@ -109,10 +109,9 @@ export class VacanciesRegisterComponent implements OnInit {
 
   async postVacancy(vacancy: Vacancy) {
 
-    this.vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
-    this.vacancy.creationDate = new Date();
-    //this.vacancy.userId = JSON.parse(sessionStorage.getItem('user')!).id; usar
-    this.vacancy.userId = 2; //alterar
+    vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
+    vacancy.creationDate = new Date();
+    vacancy.userId = JSON.parse(sessionStorage.getItem('user')!).id;
     
 
     if (this.formVacancy.valid) {

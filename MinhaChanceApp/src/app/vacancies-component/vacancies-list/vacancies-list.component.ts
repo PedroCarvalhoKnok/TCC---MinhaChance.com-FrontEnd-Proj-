@@ -24,7 +24,7 @@ export class VacanciesListComponent implements OnInit {
 
   pageEvent!: PageEvent;
 
-  userLogged: User = new User();
+  userLogged: any;
 
   userCandidaturesRequired: boolean = false;
 
@@ -43,36 +43,33 @@ export class VacanciesListComponent implements OnInit {
   // { id: 3, vacancyTitle: 'Consultor Cloud Senior', creationDate: new Date(), image: this.fileMocked, quantity: 1, salary: 0, isConfidential: true, contractType: 'CLT', modalidity: 'Remoto', semanalQuantity: 0, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 2000 }, { id: 2, description: 'Convenio medico', value: 1500 }], requirements: [{ id: 1, description: 'Ensino superior completo', differential: 'Conhecimento avançado de Azure ou AWS' }] },
   // ]);
 
-  vacancies: Observable<Vacancy[]> = of([]);
+  vacancies: Observable<any[]> = of([]);
 
   async ngOnInit() {
 
-    // this.vacancies = await this.vacancyService.getAllVacanciesByUser(1); //user id
+    this.userLogged = JSON.parse(sessionStorage.getItem('user')!);
 
-    //this.userLogged = JSON.parse(sessionStorage.getItem('user')!);
-    //let userId = 2
+    console.log(this.userLogged)
+    
 
-    this.userLogged.id = 3;
-
-    await this.vacancyService.getVacanciesForCandidates().subscribe(vacancies => {
-      console.log(vacancies);
-      this.vacancies = of(vacancies);
-    });
-
-    //this.getUsers();
+    this.getUsers();
 
   }
 
   async getUsers() {
 
-    if (this.userLogged.role === 'Candidate' && !this.userCandidaturesRequired) {
+    console.log(this.userCandidaturesRequired + this.userLogged.CPF)
+
+    
+
+    if (this.userLogged.CPF && !this.userCandidaturesRequired) {
 
       await this.vacancyService.getVacanciesForCandidates().subscribe(vacancies => {
-        this.vacancies = vacancies;
+        this.vacancies = of(vacancies);
       });
 
     }
-    if (this.userLogged.role === 'Candidate' && this.userCandidaturesRequired) {
+    if (this.userLogged.CPF && this.userCandidaturesRequired) {
 
       await this.userService.getVacanciesByCandidate(this.userLogged.id).subscribe(vacancies => {
 
@@ -81,10 +78,10 @@ export class VacanciesListComponent implements OnInit {
       })
 
     }
-    if (this.userLogged.role === 'Company') {
+    if (this.userLogged.cnpj) {
 
       await this.vacancyService.getVacanciesForCompanies(this.userLogged.id).subscribe(vacancies => {
-        this.vacancies = vacancies;
+        this.vacancies = of(vacancies);
       });
 
     }
@@ -96,6 +93,8 @@ export class VacanciesListComponent implements OnInit {
     this.userCandidaturesRequired = true;
 
     await this.userService.getVacanciesByCandidate(this.userLogged.id).subscribe(vacancies => {
+
+      console.log(vacancies);
 
       this.vacancies = of(vacancies);
 
@@ -196,7 +195,7 @@ export class VacanciesListComponent implements OnInit {
     this.vacancyFilter.vacancyCategory = (<HTMLInputElement>document.getElementById(`vacancyCategory`)).value;
     console.log(this.vacancyFilter);
 
-    //this.getUsers();
+    this.getUsers();
 
     this.vacancies.subscribe(vacancies => {
 

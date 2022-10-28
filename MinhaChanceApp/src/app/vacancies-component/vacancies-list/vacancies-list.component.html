@@ -2,10 +2,10 @@
     <mat-card class="add-vacancy-card">
 
         <mat-card-header class="title-vacancy">
-            <span (click)="goToVacancyRegister()" class="material-icons">add_circle_outline</span>
-            <mat-card-title class="add-title"><a>Crie vagas e oportunidades para sua empresa</a></mat-card-title>
-            <span (click)="getCandidateVacancies()" class="material-icons">verified</span>
-            <mat-card-title class="add-title"><a>Minhas candidaturas</a></mat-card-title>
+            <span *ngIf="this.userLogged.cnpj" (click)="goToVacancyRegister()" class="material-icons">add_circle_outline</span>
+            <mat-card-title *ngIf="this.userLogged.cnpj" class="add-title"><a>Crie vagas e oportunidades para sua empresa</a></mat-card-title>
+            <span *ngIf="this.userLogged.CPF" (click)="getCandidateVacancies()" class="material-icons">verified</span>
+            <mat-card-title *ngIf="this.userLogged.CPF" class="add-title"><a>Minhas candidaturas</a></mat-card-title>
         </mat-card-header>
     </mat-card>
 </div>
@@ -129,12 +129,14 @@
                     <span class="material-icons col-md-4">account_circle</span>
                     <!-- <label class="col-md-4" for="inputdefault">Salário<br />{{vacancy.salary}}</label> -->
                     <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantity}} vaga(s)</label>
+                    <label *ngIf="this.userCandidaturesRequired" class="col-md-4" for="inputdefault">Status<br />{{vacancy.status}}</label>
                     <!-- <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{vacancy.modalidity}} {{vacancy.modalidity == 'Hibrido' ? vacancy.semanalQuantity: ''}}</label> -->
                     <!-- <br /> -->
                     <label class="col-md-4" for="inputdefault">Beneficios da vaga<br />
-                        <ul class="vacancy-list col-md-4" *ngFor="let benefit of this.vacancy.benefits">
+                        <!-- <ul class="vacancy-list col-md-4" *ngFor="let benefit of this.vacancy.benefits">
                             <li>Descrição {{benefit}}</li>
-                        </ul>
+                        </ul> -->
+                        {{vacancy.beneficios}}
                     </label><br />
                     <!-- <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
                         <ul class="vacancy-list col-md-4" *ngFor="let requirement of this.vacancy.requirements">
@@ -150,12 +152,12 @@
                     </div>
 
                     <div class="description">
-                        <button type="button" (click)="goEditVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Editar vaga</button>
-                        <button type="button" (click)="finishVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Vaga preenchida</button>
-                        <button type="button" (click)="goDetailsVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
-                        <button (click)="deleteVacancyModal(vacancy.id)" type="button"  class="btn btn-danger btn-sm space-button">Excluir vaga</button>
-                        <button (click)="openMetricsDetails(vacancy.id)" type="button" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
-                        <button (click)="sendCandidature(vacancy)" type="button" class="btn btn-primary btn-sm space-button">Candidatar a vaga</button>
+                        <button *ngIf="this.userLogged.cnpj" type="button" (click)="goEditVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Editar vaga</button>
+                        <button *ngIf="this.userLogged.cnpj" type="button" (click)="finishVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Vaga preenchida</button>
+                        <button *ngIf="this.userLogged.cnpj" type="button" (click)="goDetailsVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
+                        <button *ngIf="this.userLogged.cnpj" (click)="deleteVacancyModal(vacancy.id)" type="button"  class="btn btn-danger btn-sm space-button">Excluir vaga</button>
+                        <button *ngIf="this.userLogged.CPF" (click)="openMetricsDetails(vacancy.id)" type="button" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
+                        <button *ngIf="this.userLogged.CPF" (click)="sendCandidature(vacancy)" type="button" class="btn btn-primary btn-sm space-button">Candidatar a vaga</button>
                     </div>
 
                 </div>

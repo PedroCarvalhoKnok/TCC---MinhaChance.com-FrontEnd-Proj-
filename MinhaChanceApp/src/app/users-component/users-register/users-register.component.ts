@@ -37,9 +37,9 @@ export class UsersRegisterComponent implements OnInit {
           showConfirmButton: true,         
           confirmButtonText: 'OK'         
         }).then(async (result) => {
-          if (result.isConfirmed) {
+          
             this.route.navigate([`${this.userId}/perfil`]);
-          }
+          
 
         })
       }

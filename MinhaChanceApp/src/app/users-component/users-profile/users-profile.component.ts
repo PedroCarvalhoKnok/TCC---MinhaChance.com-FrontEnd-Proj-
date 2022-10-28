@@ -18,7 +18,7 @@ import { Role } from 'src/app/Enums/role';
 })
 export class UsersProfileComponent implements OnInit {
 
-  userLogged: User = {
+  userLogged: any = {
     id: 1,
     userName: 'Daniel Silva',
     profile: 'Candidato',
@@ -130,7 +130,7 @@ export class UsersProfileComponent implements OnInit {
 
     let userId = this.router.snapshot.params?.['userId'];
 
-    this.route.navigate([`/${this.userLogged.role}/editar/${userId}`]);
+    this.route.navigate([`/${this.userLogged.CPF ? 'candidato': 'empresa'}/editar/${userId}`]);
 
   }
 

@@ -1,6 +1,6 @@
 <!-- Toobar -->
 <mat-toolbar class="toolbar">
-  <span class="name-icon">Minha Chance</span>
+  <span class="name-icon">Minha Vez!</span>
   <span class="example-spacer-menu"></span>
 
   <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" title="Início">
@@ -33,7 +33,7 @@
   </button>
   <span class="example-spacer"></span>
   <button *ngIf="isAuthenticated" type="button" class="btn btn-outline-secondary me-2" placement="bottom"
-    ngbPopover="Seja bem vindo(a), usuario" popoverTitle="Usuario">
+    ngbPopover="Seja bem vindo(a), {{this.user.nome}}" popoverTitle="Usuario">
     <mat-icon class="side-icon"><span class="material-icons">
         account_circle
       </span></mat-icon>
@@ -75,7 +75,7 @@
 <!-- Footer -->
 <mat-toolbar class="footer">
   <span class="footer-icon">
-    Desenvolvido por:
+    Desenvolvido por: Equipe Minha Vez!
   </span>
   <span class="example-spacer"></span>
   <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile"

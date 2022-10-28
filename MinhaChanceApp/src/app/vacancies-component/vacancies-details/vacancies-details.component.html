@@ -134,40 +134,40 @@
                 <div class="row">
 
                     <span class="material-icons col-md-4 distance-pad-content">account_circle</span>
-                    <label class="col-md-4 distance-between" for="inputdefault">Status<br />{{detail.isWorking? 'Trabalhando': 'Desempregado(a)'}}</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Status<br />{{detail.status}}</label>
                     <label class="col-md-4 distance-between" for="inputdefault">Empresa atual<br />{{detail.isWorking? detail.actualCompany: 'Nãa possui'}}</label>
                     <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Cargo atual<br />{{detail.isWorking? detail.actualCharge: 'Não Possui'}}</label>
                     <label class="col-md-4 distance-between" for="inputdefault">Idade<br />{{detail.age}} anos</label>
                     <label class="col-md-4 distance-between" for="inputdefault">Email<br />{{detail.email}}</label>
                     <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Contato<br />{{detail.phone}}</label>
                     <label class="col-md-4 distance-between" for="inputdefault">Pretensão salarial<br />{{detail.salaryPretension}}</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Experiências anteriores<br />
+                    <!-- <label class="col-md-4 distance-between" for="inputdefault">Experiências anteriores<br />
                         <ul class="vacancy-list col-md-4"  *ngFor="let experience of detail.experiences">
                             <li>{{experience.chargeDescription}}</li>
                             <li>{{experience.company}}</li>
                             <li> {{experience.timeSpent}}</li>
                         </ul>
-                    </label><br />                    
-                    <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Formação Acadêmica<br />
+                    </label><br />                     --><br /> 
+                    <!-- <label class="col-md-4 distance-between distance-pad-content" for="inputdefault">Formação Acadêmica<br />
                         <ul *ngFor="let graduation of detail.graduations" class="vacancy-list col-md-4">
                             <li>{{graduation.graduationDescription}}</li>
                             <li>{{graduation.course}}</li>
                             <li>{{graduation.institute}}</li>
                             <li>{{graduation.timeSpent}}</li>
                         </ul>
-                    </label><br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Interesses<br />
+                    </label><br /> -->
+                    <!-- <label class="col-md-4 distance-between" for="inputdefault">Interesses<br />
                         <ul class="vacancy-list col-md-4"  *ngFor="let interest of detail.interests">
                             <li>{{interest.description}}</li>
                         </ul>
-                    </label><br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Certificados<br />
+                    </label><br /> -->
+                    <!-- <label class="col-md-4 distance-between" for="inputdefault">Certificados<br />
                         <ul *ngFor="let certification of detail.certifications" class="vacancy-list col-md-4">
                             <li>{{certification.certificationDescription}}</li>
                             <li>{{certification.platform}}</li>
                             <li>{{certification.timeSpent}}</li>
                         </ul>
-                    </label><br />
+                    </label><br /> -->
                     <br/>
                     <div class="description distance-pad-content">
                         <label for="inputdefault">Objetivos<br />{{detail.objective}}</label><br />

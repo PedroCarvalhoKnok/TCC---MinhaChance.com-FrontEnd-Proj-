@@ -11,7 +11,7 @@ import { AuthenticationService } from './Services/Authentication/authentication.
 })
 export class AppComponent {
 
-  user: User;
+  user: any;
   title: string = 'MinhaVezApp'
 
   constructor(private authenticationService: AuthenticationService, private router: Router) {
@@ -23,6 +23,7 @@ export class AppComponent {
   }
 
   get isAuthenticated() {
+    console.log(this.user)
     return this.user;
   }
   

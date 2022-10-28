@@ -44,20 +44,20 @@ const routes: Routes = [
   {
     path: 'empresa/vagas/detalhes/:vacancyId',
     component: VacanciesDetailsComponent,
-    // canActivate: [AuthGuard],
-    // data: { roles: [Role.Company] }
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Company] }
   },
   {
     path: 'empresa/vagas/cadastrar',
     component: VacanciesRegisterComponent,
-    // canActivate: [AuthGuard],
-    // data: { roles: [Role.Company] }
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Company] }
   },
   {
     path: 'empresa/vagas/editar/:vacancyId',
     component: VacanciesRegisterComponent,
-    // canActivate: [AuthGuard],
-    // data: { roles: [Role.Company] }
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Company] }
   },
   {
     path: 'empresa/vagas/editar/:vacancyId',
@@ -68,14 +68,14 @@ const routes: Routes = [
   {
     path: 'candidato/:userId/teste',
     component: SkillsTestComponent,
-    // canActivate: [AuthGuard],
-    // data: { roles: [Role.Candidate] }
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Candidate] }
   },
   {
     path: 'candidato/:userId/teste/resultado',
     component: SkillsResultComponent,
-    // canActivate: [AuthGuard],
-    // data: { roles: [Role.Candidate] }
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Candidate] }
   },
   {
     path: 'candidato/:userId/teste/inicio',

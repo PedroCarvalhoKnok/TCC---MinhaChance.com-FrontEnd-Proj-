@@ -11,10 +11,18 @@ export class AuthGuard implements CanActivate {
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const user = this.authenticationService.userValue;
+        const user: any = this.authenticationService.userValue;
+
+        if(user.CPF)
+            user.role = "Candidate";
+        else
+            user.role = "Company";
+
         if (user) {
+
+            console.log(user)
             // check if route is restricted by role
-            if (route.data.roles && route.data.roles.indexOf(user) === -1) {
+            if (route.data.roles && route.data.roles.indexOf(user.role) === -1) {
                 // role not authorised so redirect to home page
                 this.router.navigate(['/']);
                 return false;

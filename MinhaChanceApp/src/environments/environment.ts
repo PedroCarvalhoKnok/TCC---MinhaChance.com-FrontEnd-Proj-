@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  urlBaseApi: "http://localhost:3000"
-  //urlBaseApi: "https://api-minhavez-containers.azurewebsites.net"
+  //urlBaseApi: "http://localhost:3000"
+  urlBaseApi: "https://api-minhavez-containers.azurewebsites.net"
 };
 
 export const questions = [
