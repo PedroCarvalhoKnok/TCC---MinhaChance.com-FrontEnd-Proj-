@@ -23,7 +23,6 @@ export class AppComponent {
   }
 
   get isAuthenticated() {
-    console.log(this.user)
     return this.user;
   }
   

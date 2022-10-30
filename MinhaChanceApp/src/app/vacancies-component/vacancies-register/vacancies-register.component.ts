@@ -31,8 +31,7 @@ export class VacanciesRegisterComponent implements OnInit {
   isHibrid: boolean = false;
 
   vacancyId!: number;
-  vacancyBenefitsToBeDeleted: string[] = [];
-  vacancyRequirementsToBeDeleted: Requirement[] = [];
+ 
 
   constructor(private vacancyService: VacancyService, private router: ActivatedRoute) { }
 
@@ -107,16 +106,51 @@ export class VacanciesRegisterComponent implements OnInit {
     this.vacancy.image = event.target.files[0];
   }
 
+  goToVacancyRegister(vacancy: Vacancy) {
+
+    Swal.fire({
+      title: 'Deseja criar uma nova vaga?',
+      icon: 'warning',
+      confirmButtonColor: '#3085d6',
+      showCancelButton: true,
+      showConfirmButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim!',
+      cancelButtonText: 'Não!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        this.postVacancy(vacancy);
+      }
+    })
+
+  }
+
+  goToVacancyEdit(vacancy: Vacancy) {
+
+    Swal.fire({
+      title: `Deseja editar a vaga ${vacancy.vacancyTitle}?`,
+      icon: 'warning',
+      confirmButtonColor: '#3085d6',
+      showCancelButton: true,
+      showConfirmButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim!',
+      cancelButtonText: 'Não!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        this.editVacancy(vacancy);
+      }
+    })
+
+  }
+
   async postVacancy(vacancy: Vacancy) {
 
     vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
     vacancy.creationDate = new Date();
     vacancy.userId = JSON.parse(sessionStorage.getItem('user')!).id;
-    
-
-    if (this.formVacancy.valid) {
-
-    console.log(vacancy);
+    vacancy.benefit = this.benefit;
+    vacancy.requirement = this.requirement;
 
     await this.vacancyService.postVacancy(vacancy).subscribe(retornMsg =>
       Swal.fire(
@@ -125,102 +159,51 @@ export class VacanciesRegisterComponent implements OnInit {
           icon: 'success',
         }));
 
-     }
+
 
 
   }
 
   async editVacancy(vacancy: Vacancy) {
 
-    // if (this.vacancyBenefitsToBeDeleted.length > 0) {
+    vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
+    vacancy.userId = JSON.parse(sessionStorage.getItem('user')!).id;
+    vacancy.benefit = this.benefit;
+    vacancy.requirement = this.requirement;
 
-    //   for (let benefitToBeDeleted of this.vacancyBenefitsToBeDeleted) {
-    //     await this.vacancyService.deleteVacancyBenefit(benefitToBeDeleted.id)
-    //   }
+    console.log(vacancy);
 
-    // }
 
-    if (this.vacancyRequirementsToBeDeleted.length > 0) {
+    await this.vacancyService.editVacancy(vacancy).subscribe(returnMsg =>
+      Swal.fire(
+        {
+          title: `${returnMsg.message}`,
+          icon: 'success',
+        }));
 
-      for (let requirementToBeDeleted of this.vacancyRequirementsToBeDeleted) {
-        await this.vacancyService.deleteVacancyRequirement(requirementToBeDeleted.id)
-      }
-
-    }
-
-    this.vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
-
-    if (this.formVacancy.valid) {
-      await this.vacancyService.editVacancy(vacancy).subscribe(returnMsg =>
-        Swal.fire(
-          {
-            title: `${returnMsg.message}`,
-            icon: 'success',
-          }));
-    }
   }
 
   addBenefit() {
 
     if (this.formBenefits.valid) {
       this.benefit.description = (<HTMLInputElement>document.getElementById(`benefitDescription`)).value;
-      this.benefit.value = +(<HTMLInputElement>document.getElementById(`benefitValue`)).value;
       
+
+      console.log(this.benefit);
+
       this.vacancy.benefits.push(this.benefit.description);
 
     }
 
   }
 
-  removeBenefit() {
+  addRequirement() {
 
-    this.vacancy.benefits.pop();
+    this.requirement.description = (<HTMLInputElement>document.getElementById(`requirementDescription`)).value;
+    this.requirement.differencial = (<HTMLInputElement>document.getElementById(`requirementDifferential`)).value;
 
-  }
+    this.vacancy.requirements?.push(this.requirement);
 
-  removeRequirement() {
-
-    this.vacancy.requirements?.pop();
-
-  }
-
-  addRequirement(requirement: Requirement) {
-
-    requirement.description = (<HTMLInputElement>document.getElementById(`requirementDescription`)).value;
-    requirement.differencial = (<HTMLInputElement>document.getElementById(`requirementDifferential`)).value;
-    
-    this.vacancy.requirements?.push(requirement);
-
-  }
-
-  editBenefitByIndex(index: number) {
-    this.vacancy.benefits[index] = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value;
-    //this.vacancy.benefits[index] = +(<HTMLInputElement>document.getElementById(`input-description-${index}`)).value;
-  }
-
-  removeBenefitByIndex(index: number) {
-
-    if (this.vacancyId != undefined)
-      this.vacancyBenefitsToBeDeleted.push(this.vacancy.benefits[index])
-
-
-    delete this.vacancy.benefits[index];
-
-  }
-
-  removeRequirementByIndex(index: number) {
-
-    if (this.vacancyId != undefined)
-      if (this.vacancy.requirements != undefined)
-        this.vacancyRequirementsToBeDeleted.push(this.vacancy.requirements[index])
-
-
-    delete this.vacancy.requirements ?? [index];
-  }
-
-  editRequirementByIndex(index: number) {
-    this.vacancy.requirements != undefined ? this.vacancy.requirements[index].description = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value : '';
-    this.vacancy.requirements != undefined ? this.vacancy.requirements[index].differencial = (<HTMLInputElement>document.getElementById(`input-description-${index}`)).value : '';
   }
 
   createFormVacancyValidation(): void {
@@ -241,11 +224,6 @@ export class VacanciesRegisterComponent implements OnInit {
         Validators.required,
         this.forbiddenDurationTimeValidator(/0/i),
       ]),
-      vacancySemanalQuantity: new FormControl(this.vacancy.semanalQuantity, [
-        Validators.required,
-        this.forbiddenDurationTimeValidator(/0/i),
-        this.forbiddenDurationTimeValidator(/[-0-9]+/i)
-      ]),
       vacancyModalidity: new FormControl(this.vacancy.modalidity, [
         Validators.required,
       ]),
@@ -262,9 +240,6 @@ export class VacanciesRegisterComponent implements OnInit {
   createFormBenefitValidation(): void {
     this.formBenefits = new FormGroup({
       benefitDescription: new FormControl(this.benefit.description, [
-        Validators.required,
-      ]),
-      benefitValue: new FormControl(this.benefit.value, [
         Validators.required,
       ])
     });

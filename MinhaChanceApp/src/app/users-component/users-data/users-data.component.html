@@ -41,6 +41,12 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="col-md-4">
+                <mat-label class="placeholder-color">Situação empregatícia</mat-label>
+                <mat-select [value]="this.situationSelected" (valueChange)="changeSituation($event)" placeholder="Situação empregaticia">
+                    <mat-option [value]="situation.id" *ngFor="let situation of this.situations">{{situation.descricao}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-md-4">
                 <mat-label class="placeholder-color">CPF</mat-label>
                 <input mask="000.000.000-00" id="userEmail" class="form-control" [(ngModel)]="this.user.cpf" formControlName="cpf" type="text" matInput
                     autocomplete="off" placeholder="CPF" required />

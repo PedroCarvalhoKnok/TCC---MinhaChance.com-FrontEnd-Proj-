@@ -131,9 +131,10 @@ export class UserService {
       "nome": user.userName,
       "cpf": user.cpf,
       "dataNascimento": user.birthDate,
-      "idSituacaoEmpregaticia": user.isWorking ? 1 : 2,
+      "idSituacaoEmpregaticia": 1, //validar
       "dataCadastro": user.creationDate,
       "idEscolaridade": user.schoolingId,
+      "senha": user.passWord,
       "idProfissao": 1
     }).pipe(
       retry(2)
@@ -155,11 +156,12 @@ export class UserService {
   }
 
   editCandidate(user: User) {
-    return this.httpClient.put<boolean>(this.urlCandidate + '/3', {
+    return this.httpClient.put<any>(this.urlCandidate + `/${user.id}`, {
       "nome": user.userName,
       "cpf": user.cpf,
+      "senha": user.passWord,
       "dataNascimento": user.birthDate,
-      "idSituacaoEmpregaticia": user.isWorking ? 1 : 2,
+      "idSituacaoEmpregaticia": 1, //validar
       "dataCadastro": "2022/10/17",
       "idEscolaridade": user.schoolingId,
       "idProfissao": 1
@@ -169,9 +171,11 @@ export class UserService {
   }
 
   editCompany(user: User) {
-    return this.httpClient.put<boolean>(this.urlCompany + '/2', {
+    console.log(user);
+    return this.httpClient.put<any>(this.urlCompany + `/${user.id}`, {
       "nomeFantasia": user.userName,
       "razaoSocial": user.profile,
+      "senha": user.passWord,
       "cnpj": user.cnpj,
       "ramoAtuacao": user.companyArea,
       "porte": user.companyPort

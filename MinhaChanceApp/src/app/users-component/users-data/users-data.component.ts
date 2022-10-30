@@ -3,8 +3,10 @@ import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/f
 import { ActivatedRoute } from '@angular/router';
 import { Address } from 'src/app/Models/User/Address';
 import { Schooling } from 'src/app/Models/User/Schooling';
+import { Situation } from 'src/app/Models/User/Situation';
 import { User } from 'src/app/Models/User/User';
 import { SchoolingService } from 'src/app/Services/Schooling/schooling.service';
+import { SituationService } from 'src/app/Services/Situation/situation.service';
 import { UserService } from 'src/app/Services/User/user.service';
 
 @Component({
@@ -22,11 +24,13 @@ export class UsersDataComponent implements OnInit {
   userId: number;
   isCandidate: boolean;
   schoolings!: Schooling[];
+  situations!: Situation[];
   schoolingSelected: number = 0;
+  situationSelected: number = 0;
   companySize!: string;
   @Output() sendUserEvent = new EventEmitter<User>();
 
-  constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService) {
+  constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService, private situationService: SituationService) {
 
   }
 
@@ -40,6 +44,7 @@ export class UsersDataComponent implements OnInit {
       this.isCandidate = true;
       this.createFormCandidateDataValidation();
       this.getSchoolings()
+      this.getSituations();
     }
     else {
       this.isCandidate = false;
@@ -53,11 +58,15 @@ export class UsersDataComponent implements OnInit {
 
         await this.userService.getCandidateInfoById(this.userId).subscribe(user => {
           
+          console.log(user)
           
+          this.user.userName = user[0].nome;
           this.user.cpf = user[0].cpf;
+          this.user.id = user[0].id;
+          this.user.creationDate = this.formatDate(user[0].dataCadastro);
           this.user.birthDate = this.formatDate(user[0].dataNascimento);
           this.schoolingSelected = user[0].idEscolaridade;
-          this.user.isWorking = user[0].idSituacaoEmpregaticia == 1 ? true: false;
+          this.situationSelected = user[0].idSituacaoEmpregaticia;
 
         });
 
@@ -69,6 +78,7 @@ export class UsersDataComponent implements OnInit {
           
           console.log(company)
           
+          this.user.id = company[0].id;
           this.user.profile = company[0].nomeFantasia;
           this.user.userName = company[0].razaoSocial;
           this.user.cnpj = company[0].cnpj;
@@ -102,11 +112,24 @@ export class UsersDataComponent implements OnInit {
 
   }
 
+  async getSituations(){
+
+    await this.situationService.getSituations().subscribe(data => {
+      this.situations = data
+    })
+  }
+
   changeSchooling(schoolId: number) {
 
     this.user.schoolingId = schoolId;
 
 
+  }
+
+  changeSituation(situationId: number){
+
+    this.user.situationId = situationId;
+    
   }
 
   changeCompanySize(size: string) {
@@ -220,6 +243,7 @@ export class UsersDataComponent implements OnInit {
       return;
 
     if (this.isCandidate) {
+      console.log(this.formCandidateData.valid)
       if (!this.formCandidateData.valid)
         return;
     }
@@ -231,6 +255,10 @@ export class UsersDataComponent implements OnInit {
     }
 
     this.user.address = this.address;
+    this.user.schoolingId = this.schoolingSelected;
+    this.user.situationId = this.situationSelected;
+
+    console.log(this.user)
 
     this.sendUserEvent.emit(this.user);
 

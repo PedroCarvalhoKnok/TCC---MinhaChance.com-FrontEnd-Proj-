@@ -26,24 +26,24 @@ export class UsersRegisterComponent implements OnInit {
 
     this.userId = this.router.snapshot.params?.['userId'];
 
-    if (this.userId) {
-      let userLogged = JSON.parse(sessionStorage.getItem('user')!);
-      if (this.userId != userLogged.id) {
+    // if (this.userId) {
+    //   let userLogged = JSON.parse(sessionStorage.getItem('user')!);
+    //   if (this.userId != userLogged.id) {
         
-        Swal.fire({
-          title: 'Não é possivel editar outro perfil',
-          icon: 'warning',
-          confirmButtonColor: '#3085d6',          
-          showConfirmButton: true,         
-          confirmButtonText: 'OK'         
-        }).then(async (result) => {
+    //     Swal.fire({
+    //       title: 'Não é possivel editar outro perfil',
+    //       icon: 'warning',
+    //       confirmButtonColor: '#3085d6',          
+    //       showConfirmButton: true,         
+    //       confirmButtonText: 'OK'         
+    //     }).then(async (result) => {
           
-            this.route.navigate([`${this.userId}/perfil`]);
+    //         this.route.navigate([`${this.userId}/perfil`]);
           
 
-        })
-      }
-    }
+    //     })
+    //   }
+    // }
 
   }
 
@@ -132,8 +132,8 @@ export class UsersRegisterComponent implements OnInit {
     this.user.role = Role.Candidate;
 
     await this.userService.postCandidateRegister(this.user).subscribe(user => {
-      console.log(user);
-      user === "Candidato cadastrado com sucesso!" ?
+      console.log(user.message);
+      user.message === "Candidato cadastrado com sucesso" ?
         Swal.fire(
           'Sucesso!',
           `Dados cadastrados com sucesso!`,
@@ -145,7 +145,7 @@ export class UsersRegisterComponent implements OnInit {
 
         }) : Swal.fire(
           'Ops, ocorreu um erro!',
-          `Ocorreu um erro ao criar o usuário, tente novamente!`,
+          `${user.message}`,
           'warning'
         );
     })
@@ -201,6 +201,8 @@ export class UsersRegisterComponent implements OnInit {
 
   async editCandidate() {
 
+    console.log(this.user)
+
     await this.userService.editCandidate(this.user).subscribe(feedBack => {
       feedBack ?
         Swal.fire(
@@ -217,6 +219,8 @@ export class UsersRegisterComponent implements OnInit {
   }
 
   async editCompany() {
+
+    console.log(this.user)
 
     await this.userService.editCompany(this.user).subscribe(feedBack => {
       feedBack ?
