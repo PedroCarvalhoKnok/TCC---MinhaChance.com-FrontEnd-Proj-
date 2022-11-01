@@ -50,7 +50,15 @@ export class AppComponent {
   }
 
   logout() {
+
     this.authenticationService.logout();
+
+    if (this.user.CPF) {
+      location.href = '/candidato/login';
+    }
+    else {
+      location.href = '/empresa/login';
+    }
   }
 
 

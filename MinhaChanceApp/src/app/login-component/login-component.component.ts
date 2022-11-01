@@ -77,7 +77,7 @@ export class LoginComponentComponent implements OnInit {
         return;
       }
     }
-    else{
+    else {
 
       if (this.formLoginCompany.invalid) {
         return;
@@ -93,8 +93,24 @@ export class LoginComponentComponent implements OnInit {
     this.authenticationService.login(userDoc, this.passWord)
       .pipe(first())
       .subscribe({
-        next: () => {
+        next: (result) => {
           // get return url from query parameters or default to home page
+          if (result === "Usuário ou senha inválidos") {
+            //swal
+            Swal.fire(
+              `${result}`,
+              'Tente novamente',
+              'warning'
+            ).then(() => {
+
+              !this.isCandidate ? this.router.navigate(['/empresa/login']) : this.router.navigate(['/candidato/login']);
+              return;
+
+            });
+
+
+          }
+          sessionStorage.setItem('user', JSON.stringify(result));
           const returnUrl = this.route.snapshot.queryParams['/home'] || '/';
           this.router.navigateByUrl(returnUrl);
         },

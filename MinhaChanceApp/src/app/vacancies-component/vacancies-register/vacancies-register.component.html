@@ -155,19 +155,9 @@
                 <div fxLayout="row" fxLayoutAlign="center">
                     <form [formGroup]="formBenefits">
                         <div fxLayout="column">
-                            <mat-label class="placeholder-color">Nome do beneficio</mat-label>
-                            <br/>
-                            <mat-form-field>
-                            <input id="benefitDescription" matInput class="form-control" formControlName="benefitDescription" type="text" autocomplete="off"
-                                placeholder="Nome do beneficio" required />
-                            </mat-form-field>
-                            <div
-                                *ngIf="formBenefits.get('benefitDescription')?.invalid && (formBenefits.get('benefitDescription')?.dirty || formBenefits.get('benefitDescription')?.touched)">
-                                <p *ngIf="formBenefits.get('benefitDescription')?.errors?.['required']">
-                                    Descrição do beneficio é necessária.
-                                </p>
-                            </div>
-                            
+
+                            <mat-label class="placeholder-color">Beneficios</mat-label>
+                            <textarea id="benefitDescription" class="text-area-form"></textarea>
 
                         </div>
                     </form>
@@ -199,9 +189,6 @@
                            
                             <mat-label class="placeholder-color">Descrição do requisito</mat-label>
                             <textarea id="requirementDescription" class="text-area-form"></textarea>
-                            <br />
-                            <mat-label class="placeholder-color">Diferenciais (opcional)</mat-label>
-                            <textarea id="requirementDifferential" class="text-area-form"></textarea>
 
                         </div>
                     </form>

@@ -23,7 +23,7 @@ export class VacanciesRegisterComponent implements OnInit {
 
 
   contractCategories = ['CLT', 'PJ', 'Estagio', 'Jovem Aprendiz', 'Trainee'];
-  modalities = ['Presencial', 'Hibrido', 'Remoto'];
+  modalities = ['Presencial', 'Hibrido', 'Home-Office'];
   locations: string[] = ['Sao Paulo - Centro', 'Rio de Janeiro - Centro', 'Parana - Curitiba']
 
   isCombinated: boolean = false;
@@ -31,7 +31,7 @@ export class VacanciesRegisterComponent implements OnInit {
   isHibrid: boolean = false;
 
   vacancyId!: number;
- 
+
 
   constructor(private vacancyService: VacancyService, private router: ActivatedRoute) { }
 
@@ -46,8 +46,12 @@ export class VacanciesRegisterComponent implements OnInit {
         this.vacancy.id = vacancy[0].id;
         this.vacancy.vacancyTitle = vacancy[0].titulo;
         this.vacancy.quantity = vacancy[0].quantidade;
+        this.vacancy.modalidity = vacancy[0].modalidade;
+        this.vacancy.location = vacancy[0].localizacao;
+        this.vacancy.creationDate = vacancy[0].dataCriacao;
         (<HTMLInputElement>document.getElementById('vacancyDescription')).value = vacancy[0].descricao;
-        (<HTMLInputElement>document.getElementById(`benefitDescription`)).value = vacancy[0].beneficios; //alterar
+        (<HTMLInputElement>document.getElementById('requirementDescription')).value = vacancy[0].requisitos;
+        (<HTMLInputElement>document.getElementById(`benefitDescription`)).value = vacancy[0].beneficios;
       })
     }
 
@@ -144,13 +148,41 @@ export class VacanciesRegisterComponent implements OnInit {
 
   }
 
+  formatMonth(mes: number): string {
+
+    let mesFormatted = mes < 10 ? `0${mes}` : mes.toString();
+
+    return mesFormatted;
+
+  }
+
+  formatCreationDate() {
+
+    let actualDate = new Date();
+    var data =
+      actualDate.getFullYear() +
+      "-" +
+      this.formatMonth(actualDate.getMonth() + 1) +
+      "-" +
+      actualDate.getDate() +
+      " " +
+      actualDate.getHours() +
+      ":" +
+      actualDate.getMinutes() +
+      ":" +
+      actualDate.getSeconds();
+
+    return data;
+  }
+
   async postVacancy(vacancy: Vacancy) {
 
     vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
-    vacancy.creationDate = new Date();
+    vacancy.creationDate = this.formatCreationDate();
     vacancy.userId = JSON.parse(sessionStorage.getItem('user')!).id;
-    vacancy.benefit = this.benefit;
-    vacancy.requirement = this.requirement;
+    vacancy.benefits = (<HTMLInputElement>document.getElementById('benefitDescription')).value;
+    vacancy.requirements = (<HTMLInputElement>document.getElementById('requirementDescription')).value;
+
 
     await this.vacancyService.postVacancy(vacancy).subscribe(retornMsg =>
       Swal.fire(
@@ -160,19 +192,17 @@ export class VacanciesRegisterComponent implements OnInit {
         }));
 
 
-
-
   }
 
   async editVacancy(vacancy: Vacancy) {
 
     vacancy.description = (<HTMLInputElement>document.getElementById('vacancyDescription')).value;
+    vacancy.creationDate = this.formatCreationDate();
     vacancy.userId = JSON.parse(sessionStorage.getItem('user')!).id;
-    vacancy.benefit = this.benefit;
-    vacancy.requirement = this.requirement;
+    vacancy.benefits = (<HTMLInputElement>document.getElementById('benefitDescription')).value;
+    vacancy.requirements = (<HTMLInputElement>document.getElementById('requirementDescription')).value;
 
     console.log(vacancy);
-
 
     await this.vacancyService.editVacancy(vacancy).subscribe(returnMsg =>
       Swal.fire(
@@ -187,11 +217,9 @@ export class VacanciesRegisterComponent implements OnInit {
 
     if (this.formBenefits.valid) {
       this.benefit.description = (<HTMLInputElement>document.getElementById(`benefitDescription`)).value;
-      
+
 
       console.log(this.benefit);
-
-      this.vacancy.benefits.push(this.benefit.description);
 
     }
 
@@ -200,9 +228,6 @@ export class VacanciesRegisterComponent implements OnInit {
   addRequirement() {
 
     this.requirement.description = (<HTMLInputElement>document.getElementById(`requirementDescription`)).value;
-    this.requirement.differencial = (<HTMLInputElement>document.getElementById(`requirementDifferential`)).value;
-
-    this.vacancy.requirements?.push(this.requirement);
 
   }
 

@@ -60,12 +60,6 @@ const routes: Routes = [
     data: { roles: [Role.Company] }
   },
   {
-    path: 'empresa/vagas/editar/:vacancyId',
-    component: VacanciesRegisterComponent,
-    canActivate: [AuthGuard],
-    data: { roles: [Role.Company] }
-  },
-  {
     path: 'candidato/:userId/teste',
     component: SkillsTestComponent,
     canActivate: [AuthGuard],

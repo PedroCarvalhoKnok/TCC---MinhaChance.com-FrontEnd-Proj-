@@ -155,11 +155,11 @@ export class VacanciesListComponent implements OnInit {
   }
 
   changeBenefit(benefit: string) {
-    this.vacancyFilter.benefits.push(benefit);
+    this.vacancyFilter.benefits = benefit;
   }
 
   changeRequirement(requirement: string) {
-    this.vacancyFilter.requirements.push(requirement);
+    this.vacancyFilter.requirements = requirement;
   }
 
   changeLocation(location: string) {
@@ -216,16 +216,14 @@ export class VacanciesListComponent implements OnInit {
       vacancyList = vacancyList.filter(vacancy => vacancy.modalidity == 'Presencial');
     }
 
-    if (this.vacancyFilter.benefits.length > 0) {
-      this.vacancyFilter.benefits.forEach(benefitFilter => {
-        vacancyList = vacancyList.filter(vacancy => vacancy.benefits.filter(benefit => benefitFilter == benefit));
-      })
+    if (this.vacancyFilter.benefits) {
+      vacancyList = vacancyList.filter((vacancy) => (vacancy.benefits === this.vacancyFilter.benefits));
     }
 
-    if (this.vacancyFilter.requirements.length > 0) {
-      this.vacancyFilter.requirements.forEach(requirementFilter => {
-        vacancyList = vacancyList.filter((vacancy) => (vacancy.requirements?.filter(requirement => requirementFilter == requirement.description)));
-      })
+    if (this.vacancyFilter.requirements) {
+
+      vacancyList = vacancyList.filter((vacancy) => (vacancy.requirements === this.vacancyFilter.requirements));
+      
     }
 
     if (this.vacancyFilter.location != '') {

@@ -5,7 +5,7 @@ export class Vacancy {
     id!: number;
     userId?: number;
     vacancyTitle!: string;
-    creationDate!: Date;
+    creationDate!: string;
     quantity!: number;
     salary!: number;
     isConfidential!: boolean;
@@ -16,8 +16,8 @@ export class Vacancy {
     description!: string;
     benefit?: Benefit;
     requirement?: Requirement;
-    benefits: string[] = [];
-    requirements?: Requirement[] = [];
+    benefits?: string;
+    requirements?: string;
     category!: string;
     location?: string;
 }

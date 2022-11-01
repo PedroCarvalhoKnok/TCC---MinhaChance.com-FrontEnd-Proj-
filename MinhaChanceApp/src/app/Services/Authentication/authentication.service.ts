@@ -31,20 +31,19 @@ export class AuthenticationService {
       "cpfcnpj": username,
       "senha": password
     })
-      .pipe(map(user => {
+      .pipe(map(result => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
-        console.log(user);
-        sessionStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
-        return user;
+        console.log(result);
+        this.userSubject.next(result);
+        return result;
       }));
   }
 
   logout() {
     // remove user from local storage to log user out
-    let user = JSON.parse(sessionStorage.getItem('user')!);
+    JSON.parse(sessionStorage.getItem('user')!);
     sessionStorage.removeItem('user');
     this.userSubject.next(new User());
-    user.role === Role.Candidate ? this.router.navigate(['/login/candidato']) : this.router.navigate(['/login/empresa'])
+    
   }
 }

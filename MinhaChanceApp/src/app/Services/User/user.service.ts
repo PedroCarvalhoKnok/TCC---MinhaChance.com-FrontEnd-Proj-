@@ -131,7 +131,7 @@ export class UserService {
       "nome": user.userName,
       "cpf": user.cpf,
       "dataNascimento": user.birthDate,
-      "idSituacaoEmpregaticia": 1, //validar
+      "idSituacaoEmpregaticia": user.situationId,
       "dataCadastro": user.creationDate,
       "idEscolaridade": user.schoolingId,
       "senha": user.passWord,
@@ -161,8 +161,8 @@ export class UserService {
       "cpf": user.cpf,
       "senha": user.passWord,
       "dataNascimento": user.birthDate,
-      "idSituacaoEmpregaticia": 1, //validar
-      "dataCadastro": "2022/10/17",
+      "idSituacaoEmpregaticia": user.situationId,
+      "dataCadastro": user.creationDate,
       "idEscolaridade": user.schoolingId,
       "idProfissao": 1
     }).pipe(

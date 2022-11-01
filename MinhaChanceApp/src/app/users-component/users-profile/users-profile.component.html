@@ -143,14 +143,13 @@
                     <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{vacancy.modalidity}}</label>
                     <br />
                     <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
-                        <ul class="vacancy-list col-md-8" *ngFor="let benefit of this.vacancy.benefits">
-                            <li>Descrição {{benefit}}</li>
+                        <ul class="vacancy-list col-md-8">
+                            <li>Beneficios {{vacancy.benefits}}</li>
                         </ul>
                     </label><br />
                     <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
-                        <ul class="vacancy-list col-md-4" *ngFor="let requirement of this.vacancy.requirements">
-                            <li>Descrição {{requirement.description}}</li>
-                            <li>Diferencial {{requirement.differencial != undefined ? '- ' + requirement.differencial : ''}}</li>
+                        <ul class="vacancy-list col-md-4">
+                            <li>Requisitos {{vacancy.requirements}}</li>
                         </ul>
                     </label><br />
                     <label class="col-md-4" for="inputdefault">Localização<br />{{vacancy.location}}</label><br />

@@ -1,6 +1,6 @@
 export class vacancyFilter{
-    requirements: string[] = [];
-    benefits: string[] = [];
+    requirements: string;
+    benefits: string;
     hasVacancyLink?: boolean;
     subscribeQuantity!: number;
     isConfidential!: boolean;

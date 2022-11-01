@@ -33,7 +33,7 @@
   </button>
   <span class="example-spacer"></span>
   <button *ngIf="isAuthenticated" type="button" class="btn btn-outline-secondary me-2" placement="bottom"
-    ngbPopover="Seja bem vindo(a), {{this.user.nome}}" popoverTitle="Usuario">
+    ngbPopover="Seja bem vindo(a), {{this.user.CPF ? this.user.nome: this.user.razaoSocial}}" popoverTitle="Usuario">
     <mat-icon class="side-icon"><span class="material-icons">
         account_circle
       </span></mat-icon>
@@ -42,7 +42,7 @@
     [ngbPopover]="popContentCreate">
     Criar conta como
   </button>
-  <button *ngIf="isAuthenticated" mat-icon-button class="side-icon" aria-label="Example icon-button with share icon">
+  <button (click)="logout()" *ngIf="isAuthenticated" mat-icon-button class="side-icon" aria-label="Example icon-button with share icon">
     <mat-icon class="side-icon">logout</mat-icon>
   </button>
   <button *ngIf="!isAuthenticated" type="button" class="btn btn-outline-primary me-2" placement="bottom"

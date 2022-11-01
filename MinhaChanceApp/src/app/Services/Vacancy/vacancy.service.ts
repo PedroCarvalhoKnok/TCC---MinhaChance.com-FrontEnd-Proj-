@@ -21,7 +21,12 @@ export class VacancyService {
       "titulo": vacancy.vacancyTitle,
       "quantidade": vacancy.quantity,
       "descricao": vacancy.description,
-      "beneficios": vacancy.benefit?.description
+      "beneficios": vacancy.benefits,
+      "requisitos": vacancy.requirements,
+      "localizacao": vacancy.location,
+      "modalidade": vacancy.modalidity,
+      "idProfissao": 1,
+      "dataCriacao": vacancy.creationDate
     })
       .pipe(
         retry(2),
@@ -58,7 +63,12 @@ export class VacancyService {
       "titulo": vacancy.vacancyTitle,
       "quantidade": vacancy.quantity,
       "descricao": vacancy.description,
-      "beneficios": vacancy.benefit?.description
+      "beneficios": vacancy.benefits,
+      "requisitos": vacancy.requirements,
+      "localizacao": vacancy.location,
+      "modalidade": vacancy.modalidity,
+      "idProfissao": 1,
+      "dataCriacao": vacancy.creationDate
     })
       .pipe(
         retry(2),

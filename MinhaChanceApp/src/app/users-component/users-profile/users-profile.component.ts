@@ -44,10 +44,7 @@ export class UsersProfileComponent implements OnInit {
     type: "",
   });
 
-  userBestVacancies: Observable<Vacancy[]> = of([{ id: 1, vacancyTitle: 'Estagiario Desenvolvimento Java', creationDate: new Date(), image: this.fileMocked, quantity: 1, salary: 0, isConfidential: false, contractType: 'Estagio', modalidity: 'Hibrido', semanalQuantity: 2, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: ['VR', 'VT'], requiments: [{ id: 1, description: 'Cursando ensino superior', differential: undefined }] },
-  { id: 2, vacancyTitle: 'Desenvolvedor Junior', creationDate: new Date(), image: this.fileMocked, quantity: 2, salary: 3500, isConfidential: false, contractType: 'CLT', modalidity: 'Remoto', semanalQuantity: 0, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: ['VR', 'VT'] , requiments: [{ id: 1, description: 'Ensino superior completo', differential: 'Conhecimento básico de .NET' }] },
-  { id: 3, vacancyTitle: 'Consultor Cloud Senior', creationDate: new Date(), image: this.fileMocked, quantity: 1, salary: 0, isConfidential: true, contractType: 'CLT', modalidity: 'Remoto', semanalQuantity: 0, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: ['VR', 'VT'], requiments: [{ id: 1, description: 'Ensino superior completo', differential: 'Conhecimento avançado de Azure ou AWS' }] },
-  ]);
+  userBestVacancies: Observable<Vacancy[]> = of([]);
 
 
   categories: string[] = ['Construção', 'Tecnologia', 'Gestão'];
