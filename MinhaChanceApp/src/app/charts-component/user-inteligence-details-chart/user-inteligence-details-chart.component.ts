@@ -11,45 +11,58 @@ Chart.register(...registerables)
 })
 export class UserInteligenceDetailsChartComponent implements AfterViewInit {
 
-  @Input() userIntelligenceVacancyRecommendations!: User;
+  @Input() userIntelligenceVacancyRecommendations: any = {};
+
+  skillPercentualList: any[] = [];
 
   constructor() { }
-  
+
 
   ngAfterViewInit(): void {
 
+    let skillNameList: any = ['cinestesica', 'espacial', 'interpessoal', 'intrapessoal', 'linguistica', 'matematica', 'musical', 'naturalista'];
+
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.cinestesica)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.espacial)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.interpessoal)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.intrapessoal)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.linguistica)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.matematica)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.musical)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.naturalista)
+
     console.log(this.userIntelligenceVacancyRecommendations.id)
 
-    new Chart(`${this.userIntelligenceVacancyRecommendations.id + 1}`, {
-      type: 'bar',
-      data: { labels: 
-        this.userIntelligenceVacancyRecommendations.userInteligenciesInfo.vacancies
-      ,
-      datasets:[{
-        label: 'Area',
-        data: this.userIntelligenceVacancyRecommendations.userInteligenciesInfo.skills,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-        ],
-        borderColor: [
-          'rgb(255, 99, 132)',
-          'rgb(255, 99, 132)',
-          'rgb(255, 99, 132)',
-        ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
+    new Chart(`${this.userIntelligenceVacancyRecommendations.id + 2}`, {
+      type: 'radar',
+      data: {
+        labels:
+          skillNameList
+        ,
+        datasets: [{
+          label: 'Area',
+          data: this.skillPercentualList,
+          fill: true,
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          borderColor: 'rgba(255, 255, 255)',
+          pointBackgroundColor: 'rgba(255, 255, 255)',
+          pointBorderColor: '#bf7575',
+          pointHoverBackgroundColor: '#bf7575',
+          pointHoverBorderColor: 'rgba(255, 255, 255)'
+        }]
+      },
+      options: {
+        color: 'white',
+        scales: {
+          r: {
+            grid: {
+              color: 'white'
+            }
+          }
         }
       }
-    },
     });
-      
+
   }
-  
+
 }

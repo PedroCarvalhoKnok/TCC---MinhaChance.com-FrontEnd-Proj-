@@ -90,10 +90,7 @@ export class VacanciesDetailsComponent implements OnInit {
 
     this.vacancyId = this.router.snapshot.params?.['vacancyId'];
 
-    await this.userService.getCandidatesByVacancy(this.vacancyId).subscribe(candidates => {
-      console.log(candidates);
-      this.vacancyDetails = of(candidates);
-    });
+    await this.getCandidatesByVacancy();
 
     console.log(this.vacancyDetails);
 
@@ -102,11 +99,20 @@ export class VacanciesDetailsComponent implements OnInit {
 
   }
 
+  async getCandidatesByVacancy() {
+
+    await this.userService.getCandidatesByVacancy(this.vacancyId).subscribe(candidates => {
+      console.log(candidates);
+      this.vacancyDetails = of(candidates);
+    });
+
+  }
+
   async openMetricsDetails(detail: User) {
 
-    await this.userService.getUserInfoByVacancy(detail.id, this.vacancyId).subscribe(user => {
+    await this.userService.getUserInfoByVacancy(detail.id, this.vacancyId).subscribe(metrics => {
       const dialog = this.dialog.open(UserVacancyDetailsDialogComponent, {
-        data: user
+        data: metrics[0]
       });
     })
 
@@ -144,15 +150,21 @@ export class VacanciesDetailsComponent implements OnInit {
   }
 
 
-  applyFilters() {
+  async applyFilters() {
 
     let vacancyDetailsListFiltered!: any[];
     this.detailsFilter.actualCompany = (<HTMLInputElement>document.getElementById(`actualCompany`)).value;
     this.detailsFilter.actualCharge = (<HTMLInputElement>document.getElementById(`actualCharge`)).value;
 
-    this.vacancyDetails.subscribe(details => vacancyDetailsListFiltered = details);
+    await this.getCandidatesByVacancy();
 
-    this.vacancyDetails = of(this.filterVacancyList(vacancyDetailsListFiltered));
+    this.vacancyDetails.subscribe(details => {
+
+      this.vacancyDetails = of(this.filterVacancyList(details));
+      
+    });
+
+    
 
   }
 

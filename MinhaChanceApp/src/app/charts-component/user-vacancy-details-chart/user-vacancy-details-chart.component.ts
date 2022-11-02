@@ -18,7 +18,7 @@ export class UserVacancyDetailsChartComponent implements AfterViewInit {
 
   
   ngAfterViewInit(): void {
-    new Chart(`${this.user.id}`, {
+    new Chart(`${this.user.id + 3}`, {
       type: 'pie',
       data: {
         labels: [

@@ -1,36 +1,29 @@
 <!-- Toobar -->
 <mat-toolbar class="toolbar">
-  <span class="name-icon">Minha Vez!</span>
+  <span (click)="goHome()" class="name-icon">Minha Vez!</span>
   <span class="example-spacer-menu"></span>
 
-  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" title="Início">
+  <button (click)="goHome()" *ngIf="isAuthenticated" mat-icon-button class="menu-icon" title="Início">
     <mat-icon class="material-icons">home</mat-icon>
     <a class="text-menu">Inicio</a>
   </button>
   <span class="example-spacer-menu-items"></span>
-  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon"
-    title="Vagas">
+  <button (click)="goToVacancies()" *ngIf="isAuthenticated" mat-icon-button class="menu-icon"
+    aria-label="Example icon-button with heart icon" title="Vagas">
     <mat-icon class="material-icons">
       work
     </mat-icon>
     <a class="text-menu">Vagas</a>
   </button>
   <span class="example-spacer-menu-items"></span>
-  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon"
-    title="Colaboradores">
-    <mat-icon class="material-icons">
-      construction
-    </mat-icon>
-    <a class="text-menu-fix">Colaboradores</a>
-  </button>
-  <span class="example-spacer-menu-items"></span>
-  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon" aria-label="Example icon-button with heart icon"
-    title="Cursos">
+  <button (click)="goToStartTest()" *ngIf="isAuthenticated" mat-icon-button class="menu-icon"
+    aria-label="Example icon-button with heart icon" title="Prova">
     <mat-icon class="material-icons">
       school
     </mat-icon>
-    <a class="text-menu">Cursos</a>
+    <a class="text-menu-fix">Prova</a>
   </button>
+  <span class="example-spacer-menu-items"></span>
   <span class="example-spacer"></span>
   <button *ngIf="isAuthenticated" type="button" class="btn btn-outline-secondary me-2" placement="bottom"
     ngbPopover="Seja bem vindo(a), {{this.user.CPF ? this.user.nome: this.user.razaoSocial}}" popoverTitle="Usuario">
@@ -42,7 +35,8 @@
     [ngbPopover]="popContentCreate">
     Criar conta como
   </button>
-  <button (click)="logout()" *ngIf="isAuthenticated" mat-icon-button class="side-icon" aria-label="Example icon-button with share icon">
+  <button (click)="logout()" *ngIf="isAuthenticated" mat-icon-button class="side-icon"
+    aria-label="Example icon-button with share icon">
     <mat-icon class="side-icon">logout</mat-icon>
   </button>
   <button *ngIf="!isAuthenticated" type="button" class="btn btn-outline-primary me-2" placement="bottom"
@@ -53,8 +47,8 @@
   <ng-template #popContentCreate>
     <div>
       <button class="btnPop" (click)="goToRegisterCandidate()">Candidato</button>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <button class="btnPop" (click)="goToRegisterCompany()">Empresa</button>
     </div>
   </ng-template>
@@ -62,8 +56,8 @@
   <ng-template #popContentLogin>
     <div>
       <button class="btnPop" (click)="goToLoginCandidate()">Candidato</button>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <button class="btnPop" (click)="goToLoginCompany()">Empresa</button>
     </div>
   </ng-template>

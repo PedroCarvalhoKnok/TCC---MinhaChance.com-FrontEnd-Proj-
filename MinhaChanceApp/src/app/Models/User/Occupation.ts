@@ -1,4 +1,4 @@
 export class Occupation {
     id: number;
-    description: string;
+    descricao: string;
 }

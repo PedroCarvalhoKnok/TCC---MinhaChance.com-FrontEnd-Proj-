@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Informações da relação Usuário X Vaga</h2>
+<h2 mat-dialog-title>Informações da relação Candidato X Vaga</h2>
 <mat-dialog-content class="mat-typography">
 
 
@@ -6,10 +6,14 @@
 
         <div class="row">
 
-            <label class="col-md-6" for="inputdefault">Aptidao do usuário</label>
-            <app-user-vacancy-list-chart [user]="data" class="col-md-8"></app-user-vacancy-list-chart>
-            <!-- <label class="col-md-6" for="inputdefault">Destaque(s)</label>
-            <app-user-inteligence-details-chart [userIntelligenceVacancyRecommendations]="data" class="col-md-8"></app-user-inteligence-details-chart> -->
+            <label class="col-md-4" for="inputdefault">Aptidão do candidato para a vaga</label>
+            <app-user-vacancy-list-chart [user]="data.aptidao" class="col-md-4"></app-user-vacancy-list-chart>
+
+            <label class="col-md-4" for="inputdefault">Aptidões do candidato</label>
+            <app-user-inteligence-details-chart [userIntelligenceVacancyRecommendations]="data.testeIM" class="col-md-4"></app-user-inteligence-details-chart>
+            
+            <label class="col-md-4" for="inputdefault">Aptidões da vaga</label>
+            <app-user-inteligence-list-chart [userIntelligenceVacancyRecommendations]="data.testeVaga" class="col-md-4"></app-user-inteligence-list-chart>
 
 
         </div>

@@ -35,7 +35,7 @@ export class UserService {
   }
 
   getUserInfoByVacancy(userId: number, vacancyId: number) {
-    return this.httpClient.get<User>('',).pipe(
+    return this.httpClient.get<any>('',).pipe(
       retry(2)
     )
   }

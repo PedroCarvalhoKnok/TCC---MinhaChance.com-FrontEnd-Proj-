@@ -9,7 +9,7 @@ import { User } from 'src/app/Models/User/User';
 })
 export class UserVacancyListDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: User) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
   }

@@ -26,6 +26,14 @@ export class OccupationService {
 
   getOccupationById(occupationId: number) {
 
+    return this.httpClient.get<Occupation>(`${this.urlOccupation}/${occupationId}`).pipe(
+      retry(2)
+    )
+
+  }
+
+  getOccupation(){
+
     return this.httpClient.get<Occupation>(this.urlOccupation).pipe(
       retry(2)
     )

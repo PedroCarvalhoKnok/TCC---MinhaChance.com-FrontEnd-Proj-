@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { UserService } from 'src/app/Services/User/user.service';
 import { User } from 'src/app/Models/User/User';
 import { Router } from '@angular/router';
+import { OccupationService } from 'src/app/Services/Occupation/occupation.service';
 
 @Component({
   selector: 'app-vacancies-list',
@@ -20,7 +21,7 @@ import { Router } from '@angular/router';
 })
 export class VacanciesListComponent implements OnInit {
 
-  constructor(private vacancyService: VacancyService, private userService: UserService, public dialog: MatDialog, private router: Router) { }
+  constructor(private vacancyService: VacancyService, private userService: UserService, public dialog: MatDialog, private router: Router, private occupationService: OccupationService) { }
 
   pageEvent!: PageEvent;
 
@@ -49,8 +50,9 @@ export class VacanciesListComponent implements OnInit {
 
     this.userLogged = JSON.parse(sessionStorage.getItem('user')!);
 
-    console.log(this.userLogged)
-    
+    console.log(this.userLogged);
+
+
 
     this.getUsers();
 
@@ -60,18 +62,23 @@ export class VacanciesListComponent implements OnInit {
 
     console.log(this.userCandidaturesRequired + this.userLogged.CPF)
 
-    
+
 
     if (this.userLogged.CPF && !this.userCandidaturesRequired) {
 
-      await this.vacancyService.getVacanciesForCandidates().subscribe(vacancies => {
+      await this.vacancyService.getVacanciesForCandidates().subscribe(async vacancies => {
+
+        await this.getOccupationByVacancyId(vacancies);
+
         this.vacancies = of(vacancies);
       });
 
     }
     if (this.userLogged.CPF && this.userCandidaturesRequired) {
 
-      await this.userService.getVacanciesByCandidate(this.userLogged.id).subscribe(vacancies => {
+      await this.userService.getVacanciesByCandidate(this.userLogged.id).subscribe(async vacancies => {
+
+        await this.getOccupationByVacancyId(vacancies);
 
         this.vacancies = of(vacancies);
 
@@ -80,9 +87,22 @@ export class VacanciesListComponent implements OnInit {
     }
     if (this.userLogged.cnpj) {
 
-      await this.vacancyService.getVacanciesForCompanies(this.userLogged.id).subscribe(vacancies => {
+      await this.vacancyService.getVacanciesForCompanies(this.userLogged.id).subscribe(async vacancies => {
+
+        await this.getOccupationByVacancyId(vacancies);
         this.vacancies = of(vacancies);
+
       });
+
+    }
+
+  }
+
+  async getOccupationByVacancyId(vacancies) {
+
+    for (let vacancy of vacancies) {
+
+      await this.occupationService.getOccupationById(vacancy.idProfissao).subscribe(occupation => vacancy.profissao = occupation.descricao)
 
     }
 
@@ -223,7 +243,7 @@ export class VacanciesListComponent implements OnInit {
     if (this.vacancyFilter.requirements) {
 
       vacancyList = vacancyList.filter((vacancy) => (vacancy.requirements === this.vacancyFilter.requirements));
-      
+
     }
 
     if (this.vacancyFilter.location != '') {
@@ -256,9 +276,9 @@ export class VacanciesListComponent implements OnInit {
 
   async openMetricsDetails(vacancyId: number) {
 
-    await this.userService.getUserInfoByVacancy(this.userLogged.id, vacancyId).subscribe(user => {
+    await this.userService.getUserInfoByVacancy(this.userLogged.id, vacancyId).subscribe(metrics => {
       const dialog = this.dialog.open(UserVacancyListDialogComponent, {
-        data: user
+        data: metrics[0]
       });
     })
 

@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
   //urlBaseApi: "http://localhost:3000"
-  urlBaseApi: "https://api-minhavez-containers.azurewebsites.net"
+  urlBaseApi: "https://api-minhavez-containers.azurewebsites.net",
+  urlBaseViaCepApi: "viacep.com.br/ws",
+  urlBaseTerritorio: "https://servicodados.ibge.gov.br/api/v1/localidades"
 };
 
 export const questions = [

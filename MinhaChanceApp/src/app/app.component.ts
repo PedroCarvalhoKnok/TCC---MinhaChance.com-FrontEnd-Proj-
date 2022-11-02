@@ -49,6 +49,18 @@ export class AppComponent {
    
   }
 
+  goToStartTest(){
+    location.href = `/candidato/${this.user.id}/teste/inicio`;
+  }
+
+  goToVacancies(){
+    location.href = `/vagas/buscar`;
+  }
+
+  goHome(){
+    location.href = `/home`;
+  }
+
   logout() {
 
     this.authenticationService.logout();

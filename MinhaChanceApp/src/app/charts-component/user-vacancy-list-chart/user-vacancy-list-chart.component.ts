@@ -17,7 +17,7 @@ export class UserVacancyListChartComponent implements OnInit {
 
   ngOnInit(): void {
 
-    new Chart(`${this.user.id}`, {
+    new Chart(`${this.user.id + 3}`, {
       type: 'pie',
       data: {
         labels: [

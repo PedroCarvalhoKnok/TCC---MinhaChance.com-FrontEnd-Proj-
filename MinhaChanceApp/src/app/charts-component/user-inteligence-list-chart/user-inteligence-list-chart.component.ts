@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { User } from 'src/app/Models/User/User';
 import { Chart, registerables } from 'chart.js';
+import { TestService } from 'src/app/Services/Test/test.service';
 
 Chart.register(...registerables)
 
@@ -11,7 +12,9 @@ Chart.register(...registerables)
 })
 export class UserInteligenceListChartComponent implements OnInit {
 
-  @Input() userIntelligenceVacancyRecommendations!: User;
+  @Input() userIntelligenceVacancyRecommendations: any = {};
+
+  skillPercentualList: any[] = [];
 
   constructor() { }
 
@@ -20,38 +23,49 @@ export class UserInteligenceListChartComponent implements OnInit {
 
   ngAfterViewInit(): void {
 
+    let skillNameList: any = ['cinestesica', 'espacial', 'interpessoal', 'intrapessoal', 'linguistica', 'matematica', 'musical', 'naturalista'];
+
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.cinestesica)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.espacial)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.interpessoal)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.intrapessoal)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.linguistica)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.matematica)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.musical)
+    this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.naturalista)
+
     console.log(this.userIntelligenceVacancyRecommendations.id)
 
     new Chart(`${this.userIntelligenceVacancyRecommendations.id + 1}`, {
-      type: 'bar',
-      data: { labels: 
-        this.userIntelligenceVacancyRecommendations.userInteligenciesInfo.vacancies
-      ,
-      datasets:[{
-        label: 'Area',
-        data: this.userIntelligenceVacancyRecommendations.userInteligenciesInfo.skills,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-        ],
-        borderColor: [
-          'rgb(255, 99, 132)',
-          'rgb(255, 99, 132)',
-          'rgb(255, 99, 132)',
-        ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
+      type: 'radar',
+      data: {
+        labels:
+          skillNameList
+        ,
+        datasets: [{
+          label: 'Vaga',
+          data: this.skillPercentualList,
+          fill: true,
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          borderColor: 'rgba(255, 255, 255)',
+          pointBackgroundColor: 'rgba(255, 255, 255)',
+          pointBorderColor: '#bf7575',
+          pointHoverBackgroundColor: '#bf7575',
+          pointHoverBorderColor: 'rgba(255, 255, 255)'
+        }]
+      },
+      options: {
+        color: 'white',
+        scales: {
+          r: {
+            grid: {
+              color: 'white'
+            }
+          }
         }
       }
-    },
     });
-      
+
   }
 
 }
