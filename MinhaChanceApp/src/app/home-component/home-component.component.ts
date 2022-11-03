@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home-component',
@@ -30,9 +32,30 @@ export class HomeComponentComponent implements OnInit {
       'https://cdn-icons-png.flaticon.com/512/4341/4341966.png'
       ].map((n) => `${n}`);
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  goToMyProfile(){
+
+    let userLogged = JSON.parse(sessionStorage.getItem('user')!);
+    console.log(userLogged);
+
+    if(!userLogged){
+
+      Swal.fire(
+        `Atenção!`,
+        'Autentique seu usuário para acessar o perfil',
+        'warning'
+      );
+
+      return;
+
+    }
+
+    this.router.navigate([`/${userLogged.id}/perfil`]);
+
   }
 
 }
