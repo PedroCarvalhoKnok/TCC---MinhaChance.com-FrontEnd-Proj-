@@ -7,12 +7,11 @@
         <div class="row">
 
             <label class="col-md-4" for="inputdefault">Aptidão do candidato para a vaga</label>
-            <app-user-vacancy-details-chart [user]="data.aptidao" class="col-md-4"></app-user-vacancy-details-chart>
-
             <label class="col-md-4" for="inputdefault">Aptidões do candidato</label>
-            <app-user-inteligence-details-chart [userIntelligenceVacancyRecommendations]="data.testeIM" class="col-md-4"></app-user-inteligence-details-chart>
-            
             <label class="col-md-4" for="inputdefault">Aptidões da vaga</label>
+            
+            <app-user-vacancy-details-chart [user]="data.aptidao" class="col-md-4"></app-user-vacancy-details-chart>
+            <app-user-inteligence-details-chart [userIntelligenceVacancyRecommendations]="data.testeIM" class="col-md-4"></app-user-inteligence-details-chart>
             <app-user-inteligence-list-chart [userIntelligenceVacancyRecommendations]="data.testeVaga" class="col-md-4"></app-user-inteligence-list-chart>           
 
         </div>

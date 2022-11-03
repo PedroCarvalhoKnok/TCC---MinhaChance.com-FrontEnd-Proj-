@@ -21,6 +21,15 @@ export class SituationService {
 
   }
 
+  getSituationById(situationId: number) {
+
+    return this.httpClient.get<any>(`${this.urlSituation}/${situationId}`).pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+
+  }
+
   handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {

@@ -25,6 +25,15 @@ export class SchoolingService {
 
   }
 
+  getSchoolingById(schoolingId: number) {
+
+    return this.httpClient.get<any>(`${this.urlSchooling}/${schoolingId}`).pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+
+  }
+
 
   handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';

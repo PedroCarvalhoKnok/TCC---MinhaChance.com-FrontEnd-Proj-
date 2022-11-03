@@ -12,6 +12,7 @@ Chart.register(...registerables)
 export class UserInteligenceDetailsChartComponent implements AfterViewInit {
 
   @Input() userIntelligenceVacancyRecommendations: any = {};
+  @Input() userName: any = '';
 
   skillPercentualList: any[] = [];
 
@@ -40,7 +41,7 @@ export class UserInteligenceDetailsChartComponent implements AfterViewInit {
           skillNameList
         ,
         datasets: [{
-          label: 'Area',
+          label: this.userName,
           data: this.skillPercentualList,
           fill: true,
           backgroundColor: 'rgba(255, 255, 255, 0.2)',

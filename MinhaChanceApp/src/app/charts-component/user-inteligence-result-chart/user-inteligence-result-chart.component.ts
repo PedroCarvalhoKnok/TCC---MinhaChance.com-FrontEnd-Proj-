@@ -27,6 +27,7 @@ export class UserInteligenceResultChartComponent {
 
     let userId = this.router.snapshot.params?.['userId'];
 
+
     await this.userService.getCandidateInfoById(userId).subscribe(async user => {
 
       await this.testService.getUserTestResults(user[0].idTesteIM).subscribe(imResult => {

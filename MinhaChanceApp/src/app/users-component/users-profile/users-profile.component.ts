@@ -10,6 +10,8 @@ import { UserVacancyListDialogComponent } from 'src/app/Dialogs/user-vacancy-lis
 import { Observable, of } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Role } from 'src/app/Enums/role';
+import { SituationService } from 'src/app/Services/Situation/situation.service';
+import { SchoolingService } from 'src/app/Services/Schooling/schooling.service';
 
 @Component({
   selector: 'app-users-profile',
@@ -39,6 +41,9 @@ export class UsersProfileComponent implements OnInit {
     schooling: {id: 1, descricao: 'Ensino Médio Completo'},
     role: Role.Candidate
   };
+
+  situation: string;
+  schooling: string;
 
   fileMocked = new File([], "", {
     type: "",
@@ -94,7 +99,7 @@ export class UsersProfileComponent implements OnInit {
 
   ];
 
-  constructor(private userService: UserService, private testService: TestService, private router: ActivatedRoute, public dialog: MatDialog, private route: Router) { }
+  constructor(private userService: UserService, private testService: TestService, private router: ActivatedRoute, public dialog: MatDialog, private route: Router, private schoolingService: SchoolingService, private situationService: SituationService) { }
 
   async ngOnInit() {
 
@@ -104,6 +109,13 @@ export class UsersProfileComponent implements OnInit {
 
       this.userLogged = JSON.parse(sessionStorage.getItem('user')!);
 
+      await this.getSituationById(this.userLogged.idSituacaoEmpregaticia);
+
+      await this.getSchoolingById(this.userLogged.idEscolaridade);
+
+      console.log(this.situation)
+      console.log(this.schooling)
+
       await this.testService.getUserTestResults(userId).subscribe(results => { this.userSkillsByIntelligence = results })
 
       this.userBestVacancies = await this.userService.getBestVacanciesById(userId);
@@ -111,6 +123,32 @@ export class UsersProfileComponent implements OnInit {
       this.userBestCourses = await this.userService.getBestCoursesById(userId);
 
     }
+  }
+
+  formatDate(date: string): string{
+
+    date = `${date.split('-')[2][0]}${date.split('-')[2][1]}/${date.split('-')[1]}/${date.split('-')[0]}`;
+
+    return date;
+
+  }
+
+  getSchoolingById(schoolingId: number){
+
+     this.schoolingService.getSchoolingById(schoolingId).subscribe(schooling =>{
+      this.userLogged.schooling = schooling[0].descricao;
+      console.log(schooling)
+    })
+
+  }
+
+  getSituationById(situationId: number){
+    
+     this.situationService.getSituationById(situationId).subscribe(situation =>{
+      this.userLogged.situation = situation[0].descricao;
+      console.log(situation)
+    })
+
   }
 
   async openMetricsDetails(vacancyId: number) {
@@ -125,9 +163,7 @@ export class UsersProfileComponent implements OnInit {
 
   editUserProfile(){
 
-    let userId = this.router.snapshot.params?.['userId'];
-
-    this.route.navigate([`/${this.userLogged.CPF ? 'candidato': 'empresa'}/editar/${userId}`]);
+    this.route.navigate([`/${this.userLogged.CPF ? 'candidato': 'empresa'}/editar/${this.userLogged.id}`]);
 
   }
 

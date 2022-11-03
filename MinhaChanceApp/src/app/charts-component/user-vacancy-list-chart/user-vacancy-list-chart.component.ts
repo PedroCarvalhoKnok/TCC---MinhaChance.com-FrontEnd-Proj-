@@ -8,16 +8,20 @@ import { User } from 'src/app/Models/User/User';
   templateUrl: './user-vacancy-list-chart.component.html',
   styleUrls: ['./user-vacancy-list-chart.component.scss']
 })
-export class UserVacancyListChartComponent implements OnInit {
+export class UserVacancyListChartComponent implements AfterViewInit {
 
 
-  @Input() user!: User;
+  @Input() user: any = 0;
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
 
-    new Chart(`${this.user.id + 3}`, {
+    let no = (100 - this.user);
+
+    console.log(no);
+
+    new Chart(`${this.user + 3}`, {
       type: 'pie',
       data: {
         labels: [
@@ -26,7 +30,7 @@ export class UserVacancyListChartComponent implements OnInit {
         ],
         datasets: [{
           label: 'Aptidão Candidato X Vaga',
-          data: [this.user.userVacancyInfo.no, this.user.userVacancyInfo.yes],
+          data: [no, this.user],
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',

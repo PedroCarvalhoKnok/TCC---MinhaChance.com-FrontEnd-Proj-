@@ -1,7 +1,7 @@
 <div class="center-content">
     <mat-card class="user-card">
 
-        <mat-card-title class="center-title">Bem vindo(a), Pedro</mat-card-title>
+        <mat-card-title class="center-title">Bem vindo(a), {{this.userLogged.nome}}</mat-card-title>
 
         <mat-card-actions align="end">
             <button type="button" (click)="editUserProfile()" class="btn btn-primary btn-sm space-button">Editar perfil</button>
@@ -12,10 +12,13 @@
 
                 <div class="row">
                     <span class="material-icons col-md-4">account_circle</span>
-                    <label class="col-md-4" for="inputdefault">Email:<br />pedro@teste.com</label>
-                    <label class="col-md-4" for="inputdefault">CPF:<br />XXX.XXX.XXX-XX</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Idade<br />18 anos</label>
+                    <label class="col-md-4" for="inputdefault">Email:<br />teste@teste.com</label>
+                    <label class="col-md-4" for="inputdefault">CPF:<br />{{this.userLogged.CPF ? this.userLogged.CPF: this.userLogged.cnpj}}</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Data de nascimento:<br />{{formatDate(this.userLogged.dataNascimento)}}</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Data de cadastro:<br />{{formatDate(this.userLogged.dataCadastro)}}</label>
                     <label class="col-md-4 distance-between" for="inputdefault">Contato<br />(11) 984567459</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Situação<br />{{this.userLogged.situation}}</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Escolaridade<br />{{this.userLogged.schooling}}</label>
                 </div>
             </div>
         </mat-card-content>

@@ -34,6 +34,8 @@ export class UserInteligenceListChartComponent implements OnInit {
     this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.musical)
     this.skillPercentualList.push(this.userIntelligenceVacancyRecommendations.naturalista)
 
+    console.log(this.skillPercentualList)
+
     console.log(this.userIntelligenceVacancyRecommendations.id)
 
     new Chart(`${this.userIntelligenceVacancyRecommendations.id + 1}`, {

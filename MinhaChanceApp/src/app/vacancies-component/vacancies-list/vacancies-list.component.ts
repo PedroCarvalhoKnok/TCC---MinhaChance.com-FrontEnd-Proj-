@@ -27,6 +27,10 @@ export class VacanciesListComponent implements OnInit {
 
   userLogged: any;
 
+  vacanciesFiltered: any;
+
+  filterApplied: boolean = false;
+
   userCandidaturesRequired: boolean = false;
 
   fileMocked = new File([], "", {
@@ -52,9 +56,8 @@ export class VacanciesListComponent implements OnInit {
 
     console.log(this.userLogged);
 
-
-
-    this.getUsers();
+    await this.getUsers();
+    
 
   }
 
@@ -62,39 +65,43 @@ export class VacanciesListComponent implements OnInit {
 
     console.log(this.userCandidaturesRequired + this.userLogged.CPF)
 
-
-
     if (this.userLogged.CPF && !this.userCandidaturesRequired) {
 
-      await this.vacancyService.getVacanciesForCandidates().subscribe(async vacancies => {
+      await this.vacancyService.getVacanciesForCandidates().subscribe(vacancies => {
 
-        await this.getOccupationByVacancyId(vacancies);
+        this.getOccupationByVacancyId(vacancies).then(() => {
+          this.vacancies = of(vacancies);
+        });
 
-        this.vacancies = of(vacancies);
       });
+
+      console.log('vacancy one');
 
     }
     if (this.userLogged.CPF && this.userCandidaturesRequired) {
 
-      await this.userService.getVacanciesByCandidate(this.userLogged.id).subscribe(async vacancies => {
+      await this.userService.getVacanciesByCandidate(this.userLogged.id).subscribe(vacancies => {
 
-        await this.getOccupationByVacancyId(vacancies);
-
-        this.vacancies = of(vacancies);
+        this.getOccupationByVacancyId(vacancies).then(() => {
+          this.vacancies = of(vacancies);
+        });
 
       })
 
     }
     if (this.userLogged.cnpj) {
 
-      await this.vacancyService.getVacanciesForCompanies(this.userLogged.id).subscribe(async vacancies => {
+      await this.vacancyService.getVacanciesForCompanies(this.userLogged.id).subscribe(vacancies => {
 
-        await this.getOccupationByVacancyId(vacancies);
-        this.vacancies = of(vacancies);
+        this.getOccupationByVacancyId(vacancies).then(() => {
+          this.vacancies = of(vacancies);
+        });
 
       });
 
     }
+
+    console.log('terminei de rodar')
 
   }
 
@@ -102,7 +109,11 @@ export class VacanciesListComponent implements OnInit {
 
     for (let vacancy of vacancies) {
 
-      await this.occupationService.getOccupationById(vacancy.idProfissao).subscribe(occupation => vacancy.profissao = occupation.descricao)
+      await this.occupationService.getOccupationById(vacancy.idProfissao).subscribe(occupation => {
+
+        vacancy.profissao = occupation[0].descricao
+
+      });
 
     }
 
@@ -207,47 +218,57 @@ export class VacanciesListComponent implements OnInit {
     })
   }
 
-  applyFilters() {
+  async applyFilters() {
 
-    let vacanciesFiltered!: Vacancy[];
 
     this.vacancyFilter.vacancyQuantity = +(<HTMLInputElement>document.getElementById(`maxVacancyQuantity`)).value;
     this.vacancyFilter.vacancyCategory = (<HTMLInputElement>document.getElementById(`vacancyCategory`)).value;
     console.log(this.vacancyFilter);
+    
 
-    this.getUsers();
-
-    this.vacancies.subscribe(vacancies => {
-
-      this.vacancies = of(this.filterVacancyList(vacancies));
-
-    })
-
+    this.updateVacancies();
+    
 
   }
 
-  filterVacancyList(vacancyList: Vacancy[]): Vacancy[] {
+  updateVacancies(){
+
+    this.vacancies.subscribe(vacancies => {
+
+      console.log(vacancies)
+
+      this.vacancies = of(this.filterVacancyList(vacancies));
+
+    });
+
+  }
+
+   filterVacancyList(vacancyList: any) {
 
     if (this.vacancyFilter.isConfidential != undefined) {
       vacancyList = vacancyList.filter(vacancy => vacancy.isConfidential == this.vacancyFilter.isConfidential);
     }
 
     if (this.vacancyFilter.isPresential) {
-      vacancyList = vacancyList.filter(vacancy => vacancy.modalidity == 'Presencial');
+      vacancyList = vacancyList.filter(vacancy => vacancy.modalidade === 'Presencial');
     }
 
     if (this.vacancyFilter.benefits) {
-      vacancyList = vacancyList.filter((vacancy) => (vacancy.benefits === this.vacancyFilter.benefits));
+      vacancyList = vacancyList.filter((vacancy) => (vacancy.beneficios === this.vacancyFilter.benefits));
     }
 
     if (this.vacancyFilter.requirements) {
 
-      vacancyList = vacancyList.filter((vacancy) => (vacancy.requirements === this.vacancyFilter.requirements));
+      vacancyList = vacancyList.filter((vacancy) => (vacancy.requisitos === this.vacancyFilter.requirements));
 
     }
 
-    if (this.vacancyFilter.location != '') {
-      vacancyList = vacancyList.filter(vacancy => vacancy.location == this.vacancyFilter.location);
+    if (this.vacancyFilter.location) {
+      vacancyList = vacancyList.filter(vacancy => vacancy.localizacao === this.vacancyFilter.location);
+    }
+
+    if (this.vacancyFilter.modality) {
+      vacancyList = vacancyList.filter(vacancy => vacancy.modalidade == this.vacancyFilter.modality);
     }
 
     if (this.vacancyFilter.vacancyQuantity != 0 && this.vacancyFilter.vacancyQuantity) {
@@ -257,6 +278,8 @@ export class VacanciesListComponent implements OnInit {
     if (this.vacancyFilter.salary != 0 && this.vacancyFilter.salary) {
       vacancyList = vacancyList.filter(vacancy => vacancy.salary <= this.vacancyFilter.salary && !vacancy.isConfidential);
     }
+
+    console.log(vacancyList)
 
     return vacancyList;
 
@@ -276,11 +299,45 @@ export class VacanciesListComponent implements OnInit {
 
   async openMetricsDetails(vacancyId: number) {
 
-    await this.userService.getUserInfoByVacancy(this.userLogged.id, vacancyId).subscribe(metrics => {
-      const dialog = this.dialog.open(UserVacancyListDialogComponent, {
-        data: metrics[0]
-      });
-    })
+    const dialog = this.dialog.open(UserVacancyListDialogComponent, {
+      data: {
+        "aptidao": 50,
+        "usuario": this.userLogged.nome,
+        "testeIM": {
+          "id": 2,
+          "linguistica": 74,
+          "matematica": 12,
+          "espacial": 25,
+          "cinestesica": 45,
+          "musical": 58,
+          "interpessoal": 78,
+          "intrapessoal": 48,
+          "naturalista": 47,
+          "data": "2022-10-20T00:00:00.000Z",
+          "cadastrado": 1
+        },
+        "testeVaga": {
+          "id": 2,
+          "linguistica": 74,
+          "matematica": 12,
+          "espacial": 25,
+          "cinestesica": 45,
+          "musical": 58,
+          "interpessoal": 78,
+          "intrapessoal": 48,
+          "naturalista": 47,
+          "data": "2022-10-20T00:00:00.000Z",
+          "cadastrado": 1
+        }
+      }
+    });
+
+
+    // await this.userService.getUserInfoByVacancy(this.userLogged.id, vacancyId).subscribe(metrics => {
+    //   const dialog = this.dialog.open(UserVacancyListDialogComponent, {
+    //     data: metrics[0]
+    //   });
+    // })
 
   }
 

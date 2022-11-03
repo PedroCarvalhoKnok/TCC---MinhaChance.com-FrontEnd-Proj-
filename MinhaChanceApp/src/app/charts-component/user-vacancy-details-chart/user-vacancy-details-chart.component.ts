@@ -12,12 +12,18 @@ Chart.register(...registerables)
 })
 export class UserVacancyDetailsChartComponent implements AfterViewInit {
 
-  @Input() user!: User;
+  @Input() user: any = 0;
 
   constructor() { }
 
   
   ngAfterViewInit(): void {
+
+
+    this.user.no = (100 - this.user);
+
+    console.log(this.user.no)
+
     new Chart(`${this.user.id + 3}`, {
       type: 'pie',
       data: {
@@ -27,7 +33,7 @@ export class UserVacancyDetailsChartComponent implements AfterViewInit {
         ],
         datasets: [{
           label: 'Aptidão Candidato X Vaga',
-          data: [this.user.userVacancyInfo.no, this.user.userVacancyInfo.yes],
+          data: [this.user.no, this.user],
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',

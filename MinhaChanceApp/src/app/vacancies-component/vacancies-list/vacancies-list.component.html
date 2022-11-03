@@ -128,17 +128,23 @@
 
                     <span class="material-icons col-md-4">account_circle</span>
                     <!-- <label class="col-md-4" for="inputdefault">Salário<br />{{vacancy.salary}}</label> -->
-                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantity}} vaga(s)</label>
+                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantidade}} vaga(s)</label>
                     <label *ngIf="this.userCandidaturesRequired" class="col-md-4" for="inputdefault">Status<br />{{vacancy.status}}</label>
-                    <!-- <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{vacancy.modalidity}} {{vacancy.modalidity == 'Hibrido' ? vacancy.semanalQuantity: ''}}</label> -->
-                    <!-- <br /> -->
-                    <label class="col-md-4" for="inputdefault">Beneficios da vaga<br />
+                    <label class="col-md-4" for="inputdefault">Data de criação<br />{{vacancy.dataCriacao}}</label><br />
+                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{vacancy.modalidade}}</label><br />
+                    <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
                         <!-- <ul class="vacancy-list col-md-4" *ngFor="let benefit of this.vacancy.benefits">
                             <li>Descrição {{benefit}}</li>
                         </ul> -->
                         {{vacancy.beneficios}}
                     </label><br />
-                    <label class="col-md-4" for="inputdefault">Profissão<br />
+                    <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
+                        <!-- <ul class="vacancy-list col-md-4" *ngFor="let benefit of this.vacancy.benefits">
+                            <li>Descrição {{benefit}}</li>
+                        </ul> -->
+                        {{vacancy.requisitos}}
+                    </label><br />
+                    <label class="col-md-4 distance-between" for="inputdefault">Profissão<br />
                         <!-- <ul class="vacancy-list col-md-4" *ngFor="let benefit of this.vacancy.benefits">
                             <li>Descrição {{benefit}}</li>
                         </ul> -->
@@ -150,11 +156,10 @@
                             <li>Diferencial {{requirement.differencial != undefined ? '- ' + requirement.differencial : ''}}</li>
                         </ul>
                     </label><br /> -->
-                    <!-- <label class="col-md-4" for="inputdefault">Localização<br />{{vacancy.location}}</label><br />
-                    <label class="col-md-4" for="inputdefault">Categoria<br />{{vacancy.category}}</label>
-                    <label class="col-md-4" for="inputdefault">Criação<br />{{ vacancy.creationDate.getDate() }}/{{ vacancy.creationDate.getMonth() + 1 }}/{{ vacancy.creationDate.getFullYear() }}</label> -->
+                    <label class="col-md-4 distance-between" for="inputdefault">Localização<br />{{vacancy.localizacao}}</label><br /> 
+                    <label class="col-md-4 distance-between" for="inputdefault">Categoria<br />{{vacancy.category}}</label>
                     <div class="description">
-                        <label for="inputdefault">Descrição da vaga<br />{{vacancy.description}}</label><br />
+                        <label for="inputdefault">Descrição da vaga<br />{{vacancy.descricao}}</label><br />
                     </div>
 
                     <div class="description">
