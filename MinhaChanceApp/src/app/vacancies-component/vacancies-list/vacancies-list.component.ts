@@ -32,14 +32,12 @@ export class VacanciesListComponent implements OnInit {
   filterApplied: boolean = false;
 
   userCandidaturesRequired: boolean = false;
-
-  fileMocked = new File([], "", {
-    type: "",
-  });
+  
 
   requirements = ['Ensino superior', 'Ensino médio', 'Conhecimento básico'];
   benefits = ['VR', 'VT', 'Convenio médico', 'Convenio odontologico', 'Gym pass'];
   locations = ['São Paulo - Centro', 'Rio de Janeiro - Centro', 'Parana - Curitiba'];
+  modalities = ['Presencial', 'Híbrido', 'Home-Office'];
 
   vacancyFilter: vacancyFilter = new vacancyFilter();
 
@@ -57,7 +55,7 @@ export class VacanciesListComponent implements OnInit {
     console.log(this.userLogged);
 
     await this.getUsers();
-    
+
 
   }
 
@@ -70,7 +68,16 @@ export class VacanciesListComponent implements OnInit {
       await this.vacancyService.getVacanciesForCandidates().subscribe(vacancies => {
 
         this.getOccupationByVacancyId(vacancies).then(() => {
-          this.vacancies = of(vacancies);
+
+          if (!this.filterApplied){
+            console.log('sem filtro')
+            this.vacancies = of(vacancies);
+          }
+          else{
+            console.log('com filtro')
+            console.log(vacancies)
+            this.vacancies = of(this.filterVacancyList(vacancies))
+          }
         });
 
       });
@@ -83,7 +90,15 @@ export class VacanciesListComponent implements OnInit {
       await this.userService.getVacanciesByCandidate(this.userLogged.id).subscribe(vacancies => {
 
         this.getOccupationByVacancyId(vacancies).then(() => {
-          this.vacancies = of(vacancies);
+          if (!this.filterApplied){
+            console.log('sem filtro')
+            this.vacancies = of(vacancies);
+          }
+          else{
+            console.log('com filtro')
+            console.log(vacancies)
+            this.vacancies = of(this.filterVacancyList(vacancies))
+          }
         });
 
       })
@@ -94,7 +109,10 @@ export class VacanciesListComponent implements OnInit {
       await this.vacancyService.getVacanciesForCompanies(this.userLogged.id).subscribe(vacancies => {
 
         this.getOccupationByVacancyId(vacancies).then(() => {
-          this.vacancies = of(vacancies);
+          if (!this.filterApplied)
+            this.vacancies = of(vacancies);
+          else
+            this.vacancies = of(this.filterVacancyList(vacancies))
         });
 
       });
@@ -189,8 +207,8 @@ export class VacanciesListComponent implements OnInit {
     this.vacancyFilter.benefits = benefit;
   }
 
-  changeRequirement(requirement: string) {
-    this.vacancyFilter.requirements = requirement;
+  changeModality(modality: string) {
+    this.vacancyFilter.modality = modality;
   }
 
   changeLocation(location: string) {
@@ -224,26 +242,16 @@ export class VacanciesListComponent implements OnInit {
     this.vacancyFilter.vacancyQuantity = +(<HTMLInputElement>document.getElementById(`maxVacancyQuantity`)).value;
     this.vacancyFilter.vacancyCategory = (<HTMLInputElement>document.getElementById(`vacancyCategory`)).value;
     console.log(this.vacancyFilter);
-    
 
-    this.updateVacancies();
-    
+    this.filterApplied = true
 
-  }
 
-  updateVacancies(){
+    await this.getUsers();
 
-    this.vacancies.subscribe(vacancies => {
-
-      console.log(vacancies)
-
-      this.vacancies = of(this.filterVacancyList(vacancies));
-
-    });
 
   }
 
-   filterVacancyList(vacancyList: any) {
+  filterVacancyList(vacancyList: any) {
 
     if (this.vacancyFilter.isConfidential != undefined) {
       vacancyList = vacancyList.filter(vacancy => vacancy.isConfidential == this.vacancyFilter.isConfidential);
@@ -272,12 +280,12 @@ export class VacanciesListComponent implements OnInit {
     }
 
     if (this.vacancyFilter.vacancyQuantity != 0 && this.vacancyFilter.vacancyQuantity) {
-      vacancyList = vacancyList.filter(vacancy => vacancy.quantity <= this.vacancyFilter.vacancyQuantity);
+      vacancyList = vacancyList.filter(vacancy => vacancy.quantidade <= this.vacancyFilter.vacancyQuantity);
     }
 
-    if (this.vacancyFilter.salary != 0 && this.vacancyFilter.salary) {
-      vacancyList = vacancyList.filter(vacancy => vacancy.salary <= this.vacancyFilter.salary && !vacancy.isConfidential);
-    }
+    // if (this.vacancyFilter.salary != 0 && this.vacancyFilter.salary) {
+    //   vacancyList = vacancyList.filter(vacancy => vacancy.salary <= this.vacancyFilter.salary && !vacancy.isConfidential);
+    // }
 
     console.log(vacancyList)
 

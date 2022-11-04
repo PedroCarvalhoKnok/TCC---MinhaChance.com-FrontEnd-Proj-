@@ -30,12 +30,13 @@ export class VacanciesDetailsComponent implements OnInit {
 
   vacancyId!: number;
 
-  users: User[];
+
+  filterApplied: boolean = false;
 
   detailsFilter: vacancyDetailsFilter = new vacancyDetailsFilter();
 
   title = 'Aptidão geral a vaga';
-  vacancyDetailChart = [];
+  status = ['desaprovado', 'aprovado', 'em andamento'];
 
   // vacancyDetails: Observable<any[]> = of([{
   //   id: 3,
@@ -103,18 +104,54 @@ export class VacanciesDetailsComponent implements OnInit {
 
     await this.userService.getCandidatesByVacancy(this.vacancyId).subscribe(candidates => {
       console.log(candidates);
-      this.vacancyDetails = of(candidates);
+      if (!this.filterApplied)
+        this.vacancyDetails = of(candidates);
+      else
+        this.vacancyDetails = of(this.filterVacancyList(candidates))
     });
 
   }
 
   async openMetricsDetails(detail: User) {
 
-    await this.userService.getUserInfoByVacancy(detail.id, this.vacancyId).subscribe(metrics => {
-      const dialog = this.dialog.open(UserVacancyDetailsDialogComponent, {
-        data: metrics[0]
-      });
-    })
+    const dialog = this.dialog.open(UserVacancyDetailsDialogComponent, {
+      data:{
+        "aptidao": 50,
+        "usuario": 'teste', //alterar
+        "testeIM": {
+          "id": 2,
+          "linguistica": 74,
+          "matematica": 12,
+          "espacial": 25,
+          "cinestesica": 45,
+          "musical": 58,
+          "interpessoal": 78,
+          "intrapessoal": 48,
+          "naturalista": 47,
+          "data": "2022-10-20T00:00:00.000Z",
+          "cadastrado": 1
+        },
+        "testeVaga": {
+          "id": 2,
+          "linguistica": 74,
+          "matematica": 12,
+          "espacial": 25,
+          "cinestesica": 45,
+          "musical": 58,
+          "interpessoal": 78,
+          "intrapessoal": 48,
+          "naturalista": 47,
+          "data": "2022-10-20T00:00:00.000Z",
+          "cadastrado": 1
+        }
+      }
+    });
+
+    // await this.userService.getUserInfoByVacancy(detail.id, this.vacancyId).subscribe(metrics => {
+    //   const dialog = this.dialog.open(UserVacancyDetailsDialogComponent, {
+    //     data: metrics[0]
+    //   });
+    // })
 
   }
 
@@ -131,9 +168,11 @@ export class VacanciesDetailsComponent implements OnInit {
     this.detailsFilter.salaryPretension = +event.value;
   }
 
-  changeWorking(status: boolean) {
+  changeStatus(status: string) {
 
-    this.detailsFilter.status = status ? true : false;
+    console.log(status)
+
+    this.detailsFilter.status = status;
 
   }
 
@@ -153,55 +192,39 @@ export class VacanciesDetailsComponent implements OnInit {
   async applyFilters() {
 
     let vacancyDetailsListFiltered!: any[];
-    this.detailsFilter.actualCompany = (<HTMLInputElement>document.getElementById(`actualCompany`)).value;
-    this.detailsFilter.actualCharge = (<HTMLInputElement>document.getElementById(`actualCharge`)).value;
+    // this.detailsFilter.actualCompany = (<HTMLInputElement>document.getElementById(`actualCompany`)).value;
+    // this.detailsFilter.actualCharge = (<HTMLInputElement>document.getElementById(`actualCharge`)).value;
+
+    this.filterApplied = true;
 
     await this.getCandidatesByVacancy();
 
-    this.vacancyDetails.subscribe(details => {
-
-      this.vacancyDetails = of(this.filterVacancyList(details));
-      
-    });
-
-    
 
   }
 
-  filterVacancyList(vacancyDetailsList: any[]): any[] {
-
-    //chamar get de listagem de detalhes
+  filterVacancyList(candidatesList: any) {
 
 
-    if (this.detailsFilter.status != undefined)
-      vacancyDetailsList = vacancyDetailsList.filter(detail => detail.isWorking == this.detailsFilter.status)
+    if (this.detailsFilter.status)
+      candidatesList = candidatesList.filter(candidate => candidate.status === this.detailsFilter.status)
 
-    if (this.detailsFilter.actualCompany != '')
-      vacancyDetailsList = vacancyDetailsList.filter(detail => detail.actualCompany = this.detailsFilter.actualCompany)
+    if (this.detailsFilter.actualCompany)
+      candidatesList = candidatesList.filter(candidate => candidate.actualCompany === this.detailsFilter.actualCompany)
 
-    if (this.detailsFilter.actualCharge != '')
-      vacancyDetailsList = vacancyDetailsList.filter(detail => detail.actualCharge = this.detailsFilter.actualCharge)
+    if (this.detailsFilter.actualCharge)
+      candidatesList = candidatesList.filter(candidate => candidate.actualCharge === this.detailsFilter.actualCharge)
 
     if (this.detailsFilter.age != 0 && this.detailsFilter.age)
-      vacancyDetailsList = vacancyDetailsList.filter(detail => detail.age = this.detailsFilter.age)
-
-    if (this.detailsFilter.experienceTime != 0 && this.detailsFilter.experienceTime)
-      vacancyDetailsList = vacancyDetailsList.filter(detail => detail.experiences != undefined ? detail.experiences.map(experience => experience.timeSpent).reduce((acc, sum) => acc + sum) >= this.detailsFilter.experienceTime : undefined)
+      candidatesList = candidatesList.filter(candidate => (new Date().getFullYear() - new Date(candidate.dataNascimento).getFullYear()) <= this.detailsFilter.age)
 
     if (this.detailsFilter.salaryPretension != 0 && this.detailsFilter.salaryPretension)
-      vacancyDetailsList = vacancyDetailsList.filter(detail => detail.salaryPretension >= this.detailsFilter.salaryPretension)
-
-    if (this.detailsFilter.hasVacancyCourse)
-      vacancyDetailsList = vacancyDetailsList.filter(detail => detail.hasVacancyCourse = true)
-
-    if (this.detailsFilter.hasCertifications)
-      vacancyDetailsList = vacancyDetailsList.filter(detail => detail.certifications != undefined ? detail.certifications.length > 0 : 0)
+      candidatesList = candidatesList.filter(candidate => candidate.salaryPretension >= this.detailsFilter.salaryPretension)
 
     if (this.detailsFilter.hasGraduation)
-      vacancyDetailsList = vacancyDetailsList.filter(detail => detail.graduations != undefined ? detail.graduations.length > 0 : 0)
+      candidatesList = candidatesList.filter(candidate => candidate.graduations)
 
 
-    return vacancyDetailsList;
+    return candidatesList;
 
   }
 

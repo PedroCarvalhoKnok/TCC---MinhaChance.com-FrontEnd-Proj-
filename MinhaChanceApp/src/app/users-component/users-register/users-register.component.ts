@@ -29,7 +29,7 @@ export class UsersRegisterComponent implements OnInit {
     // if (this.userId) {
     //   let userLogged = JSON.parse(sessionStorage.getItem('user')!);
     //   if (this.userId != userLogged.id) {
-        
+
     //     Swal.fire({
     //       title: 'Não é possivel editar outro perfil',
     //       icon: 'warning',
@@ -37,9 +37,9 @@ export class UsersRegisterComponent implements OnInit {
     //       showConfirmButton: true,         
     //       confirmButtonText: 'OK'         
     //     }).then(async (result) => {
-          
+
     //         this.route.navigate([`${this.userId}/perfil`]);
-          
+
 
     //     })
     //   }
@@ -104,7 +104,7 @@ export class UsersRegisterComponent implements OnInit {
     return data;
   }
 
-  validateGoToUserTest(user: User) {
+  validateGoToUserTest(user: any) {
 
     Swal.fire({
       title: 'Deseja fazer o teste de mapeamento de aptidão?',
@@ -117,10 +117,10 @@ export class UsersRegisterComponent implements OnInit {
       cancelButtonText: 'Não!'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        this.route.navigate([`${user.role}/${user.id}/teste/inicio`]);
+        this.route.navigate([`candidato/${user.id}/teste/inicio`]);
       }
       else {
-        this.route.navigate([`${user.role}/login`]);
+        this.route.navigate([`candidato/login`]);
       }
     })
 
@@ -132,16 +132,15 @@ export class UsersRegisterComponent implements OnInit {
     this.user.role = Role.Candidate;
 
     await this.userService.postCandidateRegister(this.user).subscribe(user => {
-      console.log(user.message);
-      user.message === "Candidato cadastrado com sucesso" ?
+      console.log(user.dataCandidato[0].message);
+      user.dataCandidato[0].message === "Candidato cadastrado com sucesso" ?
         Swal.fire(
           'Sucesso!',
           `Dados cadastrados com sucesso!`,
           'success'
-        ).then((result) => {
+        ).then(() => {
 
-          if (result.isConfirmed)
-            this.validateGoToUserTest(user);
+          this.validateGoToUserTest(user.dataCandidato[0]);
 
         }) : Swal.fire(
           'Ops, ocorreu um erro!',

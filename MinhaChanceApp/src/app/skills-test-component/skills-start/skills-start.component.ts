@@ -36,7 +36,7 @@ export class SkillsStartComponent implements OnInit {
   }
 
   startTest(){
-    this.router.navigate([`/candidato/${this.userId}/teste/resultado`])
+    this.router.navigate([`/candidato/${this.userId}/teste`]);
   }
 
 }

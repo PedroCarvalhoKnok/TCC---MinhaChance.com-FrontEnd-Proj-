@@ -1,5 +1,5 @@
 export class vacancyDetailsFilter{
-    status!: boolean;
+    status!: string;
     actualCompany!: string;
     actualCharge!: string;
     experienceTime!: number;

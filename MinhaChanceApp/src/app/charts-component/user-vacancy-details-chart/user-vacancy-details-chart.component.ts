@@ -20,9 +20,9 @@ export class UserVacancyDetailsChartComponent implements AfterViewInit {
   ngAfterViewInit(): void {
 
 
-    this.user.no = (100 - this.user);
+    let no: any = (100 - this.user);
 
-    console.log(this.user.no)
+    console.log(no)
 
     new Chart(`${this.user.id + 3}`, {
       type: 'pie',
@@ -33,7 +33,7 @@ export class UserVacancyDetailsChartComponent implements AfterViewInit {
         ],
         datasets: [{
           label: 'Aptidão Candidato X Vaga',
-          data: [this.user.no, this.user],
+          data: [no, this.user],
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',

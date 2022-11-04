@@ -22,18 +22,19 @@
             <form class="example-form">
 
 
-                <label class="label-filter" for="typeahead-basic">Trabalhando?</label>
+                <label class="label-filter" for="typeahead-basic">Status da vaga</label>
                 <br />
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input (click)="changeWorking(true)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
-
-                    <input (click)="changeWorking(false)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio2">Não</label>
-
+                <div class="col select-filters">
+                    <div ngbDropdown class="d-inline-block select-filters">
+                        <button type="button" class="btn btn-outline-primary" id="dropdownRequires"
+                            ngbDropdownToggle>{{!this.detailsFilter.status ? 'Status': this.detailsFilter.status}}</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownCategory">
+                            <button (click)="changeStatus(stat)" *ngFor="let stat of status" ngbDropdownItem>{{stat}}</button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="label-filter">Empresa atual</label>
                     <br />
                     <input id="actualCompany" class="form-control" type="text" class="form-control" />
@@ -43,34 +44,23 @@
                     <label class="label-filter">Cargo atual</label>
                     <br />
                     <input id="actualCharge" class="form-control" type="text" class="form-control" />
-                </div>
+                </div> -->
 
                 <br />
                 <label class="label-filter">Idade</label>
                 <br />
                 <mat-slider (change)="changeAge($event)" thumbLabel tickInterval="1" step="1" min="0" max="100" aria-label="Idade">
                 </mat-slider>
-
+                
                 <br />
-                <label class="label-filter" for="typeahead-basic">Concluiu curso da vaga?</label>
-                <br />
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input (click)="changeCourseConclusion(true)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
-
-                    <input (click)="changeCourseConclusion(false)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio2">Não</label>
-
-                </div>
-                <br />
-                <br />
+                <!-- <br />
                 <div class="form-group">
 
                     <label class="label-filter">Anos de experiência</label>
                     <br />
                     <mat-slider (change)="changeExperience($event)" thumbLabel tickInterval="1" step="1" min="0" max="100" aria-label="Ano">
                     </mat-slider>
-                </div>
+                </div> -->
                 <br />
                 <label class="label-filter" for="typeahead-basic">Possui formação acadêmica?</label>
                 <br />
@@ -82,7 +72,7 @@
                     <label class="btn btn-outline-primary" for="btnradio2">Não</label>
 
                 </div>
-                <br />
+                <!-- <br />
                 <label class="label-filter" for="typeahead-basic">Possui certificados?</label>
                 <br />
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
@@ -92,14 +82,14 @@
                     <input (click)="changeHasCertifications(false)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio2">Não</label>
 
-                </div>
+                </div> -->
                 <br/>
-                <div class="form-group">
+                <!-- <div class="form-group">
 
                     <label class="label-filter">Quantidade de certificados</label>
                     <br />
                     <input id="maxVacancyQuantity" class="form-control" type="number" class="form-control" />
-                </div>
+                </div> -->
                 
                 <label class="label-filter">Pretensão Salarial (R$)</label>
                 <br />
