@@ -1,8 +1,17 @@
-.container{
+.container {
     margin-top: 5%;
 }
 
 .placeholder-color {
     color: white !important;
-    
+
+}
+
+mat-option {
+    background-color: grey;
+}
+
+.btn-validate {
+    height: 30px;
+    margin-top: 5px;
   }

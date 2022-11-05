@@ -17,6 +17,7 @@ export class UserService {
   urlCandidatesPerVacancy = `${environment.urlBaseApi}/CandidatosPorVaga`;
   urlVacancyPerCandidate = `${environment.urlBaseApi}/vagasPorCandidato`;
   urlViaCep = `${environment.urlBaseViaCepApi}`;
+  urlIbge = `${environment.urlBaseTerritorio}`
 
   constructor(private httpClient: HttpClient) { }
 
@@ -35,13 +36,6 @@ export class UserService {
 
   }
 
-  getAddressByZipCode(zipCode: string){
-
-    return this.httpClient.get<any>(`${this.urlViaCep}/${zipCode}/json`,).pipe(
-      retry(2)
-    )
-
-  }
 
   getUserInfoByVacancy(userId: number, vacancyId: number) {
     return this.httpClient.get<any>('',).pipe(
@@ -192,4 +186,6 @@ export class UserService {
       retry(2)
     )
   }
+
+  
 }

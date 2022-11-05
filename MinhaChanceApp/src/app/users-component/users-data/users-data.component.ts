@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -5,6 +6,7 @@ import { Address } from 'src/app/Models/User/Address';
 import { Schooling } from 'src/app/Models/User/Schooling';
 import { Situation } from 'src/app/Models/User/Situation';
 import { User } from 'src/app/Models/User/User';
+import { LocationService } from 'src/app/Services/Location/location.service';
 import { SchoolingService } from 'src/app/Services/Schooling/schooling.service';
 import { SituationService } from 'src/app/Services/Situation/situation.service';
 import { UserService } from 'src/app/Services/User/user.service';
@@ -25,12 +27,16 @@ export class UsersDataComponent implements OnInit {
   isCandidate: boolean;
   schoolings!: Schooling[];
   situations!: Situation[];
+  states!: any[];
+  counties!: any[];
+  stateSelected: string;
+  countySelected: string;
   schoolingSelected: number = 0;
   situationSelected: number = 0;
   companySize!: string;
   @Output() sendUserEvent = new EventEmitter<User>();
 
-  constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService, private situationService: SituationService) {
+  constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService, private situationService: SituationService, private locationService: LocationService) {
 
   }
 
@@ -43,8 +49,8 @@ export class UsersDataComponent implements OnInit {
     if (this.router.snapshot.params?.['user'] === 'candidato') {
       this.isCandidate = true;
       this.createFormCandidateDataValidation();
-      this.getSchoolings()
-      this.getSituations();
+      await this.getSchoolings()
+      await this.getSituations();
     }
     else {
       this.isCandidate = false;
@@ -52,14 +58,16 @@ export class UsersDataComponent implements OnInit {
     }
     console.log(this.userId)
 
+    await this.getStates();
+
     if (this.userId) {
 
       if (this.isCandidate) {
 
         await this.userService.getCandidateInfoById(this.userId).subscribe(user => {
-          
+
           console.log(user)
-          
+
           this.user.userName = user[0].nome;
           this.user.cpf = user[0].cpf;
           this.user.id = user[0].id;
@@ -70,14 +78,14 @@ export class UsersDataComponent implements OnInit {
 
         });
 
-        
+
       }
-      else{
+      else {
 
         await this.userService.getCompanyInfoById(this.userId).subscribe(company => {
-          
+
           console.log(company)
-          
+
           this.user.id = company[0].id;
           this.user.profile = company[0].nomeFantasia;
           this.user.userName = company[0].razaoSocial;
@@ -93,7 +101,7 @@ export class UsersDataComponent implements OnInit {
 
   }
 
-  formatDate(date: string): string{
+  formatDate(date: string): string {
 
     date = `${date.split('-')[0]}-${date.split('-')[1]}-${date.split('-')[2][0]}${date.split('-')[2][1]}`;
 
@@ -112,7 +120,40 @@ export class UsersDataComponent implements OnInit {
 
   }
 
-  async getSituations(){
+  async getStates() {
+
+    await this.locationService.getLocationStates().subscribe(data => {
+      console.log(data)
+      this.states = data
+
+    });
+
+
+  }
+
+  async changeState(stateId: number) {
+
+    this.stateSelected = this.states.find(state => state.id === stateId).nome;
+    this.address.state = this.stateSelected;
+    this.countySelected = '';
+
+    await this.locationService.getLocationCountiesByState(stateId).subscribe(counties => {
+      console.log(counties)
+      this.counties = counties;
+    })
+
+  }
+
+  changeCounty(county: string) {
+
+    console.log(county)
+    console.log(this.stateSelected)
+    this.countySelected = county;
+    this.address.county = this.countySelected;
+
+  }
+
+  async getSituations() {
 
     await this.situationService.getSituations().subscribe(data => {
       this.situations = data
@@ -126,15 +167,42 @@ export class UsersDataComponent implements OnInit {
 
   }
 
-  changeSituation(situationId: number){
+  changeSituation(situationId: number) {
 
     this.user.situationId = situationId;
-    
+
   }
 
   changeCompanySize(size: string) {
 
     this.user.companyPort = size;
+
+  }
+
+  async findZipCode(zipCode: string){
+
+    console.log(zipCode)
+
+    await this.locationService.getAddressByZipCode(zipCode).subscribe(async address => {
+
+      console.log(address)
+
+      this.address.streetName = address.logradouro;
+      this.address.district = address.bairro;
+      this.stateSelected = this.states.find(state => state.sigla === address.uf).nome;
+      this.address.state = this.stateSelected
+
+      await this.locationService.getLocationCountiesByState(this.states.find(state => state.sigla === address.uf).id).subscribe(counties => {
+
+        this.counties = counties;
+
+        this.countySelected = counties.find(county => county.nome === address.localidade).nome;
+        this.address.county = this.countySelected
+        
+      })
+
+
+    })
 
   }
 

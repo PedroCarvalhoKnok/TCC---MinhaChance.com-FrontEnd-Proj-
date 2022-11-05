@@ -15,12 +15,13 @@
                     <form [formGroup]="formVacancy">
                         <div fxLayout="column">
                             <mat-label class="placeholder-color">Título da vaga</mat-label>
-                            <br/>
+                            <br />
                             <mat-form-field>
-                                <input id="vacancyTitle" formControlName="vacancySalary" class="form-control" type="text" [(ngModel)]="this.vacancy.vacancyTitle"
-                                    matInput autocomplete="off" placeholder="Título"/>
+                                <input id="vacancyTitle" formControlName="vacancySalary" class="form-control"
+                                    type="text" [(ngModel)]="this.vacancy.vacancyTitle" matInput autocomplete="off"
+                                    placeholder="Título" />
                             </mat-form-field>
-                            <br/>
+                            <br />
                             <div
                                 *ngIf="formVacancy.get('vacancyTitle')?.invalid && (formVacancy.get('vacancyTitle')?.dirty || formVacancy.get('vacancyTitle')?.touched)">
                                 <p *ngIf="formVacancy.get('vacancyTitle')?.errors?.['required']">
@@ -28,10 +29,11 @@
                                 </p>
                             </div>
                             <mat-label class="placeholder-color">Salário da vaga</mat-label>
-                            <br/>
+                            <br />
                             <mat-form-field>
-                                <input id="vacancySalary" formControlName="vacancySalary" class="form-control" type="number" [(ngModel)]="this.vacancy.salary"
-                                    matInput autocomplete="off" placeholder="Salário" readonly="{{this.isConfidential}}"/>
+                                <input id="vacancySalary" formControlName="vacancySalary" class="form-control"
+                                    type="number" [(ngModel)]="this.vacancy.salary" matInput autocomplete="off"
+                                    placeholder="Salário" readonly="{{this.isConfidential}}" />
                             </mat-form-field>
                             <div
                                 *ngIf="formVacancy.get('vacancySalary')?.invalid && (formVacancy.get('vacancySalary')?.dirty || formVacancy.get('vacancySalary')?.touched)">
@@ -44,12 +46,13 @@
                                     A combinar
                                 </mat-checkbox>
                             </section>
-                            <br/>
+                            <br />
                             <mat-label class="placeholder-color">Categoria</mat-label>
-                            <br/>
+                            <br />
                             <mat-form-field>
-                                <input formControlName="vacancyCategory" class="form-control" type="text" [(ngModel)]="this.vacancy.category"
-                                    matInput autocomplete="off" placeholder="Categoria" required/>
+                                <input formControlName="vacancyCategory" class="form-control" type="text"
+                                    [(ngModel)]="this.vacancy.category" matInput autocomplete="off"
+                                    placeholder="Categoria" required />
                             </mat-form-field>
                             <div
                                 *ngIf="formVacancy.get('vacancyCategory')?.invalid && (formVacancy.get('vacancyCategory')?.dirty || formVacancy.get('vacancyCategory')?.touched)">
@@ -60,7 +63,9 @@
                             <mat-form-field class="spacing-margin">
                                 <mat-label class="placeholder-color">Tipo de contratação</mat-label>
                                 <mat-select id="select-contracts" placeholder="Vaga">
-                                    <mat-option *ngFor="let category of contractCategories" (click)="changeContractType(category)" value="{{category}}">{{category}}</mat-option>
+                                    <mat-option *ngFor="let category of contractCategories"
+                                        (click)="changeContractType(category)" value="{{category}}">{{category}}
+                                    </mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <div
@@ -71,9 +76,10 @@
                             </div>
                             <br />
                             <mat-label class="placeholder-color">Quantidade de vagas</mat-label>
-                            <br/>
+                            <br />
                             <mat-form-field>
-                                <input formControlName="vacancyQuantity" class="form-control" type="number" [(ngModel)]="this.vacancy.quantity" matInput autocomplete="off"
+                                <input formControlName="vacancyQuantity" class="form-control" type="number"
+                                    [(ngModel)]="this.vacancy.quantity" matInput autocomplete="off"
                                     placeholder="Quantidade de vagas" required />
                             </mat-form-field>
                             <div
@@ -87,9 +93,11 @@
                             </div>
                             <br />
                             <mat-form-field>
-                                <mat-label class="placeholder-color">{{this.vacancy.modalidity != undefined ? this.vacancy.modalidity: 'Modalidade'}}</mat-label>
+                                <mat-label class="placeholder-color">{{this.vacancy.modalidity != undefined ?
+                                    this.vacancy.modalidity: 'Modalidade'}}</mat-label>
                                 <mat-select id="select-contracts" placeholder="Vaga">
-                                    <mat-option *ngFor="let modality of modalities" (click)="changeModality(modality)" value="{{modality}}">{{modality}}</mat-option>
+                                    <mat-option *ngFor="let modality of modalities" (click)="changeModality(modality)"
+                                        value="{{modality}}">{{modality}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <div
@@ -99,9 +107,30 @@
                                 </p>
                             </div>
                             <mat-form-field class="spacing-margin">
-                                <mat-label class="placeholder-color">{{this.vacancy.location != undefined ? this.vacancy.location: 'Localização'}}</mat-label>
+                                <mat-label class="placeholder-color">{{this.vacancy.location != undefined ?
+                                    this.vacancy.location: 'Localização'}}</mat-label>
                                 <mat-select id="select-contracts" placeholder="Vaga">
-                                    <mat-option *ngFor="let location of locations" (click)="changeLocation(location)" value="{{location}}">{{location}}</mat-option>
+                                    <mat-option *ngFor="let location of locations" (click)="changeLocation(location)"
+                                        value="{{location}}">{{location}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col-md-4">
+                                <mat-label class="placeholder-color">{{!this.stateSelected ? 'Estado':
+                                    this.stateSelected }}</mat-label>
+                                <mat-select [value]="this.stateSelected" (valueChange)="changeState($event)"
+                                    placeholder="{{!this.stateSelected ? 'Estado': this.stateSelected }}">
+                                    <mat-option [value]="state.id" *ngFor="let state of this.states">{{state.nome}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col-md-4">
+                                <mat-label class="placeholder-color">{{!this.countySelected ? 'Município':
+                                    this.countySelected }}</mat-label>
+                                <mat-select [disabled]="!this.counties ? true: false" [value]="this.countySelected"
+                                    (valueChange)="changeCounty($event)"
+                                    placeholder="{{!this.countySelected ? 'Município': this.countySelected }}">
+                                    <mat-option [value]="county.nome" *ngFor="let county of this.counties">
+                                        {{county.nome}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <br />
@@ -111,10 +140,11 @@
                                 </mat-checkbox>
                             </section>
                             <br />
-                            
+
                             <mat-label>Imagem da vaga</mat-label>
                             <br />
-                            <input (change)="chooseVacancyImage($event)" class="ng-hide" id="input-image-id" multiple type="file" required/>
+                            <input (change)="chooseVacancyImage($event)" class="ng-hide" id="input-image-id" multiple
+                                type="file" required />
                             <br />
                             <br />
                             <mat-label>Descrição da vaga</mat-label>
@@ -186,7 +216,7 @@
                 <div fxLayout="row" fxLayoutAlign="center">
                     <form>
                         <div fxLayout="column">
-                           
+
                             <mat-label class="placeholder-color">Descrição do requisito</mat-label>
                             <textarea id="requirementDescription" class="text-area-form"></textarea>
 
@@ -202,5 +232,7 @@
     </mat-card>
 </div>
 
-<button *ngIf="!this.vacancyId" (click)="goToVacancyRegister(this.vacancy)" mat-raised-button class="submit-btn" color="primary">Cadastrar Vaga</button>
-<button *ngIf="this.vacancyId" (click)="goToVacancyEdit(this.vacancy)" mat-raised-button class="submit-btn" color="primary">Editar Vaga</button>
+<button *ngIf="!this.vacancyId" (click)="goToVacancyRegister(this.vacancy)" mat-raised-button class="submit-btn"
+    color="primary">Cadastrar Vaga</button>
+<button *ngIf="this.vacancyId" (click)="goToVacancyEdit(this.vacancy)" mat-raised-button class="submit-btn"
+    color="primary">Editar Vaga</button>

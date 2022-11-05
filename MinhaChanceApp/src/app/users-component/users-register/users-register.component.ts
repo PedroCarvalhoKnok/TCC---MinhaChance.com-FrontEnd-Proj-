@@ -140,7 +140,7 @@ export class UsersRegisterComponent implements OnInit {
           'success'
         ).then(() => {
 
-          this.validateGoToUserTest(user.dataCandidato[0]);
+          this.route.navigate(['candidato/login']);
 
         }) : Swal.fire(
           'Ops, ocorreu um erro!',

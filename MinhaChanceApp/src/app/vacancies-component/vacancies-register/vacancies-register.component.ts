@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Benefit } from 'src/app/Models/Vacancy/Benefit';
 import { Requirement } from 'src/app/Models/Vacancy/Requirement';
 import { Vacancy } from 'src/app/Models/Vacancy/Vacancy';
+import { LocationService } from 'src/app/Services/Location/location.service';
 import { VacancyService } from 'src/app/Services/Vacancy/vacancy.service';
 import Swal from 'sweetalert2';
 
@@ -29,11 +30,15 @@ export class VacanciesRegisterComponent implements OnInit {
   isCombinated: boolean = false;
   isConfidential: boolean = false;
   isHibrid: boolean = false;
+  states!: any[];
+  counties!: any[];
+  stateSelected: string;
+  countySelected: string;
 
   vacancyId!: number;
 
 
-  constructor(private vacancyService: VacancyService, private router: ActivatedRoute) { }
+  constructor(private vacancyService: VacancyService, private router: ActivatedRoute, private locationService: LocationService) { }
 
   async ngOnInit() {
 
@@ -182,6 +187,7 @@ export class VacanciesRegisterComponent implements OnInit {
     vacancy.userId = JSON.parse(sessionStorage.getItem('user')!).id;
     vacancy.benefits = (<HTMLInputElement>document.getElementById('benefitDescription')).value;
     vacancy.requirements = (<HTMLInputElement>document.getElementById('requirementDescription')).value;
+    vacancy.location = `${this.stateSelected} - ${this.countySelected}`;
 
 
     await this.vacancyService.postVacancy(vacancy).subscribe(retornMsg =>
@@ -201,6 +207,7 @@ export class VacanciesRegisterComponent implements OnInit {
     vacancy.userId = JSON.parse(sessionStorage.getItem('user')!).id;
     vacancy.benefits = (<HTMLInputElement>document.getElementById('benefitDescription')).value;
     vacancy.requirements = (<HTMLInputElement>document.getElementById('requirementDescription')).value;
+    vacancy.location = `${this.stateSelected} - ${this.countySelected}`;
 
     console.log(vacancy);
 
@@ -228,6 +235,37 @@ export class VacanciesRegisterComponent implements OnInit {
   addRequirement() {
 
     this.requirement.description = (<HTMLInputElement>document.getElementById(`requirementDescription`)).value;
+
+  }
+
+  async getStates() {
+
+    await this.locationService.getLocationStates().subscribe(data => {
+      console.log(data)
+      this.states = data
+
+    });
+
+
+  }
+
+  async changeState(stateId: number) {
+
+    this.stateSelected = this.states.find(state => state.id === stateId).nome;
+    this.countySelected = '';
+
+    await this.locationService.getLocationCountiesByState(stateId).subscribe(counties => {
+      console.log(counties)
+      this.counties = counties;
+    })
+
+  }
+
+  changeCounty(county: string) {
+
+    console.log(county)
+    console.log(this.stateSelected)
+    this.countySelected = county;
 
   }
 

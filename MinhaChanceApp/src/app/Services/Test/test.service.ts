@@ -80,8 +80,8 @@ export class TestService {
       )
   }
 
-  getTestByUserId(userId: number) {
-    return this.httpClient.get<any>(``)
+  getTestByCandidateTestId(testImId: number) {
+    return this.httpClient.get<any>(`${this.urlTestIm}/${testImId}`)
       .pipe(
         retry(2),
       )
