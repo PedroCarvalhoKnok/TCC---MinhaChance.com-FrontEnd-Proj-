@@ -46,6 +46,34 @@
                     <input id="actualCharge" class="form-control" type="text" class="form-control" />
                 </div> -->
 
+                <label class="label-filter">{{!this.stateSelected ? 'Estado':
+                    this.stateSelected }} </label>
+                <div class="col select-filters">
+                    <div ngbDropdown class="d-inline-block select-filters">
+                        <button type="button" class="btn btn-outline-primary" id="dropdownRequires"
+                            ngbDropdownToggle>{{!this.stateSelected ? 'Estado':
+                            this.stateSelected }}</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownCategory">
+                            <button (click)="changeState(state.id)" *ngFor="let state of this.states"
+                                ngbDropdownItem>{{state.nome}}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <label class="label-filter">{{!this.countySelected ? 'Município':
+                    this.countySelected }} </label>
+                <div class="col select-filters">
+                    <div ngbDropdown class="d-inline-block select-filters">
+                        <button type="button" class="btn btn-outline-primary" id="dropdownRequires"
+                            ngbDropdownToggle>{{!this.countySelected ? 'Município':
+                            this.countySelected }}</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownCategory">
+                            <button (click)="changeCounty(county.nome)"  *ngFor="let county of this.counties"
+                                ngbDropdownItem>{{county.nome}}</button>
+                        </div>
+                    </div>
+                </div>
+
                 <br />
                 <label class="label-filter">Idade</label>
                 <br />

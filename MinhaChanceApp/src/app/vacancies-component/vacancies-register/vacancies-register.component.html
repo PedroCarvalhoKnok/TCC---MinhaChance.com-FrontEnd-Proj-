@@ -60,7 +60,8 @@
                                     Categoria da vaga é necessária.
                                 </p>
                             </div>
-                            <mat-form-field class="spacing-margin">
+                            <br />
+                            <mat-form-field>
                                 <mat-label class="placeholder-color">Tipo de contratação</mat-label>
                                 <mat-select id="select-contracts" placeholder="Vaga">
                                     <mat-option *ngFor="let category of contractCategories"
@@ -74,8 +75,6 @@
                                     Tipo de contratação é necessária.
                                 </p>
                             </div>
-                            <br />
-                            <mat-label class="placeholder-color">Quantidade de vagas</mat-label>
                             <br />
                             <mat-form-field>
                                 <input formControlName="vacancyQuantity" class="form-control" type="number"
@@ -106,15 +105,8 @@
                                     Modalidade da contratação é necessária.
                                 </p>
                             </div>
-                            <mat-form-field class="spacing-margin">
-                                <mat-label class="placeholder-color">{{this.vacancy.location != undefined ?
-                                    this.vacancy.location: 'Localização'}}</mat-label>
-                                <mat-select id="select-contracts" placeholder="Vaga">
-                                    <mat-option *ngFor="let location of locations" (click)="changeLocation(location)"
-                                        value="{{location}}">{{location}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field class="col-md-4">
+                            <br/>
+                            <mat-form-field>
                                 <mat-label class="placeholder-color">{{!this.stateSelected ? 'Estado':
                                     this.stateSelected }}</mat-label>
                                 <mat-select [value]="this.stateSelected" (valueChange)="changeState($event)"
@@ -123,7 +115,7 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field class="col-md-4">
+                            <mat-form-field>
                                 <mat-label class="placeholder-color">{{!this.countySelected ? 'Município':
                                     this.countySelected }}</mat-label>
                                 <mat-select [disabled]="!this.counties ? true: false" [value]="this.countySelected"

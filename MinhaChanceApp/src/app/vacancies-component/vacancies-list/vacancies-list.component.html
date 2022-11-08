@@ -2,8 +2,10 @@
     <mat-card class="add-vacancy-card">
 
         <mat-card-header class="title-vacancy">
-            <span *ngIf="this.userLogged.cnpj" (click)="goToVacancyRegister()" class="material-icons">add_circle_outline</span>
-            <mat-card-title *ngIf="this.userLogged.cnpj" class="add-title"><a>Crie vagas e oportunidades para sua empresa</a></mat-card-title>
+            <span *ngIf="this.userLogged.cnpj" (click)="goToVacancyRegister()"
+                class="material-icons">add_circle_outline</span>
+            <mat-card-title *ngIf="this.userLogged.cnpj" class="add-title"><a>Crie vagas e oportunidades para sua
+                    empresa</a></mat-card-title>
             <span *ngIf="this.userLogged.CPF" (click)="getCandidateVacancies()" class="material-icons">verified</span>
             <mat-card-title *ngIf="this.userLogged.CPF" class="add-title"><a>Minhas candidaturas</a></mat-card-title>
         </mat-card-header>
@@ -28,7 +30,8 @@
                         <button type="button" class="btn btn-outline-primary" id="dropdownBenefits"
                             ngbDropdownToggle>Beneficios</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownCategory">
-                            <button (click)="changeBenefit(benefit)" *ngFor="let benefit of benefits" ngbDropdownItem>{{benefit}}</button>
+                            <button (click)="changeBenefit(benefit)" *ngFor="let benefit of benefits"
+                                ngbDropdownItem>{{benefit}}</button>
                         </div>
                     </div>
                 </div>
@@ -37,38 +40,77 @@
                 <div class="col select-filters">
                     <div ngbDropdown class="d-inline-block select-filters">
                         <button type="button" class="btn btn-outline-primary" id="dropdownRequires"
-                            ngbDropdownToggle>{{!this.vacancyFilter.modality ? 'Modalidade': this.vacancyFilter.modality}}</button>
+                            ngbDropdownToggle>{{!this.vacancyFilter.modality ? 'Modalidade':
+                            this.vacancyFilter.modality}}</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownCategory">
-                            <button (click)="changeModality(modality)" *ngFor="let modality of modalities" ngbDropdownItem>{{modality}}</button>
+                            <button (click)="changeModality(modality)" *ngFor="let modality of modalities"
+                                ngbDropdownItem>{{modality}}</button>
                         </div>
                     </div>
                 </div>
 
-                <label class="label-filter">Localização</label>
-                <div class="form-group">
-                    <div class="col select-filters">
-                        <div ngbDropdown class="d-inline-block select-filters">
-                            <button type="button" class="btn btn-outline-primary" id="dropdownLocation"
-                                ngbDropdownToggle>{{!this.vacancyFilter.location ? 'Localização': this.vacancyFilter.location}}</button>
-                            <div ngbDropdownMenu aria-labelledby="dropdownCategory">
-                                <button (click)="changeLocation(location)" *ngFor="let location of locations" ngbDropdownItem>{{location}}</button>
-                            </div>
+                <label class="label-filter">{{!this.stateSelected ? 'Estado':
+                    this.stateSelected }} </label>
+                <div class="col select-filters">
+                    <div ngbDropdown class="d-inline-block select-filters">
+                        <button type="button" class="btn btn-outline-primary" id="dropdownRequires"
+                            ngbDropdownToggle>{{!this.stateSelected ? 'Estado':
+                            this.stateSelected }}</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownCategory">
+                            <button (click)="changeState(state.id)" *ngFor="let state of this.states"
+                                ngbDropdownItem>{{state.nome}}</button>
                         </div>
                     </div>
                 </div>
-                
+
+                <label class="label-filter">{{!this.countySelected ? 'Município':
+                    this.countySelected }} </label>
+                <div class="col select-filters">
+                    <div ngbDropdown class="d-inline-block select-filters">
+                        <button type="button" class="btn btn-outline-primary" id="dropdownRequires"
+                            ngbDropdownToggle>{{!this.countySelected ? 'Município':
+                            this.countySelected }}</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownCategory">
+                            <button (click)="changeCounty(county.nome)"  *ngFor="let county of this.counties"
+                                ngbDropdownItem>{{county.nome}}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <mat-form-field>
+                    <mat-label class="placeholder-color">{{!this.stateSelected ? 'Estado':
+                        this.stateSelected }}</mat-label>
+                    <mat-select [value]="this.stateSelected" (valueChange)="changeState($event)"
+                        placeholder="{{!this.stateSelected ? 'Estado': this.stateSelected }}">
+                        <mat-option [value]="state.id" *ngFor="let state of this.states">{{state.nome}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label class="placeholder-color">{{!this.countySelected ? 'Município':
+                        this.countySelected }}</mat-label>
+                    <mat-select [disabled]="!this.counties ? true: false" [value]="this.countySelected"
+                        (valueChange)="changeCounty($event)"
+                        placeholder="{{!this.countySelected ? 'Município': this.countySelected }}">
+                        <mat-option [value]="county.nome" *ngFor="let county of this.counties">
+                            {{county.nome}}</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+
                 <br />
                 <label class="label-filter" for="typeahead-basic">Vagas Presenciais</label>
                 <br />
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input (click)="vacancyPresencial(true)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                    <input (click)="vacancyPresencial(true)" type="radio" class="btn-check" name="btnradio"
+                        id="btnradio1" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
 
-                    <input (click)="vacancyPresencial(false)" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <input (click)="vacancyPresencial(false)" type="radio" class="btn-check" name="btnradio"
+                        id="btnradio2" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio2">Não</label>
 
                 </div>
-                
+
                 <br />
                 <div class="form-group">
 
@@ -96,7 +138,8 @@
 </div>
 
 <div>
-    <mat-card class="vacancies-card" *ngFor="let vacancy of this.vacancies|async |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
+    <mat-card class="vacancies-card"
+        *ngFor="let vacancy of this.vacancies|async |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
 
         <mat-card-header class="header-content">
             <mat-card-title class="title-vacancy">
@@ -113,10 +156,14 @@
 
                     <span class="material-icons col-md-4">account_circle</span>
                     <!-- <label class="col-md-4" for="inputdefault">Salário<br />{{vacancy.salary}}</label> -->
-                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantidade}} vaga(s)</label>
-                    <label *ngIf="this.userCandidaturesRequired" class="col-md-4" for="inputdefault">Status<br />{{vacancy.status}}</label>
-                    <label class="col-md-4" for="inputdefault">Data de criação<br />{{vacancy.dataCriacao}}</label><br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{vacancy.modalidade}}</label><br />
+                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantidade}}
+                        vaga(s)</label>
+                    <label *ngIf="this.userCandidaturesRequired" class="col-md-4"
+                        for="inputdefault">Status<br />{{vacancy.status}}</label>
+                    <label class="col-md-4" for="inputdefault">Data de
+                        criação<br />{{vacancy.dataCriacao}}</label><br />
+                    <label class="col-md-4 distance-between"
+                        for="inputdefault">Modalidade<br />{{vacancy.modalidade}}</label><br />
                     <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
                         <!-- <ul class="vacancy-list col-md-4" *ngFor="let benefit of this.vacancy.benefits">
                             <li>Descrição {{benefit}}</li>
@@ -141,19 +188,27 @@
                             <li>Diferencial {{requirement.differencial != undefined ? '- ' + requirement.differencial : ''}}</li>
                         </ul>
                     </label><br /> -->
-                    <label class="col-md-4 distance-between" for="inputdefault">Localização<br />{{vacancy.localizacao}}</label><br /> 
-                    <label class="col-md-4 distance-between" for="inputdefault">Categoria<br />{{vacancy.category}}</label>
+                    <label class="col-md-4 distance-between"
+                        for="inputdefault">Localização<br />{{vacancy.localizacao}}</label><br />
+                    <label class="col-md-4 distance-between"
+                        for="inputdefault">Categoria<br />{{vacancy.category}}</label>
                     <div class="description">
                         <label for="inputdefault">Descrição da vaga<br />{{vacancy.descricao}}</label><br />
                     </div>
 
                     <div class="description">
-                        <button *ngIf="this.userLogged.cnpj" type="button" (click)="goEditVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Editar vaga</button>
-                        <button *ngIf="this.userLogged.cnpj" type="button" (click)="finishVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Vaga preenchida</button>
-                        <button *ngIf="this.userLogged.cnpj" type="button" (click)="goDetailsVacancy(vacancy.id)" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
-                        <button *ngIf="this.userLogged.cnpj" (click)="deleteVacancyModal(vacancy.id)" type="button"  class="btn btn-danger btn-sm space-button">Excluir vaga</button>
-                        <button *ngIf="this.userLogged.CPF" (click)="openMetricsDetails(vacancy.id)" type="button" class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
-                        <button *ngIf="this.userLogged.CPF" (click)="sendCandidature(vacancy)" type="button" class="btn btn-primary btn-sm space-button">Candidatar a vaga</button>
+                        <button *ngIf="this.userLogged.cnpj" type="button" (click)="goEditVacancy(vacancy.id)"
+                            class="btn btn-primary btn-sm space-button">Editar vaga</button>
+                        <button *ngIf="this.userLogged.cnpj" type="button" (click)="finishVacancy(vacancy.id)"
+                            class="btn btn-primary btn-sm space-button">Vaga preenchida</button>
+                        <button *ngIf="this.userLogged.cnpj" type="button" (click)="goDetailsVacancy(vacancy.id)"
+                            class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
+                        <button *ngIf="this.userLogged.cnpj" (click)="deleteVacancyModal(vacancy.id)" type="button"
+                            class="btn btn-danger btn-sm space-button">Excluir vaga</button>
+                        <button *ngIf="this.userLogged.CPF" (click)="openMetricsDetails(vacancy.id)" type="button"
+                            class="btn btn-primary btn-sm space-button">Detalhes da vaga</button>
+                        <button *ngIf="this.userLogged.CPF" (click)="sendCandidature(vacancy)" type="button"
+                            class="btn btn-primary btn-sm space-button">Candidatar a vaga</button>
                     </div>
 
                 </div>

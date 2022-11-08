@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserVacancyDetailsDialogComponent } from 'src/app/Dialogs/user-vacancy-details-dialog/user-vacancy-details-dialog.component';
 import Swal from 'sweetalert2';
 import { Role } from 'src/app/Enums/role';
+import { LocationService } from 'src/app/Services/Location/location.service';
 
 
 @Component({
@@ -24,12 +25,17 @@ import { Role } from 'src/app/Enums/role';
 
 export class VacanciesDetailsComponent implements OnInit {
 
-  constructor(private router: ActivatedRoute, private vacancyService: VacancyService, private userService: UserService, private analyticsService: AnalyticsService, public dialog: MatDialog) { }
+  constructor(private router: ActivatedRoute, private vacancyService: VacancyService, private userService: UserService, private analyticsService: AnalyticsService, public dialog: MatDialog, private locationService: LocationService) { }
 
   pageEvent!: PageEvent
 
   vacancyId!: number;
 
+
+  states!: any[];
+  counties!: any[];
+  stateSelected: string;
+  countySelected: string;
 
   filterApplied: boolean = false;
 
@@ -95,6 +101,8 @@ export class VacanciesDetailsComponent implements OnInit {
 
     console.log(this.vacancyDetails);
 
+    this.getStates();
+
 
     // this.vacancyDetails = candidates;
 
@@ -115,7 +123,7 @@ export class VacanciesDetailsComponent implements OnInit {
   async openMetricsDetails(detail: User) {
 
     const dialog = this.dialog.open(UserVacancyDetailsDialogComponent, {
-      data:{
+      data: {
         "aptidao": 50,
         "usuario": 'teste', //alterar
         "testeIM": {
@@ -214,6 +222,14 @@ export class VacanciesDetailsComponent implements OnInit {
     if (this.detailsFilter.actualCharge)
       candidatesList = candidatesList.filter(candidate => candidate.actualCharge === this.detailsFilter.actualCharge)
 
+    if (this.stateSelected) {
+      candidatesList = candidatesList.filter(candidate => candidate.localizacao.split('-')[0] === this.stateSelected);
+    }
+
+    if (this.countySelected) {
+      candidatesList = candidatesList.filter(candidate => candidate.localizacao.split('-')[1] === this.countySelected);
+    }
+
     if (this.detailsFilter.age != 0 && this.detailsFilter.age)
       candidatesList = candidatesList.filter(candidate => (new Date().getFullYear() - new Date(candidate.dataNascimento).getFullYear()) <= this.detailsFilter.age)
 
@@ -254,6 +270,38 @@ export class VacanciesDetailsComponent implements OnInit {
       actualDate.getSeconds();
 
     return data;
+  }
+
+  async getStates() {
+
+    await this.locationService.getLocationStates().subscribe(data => {
+      console.log(data)
+      this.states = data
+
+    });
+
+
+  }
+
+  async changeState(stateId: number) {
+
+    this.stateSelected = this.states.find(state => state.id === stateId).nome;
+    this.countySelected = '';
+    //this..location = this.stateSelected;
+
+    await this.locationService.getLocationCountiesByState(stateId).subscribe(counties => {
+      console.log(counties)
+      this.counties = counties;
+    })
+
+  }
+
+  changeCounty(county: string) {
+
+    console.log(county)
+    console.log(this.stateSelected)
+    this.countySelected = county;
+
   }
 
   async sendFeedBackToCandidate(feedBack: boolean, candidateVacancy: any) {

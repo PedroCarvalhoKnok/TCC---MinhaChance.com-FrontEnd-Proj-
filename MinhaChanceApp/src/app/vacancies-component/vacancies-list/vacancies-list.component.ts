@@ -13,6 +13,7 @@ import { UserService } from 'src/app/Services/User/user.service';
 import { User } from 'src/app/Models/User/User';
 import { Router } from '@angular/router';
 import { OccupationService } from 'src/app/Services/Occupation/occupation.service';
+import { LocationService } from 'src/app/Services/Location/location.service';
 
 @Component({
   selector: 'app-vacancies-list',
@@ -21,7 +22,7 @@ import { OccupationService } from 'src/app/Services/Occupation/occupation.servic
 })
 export class VacanciesListComponent implements OnInit {
 
-  constructor(private vacancyService: VacancyService, private userService: UserService, public dialog: MatDialog, private router: Router, private occupationService: OccupationService) { }
+  constructor(private vacancyService: VacancyService, private userService: UserService, public dialog: MatDialog, private router: Router, private occupationService: OccupationService, private locationService: LocationService) { }
 
   pageEvent!: PageEvent;
 
@@ -39,6 +40,11 @@ export class VacanciesListComponent implements OnInit {
   locations = ['São Paulo - Centro', 'Rio de Janeiro - Centro', 'Parana - Curitiba'];
   modalities = ['Presencial', 'Híbrido', 'Home-Office'];
 
+  states!: any[];
+  counties!: any[];
+  stateSelected: string;
+  countySelected: string;
+
   vacancyFilter: vacancyFilter = new vacancyFilter();
 
   // vacancies: Observable<Vacancy[]> = of([{ id: 1, vacancyTitle: 'Estagiario Desenvolvimento Java', creationDate: new Date(), image: this.fileMocked, quantity: 1, salary: 0, isConfidential: false, contractType: 'Estagio', modalidity: 'Hibrido', semanalQuantity: 2, description: 'Buscamos profissional qualificado e responsavel', category: 'Tecnologia', location: 'São Paulo - Centro', benefits: [{ id: 1, description: 'VR + VT', value: 1000 }, { id: 2, description: 'Convenio medico', value: 500 }], requirements: [{ id: 1, description: 'Cursando ensino superior', differential: undefined }] },
@@ -55,6 +61,8 @@ export class VacanciesListComponent implements OnInit {
     console.log(this.userLogged);
 
     await this.getUsers();
+
+    await this.getStates();
 
 
   }
@@ -271,10 +279,14 @@ export class VacanciesListComponent implements OnInit {
 
     }
 
-    if (this.vacancyFilter.location) {
-      vacancyList = vacancyList.filter(vacancy => vacancy.localizacao === this.vacancyFilter.location);
+    if(this.stateSelected){
+      vacancyList = vacancyList.filter(vacancy => vacancy.localizacao.split('-')[0] === this.stateSelected);
     }
 
+    if(this.countySelected){
+      vacancyList = vacancyList.filter(vacancy => vacancy.localizacao.split('-')[1] === this.countySelected);
+    }
+    
     if (this.vacancyFilter.modality) {
       vacancyList = vacancyList.filter(vacancy => vacancy.modalidade == this.vacancyFilter.modality);
     }
@@ -375,7 +387,7 @@ export class VacanciesListComponent implements OnInit {
       cancelButtonText: 'Não!'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        this.router.navigate([`/empresa/vagas`]);
+        this.router.navigate([`/empresa/vagas/cadastrar`]);
       }
     })
 
@@ -407,6 +419,39 @@ export class VacanciesListComponent implements OnInit {
       actualDate.getSeconds();
 
     return data;
+  }
+
+
+  async getStates() {
+
+    await this.locationService.getLocationStates().subscribe(data => {
+      console.log(data)
+      this.states = data
+
+    });
+
+
+  }
+
+  async changeState(stateId: number) {
+
+    this.stateSelected = this.states.find(state => state.id === stateId).nome;
+    this.countySelected = '';
+    this.vacancyFilter.location = this.stateSelected;
+
+    await this.locationService.getLocationCountiesByState(stateId).subscribe(counties => {
+      console.log(counties)
+      this.counties = counties;
+    })
+
+  }
+
+  changeCounty(county: string) {
+
+    console.log(county)
+    console.log(this.stateSelected)
+    this.countySelected = county;
+
   }
 
   sendCandidature(vacancy: Vacancy) {

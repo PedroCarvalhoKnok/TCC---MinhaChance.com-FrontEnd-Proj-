@@ -57,11 +57,14 @@ export class VacanciesRegisterComponent implements OnInit {
         (<HTMLInputElement>document.getElementById('vacancyDescription')).value = vacancy[0].descricao;
         (<HTMLInputElement>document.getElementById('requirementDescription')).value = vacancy[0].requisitos;
         (<HTMLInputElement>document.getElementById(`benefitDescription`)).value = vacancy[0].beneficios;
+        this.stateSelected = vacancy[0].localizacao.split('-')[0];
+        this.countySelected = vacancy[0].localizacao.split('-')[1];
       })
     }
 
     this.createFormVacancyValidation();
     this.createFormBenefitValidation();
+    this.getStates();
     //this.getLocationsByUserId();
 
   }
