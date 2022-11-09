@@ -2,6 +2,7 @@ export class vacancyFilter{
     requirements: string;
     benefits: string;
     modality: string;
+    occupation: number;
     hasVacancyLink?: boolean;
     subscribeQuantity!: number;
     isConfidential!: boolean;

@@ -39,11 +39,13 @@ export class VacanciesListComponent implements OnInit {
   benefits = ['VR', 'VT', 'Convenio médico', 'Convenio odontologico', 'Gym pass'];
   locations = ['São Paulo - Centro', 'Rio de Janeiro - Centro', 'Parana - Curitiba'];
   modalities = ['Presencial', 'Híbrido', 'Home-Office'];
+  occupations: any = [];
 
   states!: any[];
   counties!: any[];
   stateSelected: string;
   countySelected: string;
+  occupationSelected: string;
 
   vacancyFilter: vacancyFilter = new vacancyFilter();
 
@@ -64,6 +66,7 @@ export class VacanciesListComponent implements OnInit {
 
     await this.getStates();
 
+    await this.getOccupationsFilter();
 
   }
 
@@ -227,6 +230,14 @@ export class VacanciesListComponent implements OnInit {
     this.vacancyFilter.salary = +event.value;
   }
 
+  changeOccupation(occupationId: number, occupation: string){
+
+    this.occupationSelected = occupation;
+
+    this.vacancyFilter.occupation = occupationId;
+
+  }
+
   deleteVacancyModal(vacancyId: number) {
     Swal.fire({
       title: 'Tem certeza que deseja deletar essa vaga?',
@@ -241,6 +252,17 @@ export class VacanciesListComponent implements OnInit {
       if (result.isConfirmed) {
         this.deleteVacancy(vacancyId);
       }
+    })
+  }
+
+  async getOccupationsFilter(){
+
+    this.occupationService.getOccupation().subscribe(occupation => {
+
+      console.log(occupation);
+
+      this.occupations = occupation;
+
     })
   }
 
@@ -279,12 +301,18 @@ export class VacanciesListComponent implements OnInit {
 
     }
 
+    if(this.vacancyFilter.occupation){
+
+      vacancyList = vacancyList.filter((vacancy) => (vacancy.idProfissao === this.vacancyFilter.occupation));
+
+    }
+
     if(this.stateSelected){
-      vacancyList = vacancyList.filter(vacancy => vacancy.localizacao.split('-')[0] === this.stateSelected);
+      vacancyList = vacancyList.filter(vacancy => vacancy.localizacao.split('-')[0].trim() === this.stateSelected);
     }
 
     if(this.countySelected){
-      vacancyList = vacancyList.filter(vacancy => vacancy.localizacao.split('-')[1] === this.countySelected);
+      vacancyList = vacancyList.filter(vacancy => vacancy.localizacao.split('-')[1].trim() === this.countySelected);
     }
     
     if (this.vacancyFilter.modality) {
