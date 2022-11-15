@@ -17,6 +17,10 @@ import { Role } from './Enums/role';
 
 const routes: Routes = [
   {
+    path: '/',
+    component: HomeComponentComponent
+  },
+  {
     path: 'home',
     component: HomeComponentComponent
   },
