@@ -25,13 +25,14 @@ export class LoginComponentComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService,
+    private authService: AuthenticationService) {
     if (this.authenticationService.userValue) {
       this.router.navigate(['/home']);
     }
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
 
     let user = this.route.snapshot.params?.['user'];
 
@@ -42,6 +43,13 @@ export class LoginComponentComponent implements OnInit {
       this.createFormLoginCandidateValidation();
     else
       this.createFormLoginCompanyValidation();
+
+    await this.authService.createJwtToken().subscribe(res => {
+
+      console.log(res);
+      sessionStorage.setItem('token', JSON.stringify(res.jwtToken));
+
+    })
 
   }
 
@@ -103,7 +111,7 @@ export class LoginComponentComponent implements OnInit {
               'Tente novamente',
               'warning'
             )
-            
+
             return;
 
           }

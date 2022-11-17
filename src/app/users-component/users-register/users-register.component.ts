@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Role } from 'src/app/Enums/role';
+import { LocationService } from 'src/app/Services/Location/location.service';
 
 @Component({
   selector: 'app-users-register',
@@ -18,7 +19,7 @@ export class UsersRegisterComponent implements OnInit {
   userId: number;
   actualDate!: Date;
 
-  constructor(private userService: UserService, private router: ActivatedRoute, private route: Router) { }
+  constructor(private userService: UserService, private router: ActivatedRoute, private route: Router, private locationService: LocationService) { }
 
   ngOnInit(): void {
 
@@ -131,9 +132,11 @@ export class UsersRegisterComponent implements OnInit {
     this.user.creationDate = this.formatCreationDate();
     this.user.role = Role.Candidate;
 
+    await this.locationService.postUserLocation(this.user)
+
     await this.userService.postCandidateRegister(this.user).subscribe(user => {
       console.log(user.dataCandidato[0].message);
-      user.dataCandidato[0].message === "Candidato cadastrado com sucesso" ?
+      user.message === "Candidato cadastrado com sucesso" ?
         Swal.fire(
           'Sucesso!',
           `Dados cadastrados com sucesso!`,
@@ -149,6 +152,8 @@ export class UsersRegisterComponent implements OnInit {
         );
     })
 
+
+
   }
 
   async postCompany() {
@@ -157,8 +162,10 @@ export class UsersRegisterComponent implements OnInit {
 
     console.log(this.user);
 
+    await this.locationService.postUserLocation(this.user);
+
     await this.userService.postCompanyRegister(this.user).subscribe(user => {
-      user ?
+      user.message === "Empresa cadastrada com sucesso" ?
         Swal.fire(
           'Sucesso!',
           `Dados cadastrados com sucesso!`,
@@ -169,6 +176,8 @@ export class UsersRegisterComponent implements OnInit {
           'warning'
         );
     })
+
+
 
   }
 
@@ -202,6 +211,8 @@ export class UsersRegisterComponent implements OnInit {
 
     console.log(this.user)
 
+    await this.locationService.editUserLocation(this.user);
+
     await this.userService.editCandidate(this.user).subscribe(feedBack => {
       feedBack ?
         Swal.fire(
@@ -221,8 +232,10 @@ export class UsersRegisterComponent implements OnInit {
 
     console.log(this.user)
 
+    await this.locationService.editUserLocation(this.user);
+
     await this.userService.editCompany(this.user).subscribe(feedBack => {
-      feedBack ?
+      feedBack.message === "Dados da empresa atualizados com sucesso" ?
         Swal.fire(
           'Sucesso!',
           `Dados editados com sucesso!`,

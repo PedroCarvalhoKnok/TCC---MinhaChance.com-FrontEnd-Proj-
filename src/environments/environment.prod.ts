@@ -10,6 +10,11 @@ export const environment = {
   urlBaseTerritorio: "https://servicodados.ibge.gov.br/api/v1/localidades"
 };
 
+export const userJwtAuth = {
+  user: "admin",
+  password: "admin"
+}
+
 export const questions = [
   {
   id: 1,

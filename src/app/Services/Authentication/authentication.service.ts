@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, retry } from 'rxjs';
 import { User } from 'src/app/Models/User/User';
 import { environment } from 'src/environments/environment';
 import { Role } from 'src/app/Enums/role';
+import { userJwtAuth } from 'src/environments/environment';
 
 
 
@@ -37,6 +38,12 @@ export class AuthenticationService {
         this.userSubject.next(result);
         return result;
       }));
+  }
+
+  createJwtToken(){
+    return this.http.post<any>(`${environment.urlBaseApi}/token`, userJwtAuth).pipe(
+      retry(2)
+    )
   }
 
   logout() {
