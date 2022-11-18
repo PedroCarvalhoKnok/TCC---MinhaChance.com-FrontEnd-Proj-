@@ -22,7 +22,8 @@ export class LoginComponentComponent implements OnInit {
   isCandidate: boolean;
   hide: boolean = false;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -47,7 +48,7 @@ export class LoginComponentComponent implements OnInit {
     await this.authService.createJwtToken().subscribe(res => {
 
       console.log(res);
-      sessionStorage.setItem('token', JSON.stringify(res.jwtToken));
+      sessionStorage.setItem('token', res.jwtToken);
 
     })
 
@@ -121,7 +122,7 @@ export class LoginComponentComponent implements OnInit {
         },
         error: error => {
           Swal.fire(
-            `${error}`,
+            `${error.message}`,
             'Tente novamente',
             'warning'
           )

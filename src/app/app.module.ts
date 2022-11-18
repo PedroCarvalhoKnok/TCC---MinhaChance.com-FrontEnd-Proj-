@@ -23,7 +23,7 @@ import { CoursesRegisterComponent } from './courses-component/courses-register/c
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSliderModule} from '@angular/material/slider';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { VacanciesListComponent } from './vacancies-component/vacancies-list/vacancies-list.component';
 import { VacanciesDetailsComponent } from './vacancies-component/vacancies-details/vacancies-details.component';
@@ -48,6 +48,8 @@ import { UsersDataComponent } from './users-component/users-data/users-data.comp
 import { UsersDetailsComponent } from './users-component/users-details/users-details.component';
 import { UsersInterestsComponent } from './users-component/users-interests/users-interests.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { AuthGuard } from './Helpers/auth.guard';
+import { JwtInterceptor } from './Helpers/Jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,10 @@ import { NgxMaskModule } from 'ngx-mask';
     MatTabsModule,
     NgxMaskModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
