@@ -214,7 +214,7 @@ export class UsersRegisterComponent implements OnInit {
     await this.locationService.editUserLocation(this.user);
 
     await this.userService.editCandidate(this.user).subscribe(feedBack => {
-      feedBack ?
+      feedBack.message === "Dados do candidato atualizados com sucesso" ?
         Swal.fire(
           'Sucesso!',
           `Dados editados com sucesso!`,
