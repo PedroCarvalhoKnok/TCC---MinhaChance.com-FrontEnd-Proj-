@@ -3,7 +3,7 @@
 }
 
 .example-spacer-menu {
-  flex: 0.7 0.7 auto;
+  flex: 1 1 auto;
 }
 
 .example-spacer-menu-footer {
@@ -11,7 +11,7 @@
 }
 
 .example-spacer-menu-items {
-  flex: 0.3 0.3 auto;
+  flex: 0.5 0.5 auto;
 }
 
 a{
@@ -24,6 +24,7 @@ a{
   bottom: 0;
   width: 100%;
   background-color: #191645;
+  margin-top: 90vh;
 }
 
 .toolbar {
@@ -38,7 +39,7 @@ a{
 
   border-width: 0;
   background-color: white;
-  
+
 }
 
 .menu-icon,
@@ -48,10 +49,14 @@ a{
   color: white;
 }
 
+.footer-icon{
+  margin-right: 2vw;
+  font-size: 2.5vh;
+}
 .text-menu {
   padding-top: 10px;
   margin-top: 10px;
-  margin-left: -20px;
+  margin-left: -2.25vw;
   position: fixed;
   font-size: small;
   color: white;

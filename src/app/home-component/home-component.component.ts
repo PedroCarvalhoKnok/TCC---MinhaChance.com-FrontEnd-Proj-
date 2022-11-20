@@ -35,7 +35,7 @@ export class HomeComponentComponent implements OnInit {
     'https://cdn-icons-png.flaticon.com/512/4341/4341966.png'
   ].map((n) => `${n}`);
 
-  constructor(private router: Router, private testService: TestService) { 
+  constructor(private router: Router, private testService: TestService) {
     this.afterlogin = this.router.getCurrentNavigation()?.extras.state?.login;
   }
 
@@ -53,7 +53,7 @@ export class HomeComponentComponent implements OnInit {
         if (test[0].cadastrado === 0) {
           Swal.fire(
             `Atenção!`,
-            'Faça o teste de aptidão dispobível em prova, para mapear suas habilidades',
+            'Faça o teste de aptidão disponível em provas de aptidão, para mapear suas habilidades',
             'warning'
           )
         }
@@ -79,6 +79,8 @@ export class HomeComponentComponent implements OnInit {
     }
 
     this.router.navigate([`/${this.userLogged.id}/perfil`]);
+
+    //criar fixação de carousel, para que apenas com o clique ele se mude.
 
   }
 

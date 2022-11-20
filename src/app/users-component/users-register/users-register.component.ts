@@ -34,9 +34,9 @@ export class UsersRegisterComponent implements OnInit {
     //     Swal.fire({
     //       title: 'Não é possivel editar outro perfil',
     //       icon: 'warning',
-    //       confirmButtonColor: '#3085d6',          
-    //       showConfirmButton: true,         
-    //       confirmButtonText: 'OK'         
+    //       confirmButtonColor: '#3085d6',
+    //       showConfirmButton: true,
+    //       confirmButtonText: 'OK'
     //     }).then(async (result) => {
 
     //         this.route.navigate([`${this.userId}/perfil`]);
@@ -132,11 +132,12 @@ export class UsersRegisterComponent implements OnInit {
     this.user.creationDate = this.formatCreationDate();
     this.user.role = Role.Candidate;
 
-    await this.locationService.postUserLocation(this.user)
+
+    //await this.locationService.postUserLocation(this.user)
 
     await this.userService.postCandidateRegister(this.user).subscribe(user => {
       console.log(user.dataCandidato[0].message);
-      user.message === "Candidato cadastrado com sucesso" ?
+      user.dataCandidato[0].message === "Candidato cadastrado com sucesso" ?
         Swal.fire(
           'Sucesso!',
           `Dados cadastrados com sucesso!`,

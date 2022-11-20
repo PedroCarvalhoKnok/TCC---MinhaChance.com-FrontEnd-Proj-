@@ -52,7 +52,7 @@
     </mat-card>
 </div>
 
-<div>
+<div class="questions">
     <mat-card class="vacancies-card" *ngFor="let question of this.testQuestions|async; let questionPos = index">
 
         <mat-card-header class="header-content">
@@ -117,4 +117,4 @@
 
 </div>
 
-<button (click)="confirmSendSkillTest()" mat-raised-button class="start-button">Enviar teste</button>
+<button (click)="confirmSendSkillTest()" mat-raised-button color="primary" class="start-button">Enviar teste</button>

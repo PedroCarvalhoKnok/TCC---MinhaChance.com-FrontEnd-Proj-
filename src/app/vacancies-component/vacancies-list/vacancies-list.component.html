@@ -150,7 +150,7 @@
     </mat-card>
 </div>
 
-<div>
+<div class="vacancies">
     <mat-card class="vacancies-card"
         *ngFor="let vacancy of this.vacancies|async |slice:((paginator.pageIndex)*paginator.pageSize):((paginator.pageIndex+1)*paginator.pageSize)">
 

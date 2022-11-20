@@ -8,6 +8,10 @@
   color: white;
 }
 
+.vacancies{
+  margin-bottom: 100px;
+}
+
 .filter-card{
   float: right;
   width: 30%;
@@ -19,7 +23,7 @@
   background-color: #888888;
   align-content: center;
   margin-top: -70px;
- 
+
 }
 
 .dropdown-menu { max-height: 280px; overflow-y: auto; min-width: 100% !important; background-attachment: local, local, scroll, scroll; }
@@ -35,7 +39,7 @@
   display: flex;
   width: 100%;
   padding-left: 20px;
-  
+
 }
 
 .vacancy-content{
@@ -127,20 +131,20 @@
   .container{
     margin-left: 30%;
   }
-   
+
 }
 
 
 @media (max-width: 625px) {
 
-  
+
 
   .form-control, .label-filter, .apply-btn, .select-filters{
     width: 70%;
   }
 
-  
-  
+
+
 }
 
 
@@ -171,5 +175,5 @@
 .paginator{
   margin-bottom: -30%;
 }
-  
+
 }

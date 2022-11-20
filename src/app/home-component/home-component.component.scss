@@ -1,19 +1,39 @@
+.responsive-images{
+  margin-left: 20vw;
+  margin-right: 20vw;
+  width: 30vw;
+  height: 300px;
 
+}
+
+.contexto{
+  margin-bottom: 100px;
+}
+
+//arrumar img(ok)
 .carousel-caption{
   color: black;
+  margin-left: 15vw;
+  margin-right: 15vw;
+  height: 0px;
+  width: 25vw;
+  padding-bottom: 180px;
+  //criar a parte de carrousel fixo
 }
+carousel-content{
+  align-items: center;
+  width: 100%;
+  padding-bottom: 200px;
+}//arrumar o espaçamento entre a img  o texto da img
 
+//mudar cor de empresa e de vc
 .picsum-img-wrapper{
   color: black;
+  padding-bottom: 200px;
 }
 
-mat-card-title, .company-icon{
+.mat-card-title, .company-icon{
   color: white;
-}
-
-.responsive-images{
-  width: 100%;
-  height: auto;
 }
 
 .example-card {
@@ -27,7 +47,7 @@ mat-card-title, .company-icon{
 
   .star-icon{
     color: yellow;
-    
+
   }
 
   .center-icons{
@@ -40,7 +60,7 @@ mat-card-title, .company-icon{
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
 }
 
 .description-content{
@@ -50,11 +70,11 @@ mat-card-title, .company-icon{
     align-items: center;
     text-align: center;
     background-color: #888888;
-   
+
 }
 
 .benefits-content {
-    
+
     background-color: #888888;
     padding-top: 30px;
     display: flex;
@@ -73,7 +93,7 @@ mat-card-title, .company-icon{
     justify-content: center;
     align-items: center;
     text-align: center;
-    
+
   }
 
   .corousel-content{
@@ -83,4 +103,3 @@ mat-card-title, .company-icon{
 
   }
 
- 

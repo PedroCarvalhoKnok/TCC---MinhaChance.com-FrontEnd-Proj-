@@ -10,6 +10,7 @@ import { LocationService } from 'src/app/Services/Location/location.service';
 import { SchoolingService } from 'src/app/Services/Schooling/schooling.service';
 import { SituationService } from 'src/app/Services/Situation/situation.service';
 import { UserService } from 'src/app/Services/User/user.service';
+import { AuthenticationService } from '../../Services/Authentication/authentication.service';
 
 @Component({
   selector: 'app-users-data',
@@ -36,7 +37,7 @@ export class UsersDataComponent implements OnInit {
   companySize!: string;
   @Output() sendUserEvent = new EventEmitter<User>();
 
-  constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService, private situationService: SituationService, private locationService: LocationService) {
+  constructor(private router: ActivatedRoute, private userService: UserService, private schoolingService: SchoolingService, private situationService: SituationService, private locationService: LocationService, private authService: AuthenticationService) {
 
   }
 
@@ -45,6 +46,13 @@ export class UsersDataComponent implements OnInit {
 
 
     this.userId = this.router.snapshot.params?.['userId'];
+
+    await this.authService.createJwtToken().subscribe(res => {
+
+      console.log(res);
+      sessionStorage.setItem('token', res.jwtToken);
+
+    })
 
     if (this.router.snapshot.params?.['user'] === 'candidato') {
       this.isCandidate = true;
@@ -164,7 +172,6 @@ export class UsersDataComponent implements OnInit {
 
     this.user.schoolingId = schoolId;
 
-
   }
 
   changeSituation(situationId: number) {
@@ -198,7 +205,7 @@ export class UsersDataComponent implements OnInit {
 
         this.countySelected = counties.find(county => county.nome === address.localidade).nome;
         this.address.county = this.countySelected
-        
+
       })
 
 
@@ -310,21 +317,19 @@ export class UsersDataComponent implements OnInit {
     if (this.validateConfirmPassword())
       return;
 
-    if (this.isCandidate) {
-      console.log(this.formCandidateData.valid)
-      if (!this.formCandidateData.valid)
-        return;
-    }
-    else {
+    // if (this.isCandidate) {
+    //   console.log(this.formCandidateData.valid)
+    //   if (!this.formCandidateData.valid)
+    //     return;
+    // }
+    // else {
 
-      if (!this.formCompanyData.valid)
-        return;
+    //   if (!this.formCompanyData.valid)
+    //     return;
 
-    }
+    // }
 
     this.user.address = this.address;
-    this.user.schoolingId = this.schoolingSelected;
-    this.user.situationId = this.situationSelected;
 
     console.log(this.user)
 

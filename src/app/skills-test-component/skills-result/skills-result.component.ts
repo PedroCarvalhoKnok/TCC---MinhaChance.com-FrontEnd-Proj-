@@ -146,7 +146,7 @@ export class SkillsResultComponent implements OnInit {
       case 'interpessoal':
         this.bestIndicatedArea = 'Comunicação/Contato Humano';
         this.bestIndicatedProfessions = 'psicólogo(a), terapeuta, profissional de RH, mediador(a), líder, político(a), educador(a), vendedor(a), professor(a), médico(a) e mentor(a).';
-        this.description = 'habilidade de percepção de outra pessoa, interpretação de comportamentos e cmunicações sociais, além da compreensão do relacionamento entre pessoas e situações externo a você.';
+        this.description = 'habilidade de percepção de outra pessoa, interpretação de comportamentos e comunicações sociais, além da compreensão do relacionamento entre pessoas e situações externo a você.';
         break;
       case 'intrapessoal':
         this.bestIndicatedArea = 'Introspecção/Estudo interior';

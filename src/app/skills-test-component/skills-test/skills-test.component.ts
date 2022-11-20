@@ -28,12 +28,6 @@ export class SkillsTestComponent implements OnInit {
     { firstRow: 26, secondRow: 27, thirdRow: 28, forthRow: 29, fifthRow: 30 },
     { firstRow: 31, secondRow: 32, thirdRow: 33, forthRow: 34, fifthRow: 35 },
     { firstRow: 36, secondRow: 37, thirdRow: 38, forthRow: 39, fifthRow: 40 },
-    { firstRow: 41, secondRow: 42, thirdRow: 43, forthRow: 44, fifthRow: 45 },
-    { firstRow: 46, secondRow: 47, thirdRow: 48, forthRow: 49, fifthRow: 50 },
-    { firstRow: 51, secondRow: 52, thirdRow: 53, forthRow: 54, fifthRow: 55 },
-    { firstRow: 56, secondRow: 57, thirdRow: 58, forthRow: 59, fifthRow: 60 },
-    { firstRow: 61, secondRow: 62, thirdRow: 63, forthRow: 64, fifthRow: 65 },
-    { firstRow: 66, secondRow: 67, thirdRow: 68, forthRow: 69, fifthRow: 70 },
   ];
 
   heigthProp: string = '1:0.4';
@@ -75,7 +69,7 @@ export class SkillsTestComponent implements OnInit {
   }
 
   splitQuestionsIntoChunks(questions: number[]): any {
-    const perChunk = this.numberOfColumns // items per chunk    
+    const perChunk = this.numberOfColumns // items per chunk
 
     const inputArray = questions;
 
@@ -143,7 +137,7 @@ export class SkillsTestComponent implements OnInit {
   }
 
   handleSize(event) {
-    
+
     if (event.target.innerWidth < 1000)
       this.heigthProp = '1:0.6'
     if (event.target.innerWidth >= 800 && event.target.innerWidth <= 1000)
@@ -233,7 +227,7 @@ export class SkillsTestComponent implements OnInit {
       let results = this.testService.analyzeUserAnswers(questions);
 
       if (!this.statusEdit) {
-       
+
 
         await this.testService.sendTest(results, this.userImId).subscribe(result => {
 
