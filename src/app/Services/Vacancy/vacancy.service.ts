@@ -25,7 +25,7 @@ export class VacancyService {
       "requisitos": vacancy.requirements,
       "localizacao": vacancy.location,
       "modalidade": vacancy.modalidity,
-      "idProfissao": 1,
+      "idProfissao": vacancy.professionId,
       "dataCriacao": vacancy.creationDate
     })
       .pipe(
@@ -67,7 +67,7 @@ export class VacancyService {
       "requisitos": vacancy.requirements,
       "localizacao": vacancy.location,
       "modalidade": vacancy.modalidity,
-      "idProfissao": 1,
+      "idProfissao": vacancy.professionId,
       "dataCriacao": vacancy.creationDate
     })
       .pipe(

@@ -62,8 +62,15 @@ export class UserInteligenceListChartComponent implements OnInit {
           r: {
             grid: {
               color: 'white'
+            },
+            pointLabels: {
+              color: '#D9D9D9',
+              font: {
+                size: 15
+              }
             }
-          }
+          },
+
         }
       }
     });

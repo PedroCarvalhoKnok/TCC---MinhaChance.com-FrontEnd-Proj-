@@ -8,6 +8,12 @@
   color: white;
 }
 
+.btn{
+  background-color: #3c6e71;
+  border-color: #3c6e71;
+  color: white
+}
+
 .vacancies{
   margin-bottom: 100px;
 }
@@ -77,14 +83,16 @@
 .title-vacancy{
   width: 250px;
 }
+.row{
+  height: 300px;
+}
 
 .description{
   padding-top: 20px;
   width: 100%;
-  margin-bottom: 10%;
 }
 .space-button{
-  margin-left: 20px;
+  margin-left: 50px;
   margin-top: 10px;
 }
 .desc-course{

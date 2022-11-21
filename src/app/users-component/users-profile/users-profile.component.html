@@ -1,32 +1,36 @@
 <div class="center-content">
-    <mat-card class="user-card">
+  <mat-card class="user-card">
 
-        <mat-card-title class="center-title">Bem vindo(a), {{this.userLogged.nome}}</mat-card-title>
+    <mat-card-title class="center-title">Bem vindo(a), {{this.userLogged.nome}}</mat-card-title>
 
-        <mat-card-actions align="end">
-            <button type="button" (click)="editUserProfile()" class="btn btn-primary btn-sm space-button">Editar perfil</button>
-        </mat-card-actions>
+    <mat-card-actions align="end">
+      <button type="button" (click)="editUserProfile()" class="btn btn-primary btn-sm space-button">Editar
+        perfil</button>
+    </mat-card-actions>
 
-        <mat-card-content class="user-content">
-            <div class="container">
+    <mat-card-content class="user-content">
+      <div class="container">
 
-                <div class="row">
-                    <span class="material-icons col-md-4">account_circle</span>
-                    <label class="col-md-4" for="inputdefault">Email:<br />teste@teste.com</label>
-                    <label class="col-md-4" for="inputdefault">CPF:<br />{{this.userLogged.CPF ? this.userLogged.CPF: this.userLogged.cnpj}}</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Data de nascimento:<br />{{formatDate(this.userLogged.dataNascimento)}}</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Data de cadastro:<br />{{formatDate(this.userLogged.dataCadastro)}}</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Contato<br />(11) 984567459</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Situação<br />{{this.userLogged.situation}}</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Escolaridade<br />{{this.userLogged.schooling}}</label>
-                </div>
-            </div>
-        </mat-card-content>
-        
-    </mat-card>
+        <div class="row">
+          <span class="material-icons col-md-4">account_circle</span>
+          <label class="col-md-4" for="inputdefault">CPF:<br />{{this.userLogged.CPF ? this.userLogged.CPF:
+            this.userLogged.cnpj}}</label>
+          <label class="col-md-4 distance-between" for="inputdefault">Data de
+            nascimento<br />{{formatDate(this.userLogged.dataNascimento)}}</label>
+          <label class="col-md-4 distance-between" for="inputdefault">Data de
+            cadastro<br />{{formatDate(this.userLogged.dataCadastro)}}</label>
+          <label class="col-md-4 distance-between"
+            for="inputdefault">Situação<br />{{this.userLogged.situation}}</label>
+          <label class="col-md-4 distance-between"
+            for="inputdefault">Escolaridade<br />{{this.userLogged.schooling}}</label>
+        </div>
+      </div>
+    </mat-card-content>
+
+  </mat-card>
 </div>
 
-<div class="center-content">
+<!-- <div class="center-content">
     <mat-card class="experiences-card">
 
         <mat-card-title class="center-title">Experiências anteriores</mat-card-title>
@@ -52,184 +56,135 @@
         </mat-card-content>
 
     </mat-card>
+</div> -->
+
+
+<div class="center-content">
+  <mat-card class="objectives-card">
+
+    <mat-card-title class="center-title">Endereço</mat-card-title>
+
+    <mat-card-content class="objectives-content">
+      <div class="container">
+
+        <div class="row">
+
+          <label class="col-md-4" for="inputdefault">Estado:<br />{{this.userAddress ? this.userAddress.uf: 'Não informado'}}</label>
+          <label class="col-md-4" for="inputdefault">Municipio:<br />{{this.userAddress ? this.userAddress.localidade: 'Não informado'}}
+          </label>
+          <label class="col-md-4"
+            for="inputdefault">Bairro<br />{{this.userAddress ? this.userAddress.bairro: 'Não informado'}}</label>
+          <label class="col-md-4 distance-between"
+            for="inputdefault">Rua<br />{{this.userAddress ? this.userAddress.logradouro: 'Não informado'}}</label>
+          <label class="col-md-4 distance-between" for="inputdefault">Número<br />{{this.userAddress ? this.userAddress.numero: 'Não informado'}}</label>
+          <label class="col-md-4 distance-between"
+            for="inputdefault">CEP<br />{{this.userAddress ? this.userAddress.cep: 'Não informado'}}</label>
+
+
+        </div>
+      </div>
+    </mat-card-content>
+
+  </mat-card>
 </div>
 
 
 <div class="center-content">
-    <mat-card class="objectives-card">
+  <mat-card class="skill-card">
 
-        <mat-card-title class="center-title">Interesses e Objetivos</mat-card-title>
-
-        <mat-card-content class="objectives-content">
-            <div class="container">
-
-                <div class="row">
-
-                    <label class="col-md-6" for="inputdefault">Objetivos:<br />Buscar experiência profissional e
-                        crescimento pessoal</label>
-
-                    <mat-list class="col-md-6 list-align" role="list">
-                        <div mat-subheader class="mat-item-color">Interesses</div>
-                        <mat-list-item class="mat-item-color" role="listitem">Programação</mat-list-item>
-                        <mat-list-item class="mat-item-color" role="listitem">Matemática</mat-list-item>
-                        <mat-list-item class="mat-item-color" role="listitem">Física</mat-list-item>
-                        <mat-list-item class="mat-item-color" role="listitem">Jogos eletrônicos</mat-list-item>
-                        <mat-list-item class="mat-item-color" role="listitem">Jogos eletrônicos</mat-list-item>
-                    </mat-list>
+    <mat-card-title class="center-title">Suas aptidões <button type="button"
+        [routerLink]="['candidato', this.userLogged.id, 'teste']" class="btn btn-primary btn-sm space-button">Refazer
+        teste de aptidão</button></mat-card-title>
 
 
-                </div>
-            </div>
-        </mat-card-content>
+    <mat-card-content class="user-content">
+      <div class="container">
 
-    </mat-card>
-</div>
+        <div class="row col-lg-4 col-md-8 col-sm-8 result">
+
+          <app-user-inteligence-result-chart [userResultSkills]="this.userSkillsByIntelligence"
+            [userName]="this.userLogged.nome"></app-user-inteligence-result-chart>
 
 
-<div class="center-content">
-    <mat-card class="skill-card">
+        </div>
+      </div>
+    </mat-card-content>
 
-        <mat-card-title class="center-title">Suas aptidões  <button type="button" [routerLink]="['candidato', this.userLogged.id, 'teste']" class="btn btn-primary btn-sm space-button">Refazer teste de aptidão</button></mat-card-title>
 
-        
 
-        <mat-card-content class="user-content">
-            <div class="container">
 
-                <div class="row col-lg-4 col-md-8 col-sm-8">
-
-                    <app-user-inteligence-result-chart [userResultSkills]="this.userSkillsByIntelligence" [userName]="this.userLogged.userName"></app-user-inteligence-result-chart>
-
-                   
-                </div>
-            </div>
-        </mat-card-content>
-
-       
-        
-
-    </mat-card>
+  </mat-card>
 </div>
 
 <div>
-    <mat-card class="banner-card-vac">
+  <mat-card class="banner-card-vac">
 
-        <mat-card-header class="header-content">
-            <mat-card-title class="title-vacancy">
-                Vagas para você!
-            </mat-card-title>
+    <mat-card-header class="header-content">
+      <mat-card-title class="title-vacancy">
+        Vagas para você!
+      </mat-card-title>
 
-        </mat-card-header>
+    </mat-card-header>
 
-    </mat-card>
+  </mat-card>
 </div>
 
-<div>
-    <mat-card class="vacancies-card" *ngFor="let vacancy of userBestVacancies|async">
+<div class="vacancies">
+  <mat-card class="vacancies-card" *ngFor="let vacancy of userBestVacancies">
 
-        <mat-card-header class="header-content">
-            <mat-card-title class="title-vacancy">
-                {{vacancy.vacancyTitle}}
-            </mat-card-title>
+    <mat-card-header class="header-content">
+      <mat-card-title class="title-vacancy">
+        {{vacancy.titulo}}
+      </mat-card-title>
 
-        </mat-card-header>
+    </mat-card-header>
 
-        <mat-card-content class="vacancy-content">
+    <mat-card-content class="vacancy-content">
 
-            <div class="container">
+      <div class="container">
 
-                <div class="row">
+        <div class="row">
 
-                    <label class="col-md-4" for="inputdefault">Empresa<br />{{vacancy.id}}</label>
-                    <label class="col-md-4" for="inputdefault">Salário<br />{{vacancy.salary}}</label>
-                    <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantity}} vaga(s)</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Modalidade<br />{{vacancy.modalidity}}</label>
-                    <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
-                        <ul class="vacancy-list col-md-8">
-                            <li>Beneficios {{vacancy.benefits}}</li>
-                        </ul>
-                    </label><br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
-                        <ul class="vacancy-list col-md-4">
-                            <li>Requisitos {{vacancy.requirements}}</li>
-                        </ul>
-                    </label><br />
-                    <label class="col-md-4" for="inputdefault">Localização<br />{{vacancy.location}}</label><br />
-                    <label class="col-md-4" for="inputdefault">Categoria<br />{{vacancy.category}}</label>
-                    <div class="description">
-                        <label for="inputdefault">Descrição da vaga<br />{{vacancy.description}}</label><br />
-                    </div>
-
-
-                </div>
-
-            </div>
+          <label class="col-md-4" for="inputdefault">Empresa<br />{{vacancy.empresa}}</label>
+          <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantidade}} vaga(s)</label>
+          <label class="col-md-4" for="inputdefault">Modalidade<br />{{vacancy.modalidade}}</label>
+          <br />
+          <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
+            <ul class="vacancy-list">
+              <li>Beneficios {{vacancy.beneficios}}</li>
+            </ul>
+          </label><br />
+          <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
+            <ul class="vacancy-list">
+              <li>Requisitos {{vacancy.requisitos}}</li>
+            </ul>
+          </label>
+          <label class="col-md-4 distance-between" for="inputdefault">Data de criação<br />{{vacancy.data| date:
+            "dd/MM/yyyy"}}</label>
+          <label class="col-md-4 distance-between" for="inputdefault">Localização<br />{{vacancy.localizacao}}</label>
+          <div class="description">
+            <label class="col-md-4" for="inputdefault">Descrição da vaga<br />{{vacancy.descricao}}</label><br />
+          </div>
 
 
-        </mat-card-content>
 
-        <mat-card-actions>
-            <button (click)="sendCandidature(vacancy)" type="button" class="btn btn-primary btn-sm space-button">Candidatar a vaga</button>
-        </mat-card-actions>
+          <app-user-inteligence-list-chart [userIntelligenceVacancyRecommendations]="vacancy" class="col-md-6 result">
+          </app-user-inteligence-list-chart>
 
 
-    </mat-card>
+
+        </div>
+
+      </div>
+
+
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button (click)="sendCandidature(vacancy)" type="button" class="btn btn-sm space-button">Candidatar a
+        vaga</button>
+    </mat-card-actions>
+
+
+  </mat-card>
 </div>
-
-<div>
-    <mat-card class="banner-card">
-
-        <mat-card-header class="header-content">
-            <mat-card-title class="title-vacancy">
-                Cursos para você!
-            </mat-card-title>
-
-        </mat-card-header>
-
-    </mat-card>
-</div>
-
-<div class="distance-bottom">
-    <mat-card class="courses-card"  *ngFor="let course of userBestCourses|async">
-
-        <mat-card-header class="header-content">
-            <mat-card-title class="title-vacancy">
-                {{course.courseTitle}}
-            </mat-card-title>
-
-        </mat-card-header>
-
-        <mat-card-content class="courses-content">
-
-            <div class="container">
-
-                <div class="row">
-
-                    <label class="col-md-4" for="inputdefault">Categoria<br />{{course.category}}</label>
-                    <label class="col-md-4" for="inputdefault">Relevância para você<br />9 de 10</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Tempo de curso<br /> {{course.durationTime}} hora(s)</label>
-                    <br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Plataforma<br />{{course.durationTime}}</label>
-                    <br />
-                    <div class="description">
-                        <label for="inputdefault">Descrição do curso<br />{{course.description}}</label><br />
-                    </div>
-
-
-                </div>
-
-            </div>
-
-
-        </mat-card-content>
-
-        <mat-card-actions>
-            <button (click)="goToLink(course.courseLink)" type="button" class="btn btn-primary btn-sm space-button">Visualizar Curso</button>
-        </mat-card-actions>
-
-
-    </mat-card>
-</div>
-
-

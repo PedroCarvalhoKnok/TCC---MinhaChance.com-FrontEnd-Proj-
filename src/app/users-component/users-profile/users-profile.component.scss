@@ -1,3 +1,23 @@
+.btn{
+  background-color: #3c6e71;
+  border-color: #3c6e71;
+  color: white
+}
+
+.vacancies{
+  margin-bottom: 100px;
+  padding-bottom: 100px;
+}
+
+.result{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-left: 25vw;
+  height: 30px;
+  margin-bottom: 600px;
+}
+
 .center-content {
     height: 50%;
     display: flex;
@@ -87,7 +107,7 @@ mat-card-title, p, button{
   background-color: #191645;
   color: white;
 }
-  
+
   .vacancy-content, .courses-content{
     margin-top: 60px;
     margin-right: 0px;
@@ -101,35 +121,35 @@ mat-card-title, p, button{
   .distance-bottom{
     padding-bottom: 100px;
   }
-  
+
   .example-form {
     min-width: 150px;
     max-width: 500px;
     width: 100%;
   }
-  
+
   .example-full-width {
     width: 100%;
   }
-  
+
   .d-inline-flex{
     font-size: 20px;
     color: yellow;
   }
-  
+
   .vacancy-list{
     padding-left: 0px;
     width: 100%;
   }
-  
+
   .rate{
     font-size: 30px;
   }
-  
+
   .title-vacancy{
     width: 250px;
   }
-  
+
   .description{
     padding-top: 20px;
     width: 100%;
@@ -142,16 +162,16 @@ mat-card-title, p, button{
     max-width: 300px;
     overflow-wrap: break-word;
   }
-  
+
   .form-control{
     width: 100%;
   }
-  
+
   .apply-btn{
     margin-top: 10px;
     width: 100%;
   }
-  
+
   .add-vacancy-card{
     width: 70%;
     background-color: #191645;
@@ -162,11 +182,11 @@ mat-card-title, p, button{
     color: white;
     width: 100%;
   }
-  
+
   .title-vacancy{
     width: 100%;
   }
-  
+
   .material-icons{
     color: white;
   }
@@ -176,9 +196,9 @@ mat-card-title, p, button{
   .distance-between{
     padding-top: 20px;
   }
-  
+
   @media (max-width: 750px) {
-  
+
     .container{
       margin-left: 30%;
     }
@@ -187,41 +207,41 @@ mat-card-title, p, button{
       text-align: start;
       padding-bottom: 50px;
     }
-     
+
   }
-  
-  
+
+
   @media (max-width: 625px) {
-  
-    
-  
+
+
+
     .form-control, .label-filter, .apply-btn, .select-filters{
       width: 70%;
     }
-  
+
     .list-align{
       padding-left: 0;
       margin-bottom: 40px;
     }
-    
-    
+
+
   }
-  
-  
+
+
   @media (max-width: 510px) {
-  
+
    .header-content{
     width: 200px;
    }
-  
+
    .form-control, .label-filter, .apply-btn, .select-filters{
     width: 70%;
   }
-  
+
   .title-vacancy{
     font-size: 12px;
   }
-  
+
   .filter-card{
     height: 160vh;
     padding-left: 0px;
@@ -231,10 +251,9 @@ mat-card-title, p, button{
   .space-button{
     margin-left: 0;
   }
-  
+
   .paginator{
     margin-bottom: -30%;
   }
-    
+
   }
-  

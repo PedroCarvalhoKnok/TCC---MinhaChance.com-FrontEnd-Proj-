@@ -6,6 +6,12 @@
     margin-bottom: 200px;
 }
 
+.btn{
+  background-color: #3c6e71;
+  border-color: #3c6e71;
+  color: white
+}
+
 
 .tab-content{
     margin-top: 20px;
@@ -29,6 +35,7 @@ mat-card-title, p, button, .label-color{
     margin-top: 15%;
 }
 
+
 .center-title{
     text-align: center;
 }
@@ -47,6 +54,5 @@ mat-card-title, p, button, .label-color{
 .btnSend{
     margin-top: 10px;
     float: right;
-    background-color: #191645;
     width: 30%;
 }

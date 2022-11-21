@@ -20,4 +20,5 @@ export class Vacancy {
     requirements?: string;
     category!: string;
     location?: string;
+    professionId?: number;
 }

@@ -1,5 +1,5 @@
 .center-content {
-    height: 100%;
+    height: 450px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,6 +7,12 @@
 
 mat-card-title, p, button{
     color: white;
+}
+
+.btn{
+  background-color: #3c6e71;
+  border-color: #3c6e71;
+  color: white
 }
 
 .start-card{
@@ -17,7 +23,7 @@ mat-card-title, p, button{
 
 .start-content{
     text-align: center;
-    margin-top: 20%;
+    margin-top: 80px;
 }
 
 .center-title{

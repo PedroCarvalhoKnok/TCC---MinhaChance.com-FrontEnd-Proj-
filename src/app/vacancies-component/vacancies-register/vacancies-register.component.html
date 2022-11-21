@@ -69,6 +69,15 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
+                            <br />
+                            <mat-form-field>
+                                <mat-label class="placeholder-color">Profissão/Cargo</mat-label>
+                                <mat-select id="select-contracts" placeholder="Profissão">
+                                    <mat-option *ngFor="let profession of professions"
+                                        (click)="changeProfession($event)" value="{{profession.id}}">{{profession}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
                             <div
                                 *ngIf="formVacancy.get('contractType')?.invalid && (formVacancy.get('contractType')?.dirty || formVacancy.get('contractType')?.touched)">
                                 <p *ngIf="formVacancy.get('contractType')?.errors?.['required']">

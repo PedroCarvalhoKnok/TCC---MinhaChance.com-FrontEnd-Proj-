@@ -1,5 +1,5 @@
 .center-content {
-    height: 80%;
+    height: 480px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,8 +13,8 @@ mat-card-title, p, button{
     background-color: #191645;
     text-align: center;
     width: 40%;
-    height: 100%;
-    margin-top: 10px;
+    height: 90%;
+    margin-bottom: 20px;
 }
 
 .start-content{
@@ -38,8 +38,8 @@ mat-card-title, p, button{
 }
 
 .image{
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 5vw;
     margin-bottom: 20px;
 }
 
@@ -55,6 +55,13 @@ input{
 .form-control{
     height: 30px;
     border-radius: 10px;
+}
+
+
+.btn{
+  background-color: #3c6e71;
+  border-color: #3c6e71;
+  color: white;
 }
 
 .icon{

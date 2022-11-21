@@ -10,14 +10,15 @@ import { environment } from 'src/environments/environment';
 })
 export class AnalyticsService {
 
-  analyticUrl = `${environment.urlBaseApi}/IMreturn`
+  analyticUrl = `${environment.urlBaseApi}/decisionTree`
 
   constructor(private httpClient: HttpClient) { }
 
 
 
-  getVancancyUserSkills(vacancy: Vacancy, candidate: User){
-    return this.httpClient.get<any>(`${this.analyticUrl}`).pipe(
+  getVancanciesUserSkills(candidateId: number) {
+    console.log(candidateId);
+    return this.httpClient.get<any>(`${this.analyticUrl}/${candidateId}`).pipe(
       retry(2)
     )
   }

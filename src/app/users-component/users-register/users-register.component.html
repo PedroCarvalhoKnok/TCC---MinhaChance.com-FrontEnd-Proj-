@@ -17,11 +17,11 @@
         </mat-tab-group>
 
 
-        <button *ngIf="!this.userId" (click)="confirmPostUser()" type="button" class="btn btn-outline-primary btnSend">
+        <button *ngIf="!this.userId" (click)="confirmPostUser()" type="button" class="btn btn-outline btnSend">
             Enviar dados
         </button>
 
-        <button *ngIf="this.userId" (click)="confirmEditUser()" type="button" class="btn btn-outline-primary btnSend">
+        <button *ngIf="this.userId" (click)="confirmEditUser()" type="button" class="btn btn-outline btnSend">
             Editar dados
         </button>
 

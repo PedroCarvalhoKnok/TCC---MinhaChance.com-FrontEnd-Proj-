@@ -12,6 +12,9 @@ import Swal from 'sweetalert2';
 import { Role } from 'src/app/Enums/role';
 import { SituationService } from 'src/app/Services/Situation/situation.service';
 import { SchoolingService } from 'src/app/Services/Schooling/schooling.service';
+import { AnalyticsService } from '../../Services/Analytics/analytics.service';
+import { LocationService } from '../../Services/Location/location.service';
+import { Address } from '../../Models/User/Address';
 
 @Component({
   selector: 'app-users-profile',
@@ -37,29 +40,21 @@ export class UsersProfileComponent implements OnInit {
     certifications: [],
     graduations: [],
     objective: 'Crescimento pessoal e profisional ganhando experiencia',
-    interests: [{description: 'Música'}, {description: 'Futebol'}, {description: 'Filmes e séries'}],
-    schooling: {id: 1, descricao: 'Ensino Médio Completo'},
+    interests: [{ description: 'Música' }, { description: 'Futebol' }, { description: 'Filmes e séries' }],
+    schooling: { id: 1, descricao: 'Ensino Médio Completo' },
     role: Role.Candidate
   };
 
   situation: string;
   schooling: string;
 
-  fileMocked = new File([], "", {
-    type: "",
-  });
 
-  userBestVacancies: Observable<Vacancy[]> = of([]);
+  userBestVacancies: any = [];
+  userVacanciesSkills: any = [];
+  userAddress: any;
 
 
   categories: string[] = ['Construção', 'Tecnologia', 'Gestão'];
-
-
-  userBestCourses: Observable<Course[]> = of([
-    { id: 1, certificationId: 1, description: 'Curso introdutório ao Python', courseTitle: 'Introdução Python I', creationDate: new Date(), subscribeQuantity: 100, durationTime: '7 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true, coursePlatform: 'Udemy', courseLink: 'https://www.udemy.com/pt/' },
-    { id: 2, description: 'Curso Ruby I', courseTitle: 'Introdução Ruby I', creationDate: new Date(), subscribeQuantity: 100, durationTime: '7 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true, coursePlatform: 'Udemy', courseLink: 'https://www.udemy.com/pt/' },
-    { id: 3, description: 'Curso Ruby II', courseTitle: 'Introdução Ruby II', creationDate: new Date(), subscribeQuantity: 10, durationTime: '9 Horas', category: 'Tecnologia', hasTests: true, hasCertification: true, coursePlatform: 'Udemy', courseLink: 'https://www.udemy.com/pt/' },
-  ]);
 
 
 
@@ -99,7 +94,7 @@ export class UsersProfileComponent implements OnInit {
 
   ];
 
-  constructor(private userService: UserService, private testService: TestService, private router: ActivatedRoute, public dialog: MatDialog, private route: Router, private schoolingService: SchoolingService, private situationService: SituationService) { }
+  constructor(private userService: UserService, private testService: TestService, private router: ActivatedRoute, public dialog: MatDialog, private route: Router, private schoolingService: SchoolingService, private situationService: SituationService, private analyticsService: AnalyticsService, private locationService: LocationService) { }
 
   async ngOnInit() {
 
@@ -113,19 +108,32 @@ export class UsersProfileComponent implements OnInit {
 
       await this.getSchoolingById(this.userLogged.idEscolaridade);
 
-      console.log(this.situation)
-      console.log(this.schooling)
+      console.log(this.userLogged.idTesteIM)
 
-      await this.testService.getUserTestResults(userId).subscribe(results => { this.userSkillsByIntelligence = results })
+      await this.testService.getUserTestResults(this.userLogged.idTesteIM).subscribe(results => { this.userSkillsByIntelligence = results[0] })
 
-      this.userBestVacancies = await this.userService.getBestVacanciesById(userId);
+      await this.analyticsService.getVancanciesUserSkills(userId).subscribe(vacancies => {
+        console.log(vacancies);
+        this.getCompanybyId(vacancies).then(() => {
 
-      this.userBestCourses = await this.userService.getBestCoursesById(userId);
+          this.userBestVacancies = vacancies;
+
+        })
+
+      });
+
+      await this.locationService.getAddressById(userId).subscribe(address => {
+
+        this.userAddress = address[0];
+
+      })
+
+      //this.userBestCourses = await this.userService.getBestCoursesById(userId);
 
     }
   }
 
-  formatDate(date: string): string{
+  formatDate(date: string): string {
 
     date = `${date.split('-')[2][0]}${date.split('-')[2][1]}/${date.split('-')[1]}/${date.split('-')[0]}`;
 
@@ -133,18 +141,33 @@ export class UsersProfileComponent implements OnInit {
 
   }
 
-  getSchoolingById(schoolingId: number){
+  async getCompanybyId(vacancies: any) {
 
-     this.schoolingService.getSchoolingById(schoolingId).subscribe(schooling =>{
+    for (let vacancy of vacancies) {
+
+      console.log(vacancy.id)
+      await this.userService.getCompanyInfoById(vacancy.idEmpresas).subscribe(result => {
+
+        console.log(result)
+        vacancy.empresa = result[0].razaoSocial;
+
+      })
+
+    }
+  }
+
+  getSchoolingById(schoolingId: number) {
+
+    this.schoolingService.getSchoolingById(schoolingId).subscribe(schooling => {
       this.userLogged.schooling = schooling[0].descricao;
       console.log(schooling)
     })
 
   }
 
-  getSituationById(situationId: number){
-    
-     this.situationService.getSituationById(situationId).subscribe(situation =>{
+  getSituationById(situationId: number) {
+
+    this.situationService.getSituationById(situationId).subscribe(situation => {
       this.userLogged.situation = situation[0].descricao;
       console.log(situation)
     })
@@ -161,9 +184,9 @@ export class UsersProfileComponent implements OnInit {
 
   }
 
-  editUserProfile(){
+  editUserProfile() {
 
-    this.route.navigate([`/${this.userLogged.CPF ? 'candidato': 'empresa'}/editar/${this.userLogged.id}`]);
+    this.route.navigate([`/${this.userLogged.CPF ? 'candidato' : 'empresa'}/editar/${this.userLogged.id}`]);
 
   }
 
@@ -216,13 +239,10 @@ export class UsersProfileComponent implements OnInit {
 
 
 
-  sendCandidature(vacancy: Vacancy) {
-
-    let userLogged!: User;
-    let responseCandidature!: boolean;
+  sendCandidature(vacancy: any) {
 
     Swal.fire({
-      title: `Tem certeza que deseja se candidatar a vaga ${vacancy.vacancyTitle}?`,
+      title: `Tem certeza que deseja se candidatar a vaga ${vacancy.titulo}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -232,35 +252,23 @@ export class UsersProfileComponent implements OnInit {
     }).then(async (result) => {
       if (result.isConfirmed) {
 
-        if (this.userLogged) {
-          await this.userService.postUserCandidature(this.userLogged.id, vacancy.id, this.formatCreationDate()).subscribe(response => responseCandidature = response);
-          if (responseCandidature) {
+        console.log(this.userLogged)
 
-            await this.userService.sendEmail(this.userLogged, `Olá ${this.userLogged.userName}! Sua candidatura para a vaga ${vacancy.vacancyTitle} foi enviada com sucesso, aguarde a resposta da empresa para a próxima etapa. Boa Sorte!`)
-              .subscribe(response => {
-                response ?
-                  Swal.fire(
-                    'Sucesso!',
-                    `Candidatura concluída com sucesso, um email de confirmção foi enviado a sua caixa!`,
-                    'success'
-                  ) :
-                  Swal.fire(
-                    'Ops, ocorreu um erro!',
-                    `Ocorreu um erro ao enviar o email de confirmação, porém sua canditura foi concluída!`,
-                    'warning'
-                  );
-              });
-          }
-          else {
+        if (this.userLogged) {
+          await this.userService.postUserCandidature(this.userLogged.id, vacancy.id, this.formatCreationDate()).subscribe(response => {
             Swal.fire(
-              'Ops, ocorreu um erro!',
-              `Ocorreu um erro ao efetivar sua candidatura para a vaga ${vacancy.vacancyTitle}, tente novamente!`,
-              'warning'
-            );
+              'Sucesso!',
+              `${response.message}`,
+              'success'
+            )
           }
+          );
+
         }
       }
     })
+
+
 
   }
 

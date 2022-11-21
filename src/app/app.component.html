@@ -31,15 +31,15 @@
         account_circle
       </span></mat-icon>
   </button>
-  <button *ngIf="!isAuthenticated" type="button" class="btn btn-outline-primary me-2" placement="bottom"
+  <button *ngIf="!isAuthenticated" type="button" class="btn btn-outline me-2" placement="bottom"
     [ngbPopover]="popContentCreate">
     Criar conta como
   </button>
-  <button (click)="logout()" *ngIf="isAuthenticated" mat-icon-button class="side-icon"
+  <button (click)="logout()" *ngIf="isAuthenticated" mat-icon-button class="btn side-icon"
     aria-label="Example icon-button with share icon">
     <mat-icon class="side-icon">logout</mat-icon>
   </button>
-  <button *ngIf="!isAuthenticated" type="button" class="btn btn-outline-primary me-2" placement="bottom"
+  <button *ngIf="!isAuthenticated" type="button" class="btn btn-outline me-2" placement="bottom"
     [ngbPopover]="popContentLogin">
     Entrar como
   </button>

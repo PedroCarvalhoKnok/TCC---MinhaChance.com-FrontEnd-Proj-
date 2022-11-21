@@ -6,7 +6,7 @@
 
         <mat-card-header>
           <mat-card-title>Minhas candidaturas</mat-card-title>
-          <mat-card-title><span class="material-icons star-icon" aria-label="Example icon-button with heart icon">star</span>
+          <mat-card-title><span class="material-icons star-icon" aria-label="Minhas candidaturas">verified</span>
         </mat-card-title>
         </mat-card-header>
 
@@ -17,7 +17,10 @@
 
         <mat-card-header>
             <mat-card-title (click)="goToMyProfile()">Meu Perfil</mat-card-title>
-            <mat-card-title><span class="material-icons company-icon">apartment</span></mat-card-title>
+            <mat-card-title>
+              <span *ngIf="this.userLogged.cnpj" class="material-icons company-icon">apartment</span>
+              <span *ngIf="this.userLogged.CPF" class="material-icons company-icon">people</span>
+            </mat-card-title>
         </mat-card-header>
 
     </mat-card>

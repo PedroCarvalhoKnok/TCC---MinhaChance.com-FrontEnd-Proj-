@@ -26,6 +26,7 @@ export class VacanciesRegisterComponent implements OnInit {
   contractCategories = ['CLT', 'PJ', 'Estagio', 'Jovem Aprendiz', 'Trainee'];
   modalities = ['Presencial', 'Hibrido', 'Home-Office'];
   locations: string[] = ['Sao Paulo - Centro', 'Rio de Janeiro - Centro', 'Parana - Curitiba']
+  professions: any = [];
 
   isCombinated: boolean = false;
   isConfidential: boolean = false;
@@ -54,6 +55,7 @@ export class VacanciesRegisterComponent implements OnInit {
         this.vacancy.modalidity = vacancy[0].modalidade;
         this.vacancy.location = vacancy[0].localizacao;
         this.vacancy.creationDate = vacancy[0].dataCriacao;
+        this.vacancy.professionId = vacancy[0].idProfissao;
         (<HTMLInputElement>document.getElementById('vacancyDescription')).value = vacancy[0].descricao;
         (<HTMLInputElement>document.getElementById('requirementDescription')).value = vacancy[0].requisitos;
         (<HTMLInputElement>document.getElementById(`benefitDescription`)).value = vacancy[0].beneficios;
@@ -75,6 +77,10 @@ export class VacanciesRegisterComponent implements OnInit {
 
   changeContractType(type: string) {
     this.vacancy.contractType = type;
+  }
+
+  changeProfession(profession: any) {
+    this.vacancy.professionId = profession;
   }
 
   changeSalaryDisplay() {

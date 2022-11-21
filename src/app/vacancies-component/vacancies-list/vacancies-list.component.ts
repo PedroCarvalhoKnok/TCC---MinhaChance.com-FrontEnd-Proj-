@@ -33,7 +33,7 @@ export class VacanciesListComponent implements OnInit {
   filterApplied: boolean = false;
 
   userCandidaturesRequired: boolean = false;
-  
+
 
   requirements = ['Ensino superior', 'Ensino médio', 'Conhecimento básico'];
   benefits = ['VR', 'VT', 'Convenio médico', 'Convenio odontologico', 'Gym pass'];
@@ -75,6 +75,8 @@ export class VacanciesListComponent implements OnInit {
     console.log(this.userCandidaturesRequired + this.userLogged.CPF)
 
     if (this.userLogged.CPF && !this.userCandidaturesRequired) {
+
+      this.userCandidaturesRequired = false;
 
       await this.vacancyService.getVacanciesForCandidates().subscribe(vacancies => {
 
@@ -143,6 +145,11 @@ export class VacanciesListComponent implements OnInit {
         vacancy.profissao = occupation[0].descricao
 
       });
+
+      await this.userService.getCompanyInfoById(vacancy.idEmpresas).subscribe(company => {
+
+        vacancy.empresa = company[0].razaoSocial;
+      })
 
     }
 
@@ -314,7 +321,7 @@ export class VacanciesListComponent implements OnInit {
     if(this.countySelected){
       vacancyList = vacancyList.filter(vacancy => vacancy.localizacao.split('-')[1].trim() === this.countySelected);
     }
-    
+
     if (this.vacancyFilter.modality) {
       vacancyList = vacancyList.filter(vacancy => vacancy.modalidade == this.vacancyFilter.modality);
     }

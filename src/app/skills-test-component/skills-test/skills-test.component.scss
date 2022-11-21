@@ -1,3 +1,5 @@
+
+
 .vacancies-card {
   width: 50%;
   margin-top: 30px;
@@ -11,6 +13,8 @@
 .header-content{
   width: 100%;
 }
+
+
 
 .filter-card {
   float: right;
@@ -37,10 +41,15 @@
 
 .vacancy-content {
   margin-top: 60px;
-  margin-left: -201px;
+  margin-left: -45vw;
   display: flex;
-  overflow: auto;
   width: 100%;
+}
+
+.btn{
+  background-color: #3c6e71;
+  border-color: #3c6e71;
+  color: white;
 }
 
 .example-form {
@@ -68,7 +77,8 @@
 }
 
 .start-button{
-  margin-bottom: 75px;
+  margin-bottom: 100px;
+  margin-left: 52vw;
 }
 
 .rate {

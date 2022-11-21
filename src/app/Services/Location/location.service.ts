@@ -36,6 +36,14 @@ export class LocationService {
 
   }
 
+  getAddressById(userId: number) {
+
+    return this.httpClient.get<any>(`${this.urlBaseApi}/endereco/${userId}`).pipe(
+      retry(2)
+    )
+
+  }
+
   getAddressByZipCode(zipCode: string) {
 
     console.log(this.urlViaCep)

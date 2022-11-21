@@ -6,11 +6,11 @@
         </mat-card-header>
     </mat-card>
 </div>
-<div>
+<div class="sentido">
     <mat-card class="filter-card">
 
 
-        <mat-card-header>
+        <mat-card-header class="perguntas">
             <mat-card-title>Perguntas</mat-card-title>
         </mat-card-header>
 
@@ -68,8 +68,6 @@
 
                 <div class="row">
 
-                    <h1>Alternativas</h1>
-
                     <mat-radio-group>
                         <section>
                             <mat-radio-button checked="{{question.userAnswer == '1' ? true: false}}" (click)="setSelectedQuestion(questionPos,question.id, '1')" value="1">
@@ -117,4 +115,4 @@
 
 </div>
 
-<button (click)="confirmSendSkillTest()" mat-raised-button color="primary" class="start-button">Enviar teste</button>
+<button (click)="confirmSendSkillTest()" mat-raised-button class="btn start-button">Enviar teste</button>

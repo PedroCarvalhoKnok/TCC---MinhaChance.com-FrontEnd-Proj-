@@ -20,7 +20,7 @@ export class LoginComponentComponent implements OnInit {
   formLoginCompany!: FormGroup;
   userRole: string;
   isCandidate: boolean;
-  hide: boolean = false;
+  hide: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,

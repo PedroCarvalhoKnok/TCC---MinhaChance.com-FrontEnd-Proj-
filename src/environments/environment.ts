@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  //urlBaseApi: "http://localhost:3000"
-  urlBaseApi: "https://api-minhavez-containers.azurewebsites.net",
+  urlBaseApi: "http://localhost:3000",
+  //urlBaseApi: "https://api-minhavez-containers.azurewebsites.net",
   urlBaseViaCepApi: "https://viacep.com.br/ws",
   urlBaseTerritorio: "https://servicodados.ibge.gov.br/api/v1/localidades"
 };

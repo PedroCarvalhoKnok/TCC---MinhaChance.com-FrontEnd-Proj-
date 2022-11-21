@@ -24,7 +24,12 @@ a{
   bottom: 0;
   width: 100%;
   background-color: #191645;
-  margin-top: 90vh;
+}
+
+.btn{
+  background-color: #3c6e71;
+  border-color: #3c6e71;
+  color: white
 }
 
 .toolbar {
@@ -51,7 +56,7 @@ a{
 
 .footer-icon{
   margin-right: 2vw;
-  font-size: 2.5vh;
+  font-size: 15px;
 }
 .text-menu {
   padding-top: 10px;

@@ -27,7 +27,7 @@
                 <label class="label-filter" for="typeahead-basic">Benefícios</label>
                 <div class="col select-filters">
                     <div ngbDropdown class="d-inline-block select-filters">
-                        <button type="button" class="btn btn-outline-primary" id="dropdownBenefits"
+                        <button type="button" class="btn btn-outline" id="dropdownBenefits"
                             ngbDropdownToggle>Beneficios</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownCategory">
                             <button (click)="changeBenefit(benefit)" *ngFor="let benefit of benefits"
@@ -39,7 +39,7 @@
                 <label class="label-filter">Modalidade da vaga</label>
                 <div class="col select-filters">
                     <div ngbDropdown class="d-inline-block select-filters">
-                        <button type="button" class="btn btn-outline-primary" id="dropdownRequires"
+                        <button type="button" class="btn btn-outline" id="dropdownRequires"
                             ngbDropdownToggle>{{!this.vacancyFilter.modality ? 'Modalidade':
                             this.vacancyFilter.modality}}</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownCategory">
@@ -52,7 +52,7 @@
                 <label class="label-filter">Profissão</label>
                 <div class="col select-filters">
                     <div ngbDropdown class="d-inline-block select-filters">
-                        <button type="button" class="btn btn-outline-primary" id="dropdownRequires"
+                        <button type="button" class="btn btn-outline" id="dropdownRequires"
                             ngbDropdownToggle>{{!occupationSelected ? 'Profissão':
                             occupationSelected}}</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownCategory">
@@ -66,7 +66,7 @@
                     this.stateSelected }} </label>
                 <div class="col select-filters">
                     <div ngbDropdown class="d-inline-block select-filters">
-                        <button type="button" class="btn btn-outline-primary" id="dropdownRequires"
+                        <button type="button" class="btn btn-outline" id="dropdownRequires"
                             ngbDropdownToggle>{{!this.stateSelected ? 'Estado':
                             this.stateSelected }}</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownCategory">
@@ -80,7 +80,7 @@
                     this.countySelected }} </label>
                 <div class="col select-filters">
                     <div ngbDropdown class="d-inline-block select-filters">
-                        <button type="button" class="btn btn-outline-primary" id="dropdownRequires"
+                        <button type="button" class="btn btn-outline" id="dropdownRequires"
                             ngbDropdownToggle>{{!this.countySelected ? 'Município':
                             this.countySelected }}</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownCategory">
@@ -116,11 +116,11 @@
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input (click)="vacancyPresencial(true)" type="radio" class="btn-check" name="btnradio"
                         id="btnradio1" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio1">Sim</label>
+                    <label class="btn btn-outline" for="btnradio1">Sim</label>
 
                     <input (click)="vacancyPresencial(false)" type="radio" class="btn-check" name="btnradio"
                         id="btnradio2" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio2">Não</label>
+                    <label class="btn btn-outline" for="btnradio2">Não</label>
 
                 </div>
 
@@ -168,39 +168,25 @@
                 <div class="row">
 
                     <span class="material-icons col-md-4">account_circle</span>
-                    <!-- <label class="col-md-4" for="inputdefault">Salário<br />{{vacancy.salary}}</label> -->
+                    <label *ngIf="this.userCandidaturesRequired" class="col-md-4" for="inputdefault">Status<br />{{vacancy.status}}</label>
                     <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantidade}}
                         vaga(s)</label>
-                    <label *ngIf="this.userCandidaturesRequired" class="col-md-4"
-                        for="inputdefault">Status<br />{{vacancy.status}}</label>
-                    <label class="col-md-4" for="inputdefault">Data de
-                        criação<br />{{vacancy.dataCriacao | date: "dd/MM/YYYY"}}</label><br />
+                    <label class="col-md-4"
+                        for="inputdefault">Empresa<br />{{vacancy.empresa}}</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Data de
+                        criação<br />{{vacancy.dataCriacao | date: "dd/MM/YYYY"}}</label>
                     <label class="col-md-4 distance-between"
-                        for="inputdefault">Modalidade<br />{{vacancy.modalidade}}</label><br />
-                    <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
-                        <!-- <ul class="vacancy-list col-md-4" *ngFor="let benefit of this.vacancy.benefits">
-                            <li>Descrição {{benefit}}</li>
-                        </ul> -->
+                        for="inputdefault">Modalidade<br />{{vacancy.modalidade}}</label>
+                    <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br/>
                         {{vacancy.beneficios}}
-                    </label><br />
+                    </label>
                     <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
-                        <!-- <ul class="vacancy-list col-md-4" *ngFor="let benefit of this.vacancy.benefits">
-                            <li>Descrição {{benefit}}</li>
-                        </ul> -->
                         {{vacancy.requisitos}}
-                    </label><br />
+                    </label>
                     <label class="col-md-4 distance-between" for="inputdefault">Profissão<br />
-                        <!-- <ul class="vacancy-list col-md-4" *ngFor="let benefit of this.vacancy.benefits">
-                            <li>Descrição {{benefit}}</li>
-                        </ul> -->
                         {{vacancy.profissao}}
-                    </label><br />
-                    <!-- <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />
-                        <ul class="vacancy-list col-md-4" *ngFor="let requirement of this.vacancy.requirements">
-                            <li>Descrição {{requirement.description}}</li>
-                            <li>Diferencial {{requirement.differencial != undefined ? '- ' + requirement.differencial : ''}}</li>
-                        </ul>
-                    </label><br /> -->
+                    </label>
+
                     <label class="col-md-4 distance-between"
                         for="inputdefault">Localização<br />{{vacancy.localizacao}}</label><br />
                     <label class="col-md-4 distance-between"
