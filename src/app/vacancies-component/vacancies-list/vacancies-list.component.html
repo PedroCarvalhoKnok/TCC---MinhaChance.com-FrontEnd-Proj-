@@ -28,7 +28,8 @@
                 <div class="col select-filters">
                     <div ngbDropdown class="d-inline-block select-filters">
                         <button type="button" class="btn btn-outline" id="dropdownBenefits"
-                            ngbDropdownToggle>Beneficios</button>
+                            ngbDropdownToggle>{{!this.vacancyFilter.benefits ? 'Beneficios':
+                            this.vacancyFilter.benefits}}</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownCategory">
                             <button (click)="changeBenefit(benefit)" *ngFor="let benefit of benefits"
                                 ngbDropdownItem>{{benefit}}</button>
@@ -109,20 +110,7 @@
                             {{county.nome}}</mat-option>
                     </mat-select>
                 </mat-form-field> -->
-
-                <br />
-                <label class="label-filter" for="typeahead-basic">Vagas Presenciais</label>
-                <br />
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input (click)="vacancyPresencial(true)" type="radio" class="btn-check" name="btnradio"
-                        id="btnradio1" autocomplete="off">
-                    <label class="btn btn-outline" for="btnradio1">Sim</label>
-
-                    <input (click)="vacancyPresencial(false)" type="radio" class="btn-check" name="btnradio"
-                        id="btnradio2" autocomplete="off">
-                    <label class="btn btn-outline" for="btnradio2">Não</label>
-
-                </div>
+                
 
                 <br />
                 <div class="form-group">
@@ -156,7 +144,7 @@
 
         <mat-card-header class="header-content">
             <mat-card-title class="title-vacancy">
-                {{vacancy.vacancyTitle}}
+                <strong>{{vacancy.titulo}}</strong>
             </mat-card-title>
 
         </mat-card-header>
@@ -168,16 +156,16 @@
                 <div class="row">
 
                     <span class="material-icons col-md-4">account_circle</span>
-                    <label *ngIf="this.userCandidaturesRequired" class="col-md-4" for="inputdefault">Status<br />{{vacancy.status}}</label>
+                    <label *ngIf="this.userCandidaturesRequired" class="col-md-4"
+                        for="inputdefault">Status<br />{{vacancy.status}}</label>
                     <label class="col-md-4" for="inputdefault">Quantidade de vagas<br />{{vacancy.quantidade}}
                         vaga(s)</label>
-                    <label class="col-md-4"
-                        for="inputdefault">Empresa<br />{{vacancy.empresa}}</label>
+                    <label class="col-md-4" for="inputdefault">Empresa<br />{{vacancy.empresa}}</label>
                     <label class="col-md-4 distance-between" for="inputdefault">Data de
                         criação<br />{{vacancy.dataCriacao | date: "dd/MM/YYYY"}}</label>
                     <label class="col-md-4 distance-between"
                         for="inputdefault">Modalidade<br />{{vacancy.modalidade}}</label>
-                    <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br/>
+                    <label class="col-md-4 distance-between" for="inputdefault">Beneficios da vaga<br />
                         {{vacancy.beneficios}}
                     </label>
                     <label class="col-md-4 distance-between" for="inputdefault">Requisitos da vaga<br />

@@ -36,7 +36,7 @@ export class VacanciesListComponent implements OnInit {
 
 
   requirements = ['Ensino superior', 'Ensino médio', 'Conhecimento básico'];
-  benefits = ['VR', 'VT', 'Convenio médico', 'Convenio odontologico', 'Gym pass'];
+  benefits = ['VR', 'VT', 'Convênio médico', 'Convênio odontologico', 'Gym pass', 'Auxílio Maternidade'];
   locations = ['São Paulo - Centro', 'Rio de Janeiro - Centro', 'Parana - Curitiba'];
   modalities = ['Presencial', 'Híbrido', 'Home-Office'];
   occupations: any = [];
@@ -83,11 +83,10 @@ export class VacanciesListComponent implements OnInit {
         this.getOccupationByVacancyId(vacancies).then(() => {
 
           if (!this.filterApplied){
-            console.log('sem filtro')
+            console.log(vacancies)
             this.vacancies = of(vacancies);
           }
           else{
-            console.log('com filtro')
             console.log(vacancies)
             this.vacancies = of(this.filterVacancyList(vacancies))
           }
@@ -95,7 +94,6 @@ export class VacanciesListComponent implements OnInit {
 
       });
 
-      console.log('vacancy one');
 
     }
     if (this.userLogged.CPF && this.userCandidaturesRequired) {
@@ -104,7 +102,7 @@ export class VacanciesListComponent implements OnInit {
 
         this.getOccupationByVacancyId(vacancies).then(() => {
           if (!this.filterApplied){
-            console.log('sem filtro')
+            console.log(vacancies)
             this.vacancies = of(vacancies);
           }
           else{
