@@ -1,8 +1,9 @@
 
 <!--Arrumar posicionamento da folha para que ao clicar TAB a página não desça-->
-<div class="home-content">
+<div class="col-xs-12 col-sm-9 col-lg-12 fundo">
+  <div class="home-content">
 
-    <mat-card class="example-card mat-elevation-z7">
+    <mat-card *ngIf="this.userLogged" class="example-card mat-elevation-z7">
 
         <mat-card-header>
           <mat-card-title>Minhas candidaturas</mat-card-title>
@@ -41,6 +42,7 @@
 
 </mat-card>
 
+</div>
 </div>
 
 <div class="home-content">
