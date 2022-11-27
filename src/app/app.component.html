@@ -21,7 +21,7 @@
     <mat-icon class="material-icons">
       school
     </mat-icon>
-    <a class="text-menu" style="margin-left:-4.5vw">Prova de aptidão</a>
+    <a class="text-menu-skill">Prova de aptidão</a>
   </button>
   <span class="example-spacer-menu-items"></span>
   <span class="example-spacer"></span>
@@ -74,10 +74,13 @@
   <span class="example-spacer"></span>
   <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile"
     aria-label="Example icon-button with heart icon" title="Início">
+    <div class="home-container">
     <mat-icon class="material-icons">home</mat-icon>
     <span>Inicio</span>
+    </div>
   </button>
   <span class="example-spacer-menu-items"></span>
+
   <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile"
     aria-label="Example icon-button with heart icon" title="Vagas">
     <span class="material-icons">
@@ -85,23 +88,15 @@
     </span>
     <a>Vagas</a>
   </button>
-  <span class="example-spacer-menu-items"></span>
-  <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile"
-    aria-label="Example icon-button with heart icon" title="Colaboradores">
-    <span class="material-icons">
-      construction
-    </span>
-    <a>Colaboradores</a>
-  </button>
   <span class="example-spacer-menu-items-fix"></span>
   <button *ngIf="isAuthenticated" mat-icon-button class="menu-icon-mobile"
-    aria-label="Example icon-button with heart icon" title="Cursos">
+    aria-label="Example icon-button with heart icon" title="Prova de aptidão">
     <span class="material-icons">
       <span class="material-icons">
         school
       </span>
     </span>
-    <a>Cursos</a>
+    <a>Prova de aptidão</a>
   </button>
   <span class="footer-icon">
     Português - Brasil

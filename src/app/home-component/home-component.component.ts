@@ -61,6 +61,10 @@ export class HomeComponentComponent implements OnInit {
     }
   }
 
+  goToMyCandidatures() {
+    this.router.navigate(["/vagas/buscar"], { state: { myCandidatures: true } });
+  }
+
   goToMyProfile() {
 
 

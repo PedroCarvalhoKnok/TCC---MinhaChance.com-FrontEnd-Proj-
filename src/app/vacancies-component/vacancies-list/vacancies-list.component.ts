@@ -22,7 +22,10 @@ import { LocationService } from 'src/app/Services/Location/location.service';
 })
 export class VacanciesListComponent implements OnInit {
 
-  constructor(private vacancyService: VacancyService, private userService: UserService, public dialog: MatDialog, private router: Router, private occupationService: OccupationService, private locationService: LocationService) { }
+  constructor(private vacancyService: VacancyService, private userService: UserService, public dialog: MatDialog, private router: Router, private occupationService: OccupationService, private locationService: LocationService)
+  {
+    this.isOwnCandidatures = this.router.getCurrentNavigation()?.extras.state?.myCandidatures;
+  }
 
   pageEvent!: PageEvent;
 
@@ -33,6 +36,7 @@ export class VacanciesListComponent implements OnInit {
   filterApplied: boolean = false;
 
   userCandidaturesRequired: boolean = false;
+  isOwnCandidatures: boolean = false;
 
 
   requirements = ['Ensino superior', 'Ensino médio', 'Conhecimento básico'];
@@ -62,11 +66,20 @@ export class VacanciesListComponent implements OnInit {
 
     console.log(this.userLogged);
 
-    await this.getUsers();
-
     await this.getStates();
 
     await this.getOccupationsFilter();
+
+    console.log(this.isOwnCandidatures)
+
+    if (this.isOwnCandidatures) {
+
+      await this.getCandidateVacancies();
+
+    }
+    else {
+      await this.getUsers();
+    }
 
   }
 

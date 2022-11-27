@@ -30,7 +30,7 @@ carousel-content{
   align-items: center;
   width: 100%;
   padding-bottom: 200px;
-}//arrumar o espaçamento entre a img  o texto da img
+}
 
 //mudar cor de empresa e de vc
 .picsum-img-wrapper{
@@ -38,8 +38,13 @@ carousel-content{
   padding-bottom: 200px;
 }
 
-.mat-card-title, .company-icon{
+.mat-card-title, .company-icon, .mat-card-subtitle{
   color: white;
+}
+
+.title-color{
+  color: #37FAB3;
+  font-size: 50;
 }
 
 .example-card {

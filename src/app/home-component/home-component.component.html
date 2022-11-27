@@ -1,78 +1,82 @@
-
 <!--Arrumar posicionamento da folha para que ao clicar TAB a página não desça-->
 <div class="col-xs-12 col-sm-9 col-lg-12 fundo">
   <div class="home-content">
 
     <mat-card *ngIf="this.userLogged" class="example-card mat-elevation-z7">
 
-        <mat-card-header>
-          <mat-card-title>Minhas candidaturas</mat-card-title>
-          <mat-card-title><span class="material-icons star-icon" aria-label="Minhas candidaturas">verified</span>
+      <mat-card-header *ngIf="this.userLogged.CPF">
+        <mat-card-title>Minhas candidaturas</mat-card-title>
+        <mat-card-title><span (click)="goToMyCandidatures()" class="material-icons star-icon" aria-label="Minhas candidaturas">verified</span>
         </mat-card-title>
-        </mat-card-header>
+      </mat-card-header>
 
-        <mat-card-header>
-            <mat-card-title>FeedBacks</mat-card-title>
-            <mat-card-title><span class='material-icons'>feedback</span></mat-card-title>
-        </mat-card-header>
+      <mat-card-header>
+        <mat-card-title>FeedBacks</mat-card-title>
+        <mat-card-title><span class='material-icons'>feedback</span></mat-card-title>
+      </mat-card-header>
 
-        <mat-card-header>
-            <mat-card-title (click)="goToMyProfile()">Meu Perfil</mat-card-title>
-            <mat-card-title>
-              <span *ngIf="this.userLogged.cnpj" class="material-icons company-icon">apartment</span>
-              <span *ngIf="this.userLogged.CPF" class="material-icons company-icon">people</span>
-            </mat-card-title>
-        </mat-card-header>
-
-    </mat-card>
-
-
-
-</div>
-
-<div class="home-content">
-
-<mat-card class="description-content">
-
-    <mat-card-title>
-
-        Gerencie a sua maneira a contratação de novos colaboradores e engaje pessoas e sonhos
-
-    </mat-card-title>
-
-</mat-card>
-
-</div>
-</div>
-
-<div class="home-content">
-
-    <mat-card class="benefits-content">
-
-        <mat-card-title>Minha Chance é feita para quem?</mat-card-title>
-
-        <mat-card-header>
-          <mat-card-title>Empresas</mat-card-title>
-
+      <mat-card-header>
+        <mat-card-title (click)="goToMyProfile()">Meu Perfil</mat-card-title>
         <mat-card-title>
-          <button type="button" class="btn btn-outline-secondary me-2" placement="bottom"
-          ngbPopover="Empresas que buscam otimizar sua busca por colaboradores" popoverTitle="Empresa">
-            <span class="material-icons company-icon">business</span>
-          </button>
+          <span *ngIf="this.userLogged.cnpj" class="material-icons company-icon">apartment</span>
+          <span *ngIf="this.userLogged.CPF" class="material-icons company-icon">people</span>
         </mat-card-title>
-        </mat-card-header>
-
-        <mat-card-header>
-            <mat-card-title>Você</mat-card-title>
-            <mat-card-title>
-              <button type="button" class="btn btn-outline-secondary me-2" placement="bottom"
-          ngbPopover="Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado" popoverTitle="Você">
-              <span class='material-icons company-icon'>people</span>
-              </button>
-            </mat-card-title>
-        </mat-card-header>
+      </mat-card-header>
 
     </mat-card>
+
+
+
+  </div>
+
+  <div class="home-content">
+
+    <mat-card class="description-content">
+
+      <mat-card-header>
+        <mat-card-title class="title-color">
+          Minha Vez
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          A plataforma feita para promover oportunidades, sonhos e promover pessoas e empresas
+        </mat-card-subtitle>
+      </mat-card-header>
+
+    </mat-card>
+
+  </div>
+</div>
+
+<div class="home-content">
+
+  <mat-card class="benefits-content">
+
+    <mat-card-title>Minha Vez é feita para quem?</mat-card-title>
+
+    <mat-card-header>
+      <mat-card-title class="title-color">Empresas</mat-card-title>
+
+      <mat-card-title>
+        <button type="button" class="btn btn-outline-secondary me-2" placement="bottom"
+          ngbPopover="Empresas que buscam otimizar sua busca por colaboradores" popoverTitle="Empresa">
+          <span class="material-icons company-icon">business</span>
+        </button>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-header>
+      <mat-card-title class="title-color">Você</mat-card-title>
+      <mat-card-title>
+        <button type="button" class="btn btn-outline-secondary me-2" placement="bottom"
+          ngbPopover="Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado"
+          popoverTitle="Você">
+          <span class='material-icons company-icon'>people</span>
+        </button>
+      </mat-card-title>
+    </mat-card-header>
+
+  </mat-card>
 
 
 
@@ -80,102 +84,102 @@
 
 <div class="corousel-content">
 
-    <ngb-carousel *ngIf="imagesActors">
-        <ng-template ngbSlide>
-          <div class="picsum-img-wrapper">
-            <img class="responsive-images" [src]="imagesActors[0]" alt="Random second slide">
-          </div>
-          <div class="carousel-caption">
-            <h1>Corporações</h1>
-            <p>Empresas que buscam otimizar sua busca por colaboradores</p>
-          </div>
-        </ng-template>
-        <ng-template ngbSlide>
-            <div class="picsum-img-wrapper">
-              <img class="responsive-images" [src]="imagesActors[1]" alt="Random second slide">
-            </div>
-            <div class="carousel-caption">
-              <h1>Pensamos em você!</h1>
-              <p>Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado</p>
-            </div>
-          </ng-template>
-      </ngb-carousel>
+  <ngb-carousel *ngIf="imagesActors">
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img class="responsive-images" [src]="imagesActors[0]" alt="Random second slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Corporações</h1>
+        <p>Empresas que buscam otimizar sua busca por colaboradores</p>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img class="responsive-images" [src]="imagesActors[1]" alt="Random second slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Pensamos em você!</h1>
+        <p>Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado</p>
+      </div>
+    </ng-template>
+  </ngb-carousel>
 
-    </div>
+</div>
 
 <div class="home-content">
-<mat-card class="objectives-content">
+  <mat-card class="objectives-content">
 
-      <mat-card-title>
-        Nossos objetivos
-      </mat-card-title>
-</mat-card>
+    <mat-card-title>
+      Nossos objetivos
+    </mat-card-title>
+  </mat-card>
 </div>
 
 <div class="corousel-content">
 
   <ngb-carousel *ngIf="imagesObjetives">
-      <ng-template ngbSlide>
-        <div class="picsum-img-wrapper">
-          <img class="responsive-images" [src]="imagesObjetives[0]" alt="Random second slide">
-        </div>
-        <div class="carousel-caption">
-          <h1>Equidade</h1>
-          <p>Empresas que buscam otimizar sua busca por colaboradores</p>
-        </div>
-      </ng-template>
-      <ng-template ngbSlide>
-          <div class="picsum-img-wrapper">
-            <img class="responsive-images" [src]="imagesObjetives[1]" alt="Random second slide">
-          </div>
-          <div class="carousel-caption">
-            <h1>Engajamento profissional</h1>
-            <p>Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado</p>
-          </div>
-        </ng-template>
-        <ng-template ngbSlide>
-          <div class="picsum-img-wrapper">
-            <img class="responsive-images" [src]="imagesObjetives[2]" alt="Random second slide">
-          </div>
-          <div class="carousel-caption">
-            <h1>Desenvolvimento</h1>
-            <p>Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado</p>
-          </div>
-        </ng-template>
-        <ng-template ngbSlide>
-          <div class="picsum-img-wrapper">
-            <img class="responsive-images" [src]="imagesObjetives[3]" alt="Random second slide">
-          </div>
-          <div class="carousel-caption">
-            <h1>Vinculos</h1>
-            <p>Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado</p>
-          </div>
-        </ng-template>
-        <ng-template ngbSlide>
-          <div class="picsum-img-wrapper">
-            <img class="responsive-images" [src]="imagesObjetives[4]" alt="Random second slide">
-          </div>
-          <div class="carousel-caption">
-            <h1>Inovação</h1>
-            <p>Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado</p>
-          </div>
-        </ng-template>
-    </ngb-carousel>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img class="responsive-images" [src]="imagesObjetives[0]" alt="Random second slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Equidade</h1>
+        <p>Empresas que buscam otimizar sua busca por colaboradores</p>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img class="responsive-images" [src]="imagesObjetives[1]" alt="Random second slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Engajamento profissional</h1>
+        <p>Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado</p>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img class="responsive-images" [src]="imagesObjetives[2]" alt="Random second slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Desenvolvimento</h1>
+        <p>Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado</p>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img class="responsive-images" [src]="imagesObjetives[3]" alt="Random second slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Vinculos</h1>
+        <p>Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado</p>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img class="responsive-images" [src]="imagesObjetives[4]" alt="Random second slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Inovação</h1>
+        <p>Pessoas que buscam sua primeira oportunidade à aqueles q querem se realocar no mercado</p>
+      </div>
+    </ng-template>
+  </ngb-carousel>
 
-  </div>
+</div>
 
-  <div class="home-content">
-    <mat-card class="objectives-content">
+<div class="home-content">
+  <mat-card class="objectives-content">
 
-          <mat-card-title>
-            O que oferecemos?
-          </mat-card-title>
-    </mat-card>
-    </div>
+    <mat-card-title>
+      O que oferecemos?
+    </mat-card-title>
+  </mat-card>
+</div>
 
 <div class="corousel-content">
 
-<ngb-carousel class="contexto" *ngIf="images">
+  <ngb-carousel class="contexto" *ngIf="images">
     <ng-template ngbSlide>
       <div class="picsum-img-wrapper">
         <img class="responsive-images" [src]="images[0]" alt="Random second slide">
@@ -195,49 +199,49 @@
       </div>
     </ng-template>
     <ng-template ngbSlide>
-        <div class="picsum-img-wrapper">
-          <img class="responsive-images" [src]="images[2]" alt="Random third slide">
-        </div>
-        <div class="carousel-caption">
-          <h1>Avalie antigos colaboradores e serviços prestados!</h1>
-          <p>Elabore avaliações e compartilhe suas experiências</p>
-        </div>
-      </ng-template>
-    <ng-template ngbSlide>
-        <div class="picsum-img-wrapper">
-          <img class="responsive-images" [src]="images[3]" alt="Random third slide">
-        </div>
-        <div class="carousel-caption">
-          <h1>Compartilhe cursos e avalie futuros colaboradores!</h1>
-          <p>Auxilie na qualificação e no futuro das pessoas</p>
-        </div>
-      </ng-template>
-    <ng-template ngbSlide>
-        <div class="picsum-img-wrapper">
-          <img class="responsive-images" [src]="images[4]" alt="Random third slide">
-        </div>
-        <div class="carousel-caption">
-          <h1>Se qualifique e garanta seu crescimento profissional!</h1>
-          <p>Encontre cursos e maneiras criativas de se especializar</p>
-        </div>
+      <div class="picsum-img-wrapper">
+        <img class="responsive-images" [src]="images[2]" alt="Random third slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Avalie antigos colaboradores e serviços prestados!</h1>
+        <p>Elabore avaliações e compartilhe suas experiências</p>
+      </div>
     </ng-template>
     <ng-template ngbSlide>
-        <div class="picsum-img-wrapper">
-          <img class="responsive-images" [src]="images[5]" alt="Random third slide">
-        </div>
-        <div class="carousel-caption">
-          <h1>Acumule certificados!</h1>
-          <p>Aumente sua requisição através de certificados emitidos por empresas</p>
-        </div>
+      <div class="picsum-img-wrapper">
+        <img class="responsive-images" [src]="images[3]" alt="Random third slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Compartilhe cursos e avalie futuros colaboradores!</h1>
+        <p>Auxilie na qualificação e no futuro das pessoas</p>
+      </div>
     </ng-template>
     <ng-template ngbSlide>
-        <div class="picsum-img-wrapper">
-          <img class="responsive-images" [src]="images[6]" alt="Random third slide">
-        </div>
-        <div class="carousel-caption">
-          <h1>Encontre a vaga mais indicada ao seu perfil!</h1>
-          <p>Se reencontre no mercado de trabalho ou encontre a sua grande oportunidade!</p>
-        </div>
+      <div class="picsum-img-wrapper">
+        <img class="responsive-images" [src]="images[4]" alt="Random third slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Se qualifique e garanta seu crescimento profissional!</h1>
+        <p>Encontre cursos e maneiras criativas de se especializar</p>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img class="responsive-images" [src]="images[5]" alt="Random third slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Acumule certificados!</h1>
+        <p>Aumente sua requisição através de certificados emitidos por empresas</p>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img class="responsive-images" [src]="images[6]" alt="Random third slide">
+      </div>
+      <div class="carousel-caption">
+        <h1>Encontre a vaga mais indicada ao seu perfil!</h1>
+        <p>Se reencontre no mercado de trabalho ou encontre a sua grande oportunidade!</p>
+      </div>
     </ng-template>
   </ngb-carousel>
 

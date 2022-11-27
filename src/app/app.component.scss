@@ -1,3 +1,4 @@
+
 .example-spacer {
   flex: 1 1 auto;
 }
@@ -32,6 +33,7 @@ a{
   color: white
 }
 
+
 .toolbar {
   background-color: #191645;
 }
@@ -50,7 +52,8 @@ a{
 .menu-icon,
 .footer-icon,
 .name-icon,
-.side-icon {
+.side-icon,
+.text-menu {
   color: white;
 }
 
@@ -58,24 +61,140 @@ a{
   margin-right: 2vw;
   font-size: 15px;
 }
-.text-menu {
+.text-menu{
   padding-top: 10px;
   margin-top: 10px;
   margin-left: -2.25vw;
   position: fixed;
   font-size: small;
+}
+
+.text-menu-skill{
+  padding-top: 10px;
+  margin-top: 10px;
+  position: fixed;
+  font-size: small;
+  margin-left:-6vw;
   color: white;
 }
 
 .text-menu-fix {
   padding-top: 10px;
   margin-top: 10px;
-  margin-left: -33px;
+  margin-left: -3.5vw;
   position: fixed;
   font-size: 7px;
   color: white;
 }
+@media (max-width: 1400px){
+  .text-menu{
+    margin-left: -2vw;
+  }
+  .text-menu-skill{
+    margin-left: -4vw;
+  }
+}
+@media (max-width: 1300px){
+  .text-menu{
+    margin-left: -2.25vw;
+  }
+  .text-menu-skill{
+    margin-left: -5vw;
+  }
+}
+@media (max-width: 1200px){
+  .text-menu{
+    margin-left: -2.25vw;
+  }
+  .text-menu-skill{
+    margin-left: -5vw;
+  }
+}
+@media (max-width: 1100px){
+  .text-menu{
+    margin-left: -3vw;
 
+  }
+  .text-menu-skill{
+    margin-left: -6vw;
+  }
+}
+@media (max-width: 1000px){
+  .text-menu{
+    margin-left: -3vw;
+  }
+  .text-menu-skill{
+    margin-left: -6vw;
+  }
+}
+@media (max-width: 950px){
+  .text-menu{
+    margin-left: -3.5vw;
+  }
+  .text-menu-skill{
+    margin-left: -6vw;
+  }
+}
+
+@media (max-width: 900px){
+  .text-menu{
+    margin-left: -3.7vw;
+  }
+}
+@media (max-width: 850px){
+  .text-menu{
+    margin-left: -3.7vw;
+  }
+}
+@media (max-width: 800px){
+  .text-menu{
+    margin-left: -3.75vw;
+  }
+  .text-menu-skill{
+    margin-left: -6vw;
+  }
+}
+
+@media (max-width: 775px){
+  .text-menu{
+    margin-left: -3.8vw;
+  }
+  .text-menu-skill{
+    margin-left: -6vw;
+  }
+}
+@media (max-width: 750px){
+  .text-menu{
+    margin-left: -3.75vw;
+  }
+  .text-menu-skill{
+    margin-left: -6vw;
+  }
+}
+
+@media (max-width: 700px){
+  .text-menu{
+    margin-left: -4vw;
+  }
+  .text-menu-skill{
+    margin-left: -8vw;
+  }
+}
+
+@media (max-width: 650px){
+  .text-menu{
+    margin-left: -4.5vw;
+  }
+}
+
+@media (max-width: 600px){
+  .text-menu{
+    margin-left: -5vw;
+  }
+  .text-menu-skill{
+    margin-left: -8vw;
+  }
+}
 
 
 
@@ -116,5 +235,5 @@ a{
     width: 120%;
   }
 
-
 }
+

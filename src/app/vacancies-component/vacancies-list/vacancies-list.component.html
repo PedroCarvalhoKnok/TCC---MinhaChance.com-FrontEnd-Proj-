@@ -6,7 +6,7 @@
                 class="material-icons">add_circle_outline</span>
             <mat-card-title *ngIf="this.userLogged.cnpj" class="add-title"><a>Crie vagas e oportunidades para sua
                     empresa</a></mat-card-title>
-            <span *ngIf="this.userLogged.CPF" (click)="getCandidateVacancies()" class="material-icons">verified</span>
+            <span *ngIf="this.userLogged.CPF" (click)="getCandidateVacancies()" class="material-icons" style="color: greenyellow;">verified</span>
             <mat-card-title *ngIf="this.userLogged.CPF" class="add-title"><a>Minhas candidaturas</a></mat-card-title>
         </mat-card-header>
     </mat-card>
@@ -110,7 +110,7 @@
                             {{county.nome}}</mat-option>
                     </mat-select>
                 </mat-form-field> -->
-                
+
 
                 <br />
                 <div class="form-group">
